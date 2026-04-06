@@ -21,7 +21,6 @@
 *.ind
 
 # Output
-*.pdf
 *.dvi
 *.ps
 
