@@ -5,84 +5,592 @@
 
 \section{Introdução}
 
-% [Placeholder: O paradoxo da documentação]
-% - Ninguém gosta de escrever, todos gostam de ler
-% - Documentação desatualizada é pior que nenhuma documentação
-% - Documentação como produto vivo
+Existe um paradoxo cruel na engenharia de software: ninguém gosta de escrever
+documentação, mas todos adoram ler uma boa documentação.
+
+\begin{itemize}
+    \item \textbf{O paradoxo}: o ato de escrever parece perda de tempo ---
+    até você ser a pessoa que precisa ler e não encontra nada.
+    \item \textbf{Documentação desatualizada é pior que nenhuma}: um README
+    que diz ``rode \texttt{npm start}'' quando o projeto migrou para
+    \texttt{pnpm} há seis meses gera confiança falsa.
+    \item \textbf{Documentação como produto vivo}: precisa de manutenção,
+    versionamento e feedback --- exatamente como o código.
+    \item \textbf{Empatia como motivação}: você escreve para o colega que
+    vai herdar seu código, para o novo membro da equipe, e para o seu eu
+    do futuro que não vai lembrar por que tomou aquela decisão.
+\end{itemize}
 
 \section{Tipos de Documentação}
 
-% [Placeholder: Categorias essenciais]
-% - Documentação de arquitetura (ADRs, diagramas)
-% - README e getting started
-% - Documentação de API
-% - Comentários no código (quando e quando não)
-% - Runbooks e playbooks de operações
-% - Decision logs
+Cada tipo de documentação serve um público diferente e tem um ciclo de
+vida diferente.
+
+\begin{itemize}
+    \item \textbf{Arquitetura}: ADRs, diagramas C4, mapas de contexto.
+    Público: engenheiros. Atualização: a cada decisão estrutural.
+    \item \textbf{README e getting started}: porta de entrada do projeto.
+    Público: qualquer pessoa. Atualização: mudanças no setup.
+    \item \textbf{API}: OpenAPI, schemas GraphQL, exemplos de uso.
+    Público: consumidores. Atualização: mudança de contrato.
+    \item \textbf{Comentários no código}: explicam o \textit{porquê}, não
+    o \textit{o quê}. Atualização: a cada refatoração.
+    \item \textbf{Runbooks}: passo a passo para incidentes. Público:
+    operações e plantão. Atualização: pós-incidente.
+    \item \textbf{Decision logs e RFCs}: propostas de mudança e decisões.
+    Público: equipe técnica. Atualização: antes de mudanças significativas.
+    \item \textbf{Onboarding}: como configurar o ambiente, convenções,
+    com quem falar. Público: novos integrantes.
+\end{itemize}
+
+\begin{table}[ht]
+\centering
+\caption{Tipos de Documentação: Quando Criar e Atualizar}
+\begin{tabular}{@{}p{3.5cm}p{3.5cm}p{3cm}p{3cm}@{}}
+\toprule
+\textbf{Tipo} & \textbf{Público} & \textbf{Quando Criar} & \textbf{Atualizar} \\
+\midrule
+Arquitetura (ADRs, C4) & Engenheiros & Decisões estruturais & A cada decisão \\
+README & Qualquer pessoa & Início do projeto & Mudanças no setup \\
+API (OpenAPI) & Consumidores & Primeira versão & Mudança de contrato \\
+Comentários & Desenvolvedores & Decisões não-óbvias & Refatorações \\
+Runbooks & Operações/plantão & Primeiro deploy & Pós-incidente \\
+RFCs/Decision Logs & Equipe técnica & Antes de mudanças & Decisão final \\
+Onboarding & Novos membros & Primeira contratação & Mudanças no processo \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \section{Documentação de Arquitetura}
 
-% [Placeholder: Documentando decisões]
-% - C4 Model (Context, Containers, Components, Code)
-% - Diagramas que importam
-% - ADRs como documentação viva
-% - Ferramentas: Structurizr, PlantUML, Mermaid
+Arquitetura sem documentação é folclore --- vive na cabeça de quem estava
+na reunião e morre quando essa pessoa sai da empresa.
 
-\section{Documentação como Código}
+\subsection{O Modelo C4 em Profundidade}
 
-% [Placeholder: Docs as code]
-% - Markdown no repositório
-% - Versionamento junto com o código
-% - Review de documentação no PR
-% - Geração automática de docs
+O modelo C4, criado por Simon Brown, propõe quatro níveis de abstração.
+A analogia é com o Google Maps: país, cidade, bairro, rua.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.85\textwidth]{imagens/09-documentacao-viva-01-os-quatro-niveis-do-modelo-c4.png}
+    \caption{Os Quatro Níveis do Modelo C4}
+\end{figure}
+
+\begin{itemize}
+    \item \textbf{Nível 1 --- Contexto}: sistema como caixa preta, seus
+    usuários e sistemas externos.
+    \item \textbf{Nível 2 --- Contêineres}: aplicações, bancos de dados,
+    filas --- os artefatos deployáveis.
+    \item \textbf{Nível 3 --- Componentes}: blocos funcionais dentro de
+    cada contêiner.
+    \item \textbf{Nível 4 --- Código}: classes e interfaces. Raramente
+    mantido manualmente.
+\end{itemize}
+
+\textbf{Regra prática}: níveis 1 e 2 são obrigatórios para qualquer
+sistema em produção. Nível 3 para módulos complexos. Nível 4 quase nunca
+vale o esforço manual.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.85\textwidth]{imagens/09-documentacao-viva-02-diagrama-c4-de-conteineres-e-commerce-plantuml.png}
+    \caption{Diagrama C4 de Contêineres --- E-commerce (PlantUML)}
+\end{figure}
+
+\subsection{Diagramas que Importam vs. Diagramas Inúteis}
+
+\begin{itemize}
+    \item \textbf{Importam}: visão geral (C4 nível 1-2), fluxos críticos de
+    negócio, topologia de deploy, fluxos de dados sensíveis.
+    \item \textbf{Desperdiçam tempo}: UML detalhado de cada classe, diagramas
+    de sequência para CRUD simples, qualquer diagrama que leve mais de 30
+    minutos para atualizar.
+    \item \textbf{Regra}: se o custo de manter o diagrama atualizado supera o
+    benefício de tê-lo, elimine-o ou automatize a geração.
+\end{itemize}
+
+\subsection{ADRs como Documentação Viva}
+
+Conforme vimos no Capítulo 2, ADRs capturam decisões arquiteturais e seus
+porquês. São curtos (uma página), imutáveis (nova decisão gera novo ADR),
+rastreáveis (vivem no repositório) e contextuais (registram alternativas).
+
+\begin{lstlisting}[language={}, caption={Template de ADR com Exemplo Preenchido}]
+# ADR-007: Usar PostgreSQL como banco principal
+
+## Status
+Aceito (2025-03-15)
+
+## Contexto
+O sistema de pedidos precisa de consistencia transacional.
+Temos experiencia com PostgreSQL e MySQL. Volume esperado:
+10 mil transacoes/min no pico.
+
+## Alternativas Consideradas
+1. **PostgreSQL**: ACID, JSON nativo, equipe experiente.
+2. **MySQL 8**: performante, JSON support menos maduro.
+3. **CockroachDB**: distribuido, complexidade operacional alta.
+
+## Decisao
+PostgreSQL 16 com read-replica para leitura.
+
+## Consequencias
+- **Positivas**: equipe produtiva, ecossistema rico, JSONB.
+- **Negativas**: escala horizontal exige Citus/particionamento.
+- **Riscos**: reavaliar se passar de 100k transacoes/min.
+\end{lstlisting}
+
+\subsection{Ferramentas e Arquitetura como Narrativa}
+
+\begin{table}[ht]
+\centering
+\caption{Ferramentas de Documentação por Necessidade}
+\begin{tabular}{@{}p{3cm}p{4cm}p{6cm}@{}}
+\toprule
+\textbf{Ferramenta} & \textbf{Melhor Para} & \textbf{Características} \\
+\midrule
+Structurizr & Modelo C4 completo & DSL própria, versionável, multi-formato \\
+PlantUML & Diagramas técnicos & Texto puro, integra com CI/CD \\
+Mermaid & Diagramas em Markdown & Renderiza no GitHub/GitLab nativamente \\
+draw.io & Diagramas visuais & Interface gráfica, XML versionável \\
+Excalidraw & Diagramas informais & Estética de rascunho, colaborativo \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+A melhor documentação de arquitetura conta uma história: comece pelo
+problema, explique as restrições, narre as decisões, reconheça os
+trade-offs e aponte o futuro. Não é uma lista de componentes --- é uma
+narrativa de como o sistema chegou onde está.
+
+\section{Documentação como Código (Docs as Code)}
+
+Se a documentação vive fora do repositório, ela morre. \textit{Docs as
+Code} trata documentação com as mesmas práticas do código: versionamento,
+revisão, testes e deploy automatizado.
+
+\subsection{Markdown no Repositório}
+
+\begin{itemize}
+    \item \textbf{Estrutura recomendada}: \texttt{README.md} na raiz;
+    \texttt{docs/architecture/} para ADRs e diagramas;
+    \texttt{docs/api/} para API; \texttt{docs/runbooks/} para operações.
+    \item \textbf{Convenções}: kebab-case, ADRs com prefixo numérico
+    (\texttt{001-usar-kafka.md}), links relativos entre documentos.
+\end{itemize}
+
+\subsection{Versionamento e Revisão}
+
+Documentação no mesmo repositório garante que código e docs evoluem juntos.
+Quando um PR muda uma API, a documentação deve ser atualizada no mesmo PR.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.85\textwidth]{imagens/09-documentacao-viva-03-fluxo-docs-as-code-mermaid.png}
+    \caption{Fluxo Docs-as-Code (Mermaid)}
+\end{figure}
+
+\begin{itemize}
+    \item \textbf{Revisão de docs no PR}: inclua um checkbox no template
+    de PR: ``Documentação atualizada? [ ] Sim [ ] Não aplicável''.
+    \item \textbf{Geração automática}: API docs gerados por decorators
+    (FastAPI, NestJS), changelog por commits convencionais, diagramas de
+    dependência por ferramentas como \texttt{madge}.
+    \item \textbf{Sites estáticos}: MkDocs + Material (Python), Docusaurus
+    (React), VitePress (Vue) --- todos geram sites a partir de Markdown.
+\end{itemize}
+
+\subsection{Testes de Documentação}
+
+Documentação também pode ter testes: \texttt{lychee} para links quebrados,
+\texttt{cspell} para ortografia, extração e execução de snippets, e
+scripts de freshness que alertam sobre docs sem atualização há N meses.
 
 \section{IA e Documentação}
 
-% [Placeholder: Automatizando com IA]
-% - Geração automática de README
-% - Explicação de código complexo
-% - Geração de documentação de API
-% - Atualização de docs após mudanças
-% - Os limites da IA na documentação
+A IA generativa é talvez mais útil para documentação do que para código.
+Reduz drasticamente a barreira de entrada para uma tarefa que muitos
+engenheiros evitam.
+
+\subsection{Geração Automática de README}
+
+\begin{lstlisting}[language={}, caption={Prompt para Gerar README com IA}]
+Analise o repositorio abaixo e gere um README.md contendo:
+
+1. Nome do projeto e descricao em uma frase
+2. Pre-requisitos (linguagem, versao, dependencias)
+3. Como instalar e configurar
+4. Como rodar localmente
+5. Como rodar os testes
+6. Estrutura de pastas (breve)
+7. Como contribuir
+8. Licenca
+
+Contexto: [cole a estrutura de pastas e arquivos principais]
+Tom: direto, tecnico, sem marketing. Terceira pessoa.
+\end{lstlisting}
+
+\subsection{Explicação de Código e API}
+
+A IA gera explicações de funções complexas, especificações OpenAPI a partir
+de código, exemplos de requisição/resposta e guias de migração. O engenheiro
+adiciona contexto de negócio e valida --- a IA pode inventar campos. No PR,
+peça para a IA comparar mudanças com a documentação e sugerir atualizações.
+
+\subsection{Limites da IA na Documentação}
+
+\begin{itemize}
+    \item \textbf{Contexto de negócio}: a IA não sabe que ``cliente premium''
+    tem regras especiais de SLA.
+    \item \textbf{Intenção}: descreve o que o código faz, não por que foi
+    feito daquele jeito. O ``porquê'' é humano.
+    \item \textbf{Público}: não sabe se o leitor é júnior ou arquiteto.
+    \item \textbf{Alucinação}: pode descrever comportamento que não existe.
+    \item \textbf{Regra}: IA gera o rascunho, humano garante a verdade.
+\end{itemize}
 
 \section{Documentação de APIs}
 
-% [Placeholder: APIs bem documentadas]
-% - OpenAPI/Swagger
-% - Documentação de GraphQL
-% - Exemplos de uso
-% - Versionamento de APIs
-% - Ferramentas: Redocly, Postman
+APIs mal documentadas geram mais tickets de suporte do que bugs.
+
+\subsection{OpenAPI/Swagger em Profundidade}
+
+\begin{lstlisting}[language={}, caption={Exemplo de Especificação OpenAPI (YAML)}]
+openapi: 3.1.0
+info:
+  title: API de Pedidos
+  description: Gerenciamento de pedidos do e-commerce
+  version: 2.1.0
+
+servers:
+  - url: https://api.empresa.com/v2
+    description: Producao
+
+paths:
+  /pedidos:
+    post:
+      summary: Criar novo pedido
+      description: |
+        Cria um pedido no estado "pendente". O pagamento
+        deve ser processado via /pedidos/{id}/pagamento.
+      operationId: criarPedido
+      tags: [Pedidos]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CriarPedidoRequest'
+            example:
+              cliente_id: "cli_abc123"
+              itens:
+                - produto_id: "prod_xyz"
+                  quantidade: 2
+                  preco_unitario: 49.90
+      responses:
+        '201':
+          description: Pedido criado com sucesso
+        '400':
+          description: Dados invalidos
+        '422':
+          description: Produto sem estoque
+
+components:
+  schemas:
+    CriarPedidoRequest:
+      type: object
+      required: [cliente_id, itens]
+      properties:
+        cliente_id:
+          type: string
+        itens:
+          type: array
+          minItems: 1
+          items:
+            type: object
+            properties:
+              produto_id: { type: string }
+              quantidade: { type: integer, minimum: 1 }
+              preco_unitario: { type: number }
+\end{lstlisting}
+
+\subsection{GraphQL e Exemplos de Uso}
+
+GraphQL é auto-documentado --- o schema \textit{é} a documentação. Mas não
+basta: cada tipo e campo precisa de descrição, queries de exemplo devem
+cobrir os casos comuns, e campos deprecados usam \texttt{@deprecated}
+com mensagem clara.
+
+\textbf{Exemplos são o elemento mais importante.} Se você só pode ter uma
+coisa na documentação da API, tenha exemplos: requisição completa com
+headers e body, exemplos de erro, e fluxos com múltiplas chamadas.
+
+\subsection{Versionamento e Ferramentas}
+
+\begin{itemize}
+    \item Mantenha documentação separada por versão da API.
+    \item Forneça guias de migração entre versões e changelog da API.
+    \item Documente a política de depreciação.
+\end{itemize}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.85\textwidth]{imagens/09-documentacao-viva-04-ecossistema-de-documentacao-de-api-plantuml.png}
+    \caption{Ecossistema de Documentação de API (PlantUML)}
+\end{figure}
 
 \section{Manutenção da Documentação}
 
-% [Placeholder: Mantendo docs vivas]
-% - Checklist de atualização em PRs
-% - Links quebrados e docs órfãs
-% - Feedback loop com leitores
-% - Métricas de uso de documentação
-% - Cultura de documentação na equipe
+Escrever documentação é a parte fácil. Mantê-la atualizada é o verdadeiro
+desafio.
+
+\subsection{Checklist de Atualização em PRs}
+
+\begin{itemize}
+    \item README atualizado? API spec atualizada? ADR criado para decisões
+    arquiteturais? Diagrama C4 atualizado? Runbook atualizado?
+    \item \textbf{CI check}: script que verifica mudanças de código sem
+    alteração correspondente em \texttt{docs/}. Alerta, não bloqueia.
+\end{itemize}
+
+\subsection{Links Quebrados, Docs Órfãs e Métricas}
+
+Execute \texttt{lychee} no CI semanalmente para links quebrados. Audite
+trimestralmente: documento não acessado em 6 meses deve ser questionado.
+Use botão ``Esta página foi útil?'' no site. Monitore páginas mais
+acessadas e buscas sem resultado.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.85\textwidth]{imagens/09-documentacao-viva-05-ciclo-de-vida-da-documentacao-mermaid.png}
+    \caption{Ciclo de Vida da Documentação (Mermaid)}
+\end{figure}
+
+\subsection{Construindo uma Cultura de Documentação}
+
+Ferramentas não resolvem cultura. Se a equipe não valoriza documentação,
+nenhuma ferramenta vai mudar isso.
+
+\begin{itemize}
+    \item \textbf{Lidere pelo exemplo}: líderes que documentam estabelecem
+    o padrão.
+    \item \textbf{Onboarding como teste}: novos membros testam a docs.
+    Peça que anotem o que faltou.
+    \item \textbf{Doc Fridays}: tempo recorrente para melhorar documentação.
+    \item \textbf{Ownership}: cada documento tem um responsável. Sem dono,
+    ninguém cuida.
+\end{itemize}
 
 \section{O Mínimo Viável de Documentação}
 
-% [Placeholder: Quanto文档 é suficiente]
-% - README obrigatório
-% - Arquitetura em 1 página
-% - Como rodar o projeto localmente
-% - Como fazer deploy
-% - Onde encontrar ajuda
+Se você não pode fazer documentação completa, faça o mínimo que evita caos.
+
+\subsection{O README Obrigatório}
+
+Todo projeto deve ter um README que responda cinco perguntas em menos de
+cinco minutos.
+
+\begin{lstlisting}[language={}, caption={Template de README Mínimo Viável (Markdown)}]
+# Nome do Projeto
+
+Descricao em uma frase: o que e e para que serve.
+
+## Pre-requisitos
+
+- Node.js >= 20
+- PostgreSQL 16
+- Docker e Docker Compose
+
+## Como Rodar Localmente
+
+```bash
+git clone https://github.com/empresa/projeto.git
+cd projeto
+npm install
+cp .env.example .env   # edite com suas configuracoes
+docker compose up -d    # sobe banco, cache, fila
+npm run db:migrate
+npm run dev             # http://localhost:3000
+```
+
+## Como Rodar os Testes
+
+```bash
+npm test           # unitarios
+npm run test:e2e   # end-to-end
+npm run test:cov   # cobertura
+```
+
+## Como Fazer Deploy
+
+Deploy automatico via CI/CD ao merge na branch `main`.
+Manual: docs/runbooks/deploy-manual.md
+
+## Estrutura do Projeto
+
+```
+src/
+  domain/       # Entidades e regras de negocio
+  application/  # Casos de uso
+  infra/        # Banco, filas, APIs externas
+  api/          # Controllers e rotas
+docs/           # Documentacao
+```
+
+## Onde Encontrar Ajuda
+
+- Docs: https://docs.empresa.com/projeto
+- Slack: #equipe-projeto
+- Dono tecnico: @fulano
+\end{lstlisting}
+
+\begin{table}[ht]
+\centering
+\caption{Checklist do README Mínimo Viável}
+\begin{tabular}{@{}p{5cm}p{5cm}p{3cm}@{}}
+\toprule
+\textbf{Item} & \textbf{Pergunta que Responde} & \textbf{Obrigatório?} \\
+\midrule
+Nome e descrição & O que é isto? & Sim \\
+Pré-requisitos & O que preciso ter instalado? & Sim \\
+Como rodar localmente & Como vejo funcionando? & Sim \\
+Como rodar testes & Como sei que não quebrei nada? & Sim \\
+Como fazer deploy & Como coloco em produção? & Sim \\
+Estrutura do projeto & Onde fica cada coisa? & Recomendado \\
+Onde encontrar ajuda & Com quem falo se travar? & Recomendado \\
+Licença & Posso usar livremente? & Open source \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{A Regra dos 15 Minutos}
+
+\begin{quote}
+Se um novo desenvolvedor não consegue clonar, configurar e rodar o projeto
+em 15 minutos seguindo a documentação, a documentação está incompleta.
+\end{quote}
+
+Teste regularmente pedindo a alguém de fora da equipe para seguir os
+passos. Se tem mais de 3 passos manuais, crie um script.
+
+\subsection{Template de Runbook}
+
+\begin{lstlisting}[language={}, caption={Template de Runbook}]
+# Runbook: Servico de Pedidos Sem Memoria
+
+## Sintomas
+- Alerta: "pedidos-service memory > 90%"
+- Logs: "OutOfMemoryError"
+- Impacto: novos pedidos falham com HTTP 503
+
+## Diagnostico
+1. Metricas de memoria: Grafana > Pedidos > Memory
+2. Pico de trafego? Dashboard > Pedidos > Request Rate
+3. Logs: kubectl logs -f deploy/pedidos-service --tail=100
+
+## Resolucao Imediata
+1. Reinicie: kubectl rollout restart deploy/pedidos-service
+2. Se persistir, escale:
+   kubectl scale deploy/pedidos-service --replicas=4
+3. Nao resolveu? Escale: #pedidos-oncall
+
+## Resolucao Definitiva
+- Heap dump para identificar memory leak
+- Issue com label "memory-leak"
+- Ref: ADR-015 (limites de memoria)
+
+## Historico
+- 2025-01-15: query N+1 causou leak.
+- 2025-03-02: cache sem TTL causou recorrencia.
+\end{lstlisting}
+
+\section{Boas Práticas de Comentários no Código}
+
+A regra fundamental: \textbf{comente o porquê, não o o quê}.
+
+\begin{lstlisting}[language={}, caption={Comentários: Bons vs. Ruins}]
+# === COMENTARIOS RUINS (descrevem o obvio) ===
+
+# Incrementa o contador
+contador = contador + 1
+
+# Retorna o usuario
+return usuario
+
+# === COMENTARIOS BONS (explicam o porque) ===
+
+# Taxa reduzida para o Nordeste conforme resolucao
+# fiscal 2024/187. Revisao prevista para jan/2026.
+taxa = 0.12 if regiao == "NE" else 0.18
+
+# Timeout de 30s porque o gateway de pagamento tem
+# picos de latencia de ate 25s (Black Friday 2024).
+PAYMENT_TIMEOUT = 30
+
+# Ordenamos por data DESC e nao por ID porque IDs
+# nao sao sequenciais apos migracao do legado (2024-06).
+pedidos = pedidos.order_by("-created_at")
+
+# Retry com backoff exponencial. Sem isso, o servico
+# de estoque retorna 429 e derruba nosso rate limit.
+@retry(max_attempts=3, backoff=exponential(base=2))
+def consultar_estoque(produto_id):
+    ...
+\end{lstlisting}
+
+\begin{itemize}
+    \item \textbf{Quando comentar}: decisões não-óbvias, workarounds com
+    data de revisão, regras de negócio no código, referências a tickets.
+    \item \textbf{Quando não comentar}: código autoexplicativo, getters,
+    operações triviais. Renomeie a variável em vez de comentar.
+    \item \textbf{Comentários que envelhecem mal}: \texttt{// TODO: remover
+    depois} (depois quando?), \texttt{// hack} (sem explicar por quê).
+\end{itemize}
 
 \section{Conclusão}
 
-% [Placeholder: Resumo]
-% - Documentação é ato de empatia
-% - Pouca, boa e atualizada > muita, ruim e esquecida
+Documentação é um ato de empatia profissional. Cada linha é uma mensagem
+para alguém no futuro dizendo: ``eu pensei em você e deixei instruções''.
+
+\begin{itemize}
+    \item \textbf{Pouca, boa e atualizada} supera muita, ruim e esquecida.
+    \item \textbf{Docs as Code}: no repositório, revisada em PRs, testada
+    no CI, deployada automaticamente.
+    \item \textbf{IA é aliada, não substituta}: gera rascunhos, mas contexto
+    e intenção são responsabilidades humanas.
+    \item \textbf{Comece pelo mínimo}: um bom README e um diagrama de
+    arquitetura já colocam seu projeto à frente de 90\% dos repositórios.
+    \item \textbf{Regra dos 15 minutos}: se um novo dev não consegue começar
+    em 15 minutos, corrija a documentação antes de escrever mais código.
+    \item \textbf{Cultura importa mais que ferramentas}: lidere pelo exemplo.
+\end{itemize}
 
 \section*{Exercícios}
 
-% [Placeholder: Exercícios]
-% 1. Escreva um README para um projeto existente usando IA.
-%    Compare com um README escrito manualmente.
-% 2. Crie um ADR para uma decisão recente em seu projeto.
-% 3. Audit a documentação de um projeto. Identifique o que está
-%    desatualizado.
+\begin{enumerate}
+    \item \textbf{README do zero}: escolha um projeto sem README ou com
+    README incompleto. Escreva um seguindo o template de README Mínimo
+    Viável. Depois, peça para uma IA gerar outro para o mesmo projeto.
+    Compare: onde a IA acertou? Onde errou? O que só você sabia?
+
+    \item \textbf{ADR na prática}: identifique uma decisão arquitetural
+    recente (banco, padrão de comunicação, framework). Escreva um ADR com
+    alternativas consideradas e consequências.
+
+    \item \textbf{Auditoria}: audite um projeto: README responde as 5
+    perguntas? Existe doc de arquitetura? API docs atualizadas? Links
+    quebrados? Quando foi a última atualização?
+
+    \item \textbf{Teste dos 15 minutos}: peça para alguém de fora rodar
+    seu projeto seguindo só a documentação. Cronometre e corrija.
+
+    \item \textbf{Runbook}: escreva um runbook seguindo o template para
+    um incidente real ou hipotético. Valide com um colega.
+
+    \item \textbf{Comentários}: encontre 5 comentários que descrevem ``o
+    quê''. Reescreva para o ``porquê'' ou remova-os.
+
+    \item \textbf{Docs as Code}: configure \texttt{docs/},
+    \texttt{mkdocs.yml}, link checking no CI, deploy automático.
+\end{enumerate}

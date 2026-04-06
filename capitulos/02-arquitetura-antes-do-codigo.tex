@@ -1,77 +1,1020 @@
 % ============================================================
-% Capítulo 2: Arquitetura Antes do Código
+% Capítulo 02: Arquitetura Antes do Código
 % ============================================================
 \chapter{Arquitetura Antes do Código}
 
 \section{Introdução}
 
-% [Placeholder: A importância de pensar antes de codificar]
-% - O mito do "code first, fix later"
-% - Por que pular arquitetura é uma falsa economia
-% - O papel do pensamento arquitetural
-% - Conexão com Capítulo 1: RM-ODP como estrutura de pensamento arquitetural
-%   em cinco dimensões
+O maior mito da engenharia de software contemporânea é a ideia de que se deve
+``começar a codar e ir ajustando pelo caminho''. Essa mentalidade, frequentemente
+confundida com agilidade, é na verdade o oposto do que os manifesto ágil propõe.
+Ajustes são necessários, sim --- toda arquitetura evolui com o tempo. Porém,
+começar sem direção, sem um modelo mental do sistema, sem entender as forças que
+atuam sobre ele, é o que podemos chamar de \textbf{falsa agilidade}: a ilusão
+de velocidade que se paga com retrabalho exponencial.
+
+Ágil não significa sem arquitetura. Significa arquitetura \textbf{evolutiva},
+não ausente. Os métodos ágeis reconhecem que não se pode prever tudo no início,
+mas isso não é licença para ignorar o pensamento arquitetural. Pelo contrário:
+é justamente porque o futuro é incerto que precisamos de estruturas que acomodem
+mudança. Pular a fase de arquitetura é como construir um prédio sem planta ---
+ele pode até ficar de pé, mas vai custar dez vezes mais para consertar quando
+os problemas inevitavelmente aparecerem.
+
+O papel do pensamento arquitetural é tomar decisões \textbf{antes} que elas se
+tornem irreversíveis. Quando você escolhe um banco de dados, um protocolo de
+comunicação entre serviços, ou uma estratégia de deploy, está definindo restrições
+que serão caras para mudar depois. Essas são as decisões que merecem reflexão
+antecipada. Não se trata de criar um documento de 200 páginas que ninguém vai
+ler --- trata-se de pensar, discutir e registrar as escolhas que importam.
+
+Este capítulo conecta-se diretamente com o que discutimos no Capítulo~1: o
+RM-ODP nos dá a estrutura para olhar um sistema sob múltiplos pontos de vista.
+Agora, vamos aplicar essa visão na prática, explorando estilos arquiteturais,
+técnicas de modelagem de domínio, registros de decisão e padrões de migração.
+Vamos sair do abstrato e entrar no concreto, com diagramas, código e estudos
+de caso.
+
+Como vimos no Capítulo~0, o pensamento sistêmico é o que diferencia o engenheiro
+do programador. Neste capítulo, esse pensamento se materializa em escolhas
+arquiteturais que definem o destino de um projeto. Um engenheiro que domina
+arquitetura não é aquele que conhece todos os padrões --- é aquele que sabe
+escolher o padrão certo para o contexto certo, e sabe explicar o porquê.
+
 
 \section{Princípios de Design Arquitetural}
 
-% [Placeholder: Princípios fundamentais]
-% - Separação de responsabilidades (SoC)
-% - Coesão e acoplamento
-% - Princípio da responsabilidade única
-% - Interfaces estáveis vs. implementações voláteis
+Antes de mergulhar nos estilos e padrões, precisamos estabelecer os princípios
+fundamentais que guiam qualquer decisão arquitetural. Esses princípios não são
+regras rígidas --- são heurísticas que orientam o julgamento do engenheiro em
+situações de incerteza.
 
-\section{Estilos Arquiteturais}
+\subsection{Separação de Responsabilidades (SoC)}
 
-% [Placeholder: Principais estilos arquiteturais]
-% - Monolito modular
-% - Microsserviços
-% - Arquitetura orientada a eventos
-% - Serverless
-% - Quando usar cada um
+O princípio de separação de responsabilidades (Separation of Concerns) afirma
+que cada parte do sistema deve cuidar de exatamente uma preocupação. O módulo
+que gerencia autenticação não deve saber como funciona a persistência de dados.
+O componente que renderiza a interface do usuário não deve conter lógica de
+negócio. Quando essas fronteiras são respeitadas, o sistema se torna mais fácil
+de entender, testar e modificar.
 
-\section{Modelando com Domínio}
+Na prática, SoC se manifesta em múltiplos níveis. No nível de código, significa
+funções e classes com responsabilidades claras. No nível de módulos, significa
+fronteiras bem definidas entre subsistemas. No nível de sistema, significa
+separação entre camadas (apresentação, lógica de negócio, acesso a dados) ou
+entre contextos de domínio.
 
-% [Placeholder: Domain-Driven Design]
-% - Linguagem ubíqua
-% - Bounded contexts
-% - Entidades, value objects e agregados
-% - Como o DDD se relaciona com a arquitetura
+\subsection{Coesão e Acoplamento}
+
+Coesão e acoplamento são as duas faces da mesma moeda. \textbf{Coesão} mede
+o grau em que os elementos dentro de um módulo pertencem juntos. Se uma classe
+faz cinco coisas não relacionadas, sua coesão é baixa e ela deveria ser dividida.
+\textbf{Acoplamento} mede o grau em que módulos dependem uns dos outros. Se o
+módulo A precisa conhecer detalhes internos do módulo B para funcionar, o
+acoplamento entre eles é alto, e qualquer mudança em B potencialmente quebra A.
+
+O objetivo é maximizar coesão (elementos relacionados juntos) e minimizar
+acoplamento (módulos independentes entre si). Isso não é uma busca por perfeição
+--- é uma heurística pragmática. Algum acoplamento é inevitável; o que importa
+é torná-lo explícito e controlado, preferencialmente através de interfaces
+estáveis.
+
+\subsection{Interfaces Estáveis, Implementações Voláteis}
+
+Um dos princípios mais poderosos da engenharia de software é a separação entre
+contrato e implementação. A interface de um \texttt{RepositorioDeClientes} define
+\textit{o que} pode ser feito (buscar, salvar, atualizar). A implementação define
+\textit{como} é feito (SQL, NoSQL, arquivo, API externa). Quando essa separação
+é respeitada, a implementação pode ser trocada sem afetar nenhum consumidor da
+interface.
+
+Esse princípio é a base da arquitetura hexagonal, que discutiremos em detalhes
+mais adiante. Ele também está intimamente ligado ao Princípio de Inversão de
+Dependência do SOLID: módulos de alto nível não devem depender de módulos de
+baixo nível; ambos devem depender de abstrações.
+
+\subsection{Lei de Demeter}
+
+A Lei de Demeter, também conhecida como ``princípio do menor conhecimento'',
+estabelece que um objeto deve falar apenas com seus ``amigos imediatos''. Na
+prática, isso significa evitar encadeamentos como
+\texttt{a.getB().getC().getD().doSomething()}. Cada ponto nessa cadeia é um
+acoplamento adicional: se qualquer estrutura intermediária mudar, o código
+quebra. A alternativa é expor apenas as operações necessárias, delegando
+internamente.
+
+
+\section{Estilos Arquiteturais: Um Mergulho Profundo}
+
+Cada estilo arquitetural é uma resposta a um conjunto de forças: escala, complexidade
+do domínio, tamanho da equipe, requisitos de disponibilidade, restrições de custo.
+Não existe estilo ``melhor'' --- existe o mais adequado para o contexto. A seguir,
+exploramos os principais estilos com profundidade, incluindo seus trade-offs reais
+e cenários de aplicação.
+
+\subsection{Monolito Modular}
+
+O monolito modular é um sistema implantado como uma única unidade, mas internamente
+organizado em módulos bem separados, com fronteiras claras e interfaces definidas
+entre eles. É o estilo mais subestimado da indústria. Muitos engenheiros pulam
+diretamente para microsserviços por pressão de tendência, quando um monolito
+modular resolveria o problema com uma fração da complexidade.
+
+As vantagens são significativas: simplicidade operacional (um artefato para
+implantar, monitorar e depurar), transações locais (sem a complexidade de
+consistência distribuída), e refatoração facilitada (tudo está no mesmo processo,
+então ferramentas de IDE funcionam perfeitamente). As desvantagens são reais, mas
+frequentemente exageradas: a escala é ``tudo ou nada'' (o sistema inteiro escala
+junto), e há risco de erosão das fronteiras internas com o tempo (sem disciplina,
+os módulos se acoplam progressivamente).
+
+O monolito modular é ideal para times pequenos a médios (até 30--40 pessoas),
+domínios cuja complexidade ainda está sendo descoberta, e projetos que priorizam
+velocidade de entrega sobre escala granular. Empresas como Shopify e Basecamp
+operam com monolitos modulares de grande porte e sucesso comprovado.
+
+\subsection{Microsserviços}
+
+A arquitetura de microsserviços decompõe o sistema em serviços independentes, cada
+um com seu próprio ciclo de vida, banco de dados e equipe responsável. Cada serviço
+é implantado de forma independente e se comunica com os demais via rede (HTTP, gRPC,
+mensageria).
+
+As vantagens são reais em contextos específicos: escala seletiva (escalar apenas o
+serviço que precisa), autonomia de times (cada equipe é dona do seu serviço e pode
+escolher tecnologias diferentes), e isolamento de falhas (se um serviço cai, os
+demais continuam funcionando, se bem projetados). Porém, as desvantagens são
+frequentemente subestimadas: complexidade distribuída (rede falha, latência é real,
+debugging é exponencialmente mais difícil), necessidade de infraestrutura robusta
+(service discovery, load balancing, circuit breakers, observabilidade distribuída),
+e consistência eventual (transações entre serviços são um problema notoriamente
+difícil).
+
+A regra de ouro que propomos neste livro é direta: \textbf{comece monolítico e
+modular; separe quando a dor justificar}. Nunca separe por antecipação. A dor
+que justifica microsserviços é concreta: times que não conseguem mais trabalhar
+no mesmo repositório sem conflitos constantes, necessidade comprovada de escalar
+partes do sistema independentemente, ou requisitos regulatórios de isolamento.
+
+\subsection{Arquitetura Orientada a Eventos}
+
+Na arquitetura orientada a eventos, os componentes se comunicam publicando e
+consumindo eventos, em vez de fazer chamadas diretas uns aos outros. Um evento
+representa algo que aconteceu: ``PedidoFoiCriado'', ``PagamentoFoiConfirmado'',
+``EstoqueFoiReservado''. Componentes interessados reagem a esses eventos de
+forma assíncrona.
+
+Esse estilo oferece desacoplamento temporal (o produtor não precisa esperar o
+consumidor), escalabilidade natural (mais consumidores podem ser adicionados sem
+alterar o produtor) e resiliência (se um consumidor está fora do ar, os eventos
+ficam na fila esperando). Porém, traz desafios significativos: consistência
+eventual (os dados não são imediatamente consistentes em todo o sistema),
+debugging complexo (rastrear o fluxo de um evento através de múltiplos
+consumidores exige ferramentas específicas de observabilidade), e ordenação
+de eventos (garantir que eventos sejam processados na ordem correta é
+surpreendentemente difícil).
+
+O diagrama a seguir ilustra uma arquitetura orientada a eventos para um sistema
+de pedidos:
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.85\textwidth]{imagens/02-arquitetura-antes-do-codigo-01-plantuml-arquitetura-orientada-a-eventos.png}
+    \caption{PlantUML -- Arquitetura Orientada a Eventos}
+\end{figure}
+
+Observe como o serviço de pedidos não sabe (e não precisa saber) quem vai reagir
+ao evento \texttt{PedidoCriado}. Amanhã, um novo serviço de recomendação pode
+começar a consumir esse evento sem qualquer alteração no produtor. Esse é o poder
+do desacoplamento via eventos.
+
+\subsection{Serverless}
+
+O modelo serverless leva a abstração ao extremo: o engenheiro escreve funções
+individuais que são executadas sob demanda, sem gerenciar servidores, containers
+ou infraestrutura. O provedor de nuvem cuida de escala, disponibilidade e
+cobrança por uso efetivo.
+
+As vantagens são atraentes: custo proporcional ao uso (paga-se apenas pelo tempo
+de execução), zero operação de infraestrutura, e escala automática que vai de
+zero a milhares de instâncias sem configuração. As desvantagens, porém, são
+estruturais: cold starts (latência na primeira invocação quando a função precisa
+ser carregada), vendor lock-in severo (cada provedor tem APIs e limites
+diferentes), limites de execução (tempo máximo, memória, tamanho de payload),
+e dificuldade de testar localmente.
+
+Serverless brilha em cenários de processamento de eventos (webhooks, transformação
+de dados, pipelines ETL), APIs com tráfego altamente variável, e automações
+internas. Não é adequado para workloads de longa duração, sistemas com requisitos
+de latência rigorosos, ou domínios complexos onde a lógica de negócio precisa de
+estado conversacional.
+
+\subsection{Tabela Comparativa de Estilos Arquiteturais}
+
+A tabela a seguir sintetiza os trade-offs de cada estilo para facilitar a decisão:
+
+\begin{table}[htbp]
+\centering
+\caption{Quando usar cada estilo arquitetural}
+\label{tab:estilos-arquiteturais}
+\small
+\begin{tabular}{p{2.8cm}p{2.5cm}p{2.5cm}p{2.5cm}p{2.5cm}}
+\toprule
+\textbf{Critério} & \textbf{Monolito Modular} & \textbf{Microsserviços} & \textbf{Event-Driven} & \textbf{Serverless} \\
+\midrule
+Complexidade operacional & Baixa & Alta & Média--Alta & Baixa \\
+\addlinespace
+Escala & Uniforme & Granular & Granular & Automática \\
+\addlinespace
+Tamanho de time ideal & 3--40 pessoas & 40+ pessoas & Variável & 3--15 pessoas \\
+\addlinespace
+Consistência de dados & Forte (ACID) & Eventual & Eventual & Eventual \\
+\addlinespace
+Debugging & Simples & Complexo & Complexo & Moderado \\
+\addlinespace
+Custo inicial & Baixo & Alto & Médio & Baixo \\
+\addlinespace
+Custo de mudança & Médio & Alto & Médio & Baixo \\
+\addlinespace
+Vendor lock-in & Nenhum & Baixo & Baixo--Médio & Alto \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Evolução: Do Monolito aos Microsserviços}
+
+A evolução arquitetural não é um salto --- é uma jornada. O diagrama a seguir
+ilustra os estágios típicos que um sistema percorre, cada transição motivada por
+dor concreta:
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.85\textwidth]{imagens/02-arquitetura-antes-do-codigo-02-mermaid-evolucao-do-monolito-aos-microsservicos.png}
+    \caption{Mermaid -- Evolução do Monolito aos Microsserviços}
+\end{figure}
+
+Observe que cada transição tem um gatilho claro. Não se move para o próximo
+estágio por moda tecnológica, mas por necessidade comprovada. Muitas empresas
+de sucesso operam confortavelmente no estágio de monolito modular por anos.
+Outras precisam chegar ao estágio de event-driven para atender a demandas de
+escala e resiliência. O importante é que cada decisão de transição seja consciente
+e documentada (veremos como fazer isso com ADRs adiante).
+
+
+\section{O Modelo C4: Comunicando Arquitetura em Níveis}
+
+Um dos maiores desafios da arquitetura de software não é a decisão técnica em
+si, mas a \textbf{comunicação} dessa decisão. Diagramas de arquitetura
+frequentemente falham porque tentam mostrar tudo de uma vez, resultando em
+artefatos incompreensíveis. O modelo C4, criado por Simon Brown, resolve esse
+problema ao organizar a documentação arquitetural em quatro níveis de zoom, cada
+um destinado a uma audiência diferente.
+
+\subsection{Nível 1: Contexto do Sistema}
+
+O diagrama de contexto é o nível mais alto. Ele mostra o sistema como uma caixa
+preta e mapeia suas relações com usuários e sistemas externos. É o diagrama que
+você mostra para stakeholders não técnicos, gerentes de produto e executivos.
+A pergunta que ele responde é: ``O que estamos construindo e com quem/o que
+ele interage?''
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.85\textwidth]{imagens/02-arquitetura-antes-do-codigo-03-diagrama-c4-nivel-1-contexto-do-sistema.png}
+    \caption{Diagrama C4 Nível 1 -- Contexto do Sistema}
+\end{figure}
+
+Neste exemplo, vemos imediatamente que o sistema de e-commerce tem dois tipos de
+usuários (clientes finais e administradores) e depende de três sistemas externos
+(email, pagamento e ERP). Essa simplicidade é intencional --- qualquer pessoa na
+organização deve conseguir entender esse diagrama em menos de um minuto.
+
+\subsection{Nível 2: Containers}
+
+O nível de containers mostra os ``blocos de deployment'' do sistema: aplicações
+web, APIs, bancos de dados, filas de mensagens. Cada container é uma unidade que
+roda em seu próprio processo ou ambiente. Este é o diagrama que a equipe de
+infraestrutura precisa para planejar deployment e monitoramento.
+
+\subsection{Nível 3: Componentes}
+
+Dentro de cada container, o diagrama de componentes mostra as principais peças
+internas: controllers, serviços, repositórios. É o nível que interessa aos
+desenvolvedores do time para entender a estrutura interna de um serviço ou
+aplicação.
+
+\subsection{Nível 4: Código}
+
+O último nível é o diagrama de classes ou entidades, representando o código em
+si. Na prática, esse nível raramente é mantido manualmente --- ele pode ser
+gerado automaticamente a partir do código-fonte. Use-o apenas para partes
+críticas do domínio que precisam de documentação explícita.
+
+A beleza do C4 está na sua disciplina de zoom. Quando alguém pergunta ``como
+funciona o sistema?'', você não mostra um diagrama com 200 caixas. Você começa
+pelo contexto, e aprofunda sob demanda. Cada nível é autocontido e compreensível
+por si só. Essa disciplina de comunicação é uma habilidade arquitetural tão
+importante quanto a decisão técnica em si.
+
+
+\section{Modelando com Domínio (DDD)}
+
+Domain-Driven Design, popularizado por Eric Evans, é uma abordagem de design de
+software que coloca o \textbf{domínio do negócio} no centro de todas as decisões
+técnicas. Não é um framework, não é uma biblioteca --- é uma filosofia de design
+que reconhece que a complexidade de um software está na lógica de negócio, não
+na tecnologia.
+
+\subsection{Linguagem Ubíqua}
+
+O primeiro e mais importante conceito do DDD é a linguagem ubíqua: engenheiros
+e especialistas de negócio devem usar exatamente os mesmos termos. Se o negócio
+fala ``sinistro'', o código diz \texttt{Sinistro}, não \texttt{InsuranceClaim}.
+Se o negócio fala ``apólice'', o código diz \texttt{Apolice}, não
+\texttt{PolicyDocument}.
+
+Essa prática elimina uma das maiores fontes de bugs em software: a tradução
+mental entre terminologias. Quando o analista de negócios diz ``o sinistro deve
+ser indenizado'' e o programador implementa como \texttt{claim.approve()},
+existe uma lacuna semântica que vai gerar mal-entendidos. Se ambos dizem
+``indenizar o sinistro'' e o código diz \texttt{sinistro.indenizar()}, a
+comunicação é direta e verificável.
+
+\subsection{Bounded Contexts}
+
+O conceito de bounded context reconhece que o mesmo termo pode ter significados
+diferentes em contextos diferentes. ``Cliente'' no contexto de Vendas tem nome,
+email e histórico de compras. ``Cliente'' no contexto de Suporte tem tickets
+abertos, SLA e canal de contato preferido. ``Cliente'' no contexto Financeiro
+tem CPF, limite de crédito e inadimplência.
+
+Tentar criar um modelo único de ``Cliente'' que sirva para todos os contextos é
+um erro clássico que leva a classes gigantes com dezenas de campos opcionais.
+A abordagem do DDD é aceitar que cada contexto tem seu próprio modelo de Cliente,
+e definir mapeamentos explícitos entre eles.
+
+O diagrama a seguir ilustra os bounded contexts de um sistema de e-commerce:
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.85\textwidth]{imagens/02-arquitetura-antes-do-codigo-04-mermaid-bounded-contexts-de-um-e-commerce.png}
+    \caption{Mermaid -- Bounded Contexts de um E-commerce}
+\end{figure}
+
+Observe como ``Produto'' e ``Cliente'' aparecem em múltiplos contextos, mas com
+atributos diferentes em cada um. A comunicação entre contextos acontece via
+eventos de domínio (``Pedido confirmado'', ``Pagamento confirmado''), nunca via
+acesso direto ao banco de dados do outro contexto.
+
+\subsection{Entidades, Value Objects e Agregados}
+
+\textbf{Entidades} são objetos com identidade que persiste ao longo do tempo.
+Um Pedido é uma entidade: mesmo que todos os seus atributos mudem (itens
+adicionados, status alterado, endereço atualizado), ele continua sendo o mesmo
+Pedido, identificado pelo seu ID.
+
+\textbf{Value Objects} são objetos definidos exclusivamente por seus atributos,
+sem identidade própria. Um CPF é um Value Object: dois CPFs com o mesmo número
+são iguais, ponto. Um Endereco é um Value Object: se todos os campos são
+idênticos, são o mesmo endereço. Value Objects devem ser imutáveis.
+
+\textbf{Agregados} são clusters de entidades e value objects que mudam juntos
+como uma unidade de consistência. O Pedido e seus Itens formam um agregado: não
+faz sentido adicionar um item ao pedido sem passar pela lógica do Pedido (que
+verifica estoque, calcula total, aplica descontos). O agregado define a
+fronteira transacional --- tudo dentro de um agregado é consistente a todo
+momento; entre agregados, a consistência pode ser eventual.
+
+\subsection{Domain Events}
+
+Eventos de domínio representam algo que \textbf{aconteceu} no domínio e que
+pode interessar a outras partes do sistema. Eles são escritos no passado:
+\texttt{PedidoFoiPago}, \texttt{EstoqueFoiReservado}, \texttt{ClienteFoiCadastrado}.
+
+A importância dos eventos de domínio vai além da comunicação técnica: eles tornam
+a lógica de negócio explícita. Quando o código diz ``publique o evento
+PedidoFoiPago'', qualquer pessoa --- técnica ou não --- entende o que está
+acontecendo. Compare com ``chame o endpoint POST /api/v2/orders/\{id\}/status com
+body \{status: paid\}'': a semântica se perde no mecanismo.
+
+
+\section{Event Storming: Descoberta Colaborativa do Domínio}
+
+Event Storming é uma técnica de workshop criada por Alberto Brandolini para
+explorar o domínio de negócio de forma colaborativa. Diferente de técnicas
+tradicionais de levantamento de requisitos --- onde um analista entrevista
+stakeholders e produz documentos --- o Event Storming coloca todos na mesma
+sala, com sticky notes e uma parede grande, e constrói um entendimento
+compartilhado do domínio em poucas horas.
+
+\subsection{Como Funciona}
+
+O workshop segue uma progressão estruturada. Na primeira fase, os participantes
+(engenheiros, product owners, especialistas de domínio, designers) escrevem em
+sticky notes laranjas todos os eventos de domínio que conseguem imaginar:
+``Pedido foi criado'', ``Pagamento foi recusado'', ``Estoque ficou zerado'',
+``Cliente cancelou assinatura''. Não há julgamento nessa fase --- o objetivo é
+gerar volume.
+
+Na segunda fase, os eventos são organizados em ordem cronológica na parede.
+Padrões emergem naturalmente: cadeias de causa e efeito, bifurcações, loops.
+Gaps no conhecimento ficam visíveis --- ``o que acontece entre o pagamento ser
+confirmado e o produto ser enviado?'' --- e são marcados com sticky notes
+vermelhas (``hot spots'').
+
+Na terceira fase, comandos são adicionados em sticky notes azuis: as ações que
+disparam os eventos. ``Cliente clica em Comprar'' dispara ``Pedido foi criado''.
+``Sistema verifica estoque'' dispara ``Estoque foi reservado'' ou ``Estoque
+insuficiente''.
+
+Na quarta fase, agregados são identificados: agrupamentos de eventos e comandos
+que pertencem à mesma entidade de domínio. Os bounded contexts emergem dos
+agrupamentos de agregados.
+
+\subsection{Por que Funciona}
+
+Event Storming é eficaz porque inverte o processo tradicional. Em vez de começar
+com entidades e atributos (``quais são os campos do Cliente?''), começa com
+comportamento (``o que acontece no sistema?''). Isso alinha o modelo de software
+com a realidade do negócio, porque negócios são feitos de \textbf{coisas que
+acontecem}, não de tabelas de banco de dados.
+
+Além disso, o formato de workshop elimina o jogo de telefone entre stakeholders
+e engenheiros. Quando o especialista de domínio e o arquiteto estão na mesma
+parede, discordâncias e ambiguidades são resolvidas na hora, não três sprints
+depois, quando o código já foi escrito baseado em premissas erradas.
+
+
+\section{Arquitetura Hexagonal: Portas e Adaptadores}
+
+A arquitetura hexagonal, proposta por Alistair Cockburn, é um dos padrões
+arquiteturais mais influentes da engenharia de software moderna. Sua premissa
+central é simples e poderosa: o domínio do negócio não deve depender de nenhuma
+tecnologia externa. O domínio não sabe que existe HTTP, não sabe que existe
+PostgreSQL, não sabe que existe Kafka. Ele define \textbf{portas} (interfaces) que
+descrevem o que precisa do mundo externo, e \textbf{adaptadores} implementam
+essas portas usando tecnologias concretas.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.85\textwidth]{imagens/02-arquitetura-antes-do-codigo-05-arquitetura-hexagonal-portas-e-adaptadores.png}
+    \caption{Arquitetura Hexagonal -- Portas e Adaptadores}
+\end{figure}
+
+A beleza dessa arquitetura está na testabilidade e na adaptabilidade. Para testar
+a lógica de negócio, basta criar adaptadores falsos (mocks ou stubs) que
+implementam as portas de saída. Para trocar o banco de dados de PostgreSQL para
+DynamoDB, basta criar um novo adaptador --- o domínio não muda uma linha sequer.
+
+\subsection{Implementação em Python}
+
+Vamos ver uma implementação concreta da arquitetura hexagonal em Python. O
+exemplo é um sistema simples de transferência bancária.
+
+Primeiro, as entidades e value objects do domínio:
+
+\begin{lstlisting}[language=Python, caption={Domínio -- Entidades e Value Objects}]
+from dataclasses import dataclass
+from decimal import Decimal
+from uuid import UUID, uuid4
+
+@dataclass(frozen=True)
+class Dinheiro:
+    """Value Object imutavel representando um valor monetario."""
+    valor: Decimal
+    moeda: str = "BRL"
+
+    def __post_init__(self):
+        if self.valor < 0:
+            raise ValueError("Valor monetario nao pode ser negativo")
+
+@dataclass
+class Conta:
+    """Entidade com identidade -- a conta bancaria."""
+    id: UUID
+    titular: str
+    saldo: Dinheiro
+
+    def debitar(self, quantia: Dinheiro) -> None:
+        if quantia.valor > self.saldo.valor:
+            raise ValueError("Saldo insuficiente")
+        self.saldo = Dinheiro(self.saldo.valor - quantia.valor)
+
+    def creditar(self, quantia: Dinheiro) -> None:
+        self.saldo = Dinheiro(self.saldo.valor + quantia.valor)
+\end{lstlisting}
+
+Agora, as portas --- interfaces que definem \textit{o que} o domínio precisa,
+sem definir \textit{como}:
+
+\begin{lstlisting}[language=Python, caption={Portas -- Interfaces do Domínio}]
+from abc import ABC, abstractmethod
+
+class RepositorioDeConta(ABC):
+    """Porta de saida: como o dominio persiste contas."""
+
+    @abstractmethod
+    def buscar_por_id(self, conta_id: UUID) -> Conta:
+        ...
+
+    @abstractmethod
+    def salvar(self, conta: Conta) -> None:
+        ...
+
+class PublicadorDeEventos(ABC):
+    """Porta de saida: como o dominio publica eventos."""
+
+    @abstractmethod
+    def publicar(self, evento: dict) -> None:
+        ...
+\end{lstlisting}
+
+O caso de uso (a lógica de negócio propriamente dita) depende apenas das portas,
+nunca de implementações concretas:
+
+\begin{lstlisting}[language=Python, caption={Caso de Uso -- Transferência Bancária}]
+class TransferirDinheiro:
+    """Caso de uso: transferir dinheiro entre contas."""
+
+    def __init__(
+        self,
+        repositorio: RepositorioDeConta,
+        publicador: PublicadorDeEventos,
+    ):
+        self.repositorio = repositorio
+        self.publicador = publicador
+
+    def executar(
+        self, origem_id: UUID, destino_id: UUID, quantia: Dinheiro
+    ) -> None:
+        origem = self.repositorio.buscar_por_id(origem_id)
+        destino = self.repositorio.buscar_por_id(destino_id)
+
+        origem.debitar(quantia)
+        destino.creditar(quantia)
+
+        self.repositorio.salvar(origem)
+        self.repositorio.salvar(destino)
+
+        self.publicador.publicar({
+            "tipo": "TransferenciaRealizada",
+            "origem": str(origem_id),
+            "destino": str(destino_id),
+            "valor": str(quantia.valor),
+        })
+\end{lstlisting}
+
+Finalmente, os adaptadores --- implementações concretas que conectam o domínio
+ao mundo real:
+
+\begin{lstlisting}[language=Python, caption={Adaptadores -- Implementações Concretas}]
+import json
+from kafka import KafkaProducer
+
+class ContaPostgresRepository(RepositorioDeConta):
+    """Adaptador de saida: persiste contas no PostgreSQL."""
+
+    def __init__(self, connection):
+        self.conn = connection
+
+    def buscar_por_id(self, conta_id: UUID) -> Conta:
+        cursor = self.conn.cursor()
+        cursor.execute(
+            "SELECT id, titular, saldo FROM contas WHERE id = %s",
+            (str(conta_id),)
+        )
+        row = cursor.fetchone()
+        return Conta(
+            id=UUID(row[0]),
+            titular=row[1],
+            saldo=Dinheiro(Decimal(str(row[2]))),
+        )
+
+    def salvar(self, conta: Conta) -> None:
+        cursor = self.conn.cursor()
+        cursor.execute(
+            "UPDATE contas SET saldo = %s WHERE id = %s",
+            (str(conta.saldo.valor), str(conta.id)),
+        )
+        self.conn.commit()
+
+class KafkaPublicadorDeEventos(PublicadorDeEventos):
+    """Adaptador de saida: publica eventos no Kafka."""
+
+    def __init__(self, bootstrap_servers: str):
+        self.producer = KafkaProducer(
+            bootstrap_servers=bootstrap_servers,
+            value_serializer=lambda v: json.dumps(v).encode(),
+        )
+
+    def publicar(self, evento: dict) -> None:
+        self.producer.send("eventos-dominio", value=evento)
+        self.producer.flush()
+\end{lstlisting}
+
+O ponto crucial é que o caso de uso \texttt{TransferirDinheiro} funciona
+igualmente com um banco PostgreSQL real, com um repositório em memória para
+testes, ou com um banco DynamoDB na nuvem. A lógica de negócio está isolada
+e protegida.
+
 
 \section{Decisões Arquiteturais e ADRs}
 
-% [Placeholder: Documentação de decisões]
-% - O que é um Architecture Decision Record (ADR)
-% - Estrutura de um ADR
-% - Quando e como criar ADRs
-% - Exemplo prático de ADR
+Toda arquitetura é o resultado de um conjunto de decisões. O problema é que,
+sem documentação, essas decisões se perdem. Três meses depois, ninguém lembra
+por que o Kafka foi escolhido em vez do RabbitMQ. Um ano depois, um novo
+engenheiro questiona a decisão e propõe migrar, sem saber que a escolha original
+foi motivada pela necessidade de replay de eventos --- uma necessidade que
+continua existindo.
 
-\section{Design para Mudança}
+O Architecture Decision Record (ADR) resolve esse problema de forma leve e
+prática. É um documento curto, armazenado no repositório junto do código, que
+captura o contexto, a decisão e suas consequências.
 
-% [Placeholder: Sistemas evoluem]
-% - Arquitetura evolutiva
-% - Metas de arquitetura (fitness functions)
-% - Design para substituição de componentes
-% - O padrão de portas e adaptadores (Hexagonal)
+\subsection{Estrutura de um ADR}
+
+Um ADR tem quatro seções essenciais:
+
+\textbf{Contexto}: qual é o problema ou a necessidade que motivou a decisão?
+Quais restrições existem (técnicas, organizacionais, regulatórias)?
+
+\textbf{Decisão}: o que foi decidido? Quais alternativas foram consideradas e
+por que foram descartadas?
+
+\textbf{Consequências}: o que ganhamos com essa decisão? O que perdemos? Quais
+riscos ela introduz?
+
+\textbf{Status}: proposta, aceita, obsoleta, substituída por ADR-XXX.
+
+\subsection{Template de ADR}
+
+\begin{lstlisting}[language={}, caption={Template de ADR em Markdown}]
+# ADR-001: Usar Kafka como barramento de eventos
+
+## Status
+Aceita (2024-03-15)
+
+## Contexto
+O sistema de pedidos precisa comunicar eventos para os servicos
+de estoque, notificacao e analytics. A comunicacao precisa ser
+assincrona para nao acoplar os servicos temporalmente.
+
+Requisitos identificados:
+- Replay de eventos para reprocessamento
+- Retencao de 30 dias para auditoria
+- Throughput de ~10.000 eventos/segundo no pico
+- Ordenacao garantida por pedido (partition key)
+
+## Alternativas Consideradas
+1. **RabbitMQ**: mais simples de operar, mas sem replay nativo
+   e retencao limitada.
+2. **Amazon SQS + SNS**: gerenciado, mas sem ordenacao garantida
+   e replay impossivel.
+3. **Apache Kafka**: replay nativo, retencao configuravel,
+   ordenacao por particao, ecossistema maduro.
+
+## Decisao
+Usar Apache Kafka (gerenciado via Confluent Cloud).
+
+## Consequencias
+### Positivas
+- Replay de eventos para reprocessamento e debug
+- Retencao configuravel (30 dias para auditoria)
+- Ordenacao por partition key (ID do pedido)
+- Ecossistema rico (Kafka Streams, Connect, Schema Registry)
+
+### Negativas
+- Curva de aprendizado maior que RabbitMQ
+- Custo operacional mais alto (Confluent Cloud ~$800/mes)
+- Complexidade de configuracao de particoes e replicacao
+- Time precisa aprender conceitos de consumer groups e offsets
+\end{lstlisting}
+
+\subsection{Fluxo de Decisão Arquitetural}
+
+O diagrama a seguir ilustra o processo recomendado para tomar e registrar decisões
+arquiteturais:
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.85\textwidth]{imagens/02-arquitetura-antes-do-codigo-06-mermaid-fluxo-de-decisao-arquitetural-com-adr.png}
+    \caption{Mermaid -- Fluxo de Decisão Arquitetural com ADR}
+\end{figure}
+
+ADRs devem ser armazenados no repositório do projeto, em um diretório dedicado
+como \texttt{docs/adr/}. Isso garante que eles versionem junto com o código,
+sejam revisáveis via pull request, e estejam acessíveis a qualquer engenheiro
+que precise entender o histórico de decisões.
+
+
+\section{Design para Mudança: Arquitetura Evolutiva}
+
+A ideia de que se pode ``acertar a arquitetura de primeira'' é uma fantasia.
+Todo sistema que sobrevive ao contato com a realidade precisa evoluir. O
+desafio não é prever o futuro --- é criar condições para que a mudança seja
+barata quando inevitavelmente chegar.
+
+\subsection{Fitness Functions: Testes Arquiteturais}
+
+O conceito de fitness functions, popularizado pelo livro \textit{Building
+Evolutionary Architectures} de Neal Ford, Rebecca Parsons e Patrick Kua,
+aplica a ideia de testes automatizados à própria arquitetura. Assim como
+testes unitários verificam que o código funciona corretamente, fitness
+functions verificam que a arquitetura está sendo respeitada.
+
+Exemplos concretos de fitness functions:
+
+\textbf{Dependência entre módulos}: verificar que o módulo de apresentação
+não importa diretamente o módulo de acesso a dados, garantindo que a separação
+em camadas é respeitada.
+
+\begin{lstlisting}[language=Python, caption={Fitness Function -- Verificação de Dependências}]
+import ast
+import os
+
+def verificar_dependencias_proibidas():
+    """
+    Fitness function: o modulo 'apresentacao' nao deve
+    importar diretamente o modulo 'infraestrutura'.
+    """
+    violacoes = []
+    diretorio = "src/apresentacao"
+
+    for root, dirs, files in os.walk(diretorio):
+        for arquivo in files:
+            if not arquivo.endswith(".py"):
+                continue
+            caminho = os.path.join(root, arquivo)
+            with open(caminho) as f:
+                tree = ast.parse(f.read())
+
+            for node in ast.walk(tree):
+                if isinstance(node, ast.Import):
+                    for alias in node.names:
+                        if "infraestrutura" in alias.name:
+                            violacoes.append(
+                                f"{caminho}: import {alias.name}"
+                            )
+                elif isinstance(node, ast.ImportFrom):
+                    if node.module and "infraestrutura" in node.module:
+                        violacoes.append(
+                            f"{caminho}: from {node.module}"
+                        )
+
+    assert not violacoes, (
+        f"Violacoes de arquitetura encontradas:\n"
+        + "\n".join(violacoes)
+    )
+\end{lstlisting}
+
+\textbf{Tempo de resposta}: verificar que nenhum endpoint da API leva mais
+que 200ms para responder sob carga normal.
+
+\textbf{Tamanho de deployment}: verificar que a imagem Docker do serviço
+não ultrapassa 500MB, prevenindo bloat gradual.
+
+\textbf{Cobertura de testes por módulo}: garantir que módulos críticos mantêm
+cobertura acima de 80\%.
+
+A chave é que fitness functions rodam automaticamente, idealmente no pipeline
+de CI/CD. Se uma mudança de código viola uma restrição arquitetural, o build
+falha --- assim como falharia se um teste unitário quebrasse. Isso transforma
+regras arquiteturais de ``recomendações que todo mundo ignora'' em
+``restrições que o sistema impõe''.
+
+\subsection{Strangler Fig: Migração Gradual}
+
+O Strangler Fig Pattern (nomeado em homenagem às figueiras estrangulantes que
+crescem ao redor de árvores existentes até eventualmente substituí-las) é uma
+estratégia de migração incremental. Em vez de reescrever um sistema legado do
+zero (o famoso ``big bang'' que quase sempre falha), o Strangler Fig permite
+migrar funcionalidade por funcionalidade, mantendo o sistema antigo em operação
+durante todo o processo.
+
+O mecanismo é elegante: um proxy (ou API gateway) recebe todas as requisições e
+decide para onde encaminhá-las. No início, 100\% do tráfego vai para o sistema
+legado. À medida que novas funcionalidades são reimplementadas no sistema novo,
+o proxy começa a direcionar as requisições correspondentes para o novo sistema.
+Eventualmente, todo o tráfego migra e o sistema legado pode ser desligado.
+
+As vantagens dessa abordagem são significativas. O risco é minimizado porque a
+migração acontece em pequenos passos, cada um deles reversível. O sistema legado
+continua funcionando durante toda a transição, então não há downtime planejado.
+O time pode aprender e ajustar a estratégia durante o processo, em vez de
+apostar tudo em um plano concebido antes de qualquer experiência prática com
+o novo sistema.
+
+Um exemplo real: imagine uma fintech que tem um monolito legado em Java responsável
+por processamento de transações, gestão de contas e relatórios. A equipe decide
+migrar para microsserviços. Em vez de reescrever tudo, eles começam pelo módulo
+de relatórios (menos crítico), criam um novo serviço e configuram o gateway para
+direcionar requisições de relatórios para ele. Após validar que funciona, migram
+a gestão de contas. Por último, o processamento de transações. O monolito vai
+``encolhendo'' enquanto o novo ecossistema vai ``crescendo'' ao redor dele.
+
+
+\section{Estudo de Caso: Arquitetando um Sistema Fintech}
+
+Para consolidar os conceitos discutidos neste capítulo, vamos percorrer o processo
+completo de design arquitetural de um sistema fintech fictício, mas realista: o
+\textbf{PayFlow}, uma plataforma de pagamentos para pequenos comerciantes.
+
+\subsection{Contexto do Negócio}
+
+O PayFlow precisa oferecer: cadastro de comerciantes, processamento de
+pagamentos via Pix e cartão de crédito, split de pagamentos (dividir o valor
+entre múltiplos recebedores), dashboard de acompanhamento em tempo real, e
+geração de relatórios fiscais. A expectativa inicial é de 500 comerciantes
+e 50.000 transações por dia, com projeção de crescimento de 10x em 18 meses.
+
+\subsection{Event Storming do Domínio}
+
+Realizamos um workshop de Event Storming com o time (product owner, dois
+engenheiros, um especialista em compliance financeiro). Os principais eventos
+identificados foram:
+
+\begin{enumerate}
+    \item ComercianteFoiCadastrado
+    \item DocumentacaoFoiVerificada (KYC)
+    \item ComercianteFoiAprovado / ComercianteFoiRecusado
+    \item PagamentoFoiIniciado
+    \item PagamentoFoiAutorizado (pelo gateway)
+    \item PagamentoFoiCapturado
+    \item PagamentoFoiRecusado
+    \item SplitFoiCalculado
+    \item TransferenciaFoiAgendada
+    \item TransferenciaFoiRealizada
+    \item RelatorioFiscalFoiGerado
+\end{enumerate}
+
+A partir dos eventos, identificamos quatro bounded contexts: \textbf{Onboarding}
+(cadastro e KYC), \textbf{Pagamentos} (processamento e captura), \textbf{Split}
+(divisão de valores e transferências), e \textbf{Fiscal} (relatórios e
+obrigações tributárias).
+
+\subsection{Decisão Arquitetural}
+
+Com base no tamanho da equipe (4 engenheiros), na projeção de tráfego e na
+necessidade de velocidade de entrega, decidimos por um \textbf{monolito modular}
+com \textbf{comunicação por eventos internos}. Cada bounded context é um módulo
+do monolito, com fronteiras claras e interfaces definidas. Os eventos de domínio
+são publicados em um barramento interno (em memória, inicialmente), preparando
+o terreno para uma eventual separação em microsserviços se e quando a escala
+justificar.
+
+O ADR dessa decisão registra explicitamente: ``Começamos monolítico porque a
+equipe é pequena e a velocidade de entrega é prioritária. Os módulos são
+desenhados para serem extraíveis individualmente quando o crescimento de 10x
+materializar-se e trouxer dor de escala.''
+
+A arquitetura hexagonal é adotada dentro de cada módulo, garantindo que a lógica
+de negócio fique isolada da infraestrutura. Isso significa que a futura migração
+para microsserviços será mais barata: cada módulo já tem suas portas definidas,
+e os adaptadores apenas precisarão trocar de ``em processo'' para ``via rede''.
+
+\subsection{Fitness Functions do PayFlow}
+
+Para proteger a arquitetura ao longo do tempo, definimos fitness functions
+específicas:
+
+\begin{enumerate}
+    \item \textbf{Isolamento de módulos}: nenhum módulo pode importar diretamente
+    classes internas de outro módulo. A comunicação acontece apenas via portas
+    públicas e eventos.
+    \item \textbf{Tempo de processamento}: nenhuma transação de pagamento pode
+    levar mais de 3 segundos para ser processada end-to-end.
+    \item \textbf{Cobertura de testes}: o módulo de Pagamentos mantém cobertura
+    de pelo menos 90\% (por ser o mais crítico).
+    \item \textbf{Compliance}: toda transação acima de R\$~10.000 deve gerar
+    automaticamente um registro de auditoria.
+\end{enumerate}
+
+Essas fitness functions rodam no pipeline de CI a cada pull request. Se qualquer
+uma falhar, o merge é bloqueado. Isso garante que a arquitetura definida hoje
+será respeitada amanhã, mesmo quando a pressão de prazos tentar corroê-la.
+
 
 \section{Arquitetura e IA Generativa}
 
-% [Placeholder: Como a IA muda o processo arquitetural]
-% - IA pode ajudar na modelagem?
-% - Validação de decisões com assistência de IA
-% - Os limites da IA em decisões arquiteturais
-% - Por que o engenheiro ainda é essencial
+A era dos LLMs traz novas possibilidades e novos riscos para o trabalho
+arquitetural. A IA generativa pode ser uma aliada poderosa na exploração de
+alternativas, geração de diagramas e identificação de gaps em uma arquitetura
+proposta. Porém, é essencial entender seus limites.
+
+\subsection{Onde a IA Ajuda}
+
+A IA é excelente para tarefas exploratórias: ``Quais são os trade-offs de usar
+CQRS neste contexto?'', ``Gere um diagrama C4 de contexto para este sistema'',
+``Quais riscos de usar Kafka como barramento de eventos para um sistema com
+requisitos de ordenação estrita?''. Essas perguntas se beneficiam da capacidade
+da IA de sintetizar conhecimento de múltiplas fontes e apresentar alternativas
+que o engenheiro poderia não ter considerado.
+
+A IA também é útil para gerar esqueletos de código arquitetural. Dado um diagrama
+de portas e adaptadores, um LLM pode gerar as interfaces, as classes de domínio
+e os adaptadores iniciais com precisão razoável. Isso acelera o trabalho
+repetitivo e permite que o engenheiro foque na lógica de negócio.
+
+\subsection{Onde a IA Falha}
+
+A IA não entende seu contexto organizacional: a política interna do time, as
+restrições de orçamento, a capacidade técnica da equipe, o histórico de
+decisões anteriores. Ela pode sugerir microsserviços com Kubernetes para uma
+startup de três pessoas, ou um monolito para uma empresa com 200 engenheiros.
+As sugestões são tecnicamente válidas, mas contextualmente erradas.
+
+Além disso, a IA tende a reproduzir padrões populares, não necessariamente os
+mais adequados. Se a maioria dos artigos e tutoriais na internet fala sobre
+microsserviços, a IA vai tender a sugeri-los --- mesmo quando um monolito modular
+seria claramente superior para o caso em questão.
+
+\subsection{O Engenheiro como Decisor Final}
+
+Por tudo isso, o engenheiro continua sendo essencial. Arquitetura é sobre
+trade-offs contextuais: não existe resposta certa universal, apenas respostas
+adequadas para um contexto específico. A IA tem padrões; o engenheiro tem
+contexto. A combinação dos dois é poderosa, mas a decisão final --- e a
+responsabilidade por ela --- é humana.
+
+Como discutimos no Capítulo~0, o diferencial do engenheiro não é escrever
+código, é saber \textit{qual} código escrever e \textit{por quê}. Na arquitetura,
+esse diferencial se manifesta em saber \textit{qual} padrão adotar e
+\textit{por que} esse padrão é o certo para este contexto, neste momento, com
+estas restrições. Nenhuma IA --- por mais avançada que seja --- substitui esse
+julgamento.
+
 
 \section{Conclusão}
 
-% [Placeholder: Resumo e transição]
-% - Arquitetura é sobre comunicação e decisões
-% - Código é consequência, não causa
+Arquitetura de software não é sobre diagramas bonitos ou frameworks da moda.
+É sobre \textbf{comunicação} e \textbf{decisões}. Comunicação porque a
+arquitetura precisa ser compreendida por todo o time --- do desenvolvedor
+júnior ao CTO. Decisões porque cada escolha arquitetural define o espaço de
+possibilidades futuras do sistema.
+
+Neste capítulo, percorremos um caminho que vai dos princípios fundamentais
+(SoC, coesão, acoplamento) aos estilos arquiteturais (monolito, microsserviços,
+eventos, serverless), passando por técnicas de modelagem de domínio (DDD, Event
+Storming), documentação de decisões (ADRs), e estratégias de evolução (fitness
+functions, Strangler Fig). Vimos tudo isso aplicado em um estudo de caso
+concreto de uma fintech.
+
+O código é consequência de uma arquitetura bem pensada, não a causa de um bom
+sistema. Quando a arquitetura está certa, o código flui naturalmente. Quando
+está errada, nenhuma quantidade de refatoração resolve --- porque o problema não
+está no código, está nas decisões que o precederam.
+
+No próximo capítulo, desceremos um nível de abstração para explorar os princípios
+de design que guiam o código dentro da arquitetura: SOLID, design patterns e as
+práticas que transformam uma boa arquitetura em código de qualidade.
+
 
 \section*{Exercícios}
 
-% [Placeholder: Exercícios]
-% 1. Escolha um projeto pessoal ou profissional. Escreva um ADR para
-%    uma decisão arquitetural importante.
-% 2. Compare os estilos monolito e microsserviços para um sistema de
-%    e-commerce. Liste prós e contras.
-% 3. Identifique os bounded contexts de um sistema de gestão escolar.
+\begin{enumerate}
+    \item \textbf{ADR na prática}: escolha um projeto pessoal ou profissional e
+    escreva um ADR completo para uma decisão arquitetural importante, seguindo
+    o template apresentado neste capítulo. Inclua pelo menos três alternativas
+    consideradas com justificativas para a escolha final.
+
+    \item \textbf{Comparação de estilos}: para um sistema de e-commerce com
+    expectativa de 100.000 usuários simultâneos e uma equipe de 8 engenheiros,
+    argumente qual estilo arquitetural adotaria e por quê. Considere pelo menos
+    três estilos e justifique a rejeição dos demais.
+
+    \item \textbf{Bounded contexts}: identifique os bounded contexts de um
+    sistema de gestão hospitalar. Para cada contexto, liste as entidades
+    principais, os value objects, e pelo menos dois eventos de domínio.
+    Desenhe as fronteiras e os fluxos de eventos entre contextos.
+
+    \item \textbf{Event Storming simulado}: escolha um domínio que você conhece
+    bem (pode ser o seu trabalho atual) e conduza um Event Storming individual.
+    Liste pelo menos 20 eventos de domínio, organize-os cronologicamente, e
+    identifique os agregados e bounded contexts que emergem.
+
+    \item \textbf{Fitness functions}: para o sistema do exercício 2, defina
+    pelo menos quatro fitness functions que protejam a arquitetura. Para cada
+    uma, descreva como seria implementada e em que ponto do pipeline de CI/CD
+    seria executada.
+
+    \item \textbf{Arquitetura hexagonal}: implemente um módulo simples usando
+    arquitetura hexagonal na linguagem de sua preferência. O módulo deve ter
+    pelo menos uma porta de entrada, uma porta de saída, dois adaptadores
+    diferentes para a porta de saída (por exemplo, um repositório em memória
+    e um repositório com banco de dados), e testes que usam o adaptador em
+    memória.
+
+    \item \textbf{Strangler Fig}: descreva um plano de migração usando o
+    padrão Strangler Fig para um sistema legado que você conheça. Defina a
+    ordem de migração dos módulos, justifique essa ordem, e identifique os
+    riscos de cada etapa.
+
+    \item \textbf{C4 na prática}: para o PayFlow (estudo de caso deste
+    capítulo) ou para um sistema que você conheça, crie os diagramas C4 dos
+    níveis 1 (Contexto) e 2 (Containers). Use a notação Mermaid ou PlantUML.
+
+    \item \textbf{IA como ferramenta}: use um LLM para gerar três propostas
+    de arquitetura diferentes para um sistema de delivery de comida. Analise
+    criticamente cada proposta, identifique vieses e suposições implícitas,
+    e justifique qual adotaria para uma startup com 5 engenheiros.
+\end{enumerate}

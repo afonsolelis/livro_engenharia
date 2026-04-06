@@ -5,83 +5,1166 @@
 
 \section{Introdução}
 
-% [Placeholder: Você constrói, você roda]
-% - A mentalidade DevOps
-% - Fim da dicotomia dev vs. ops
-% - Responsabilidade end-to-end
+``You build it, you run it.'' Essa frase, atribuída a Werner Vogels (CTO da Amazon),
+resume a revolução cultural mais importante da engenharia de software nas últimas
+duas décadas. Antes de DevOps, o mundo era dividido: desenvolvedores escreviam
+código e jogavam por cima do muro para o time de operações. Ops reclamava que o
+código era instável. Dev reclamava que Ops era lento. Ninguém era dono do problema
+inteiro.
 
+\begin{itemize}
+    \item \textbf{A mentalidade DevOps}: quem constrói o software é responsável por
+    operá-lo em produção. Isso muda tudo --- da forma como se escreve código à
+    forma como se projeta a arquitetura.
+    \item \textbf{Fim da dicotomia dev vs.\ ops}: não são dois times jogando a bola
+    um para o outro. São funções integradas em um ciclo contínuo.
+    \item \textbf{Responsabilidade end-to-end}: o engenheiro que escreveu o código
+    é acordado às 3h quando ele falha em produção. Isso gera uma motivação natural
+    para escrever código mais resiliente.
+    \item \textbf{Observabilidade como consequência}: quando você opera o que
+    constrói, instrumentar o sistema deixa de ser opcional. Você \textbf{quer}
+    saber o que está acontecendo.
+\end{itemize}
+
+\subsection{Breve história: do Waterfall Ops ao Platform Engineering}
+
+\begin{itemize}
+    \item \textbf{Era Waterfall (anos 1990--2000)}: deploy a cada 6 meses. Operações
+    era um time separado que recebia artefatos prontos. Change Advisory Boards
+    aprovavam cada mudança manualmente. Deploys eram eventos traumáticos.
+    \item \textbf{Era Ágil (anos 2000--2010)}: desenvolvimento ficou mais rápido,
+    mas operações não acompanhou. O gargalo se deslocou para o deploy.
+    \item \textbf{Era DevOps (2010--2020)}: automação de pipelines, infraestrutura
+    como código, deploys frequentes. O livro \emph{The Phoenix Project} popularizou
+    a cultura. Ferramentas como Docker, Kubernetes e Terraform se tornaram padrão.
+    \item \textbf{Era Platform Engineering (2020--presente)}: DevOps amadureceu,
+    mas pedir que todo engenheiro seja especialista em Kubernetes é irreal.
+    Platform Engineering cria abstrações internas (\emph{Internal Developer
+    Platforms}) que dão autonomia sem exigir expertise em infraestrutura.
+    \item \textbf{O papel da IA}: LLMs estão acelerando todas essas fases ---
+    gerando pipelines, detectando anomalias, sugerindo correções automáticas.
+\end{itemize}
+
+% ============================================================
 \section{CI/CD Moderno}
+% ============================================================
 
-% [Placeholder: Pipelines de entrega]
-% - Integração Contínua
-% - Entrega Contínua vs. Deploy Contínuo
-% - Feature flags e trunk-based development
-% - Rollback e rollforward
-% - IA em pipelines de CI/CD
+Integração e entrega contínuas são a espinha dorsal do desenvolvimento moderno.
+Sem CI/CD, todo o resto --- feature flags, observabilidade, deploys canary ---
+é impossível ou impraticável.
 
-\section{Infraestrutura como Código}
+\subsection{Integração Contínua (CI)}
 
-% [Placeholder: IaC na prática]
-% - Terraform, Pulumi, CloudFormation
-% - Versionamento de infraestrutura
-% - Ambientes efêmeros
-% - Testes de infraestrutura
-% - IA gerando infraestrutura
+\begin{itemize}
+    \item \textbf{Princípio}: cada desenvolvedor integra seu código no branch
+    principal \textbf{pelo menos uma vez por dia}. Quanto mais tempo um branch
+    vive separado, mais doloroso será o merge.
+    \item \textbf{Automatização}: a cada push, o pipeline executa build,
+    testes unitários, análise estática e verificações de segurança.
+    \item \textbf{Feedback rápido}: se o pipeline demora 45 minutos, ninguém
+    espera. O ideal é menos de 10 minutos para o ciclo básico.
+    \item \textbf{Trunk-based development}: trabalhar em branches de vida
+    curta (horas, não semanas) e integrar diretamente no trunk. Feature branches
+    longas são o inimigo da integração contínua.
+\end{itemize}
 
+\subsection{Entrega Contínua vs.\ Deploy Contínuo}
+
+São coisas \textbf{diferentes} e a confusão entre elas é endêmica na indústria.
+
+\begin{table}[h]
+\centering
+\caption{CI vs.\ CD vs.\ Continuous Deployment}
+\begin{tabular}{>{\bfseries}p{3.5cm} p{4cm} p{5cm}}
+\toprule
+Conceito & Significado & Implicação \\
+\midrule
+Continuous Integration (CI) & Integrar código frequentemente com testes automáticos &
+    Detecta conflitos e bugs cedo \\
+\addlinespace
+Continuous Delivery (CD) & Código sempre pronto para deploy, mas o deploy é manual &
+    Decisão de negócio sobre quando liberar \\
+\addlinespace
+Continuous Deployment & Todo commit que passa nos testes vai automaticamente para
+    produção & Requer maturidade extrema em testes e observabilidade \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Feature Flags e Trunk-Based Development}
+
+\begin{itemize}
+    \item \textbf{Feature flags}: permitem que código novo vá para produção
+    \textbf{desligado}. Liga-se gradualmente para porcentagens de usuários.
+    Separa \emph{deploy} de \emph{release}.
+    \item \textbf{Vantagem}: deploy deixa de ser arriscado. Se a feature causa
+    problemas, desliga-se a flag sem rollback.
+    \item \textbf{Cuidado}: flags abandonadas viram dívida técnica. Tenha um
+    processo para remover flags após a feature estar estável.
+    \item \textbf{Ferramentas}: LaunchDarkly, Unleash, Flagsmith, ou uma
+    implementação simples com variáveis de ambiente.
+\end{itemize}
+
+\subsection{Estratégias de Deploy}
+
+\begin{itemize}
+    \item \textbf{Rollback vs.\ rollforward}: rollback reverte para a versão
+    anterior. Rollforward corrige o problema com um novo deploy. Em sistemas com
+    migrações de banco, rollback pode ser impossível --- prefira rollforward.
+    \item \textbf{Blue-green deployment}: dois ambientes idênticos. O tráfego
+    aponta para o ``blue'' (atual). Deploya-se no ``green''. Troca-se o roteamento.
+    Se der problema, volta para o ``blue''.
+    \item \textbf{Canary release}: a nova versão recebe apenas 1--5\% do tráfego.
+    Monitora-se. Se as métricas estão saudáveis, aumenta-se gradualmente para
+    100\%.
+    \item \textbf{Rolling update}: substituição gradual de instâncias. Padrão no
+    Kubernetes. Menos controle que canary, mas mais simples.
+\end{itemize}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.85\textwidth]{imagens/10-devops-observabilidade-01-diagrama-blue-green-deployment.png}
+    \caption{Diagrama: Blue-Green Deployment}
+\end{figure}
+
+\subsection{IA em Pipelines de CI/CD}
+
+\begin{itemize}
+    \item \textbf{Seleção inteligente de testes}: a IA identifica quais testes
+    são afetados pelas mudanças no commit e executa apenas esses, reduzindo o
+    tempo do pipeline de 30 minutos para 5.
+    \item \textbf{Auto-fix de lint e formatação}: a IA corrige automaticamente
+    violações de estilo e abre um commit com as correções.
+    \item \textbf{Análise de impacto}: dado um diff, a IA identifica quais
+    serviços e equipes podem ser afetados.
+    \item \textbf{Geração de changelogs}: LLMs leem os commits e geram notas
+    de release em linguagem humana.
+\end{itemize}
+
+\subsection{GitOps: Infraestrutura e Deploy a Partir do Git}
+
+GitOps é o princípio de que \textbf{o estado desejado do sistema está no Git}.
+Um agente (como ArgoCD ou Flux) monitora o repositório e reconcilia o estado
+real com o declarado.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.85\textwidth]{imagens/10-devops-observabilidade-02-diagrama-fluxo-gitops.png}
+    \caption{Diagrama: Fluxo GitOps}
+\end{figure}
+
+\begin{itemize}
+    \item \textbf{Vantagem}: auditoria completa --- todo deploy é um commit.
+    Rollback é \texttt{git revert}. Sem acesso direto ao cluster.
+    \item \textbf{Pull vs.\ Push}: no modelo pull (recomendado), o agente dentro
+    do cluster puxa mudanças do Git. No modelo push, o pipeline aplica
+    diretamente. Pull é mais seguro.
+    \item \textbf{Ferramentas}: ArgoCD, Flux, Jenkins X.
+\end{itemize}
+
+\subsection{Exemplo Completo: Pipeline com GitHub Actions}
+
+\begin{lstlisting}[language={}, caption={Pipeline CI/CD com GitHub Actions}]
+# .github/workflows/ci-cd.yml
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install -r requirements-dev.txt
+
+      - name: Lint
+        run: ruff check .
+
+      - name: Type checking
+        run: mypy src/
+
+      - name: Unit tests
+        run: pytest tests/unit/ --cov=src/ --cov-report=xml
+
+      - name: Integration tests
+        run: pytest tests/integration/ -v
+
+  security:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Security scan
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          severity: 'HIGH,CRITICAL'
+
+  build-and-push:
+    needs: [test, security]
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: |
+          docker build -t app:${{ github.sha }} .
+
+      - name: Push to registry
+        run: |
+          docker push registry.example.com/app:${{ github.sha }}
+
+  deploy-staging:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    environment: staging
+    steps:
+      - name: Deploy to staging
+        run: |
+          kubectl set image deployment/app \
+            app=registry.example.com/app:${{ github.sha }}
+
+      - name: Smoke tests
+        run: |
+          curl -f https://staging.example.com/health
+
+  deploy-production:
+    needs: deploy-staging
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: Deploy to production
+        run: |
+          kubectl set image deployment/app \
+            app=registry.example.com/app:${{ github.sha }}
+
+      - name: Verify deployment
+        run: |
+          kubectl rollout status deployment/app --timeout=300s
+\end{lstlisting}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.85\textwidth]{imagens/10-devops-observabilidade-03-diagrama-pipeline-ci-cd-completo.png}
+    \caption{Diagrama: Pipeline CI/CD Completo}
+\end{figure}
+
+% ============================================================
+\section{Infraestrutura como Código (IaC)}
+% ============================================================
+
+Se a infraestrutura não está no código, ela está na cabeça de alguém. E quando
+essa pessoa sai de férias ou da empresa, a infraestrutura vira um mistério.
+
+\subsection{Por Que IaC?}
+
+\begin{itemize}
+    \item \textbf{Reprodutibilidade}: criar o mesmo ambiente N vezes com o mesmo
+    resultado. Fim do ``funciona na minha máquina''.
+    \item \textbf{Versionamento}: a infraestrutura tem histórico no Git. Quem
+    mudou o quê, quando e por quê.
+    \item \textbf{Code review}: mudanças de infraestrutura passam pelo mesmo
+    processo de revisão do código da aplicação.
+    \item \textbf{Automação}: infraestrutura é criada e destruída por pipelines,
+    não por humanos clicando em consoles.
+\end{itemize}
+
+\subsection{Ferramentas de IaC}
+
+\begin{table}[h]
+\centering
+\caption{Ferramentas de IaC: Comparação}
+\begin{tabular}{>{\bfseries}p{2.5cm} p{2cm} p{2.5cm} p{2cm} p{3cm}}
+\toprule
+Ferramenta & Linguagem & Abordagem & Multi-cloud & Observações \\
+\midrule
+Terraform & HCL & Declarativa & Sim & Padrão de mercado, vasto ecossistema \\
+\addlinespace
+OpenTofu & HCL & Declarativa & Sim & Fork open source do Terraform \\
+\addlinespace
+Pulumi & Python, TS, Go & Imperativa & Sim & Usa linguagens conhecidas \\
+\addlinespace
+CloudFormation & YAML/JSON & Declarativa & Não (AWS) & Nativo AWS, integração profunda \\
+\addlinespace
+AWS CDK & Python, TS & Imperativa & Não (AWS) & Gera CloudFormation por baixo \\
+\addlinespace
+Ansible & YAML & Procedural & Sim & Melhor para configuração que provisionamento \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Exemplo: Terraform}
+
+\begin{lstlisting}[language={}, caption={Infraestrutura com Terraform}]
+# main.tf - Infraestrutura para uma aplicacao web
+
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 5.0"
+    }
+  }
+  backend "s3" {
+    bucket = "minha-empresa-terraform-state"
+    key    = "producao/app.tfstate"
+    region = "us-east-1"
+  }
+}
+
+provider "aws" {
+  region = var.aws_region
+}
+
+# VPC
+resource "aws_vpc" "main" {
+  cidr_block           = "10.0.0.0/16"
+  enable_dns_hostnames = true
+  tags = { Name = "${var.project}-vpc" }
+}
+
+# Subnets publicas
+resource "aws_subnet" "public" {
+  count             = 2
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = "10.0.${count.index}.0/24"
+  availability_zone = data.aws_availability_zones.available.names[count.index]
+  tags = { Name = "${var.project}-public-${count.index}" }
+}
+
+# ECS Fargate Service
+resource "aws_ecs_service" "app" {
+  name            = "${var.project}-service"
+  cluster         = aws_ecs_cluster.main.id
+  task_definition = aws_ecs_task_definition.app.arn
+  desired_count   = var.app_count
+  launch_type     = "FARGATE"
+
+  network_configuration {
+    subnets         = aws_subnet.public[*].id
+    security_groups = [aws_security_group.app.id]
+  }
+
+  load_balancer {
+    target_group_arn = aws_lb_target_group.app.arn
+    container_name   = "app"
+    container_port   = 8000
+  }
+}
+
+# Outputs
+output "alb_dns_name" {
+  value = aws_lb.main.dns_name
+}
+\end{lstlisting}
+
+\subsection{Ambientes Efêmeros (Preview Environments)}
+
+\begin{itemize}
+    \item \textbf{Conceito}: para cada Pull Request, cria-se um ambiente completo
+    e isolado. O revisor pode testar a mudança em um URL real. Quando o PR é
+    fechado, o ambiente é destruído.
+    \item \textbf{Benefício}: feedback mais rápido, menos bugs em staging, QA
+    pode testar em paralelo.
+    \item \textbf{Implementação}: Terraform + GitHub Actions criam a infra. O
+    pipeline faz deploy. Um webhook no merge/close destrói tudo.
+    \item \textbf{Ferramentas}: Vercel, Netlify (front-end), Namespace,
+    Garden.io (back-end com Kubernetes).
+\end{itemize}
+
+\subsection{Testes de Infraestrutura}
+
+\begin{itemize}
+    \item \textbf{Terratest}: framework em Go para testar módulos Terraform.
+    Cria a infra real, valida, destrói.
+    \item \textbf{Checkov}: análise estática de IaC. Detecta configurações
+    inseguras (S3 bucket público, security group aberto para 0.0.0.0/0).
+    \item \textbf{OPA/Conftest}: políticas como código. ``Nenhum recurso pode
+    ser criado sem tags de custo.''
+    \item \textbf{Drift detection}: o estado real divergiu do declarado?
+    Ferramentas como \texttt{terraform plan} e Spacelift detectam drift e
+    podem reconciliar automaticamente.
+\end{itemize}
+
+\subsection{IA Gerando Infraestrutura}
+
+\begin{itemize}
+    \item LLMs geram código Terraform e CloudFormation com boa qualidade para
+    cenários comuns.
+    \item \textbf{Cuidado}: a IA pode gerar configurações inseguras (portas
+    abertas, permissões excessivas). Sempre passe por \texttt{checkov} e
+    revisão humana.
+    \item \textbf{Bom uso}: gerar o esqueleto, depois refinar. ``Crie um módulo
+    Terraform para um ECS Fargate com ALB e RDS PostgreSQL.''
+\end{itemize}
+
+% ============================================================
 \section{Observabilidade: Os Três Pilares}
+% ============================================================
 
-% [Placeholder: Monitoramento moderno]
-% - Logs: o que aconteceu
-% - Métricas: como está o sistema
-% - Traces: onde está o problema
-% - A diferença entre monitoramento e observabilidade
+Monitoramento e observabilidade não são sinônimos.
 
+\begin{itemize}
+    \item \textbf{Monitoramento}: responde a perguntas que você \textbf{já sabe
+    fazer}. ``O CPU está acima de 80\%?'' ``O disco encheu?'' Dashboards com
+    métricas predefinidas.
+    \item \textbf{Observabilidade}: permite responder perguntas que você
+    \textbf{ainda não fez}. ``Por que requisições do usuário X na região Y
+    estão lentas apenas às terças-feiras?''
+    \item \textbf{A diferença}: monitoramento é sobre alertas conhecidos.
+    Observabilidade é sobre exploração do desconhecido.
+\end{itemize}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.85\textwidth]{imagens/10-devops-observabilidade-04-diagrama-os-tres-pilares-da-observabilidade.png}
+    \caption{Diagrama: Os Três Pilares da Observabilidade}
+\end{figure}
+
+\subsection{Os Pilares}
+
+\begin{itemize}
+    \item \textbf{Logs}: registros discretos de eventos. ``Requisição recebida'',
+    ``Erro ao consultar banco'', ``Usuário autenticado''. Respondem \emph{o que}
+    aconteceu.
+    \item \textbf{Métricas}: valores numéricos agregados ao longo do tempo.
+    Latência p99, taxa de erros, uso de memória. Respondem \emph{como} o sistema
+    está.
+    \item \textbf{Traces}: o caminho de uma requisição através de múltiplos
+    serviços. Respondem \emph{onde} o problema está.
+    \item \textbf{O quarto pilar --- Profiling}: análise detalhada de consumo
+    de recursos por função/método. Responde \emph{por que} algo está lento.
+    Ferramentas como Pyroscope e Parca tornam profiling contínuo viável em produção.
+\end{itemize}
+
+\subsection{OpenTelemetry: O Padrão Unificado}
+
+\begin{itemize}
+    \item \textbf{O problema}: cada ferramenta tinha seu formato próprio.
+    Jaeger usava um SDK, Zipkin outro, Prometheus outro. Trocar de ferramenta
+    significava reinstrumentar tudo.
+    \item \textbf{A solução}: OpenTelemetry (OTel) é um padrão aberto e
+    vendor-neutral que unifica coleta de logs, métricas e traces.
+    \item \textbf{Arquitetura}: SDK (no código) $\rightarrow$ Collector
+    (processamento) $\rightarrow$ Backend (armazenamento e visualização).
+    \item \textbf{Auto-instrumentação}: em muitas linguagens, basta adicionar
+    o agente OTel e a aplicação é instrumentada automaticamente --- sem mudar
+    uma linha de código.
+\end{itemize}
+
+% ============================================================
 \section{Logging Eficiente}
+% ============================================================
 
-% [Placeholder: Boas práticas de logging]
-% - Logs estruturados (JSON)
-% - Níveis de log apropriados
-% - Contexto e correlation IDs
-% - O que logar e o que NÃO logar
-% - Ferramentas: ELK, Loki, Datadog
+Logs são a forma mais antiga de observabilidade --- e a mais abusada. Logs
+mal feitos geram ruído. Logs bem feitos salvam madrugadas.
 
+\subsection{Logs Estruturados}
+
+\begin{itemize}
+    \item \textbf{Problema}: \texttt{logger.info("Pedido 123 criado para cliente
+    456")} --- como filtrar todos os pedidos do cliente 456? Com regex frágil.
+    \item \textbf{Solução}: logs em JSON com campos semânticos. Ferramentas de
+    busca (Elasticsearch, Loki) conseguem filtrar por campo.
+    \item \textbf{Regra}: log é dado, não prosa. Escreva para máquinas parsearem,
+    com contexto para humanos entenderem.
+\end{itemize}
+
+\subsection{Níveis de Log}
+
+\begin{table}[h]
+\centering
+\caption{Níveis de Log: Quando Usar}
+\begin{tabular}{>{\bfseries}p{2cm} p{5cm} p{5cm}}
+\toprule
+Nível & Quando Usar & Exemplo \\
+\midrule
+DEBUG & Detalhes internos, útil em desenvolvimento. Nunca ligado em produção
+    por padrão. & ``Cache miss para chave user:123'' \\
+\addlinespace
+INFO & Eventos normais e significativos do sistema. & ``Pedido PED-456 criado
+    com sucesso'' \\
+\addlinespace
+WARN & Situação inesperada mas recuperável. O sistema continua funcionando. &
+    ``Tentativa 2 de 3 para conectar ao Redis'' \\
+\addlinespace
+ERROR & Falha que impede uma operação específica. Requer investigação. &
+    ``Falha ao processar pagamento: timeout no gateway'' \\
+\addlinespace
+FATAL & O sistema não consegue continuar operando. & ``Impossível conectar ao
+    banco de dados após 10 tentativas. Encerrando.'' \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Contexto e Correlation IDs}
+
+\begin{itemize}
+    \item \textbf{Correlation ID}: um identificador único (UUID) que acompanha a
+    requisição por todos os serviços. Permite rastrear uma operação do início ao
+    fim.
+    \item \textbf{Como propagar}: o primeiro serviço gera o ID. Cada serviço
+    seguinte recebe via header HTTP (ex.: \texttt{X-Correlation-ID}) e inclui
+    em todos os logs.
+    \item \textbf{Contexto adicional}: user\_id, tenant\_id, request\_path,
+    feature\_flag ativo. Quanto mais contexto, mais fácil filtrar.
+\end{itemize}
+
+\subsection{O que Logar e o que NÃO Logar}
+
+\begin{itemize}
+    \item \textbf{Logar}: início/fim de operações importantes, erros com contexto,
+    decisões de negócio (pedido aprovado, pagamento recusado), mudanças de estado.
+    \item \textbf{NÃO logar}: senhas, tokens, chaves de API, dados de cartão de
+    crédito, CPF, dados de saúde (PII/PHI). Além de ser risco de segurança, pode
+    violar LGPD/GDPR.
+    \item \textbf{Cuidado com objetos inteiros}: \texttt{logger.info("Usuário:",
+    usuario)} pode serializar o objeto completo, incluindo senha hash e dados
+    sensíveis.
+\end{itemize}
+
+\subsection{Ferramentas de Logging}
+
+\begin{itemize}
+    \item \textbf{ELK Stack}: Elasticsearch + Logstash + Kibana. Poderoso, mas
+    caro e complexo para operar. Ideal para grandes volumes.
+    \item \textbf{Grafana Loki}: inspirado no Prometheus, indexa apenas labels,
+    não o conteúdo do log. Muito mais leve e barato que ELK.
+    \item \textbf{Datadog Logs}: SaaS completo. Fácil de começar, caro em escala.
+    \item \textbf{CloudWatch Logs / GCP Cloud Logging}: nativos de cada cloud.
+    Bom ponto de partida.
+\end{itemize}
+
+\subsection{Exemplo: Logging Estruturado em Python}
+
+\begin{lstlisting}[language=Python, caption={Logging Estruturado em Python}]
+import logging
+import json
+import uuid
+from datetime import datetime, timezone
+
+class StructuredFormatter(logging.Formatter):
+    """Formatter que gera logs em JSON estruturado."""
+
+    def format(self, record):
+        log_entry = {
+            "timestamp": datetime.now(timezone.utc).isoformat(),
+            "level": record.levelname,
+            "logger": record.name,
+            "message": record.getMessage(),
+            "module": record.module,
+            "function": record.funcName,
+            "line": record.lineno,
+        }
+        # Adiciona campos extras (correlation_id, user_id, etc.)
+        if hasattr(record, "correlation_id"):
+            log_entry["correlation_id"] = record.correlation_id
+        if hasattr(record, "user_id"):
+            log_entry["user_id"] = record.user_id
+        if record.exc_info:
+            log_entry["exception"] = self.formatException(
+                record.exc_info
+            )
+        return json.dumps(log_entry, ensure_ascii=False)
+
+# Configuracao
+handler = logging.StreamHandler()
+handler.setFormatter(StructuredFormatter())
+
+logger = logging.getLogger("minha_app")
+logger.addHandler(handler)
+logger.setLevel(logging.INFO)
+
+# Uso
+def processar_pedido(pedido_id: str, user_id: str):
+    correlation_id = str(uuid.uuid4())
+    extra = {
+        "correlation_id": correlation_id,
+        "user_id": user_id,
+    }
+
+    logger.info(
+        "Iniciando processamento do pedido %s",
+        pedido_id,
+        extra=extra,
+    )
+
+    try:
+        # ... logica de negocio ...
+        logger.info(
+            "Pedido %s processado com sucesso",
+            pedido_id,
+            extra=extra,
+        )
+    except Exception as e:
+        logger.error(
+            "Falha ao processar pedido %s: %s",
+            pedido_id, str(e),
+            extra=extra,
+            exc_info=True,
+        )
+        raise
+\end{lstlisting}
+
+A saída desse logger é algo como:
+
+\begin{lstlisting}[language={}, caption={Exemplo de saída do log estruturado}]
+{
+  "timestamp": "2026-04-05T14:32:01.123456+00:00",
+  "level": "INFO",
+  "logger": "minha_app",
+  "message": "Iniciando processamento do pedido PED-789",
+  "module": "pedidos",
+  "function": "processar_pedido",
+  "line": 42,
+  "correlation_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+  "user_id": "USR-456"
+}
+\end{lstlisting}
+
+% ============================================================
 \section{Métricas e Alertas}
+% ============================================================
 
-% [Placeholder: Medindo o que importa]
-% - Métricas RED (Rate, Errors, Duration)
-% - Métricas USE (Utilization, Saturation, Errors)
-% - SLIs, SLOs e SLAs
-% - Alertas acionáveis vs. ruído
-% - Error budgets
+Se logs contam a história, métricas mostram a tendência. Métricas são valores
+numéricos que mudam ao longo do tempo e permitem detectar degradação antes que
+ela se torne incidente.
 
+\subsection{Métricas RED e USE}
+
+\begin{table}[h]
+\centering
+\caption{RED vs.\ USE: Métricas Complementares}
+\begin{tabular}{>{\bfseries}p{1.5cm} p{3.5cm} p{3.5cm} p{3.5cm}}
+\toprule
+Sigla & Foco & Componentes & Quando Usar \\
+\midrule
+RED & Serviços (perspectiva do usuário) &
+    \textbf{R}ate (requisições/s), \textbf{E}rrors (taxa de erro),
+    \textbf{D}uration (latência) &
+    Para medir a saúde de APIs, microsserviços, endpoints \\
+\addlinespace
+USE & Recursos (perspectiva da infraestrutura) &
+    \textbf{U}tilization (\% em uso), \textbf{S}aturation (fila de espera),
+    \textbf{E}rrors (erros de hardware/SO) &
+    Para medir CPU, memória, disco, rede \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{itemize}
+    \item \textbf{Combinação}: RED para serviços + USE para recursos = visão
+    completa. Se a latência (RED) subiu, verifique a saturação de CPU (USE).
+    \item \textbf{Golden Signals} (Google SRE): latência, tráfego, erros,
+    saturação. Essencialmente RED + USE resumidos.
+\end{itemize}
+
+\subsection{SLIs, SLOs e SLAs}
+
+\begin{table}[h]
+\centering
+\caption{SLI/SLO/SLA: Definições e Exemplos}
+\begin{tabular}{>{\bfseries}p{1.5cm} p{4cm} p{3.5cm} p{3.5cm}}
+\toprule
+Termo & Definição & Exemplo & Quem Define \\
+\midrule
+SLI & \textbf{Service Level Indicator}: métrica que mede um aspecto do serviço &
+    Latência p99 das requisições HTTP 200 &
+    Time de engenharia \\
+\addlinespace
+SLO & \textbf{Service Level Objective}: alvo para o SLI &
+    p99 $<$ 200ms em 99,9\% do tempo &
+    Time de engenharia + produto \\
+\addlinespace
+SLA & \textbf{Service Level Agreement}: contrato com penalidades &
+    Disponibilidade de 99,95\% ou crédito de 10\% &
+    Jurídico + negócio \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.85\textwidth]{imagens/10-devops-observabilidade-05-diagrama-relacao-sli-slo-sla.png}
+    \caption{Diagrama: Relação SLI/SLO/SLA}
+\end{figure}
+
+\subsection{Error Budgets}
+
+\begin{itemize}
+    \item \textbf{Conceito}: se o SLO é 99,9\% de disponibilidade, o \emph{error
+    budget} é 0,1\% --- o quanto se pode falhar sem violar o objetivo.
+    \item \textbf{Em números}: 99,9\% mensal = 43,2 minutos de downtime permitido
+    por mês.
+    \item \textbf{Uso prático}: enquanto há budget, o time pode fazer deploys
+    arriscados, experimentos, migrações. Quando o budget acaba, foco total em
+    estabilidade.
+    \item \textbf{Tensão saudável}: error budgets criam um equilíbrio entre
+    velocidade de features (produto quer) e estabilidade (ops quer).
+\end{itemize}
+
+\subsection{Alertas: Sinal vs.\ Ruído}
+
+\begin{itemize}
+    \item \textbf{Alerta acionável}: cada alerta que acorda alguém deve ter uma
+    ação clara associada. Se a resposta é ``ignorar'', o alerta não deveria existir.
+    \item \textbf{Alerta baseado em sintomas, não causas}: alerte sobre ``latência
+    acima do SLO'', não sobre ``CPU em 85\%''. CPU alta sem impacto no usuário
+    não é urgente.
+    \item \textbf{Severidade}: page (acorda alguém) vs.\ ticket (investiga no
+    horário comercial) vs.\ log (registra para análise futura).
+    \item \textbf{Alert fatigue}: muitos alertas = nenhum alerta. Times que
+    recebem 50 alertas por dia começam a ignorar todos --- inclusive os críticos.
+\end{itemize}
+
+\subsection{Exemplo: Métricas com Prometheus}
+
+\begin{lstlisting}[language=Python, caption={Métricas Prometheus em Python (FastAPI)}]
+from prometheus_client import (
+    Counter, Histogram, Gauge, generate_latest
+)
+from fastapi import FastAPI, Request, Response
+import time
+
+app = FastAPI()
+
+# Metricas RED
+REQUEST_COUNT = Counter(
+    "http_requests_total",
+    "Total de requisicoes HTTP",
+    ["method", "endpoint", "status_code"],
+)
+REQUEST_DURATION = Histogram(
+    "http_request_duration_seconds",
+    "Duracao das requisicoes HTTP em segundos",
+    ["method", "endpoint"],
+    buckets=[0.01, 0.05, 0.1, 0.25, 0.5, 1.0, 2.5, 5.0],
+)
+
+# Metricas de negocio
+PEDIDOS_CRIADOS = Counter(
+    "pedidos_criados_total",
+    "Total de pedidos criados",
+    ["tipo", "regiao"],
+)
+PEDIDOS_EM_PROCESSAMENTO = Gauge(
+    "pedidos_em_processamento",
+    "Pedidos sendo processados agora",
+)
+
+@app.middleware("http")
+async def metricas_middleware(request: Request, call_next):
+    start = time.perf_counter()
+    response = await call_next(request)
+    duration = time.perf_counter() - start
+
+    REQUEST_COUNT.labels(
+        method=request.method,
+        endpoint=request.url.path,
+        status_code=response.status_code,
+    ).inc()
+
+    REQUEST_DURATION.labels(
+        method=request.method,
+        endpoint=request.url.path,
+    ).observe(duration)
+
+    return response
+
+@app.get("/metrics")
+async def metrics():
+    return Response(
+        content=generate_latest(),
+        media_type="text/plain",
+    )
+
+@app.post("/pedidos")
+async def criar_pedido(pedido: dict):
+    PEDIDOS_EM_PROCESSAMENTO.inc()
+    try:
+        # ... logica ...
+        PEDIDOS_CRIADOS.labels(
+            tipo=pedido["tipo"],
+            regiao=pedido["regiao"],
+        ).inc()
+        return {"status": "criado"}
+    finally:
+        PEDIDOS_EM_PROCESSAMENTO.dec()
+\end{lstlisting}
+
+% ============================================================
 \section{Distributed Tracing}
+% ============================================================
 
-% [Placeholder: Rastreando requisições]
-% - OpenTelemetry
-% - Spans e traces
-% - Propagação de contexto
-% - Ferramentas: Jaeger, Zipkin
-% - Quando tracing é essencial
+Em um monolito, o stack trace mostra o caminho da execução. Em microsserviços,
+a requisição cruza vários processos, cada um com seus próprios logs. Sem tracing,
+encontrar onde o problema está é como procurar agulha em palheiro --- distribuído.
 
+\subsection{Conceitos Fundamentais}
+
+\begin{itemize}
+    \item \textbf{Trace}: a jornada completa de uma requisição, do início ao fim,
+    através de todos os serviços.
+    \item \textbf{Span}: uma operação individual dentro do trace. Cada serviço
+    cria pelo menos um span. Spans têm início, fim, status e atributos.
+    \item \textbf{Contexto propagado}: o trace ID e o span ID são passados de
+    serviço para serviço via headers HTTP (ex.: \texttt{traceparent} do W3C
+    Trace Context).
+    \item \textbf{Span pai/filho}: o span do API Gateway é pai do span do
+    serviço de pedidos, que é pai do span do serviço de pagamentos.
+\end{itemize}
+
+\subsection{OpenTelemetry SDK}
+
+\begin{lstlisting}[language=Python, caption={Instrumentação com OpenTelemetry em Python}]
+from opentelemetry import trace
+from opentelemetry.sdk.trace import TracerProvider
+from opentelemetry.sdk.trace.export import BatchSpanProcessor
+from opentelemetry.exporter.otlp.proto.grpc.trace_exporter import (
+    OTLPSpanExporter,
+)
+from opentelemetry.instrumentation.fastapi import (
+    FastAPIInstrumentor,
+)
+from opentelemetry.instrumentation.httpx import HTTPXClientInstrumentor
+import httpx
+
+# Configuracao do provider
+provider = TracerProvider()
+exporter = OTLPSpanExporter(
+    endpoint="http://otel-collector:4317"
+)
+provider.add_span_processor(BatchSpanProcessor(exporter))
+trace.set_tracer_provider(provider)
+
+tracer = trace.get_tracer("servico-pedidos")
+
+# Auto-instrumentacao do FastAPI e httpx
+FastAPIInstrumentor.instrument_app(app)
+HTTPXClientInstrumentor().instrument()
+
+# Instrumentacao manual para logica de negocio
+async def processar_pedido(pedido_id: str):
+    with tracer.start_as_current_span(
+        "processar_pedido",
+        attributes={
+            "pedido.id": pedido_id,
+            "pedido.tipo": "express",
+        },
+    ) as span:
+        # Span filho: validacao
+        with tracer.start_as_current_span("validar_estoque"):
+            estoque_ok = await verificar_estoque(pedido_id)
+            span.set_attribute("estoque.disponivel", estoque_ok)
+
+        if not estoque_ok:
+            span.set_status(
+                trace.StatusCode.ERROR,
+                "Estoque insuficiente"
+            )
+            span.add_event("estoque_insuficiente", {
+                "pedido_id": pedido_id
+            })
+            raise EstoqueInsuficienteError(pedido_id)
+
+        # Span filho: chamada ao servico de pagamento
+        with tracer.start_as_current_span("chamar_pagamento"):
+            async with httpx.AsyncClient() as client:
+                # O trace context e propagado automaticamente
+                resp = await client.post(
+                    "http://servico-pagamento/cobrar",
+                    json={"pedido_id": pedido_id},
+                )
+                span.set_attribute(
+                    "pagamento.status", resp.status_code
+                )
+\end{lstlisting}
+
+\subsection{Quando Tracing é Essencial}
+
+\begin{itemize}
+    \item \textbf{Microsserviços}: quando uma requisição cruza 3+ serviços,
+    tracing é indispensável.
+    \item \textbf{Debugging de latência}: o trace mostra exatamente qual serviço
+    ou operação está demorando.
+    \item \textbf{Dependências ocultas}: o mapa de traces revela quais serviços
+    dependem de quais --- às vezes com surpresas.
+    \item \textbf{Análise de falhas em cascata}: quando o serviço A falha por causa
+    do B que falha por causa do C, o trace mostra a cadeia completa.
+\end{itemize}
+
+\subsection{Ferramentas}
+
+\begin{itemize}
+    \item \textbf{Jaeger}: open source, desenvolvido pelo Uber, amplamente adotado.
+    \item \textbf{Grafana Tempo}: backend de traces da stack Grafana. Integra
+    nativamente com Loki (logs) e Prometheus (métricas).
+    \item \textbf{Zipkin}: pioneiro em tracing distribuído. Mais simples que Jaeger.
+    \item \textbf{Soluções SaaS}: Datadog APM, New Relic, Honeycomb, Lightstep.
+\end{itemize}
+
+% ============================================================
 \section{SRE: Site Reliability Engineering}
+% ============================================================
 
-% [Placeholder: Confiabilidade como disciplina]
-% - SRE vs. DevOps
-% - Error budgets na prática
-% - Toil e automação
-% - Blameless post-mortems
-% - IA em operações de SRE
+SRE é a implementação prática dos princípios de DevOps. Enquanto DevOps é uma
+cultura, SRE é uma disciplina com práticas, métricas e processos definidos.
 
+\subsection{SRE vs.\ DevOps}
+
+\begin{itemize}
+    \item \textbf{DevOps}: movimento cultural. ``Devs e Ops devem trabalhar juntos.''
+    Não prescreve como.
+    \item \textbf{SRE}: implementação concreta. Define SLOs, error budgets,
+    práticas de on-call, post-mortems. Criado pelo Google.
+    \item \textbf{Relação}: SRE implementa DevOps da mesma forma que Scrum
+    implementa Ágil. São complementares, não concorrentes.
+    \item \textbf{SRE não é Ops com nome bonito}: SRE gasta pelo menos 50\% do
+    tempo em engenharia (automação, ferramentas, melhorias), não em trabalho
+    manual repetitivo.
+\end{itemize}
+
+\subsection{Error Budgets na Prática}
+
+\begin{itemize}
+    \item O SLO define o alvo: 99,95\% de disponibilidade.
+    \item O error budget é o complemento: 0,05\% = 21,6 minutos de downtime por mês.
+    \item \textbf{Budget sobrando}: time tem liberdade para features arriscadas,
+    migrações, experimentos.
+    \item \textbf{Budget esgotado}: congelamento de features. Todo esforço vai
+    para estabilidade: corrigir bugs, melhorar testes, adicionar redundância.
+    \item \textbf{Revisão mensal}: time de produto e SRE revisam o budget juntos.
+    É uma conversa baseada em dados, não em opiniões.
+\end{itemize}
+
+\subsection{Toil: Identificação e Eliminação}
+
+\begin{itemize}
+    \item \textbf{Toil}: trabalho manual, repetitivo, automatizável, sem valor
+    duradouro e que cresce linearmente com o serviço.
+    \item \textbf{Exemplos}: reiniciar pods manualmente, rotacionar certificados
+    à mão, aprovar deploys clicando em botões, investigar os mesmos alertas toda
+    semana.
+    \item \textbf{Meta do Google}: no máximo 50\% do tempo de um SRE deve ser toil.
+    O restante é engenharia para eliminar toil.
+    \item \textbf{Como medir}: registre quanto tempo cada atividade operacional
+    consome. Priorize automatizar as que consomem mais tempo.
+\end{itemize}
+
+\subsection{Blameless Post-Mortems}
+
+Post-mortems são a forma como organizações maduras aprendem com incidentes.
+O adjetivo \emph{blameless} (sem culpa) é essencial: se pessoas têm medo de
+punição, elas escondem informações e nada melhora.
+
+\begin{lstlisting}[language={}, caption={Template de Post-Mortem}]
+====================================================
+POST-MORTEM: [Titulo descritivo do incidente]
+====================================================
+
+Data do incidente: 2026-04-03
+Duracao: 2h 15min (14:30 - 16:45 UTC)
+Severidade: SEV-1 (impacto em producao, usuarios afetados)
+Autores: Maria Silva, Joao Santos
+Revisores: Ana Oliveira (Eng Manager)
+
+---
+
+## Resumo Executivo
+O servico de pagamentos ficou indisponivel por 2h15 devido
+a uma migracao de banco que travou a tabela principal. 100%
+dos pagamentos falharam durante o periodo. Impacto estimado:
+R$ 450.000 em transacoes nao processadas.
+
+## Linha do Tempo
+- 14:25 - Deploy da versao 2.4.1 com migracao de schema
+- 14:30 - Alerta: taxa de erro do servico-pagamento > 50%
+- 14:32 - Engenheiro de plantao acionado
+- 14:45 - Identificado: migracao ALTER TABLE travou a tabela
+- 15:00 - Tentativa de rollback da migracao (falhou)
+- 15:30 - Decisao: matar a migracao e aplicar manualmente
+- 16:30 - Migracao manual concluida
+- 16:45 - Servico recuperado, transacoes represadas processadas
+
+## Causa Raiz
+A migracao adicionou uma coluna NOT NULL com DEFAULT em uma
+tabela com 50M de linhas. No PostgreSQL, isso reescreve toda
+a tabela, travando-a com lock exclusivo. A migracao nao foi
+testada com volume de dados realista.
+
+## O Que Deu Certo
+- Alertas detectaram o problema em 2 minutos
+- Comunicacao no canal de incidentes foi clara e rapida
+- Decisao de escalar para DBA foi tomada rapidamente
+
+## O Que Deu Errado
+- Migracao nao foi testada com dados de volume realista
+- Nao havia runbook para reverter migracoes travadas
+- O pipeline nao tinha gate de validacao para migracoes DDL
+
+## Acoes Corretivas
+1. [P0] Criar gate no pipeline que analisa migracoes DDL
+   automaticamente - Responsavel: Maria - Prazo: 2026-04-10
+2. [P1] Implementar shadow migration testing com copia de
+   producao - Responsavel: Joao - Prazo: 2026-04-20
+3. [P1] Escrever runbook para migracoes travadas
+   - Responsavel: Ana - Prazo: 2026-04-15
+4. [P2] Avaliar pg_repack para migracoes zero-downtime
+   - Responsavel: DBA team - Prazo: 2026-05-01
+
+## Licoes Aprendidas
+- Migracoes DDL em tabelas grandes sao operacoes de alto
+  risco. Tratar como deploy critico.
+- Testes de migracao devem usar volume de dados realista,
+  nao tabelas vazias.
+\end{lstlisting}
+
+\subsection{Chaos Engineering}
+
+\begin{itemize}
+    \item \textbf{Princípio}: em vez de esperar falhas acontecerem, provoque-as
+    de forma controlada para descobrir fraquezas antes dos usuários.
+    \item \textbf{Chaos Monkey} (Netflix): mata instâncias aleatórias em
+    produção. Se o sistema não se recupera, tem um problema de resiliência.
+    \item \textbf{Litmus}: framework de chaos engineering para Kubernetes.
+    Injeta falhas de rede, mata pods, corrompe disco.
+    \item \textbf{Prática segura}:
+    \begin{enumerate}
+        \item Defina o estado estável (métricas normais).
+        \item Formule uma hipótese (``se matarmos 1 pod, o serviço continua
+        disponível'').
+        \item Injete a falha em escopo controlado.
+        \item Observe os resultados.
+        \item Corrija as fraquezas encontradas.
+    \end{enumerate}
+    \item \textbf{Game days}: simulações de incidentes com o time inteiro. O
+    facilitador injeta problemas e o time pratica resposta. Sem risco real, com
+    aprendizado real.
+\end{itemize}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.85\textwidth]{imagens/10-devops-observabilidade-06-diagrama-fluxo-de-resposta-a-incidentes.png}
+    \caption{Diagrama: Fluxo de Resposta a Incidentes}
+\end{figure}
+
+\subsection{IA em Operações de SRE}
+
+\begin{itemize}
+    \item \textbf{Detecção de anomalias}: modelos de ML identificam padrões
+    anômalos em métricas que humanos não perceberiam (ex.: drift lento de
+    latência ao longo de semanas).
+    \item \textbf{Correlação automática}: quando um alerta dispara, a IA
+    correlaciona com deploys recentes, mudanças de infraestrutura e outros
+    alertas para sugerir a causa raiz.
+    \item \textbf{Auto-remediação}: para problemas conhecidos, a IA executa
+    o runbook automaticamente. Ex.: se o disco está cheio, limpar logs antigos
+    e reiniciar o serviço.
+    \item \textbf{Previsão de incidentes}: com base em tendências, a IA alerta
+    que o disco vai encher em 3 dias ou que o certificado TLS expira em 7 dias.
+    \item \textbf{LLMs para post-mortems}: dado os logs do incidente e a
+    timeline, um LLM pode gerar o primeiro rascunho do post-mortem para o
+    engenheiro refinar.
+\end{itemize}
+
+\subsection{Práticas de On-Call}
+
+\begin{itemize}
+    \item \textbf{Rotação justa}: ninguém deve ficar de plantão mais que os
+    outros. Rotações semanais ou quinzenais com handoff claro.
+    \item \textbf{Runbooks atualizados}: para cada alerta, deve existir um
+    runbook com passos de diagnóstico e mitigação. Se não existe, o alerta é
+    incompleto.
+    \item \textbf{Escalation clara}: se o oncall não resolve em 30 minutos,
+    escala para o próximo nível. Sem heroísmo individual.
+    \item \textbf{Compensação}: ser acordado às 3h da manhã tem um custo.
+    Folgas compensatórias, remuneração extra ou dias off pós-incidente.
+    \item \textbf{Saúde mental}: burnout de oncall é real. Monitore a carga e
+    ajuste se necessário. Se o time é acionado toda noite, o problema é o
+    sistema, não o oncall.
+\end{itemize}
+
+% ============================================================
 \section{Conclusão}
+% ============================================================
 
-% [Placeholder: Resumo]
-% - Observabilidade é sobre perguntas, não dashboards
-% - DevOps é cultura, não cargo
+DevOps não é um cargo --- é uma cultura. Observabilidade não é um dashboard ---
+é a capacidade de fazer perguntas novas sobre sistemas em produção. SRE não é
+ops com nome bonito --- é engenharia aplicada à confiabilidade.
 
+\begin{itemize}
+    \item \textbf{Instrumentar desde o dia zero}: adicionar observabilidade depois
+    é como instalar alarme de incêndio depois que o prédio pegou fogo. Funciona,
+    mas o ideal é começar junto.
+    \item \textbf{Automatizar implacavelmente}: se você fez algo manual duas vezes,
+    automatize na terceira. Toil é o inimigo.
+    \item \textbf{Medir o que importa para o usuário}: SLIs baseados na experiência
+    do usuário, não em métricas internas de infraestrutura.
+    \item \textbf{Cultura de aprendizado}: post-mortems blameless, game days, error
+    budgets --- tudo gira em torno de aprender com falhas em vez de punir.
+    \item \textbf{IA como aliada operacional}: detecção de anomalias,
+    auto-remediação, geração de runbooks. A IA não substitui o engenheiro de
+    plantão, mas reduz o tempo de diagnóstico drasticamente.
+    \item \textbf{O engenheiro completo}: na era moderna, construir software sem
+    saber operá-lo é como construir um carro sem saber dirigir. DevOps e
+    observabilidade não são especialidades --- são competências fundamentais.
+\end{itemize}
+
+% ============================================================
 \section*{Exercícios}
+% ============================================================
 
-% [Placeholder: Exercícios]
-% 1. Configure um pipeline de CI/CD básico para um projeto.
-% 2. Defina SLIs e SLOs para um serviço que você conhece.
-% 3. Instrumente uma aplicação com OpenTelemetry e visualize
-%    os traces.
+\begin{enumerate}
+    \item \textbf{Pipeline CI/CD}: Configure um pipeline de CI/CD completo para
+    um projeto usando GitHub Actions (ou GitLab CI). O pipeline deve incluir:
+    build, testes unitários, análise estática, build de imagem Docker e deploy
+    para um ambiente de staging. Documente cada stage e explique as decisões.
+
+    \item \textbf{Logging estruturado}: Pegue uma aplicação existente (ou crie
+    uma simples) e substitua todos os \texttt{print()} por logging estruturado em
+    JSON. Inclua correlation IDs e campos de contexto. Verifique se nenhum dado
+    sensível está sendo logado.
+
+    \item \textbf{Definição de SLIs/SLOs}: Escolha um serviço que você conhece
+    (ou um serviço público como a API do GitHub) e defina: (a) 3 SLIs relevantes,
+    (b) SLOs para cada SLI com justificativa, (c) calcule o error budget mensal,
+    (d) descreva o que acontece quando o budget se esgota.
+
+    \item \textbf{Instrumentação com OpenTelemetry}: Instrumente uma aplicação
+    FastAPI (ou Flask/Express) com OpenTelemetry. Configure exportação para Jaeger
+    ou Grafana Tempo. Faça requisições que cruzem pelo menos 2 serviços e
+    visualize o trace completo no dashboard.
+
+    \item \textbf{Post-mortem fictício}: Invente um incidente realista (ex.:
+    deploy que corrompeu cache, falha de DNS, certificado TLS expirado) e escreva
+    um post-mortem completo seguindo o template apresentado neste capítulo.
+    Inclua timeline, causa raiz, ações corretivas com prazos e responsáveis.
+
+    \item \textbf{Infraestrutura como código}: Escreva um módulo Terraform (ou
+    Pulumi) que crie uma infraestrutura simples (VPC + subnet + instância EC2
+    ou equivalente). Adicione pelo menos 2 testes com Checkov que validem boas
+    práticas de segurança. Explique como versionaria esse módulo.
+
+    \item \textbf{Chaos engineering}: Em um ambiente de desenvolvimento (Docker
+    Compose ou Kubernetes local), execute pelo menos 2 experimentos de chaos:
+    (a) mate um container e observe a recuperação, (b) introduza latência de rede
+    entre dois serviços. Documente hipóteses, resultados e melhorias identificadas.
+
+    \item \textbf{Métricas e alertas}: Instrumenta uma aplicação com métricas
+    RED (usando Prometheus client). Configure o Prometheus para coletar as
+    métricas e crie pelo menos 2 alertas no Grafana: um baseado em taxa de
+    erro e outro baseado em latência p99. Defina thresholds com base em SLOs.
+\end{enumerate}

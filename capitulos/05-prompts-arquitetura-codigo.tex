@@ -5,85 +5,913 @@
 
 \section{Introdução}
 
-% [Placeholder: A arte de pedir à IA]
-% - Prompt engineering como habilidade de engenharia
-% - Contexto é tudo
-% - Estrutura de um bom prompt
+Prompt engineering não é ``pedir com jeitinho'' para a IA. É uma disciplina de
+engenharia. Assim como um engenheiro civil não pede ao calculista para
+``fazer uma fundação boa'', o engenheiro de software não deveria pedir ao LLM
+para ``escrever um código bom''. Especificidade é poder.
 
+\begin{itemize}
+    \item \textbf{Prompt é especificação}: um prompt bem escrito é, na prática,
+    uma especificação formal do que você precisa. Quanto mais precisa a
+    especificação, melhor o resultado.
+    \item \textbf{Habilidade treinável}: assim como escrever testes ou documentar
+    APIs, prompt engineering é uma habilidade que melhora com prática deliberada
+    e reflexão sobre resultados.
+    \item \textbf{Retorno sobre investimento}: 5 minutos a mais escrevendo um
+    prompt bem estruturado economizam 30 minutos de ida e volta com a IA e
+    revisão de código inadequado.
+    \item \textbf{Conexão com capítulos anteriores}: no Capítulo 4, vimos que a
+    IA é uma parceira de engenharia. Neste capítulo, aprenderemos a
+    \textbf{comunicar} com essa parceira de forma eficaz.
+\end{itemize}
+
+A diferença entre um engenheiro que usa IA de forma produtiva e um que perde
+tempo com ela está, quase sempre, na qualidade dos prompts.
+
+% ============================================================
 \section{Anatomia de um Bom Prompt}
+% ============================================================
 
-% [Placeholder: Elementos essenciais]
-% - Contexto e papel da IA
-% - Descrição clara do problema
-% - Restrições e requisitos
-% - Formato de saída esperado
-% - Exemplos (few-shot prompting)
+Um prompt eficaz não é um parágrafo solto. É uma estrutura com componentes
+identificáveis, cada um com uma função específica.
 
+\subsection{Elementos Essenciais}
+
+\begin{table}[ht]
+\centering
+\caption{Anatomia do Prompt Eficaz}
+\begin{tabular}{@{}p{3.5cm}p{4.5cm}p{5cm}@{}}
+\toprule
+\textbf{Elemento} & \textbf{Função} & \textbf{Exemplo} \\
+\midrule
+Contexto & Situa o problema no domínio & ``Sistema de e-commerce com 50k
+    requisições/min'' \\
+Papel (Role) & Define a perspectiva da IA & ``Atue como arquiteto de
+    sistemas distribuídos'' \\
+Instrução & Diz o que fazer & ``Proponha uma arquitetura de cache'' \\
+Especificidades & Detalha restrições & ``Latência máxima de 50ms,
+    orçamento AWS de \$2k/mês'' \\
+Formato de saída & Define como responder & ``Responda em formato ADR com
+    seções: Contexto, Decisão, Consequências'' \\
+Exemplos (few-shot) & Mostra o padrão esperado & ``Exemplo de ADR:
+    [exemplo completo]'' \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{O Framework CRISP}
+
+Para facilitar a memorização, propomos o framework \textbf{CRISP}:
+
+\begin{itemize}
+    \item \textbf{C --- Context}: o cenário, o sistema, o domínio de negócio.
+    Sem contexto, a IA generaliza. Com contexto, ela particulariza.
+    \item \textbf{R --- Role}: qual persona a IA deve assumir. Um ``arquiteto
+    sênior'' responde diferente de um ``desenvolvedor júnior explicando para
+    outro júnior''.
+    \item \textbf{I --- Instructions}: o que exatamente você quer. Verbo no
+    imperativo: ``analise'', ``compare'', ``implemente'', ``refatore''.
+    \item \textbf{S --- Specifics}: restrições técnicas, requisitos não
+    funcionais, linguagem, framework, padrões obrigatórios.
+    \item \textbf{P --- Parameters}: formato da resposta, nível de detalhe,
+    tom, comprimento, inclusão de exemplos ou diagramas.
+\end{itemize}
+
+\begin{lstlisting}[language={}, caption={Exemplo de prompt usando o framework CRISP}]
+[Context]
+Estou desenvolvendo um sistema de pagamentos para uma fintech brasileira.
+O sistema processa 10.000 transacoes/dia via Pix e cartao de credito.
+Usamos Java 21, Spring Boot 3, PostgreSQL 16 e AWS.
+
+[Role]
+Atue como um arquiteto de software senior com experiencia em sistemas
+financeiros e compliance do Banco Central do Brasil.
+
+[Instructions]
+Proponha uma arquitetura para o modulo de conciliacao financeira que
+roda diariamente, comparando transacoes internas com extratos bancarios.
+
+[Specifics]
+- Deve suportar idempotencia (reprocessamento seguro)
+- Tempo maximo de execucao: 30 minutos para 10k transacoes
+- Deve gerar relatorio de divergencias
+- Precisa de audit trail completo
+- Integracao com S3 para receber extratos em CSV
+
+[Parameters]
+Responda com:
+1. Diagrama de componentes (em formato Mermaid)
+2. Descricao de cada componente (2-3 frases)
+3. Principais trade-offs da abordagem escolhida
+4. Riscos e mitigacoes
+\end{lstlisting}
+
+\subsection{O Poder dos Exemplos (Few-Shot Prompting)}
+
+Exemplos valem mais que descrições. Quando você mostra à IA \textbf{como} quer
+a resposta, ela replica o padrão com mais fidelidade do que quando você apenas
+\textbf{descreve} o que quer.
+
+\begin{itemize}
+    \item \textbf{Zero-shot}: nenhum exemplo. Depende inteiramente da
+    compreensão da instrução.
+    \item \textbf{One-shot}: um exemplo. Já melhora significativamente a
+    consistência do formato.
+    \item \textbf{Few-shot}: 2--3 exemplos. Ideal para tarefas com padrão
+    específico de saída.
+    \item \textbf{Regra prática}: se o formato importa, inclua pelo menos um
+    exemplo completo. O custo em tokens compensa pela economia em iterações.
+\end{itemize}
+
+% ============================================================
 \section{Prompts para Design Arquitetural}
+% ============================================================
 
-% [Placeholder: Usando IA para arquitetura]
-% - Prompt para explorar alternativas arquiteturais
-% - Prompt para analisar trade-offs
-% - Prompt para gerar ADRs
-% - Prompt para identificar riscos no design
-% - Exemplos práticos
+Arquitetura é onde a IA pode ser mais útil --- e mais perigosa. Útil porque
+explora alternativas rapidamente. Perigosa porque pode gerar respostas
+superficialmente convincentes mas fundamentalmente inadequadas.
 
+\subsection{Template: Explorando Alternativas Arquiteturais}
+
+\begin{lstlisting}[language={}, caption={Prompt para exploração de alternativas arquiteturais}]
+Contexto: [descreva o sistema, dominio, escala, equipe]
+
+Preciso decidir a arquitetura para [componente/modulo/sistema].
+
+Requisitos funcionais:
+- [RF1]
+- [RF2]
+- [RF3]
+
+Requisitos nao funcionais:
+- [RNF1: ex. latencia < 100ms p99]
+- [RNF2: ex. disponibilidade 99.9%]
+- [RNF3: ex. equipe de 4 devs]
+
+Restricoes:
+- [Stack atual: linguagem, cloud, banco]
+- [Orcamento: X/mes]
+- [Prazo: Y semanas]
+
+Para cada alternativa arquitetural viavel:
+1. Descreva a abordagem em 3-5 frases
+2. Liste pros e contras (minimo 3 de cada)
+3. Estime complexidade de implementacao (baixa/media/alta)
+4. Identifique o principal risco
+5. De uma nota de adequacao de 1-10 para este cenario especifico
+
+Apresente pelo menos 3 alternativas.
+\end{lstlisting}
+
+\subsection{Template: Análise de Trade-offs}
+
+\begin{lstlisting}[language={}, caption={Prompt para análise de trade-offs arquiteturais}]
+Atue como arquiteto senior revisando uma decisao tecnica.
+
+Estamos decidindo entre:
+- Opcao A: [descreva]
+- Opcao B: [descreva]
+- Opcao C: [descreva] (opcional)
+
+Contexto do sistema: [descreva]
+Equipe: [tamanho, senioridade, experiencia]
+Momento do produto: [MVP, escala, manutencao]
+
+Analise cada opcao nos seguintes eixos:
+1. Performance (latencia, throughput)
+2. Escalabilidade (horizontal, vertical)
+3. Complexidade operacional (deploy, monitoramento)
+4. Curva de aprendizado para a equipe
+5. Custo (infraestrutura + desenvolvimento)
+6. Flexibilidade para mudancas futuras
+
+Para cada eixo, classifique como: Excelente / Bom / Aceitavel / Ruim.
+Ao final, faca uma recomendacao fundamentada para ESTE cenario especifico.
+\end{lstlisting}
+
+\subsection{Template: Geração de ADRs}
+
+Architecture Decision Records (ADRs) documentam decisões e suas justificativas.
+A IA pode gerar rascunhos excelentes quando recebe contexto suficiente.
+
+\begin{lstlisting}[language={}, caption={Prompt para geração de ADR}]
+Gere um Architecture Decision Record (ADR) no formato de Michael Nygard.
+
+Decisao: [descreva a decisao tomada]
+Contexto do sistema: [descreva]
+Alternativas consideradas: [liste]
+Motivo da escolha: [resuma]
+
+Formato do ADR:
+# ADR-[numero]: [titulo]
+
+## Status
+[Proposta | Aceita | Deprecada | Substituida por ADR-X]
+
+## Contexto
+[O que motivou esta decisao? Qual problema estavamos resolvendo?]
+
+## Decisao
+[O que decidimos fazer e por que]
+
+## Alternativas Consideradas
+[Para cada alternativa: descricao + por que foi descartada]
+
+## Consequencias
+### Positivas
+- [consequencia positiva 1]
+### Negativas
+- [consequencia negativa 1]
+### Riscos
+- [risco 1 + mitigacao]
+\end{lstlisting}
+
+\subsection{Template: Avaliação de Riscos}
+
+\begin{lstlisting}[language={}, caption={Prompt para avaliação de riscos arquiteturais}]
+Atue como engenheiro de confiabilidade (SRE) revisando a arquitetura
+proposta abaixo.
+
+[Cole ou descreva a arquitetura]
+
+Para cada componente e integracao, identifique:
+1. Modos de falha possiveis
+2. Probabilidade (alta/media/baixa)
+3. Impacto no usuario final (critico/degradado/imperceptivel)
+4. Estrategia de mitigacao recomendada
+5. Mecanismo de deteccao (como sabemos que falhou?)
+
+Organize em uma tabela com colunas:
+Componente | Modo de Falha | Probabilidade | Impacto | Mitigacao | Deteccao
+
+Ao final, identifique os 3 maiores riscos e proponha um plano de acao.
+\end{lstlisting}
+
+\subsection{Exemplo Completo: Arquitetura de Microsserviços}
+
+\begin{lstlisting}[language={}, caption={Prompt completo para decisão de arquitetura}]
+Contexto: Somos uma startup brasileira de logistica com 2 anos de mercado.
+Temos um monolito em Node.js/Express com PostgreSQL que atende 500
+requisicoes/min. A equipe tem 8 desenvolvedores (2 seniors, 4 plenos,
+2 juniors). Estamos crescendo 30% ao mes em volume de pedidos.
+
+O monolito esta ficando dificil de manter: deploys levam 40 minutos,
+um bug no modulo de rastreamento derrubou o checkout na semana passada,
+e dois times diferentes frequentemente geram conflitos de merge no
+mesmo arquivo.
+
+Pergunta: devemos migrar para microsservicos agora?
+
+Analise considerando:
+1. O momento da empresa (ainda validando produto vs. escala confirmada)
+2. A maturidade da equipe para operar microsservicos
+3. Alternativas intermediarias (modular monolith, SOA leve)
+4. Custo de migracao vs. custo de manter o monolito
+5. Riscos de cada abordagem
+
+Nao quero uma resposta generica sobre microsservicos.
+Quero uma recomendacao especifica para ESTE cenario.
+\end{lstlisting}
+
+Este prompt funciona porque: fornece contexto rico (tamanho da equipe, volume,
+problemas reais), pede análise em eixos específicos, e explicitamente rejeita
+respostas genéricas. A IA, diante dessas restrições, é forçada a produzir uma
+análise contextualizada.
+
+% ============================================================
 \section{Prompts para Geração de Código}
+% ============================================================
 
-% [Placeholder: Gerando código com qualidade]
-% - Especificando interfaces antes da implementação
-% - Definindo contratos e tipos
-% - Solicitando código com testes
-% - Pedindo explicações junto com o código
-% - Exemplos práticos
+A geração de código é o uso mais comum de LLMs entre desenvolvedores --- e
+também o mais propenso a resultados medíocres quando o prompt é fraco.
 
+\subsection{Especificando Interfaces Antes da Implementação}
+
+O erro mais comum é pedir a implementação diretamente. O padrão correto é:
+primeiro definir interfaces e contratos, depois solicitar a implementação.
+
+\begin{lstlisting}[language={}, caption={Prompt para definição de interfaces antes da implementação}]
+Antes de implementar, preciso definir as interfaces do modulo de
+notificacoes do nosso sistema.
+
+Requisitos:
+- Suportar email, SMS e push notification
+- Cada canal pode estar ativo ou inativo por usuario
+- Notificacoes podem ser imediatas ou agendadas
+- Precisa de retry com backoff exponencial para falhas
+- Deve registrar log de todas as tentativas
+
+Linguagem: TypeScript
+Padrao: interfaces primeiro, implementacao depois
+
+Passo 1: Defina APENAS as interfaces/tipos (sem implementacao).
+Inclua:
+- Interface principal do servico
+- Tipos para cada canal de notificacao
+- Tipo para configuracao de retry
+- Tipo para o registro de log
+- Enums necessarios
+
+Passo 2: Para cada interface, adicione JSDoc explicando o contrato
+(pre-condicoes, pos-condicoes, erros possiveis).
+\end{lstlisting}
+
+\subsection{Definindo Contratos e Tipos}
+
+\begin{lstlisting}[language={}, caption={Prompt para geração de código com contratos tipados}]
+Implemente o servico de NotificationService seguindo estas interfaces:
+
+[cole as interfaces definidas no passo anterior]
+
+Restricoes de implementacao:
+- Use injecao de dependencia (construtor)
+- Cada canal deve ser uma Strategy (Strategy Pattern)
+- O retry deve usar backoff exponencial: 1s, 2s, 4s, 8s, max 3 tentativas
+- Funcoes puras onde possivel; efeitos colaterais isolados
+- Tratamento explicito de erros (sem try/catch generico)
+- Cada metodo deve ter no maximo 15 linhas
+
+Para cada metodo implementado, adicione um comentario de uma linha
+explicando a decisao de design.
+\end{lstlisting}
+
+\subsection{Solicitando Código com Testes}
+
+\begin{lstlisting}[language={}, caption={Prompt para geração de código com testes}]
+Implemente a funcao de calculo de frete com as seguintes regras:
+
+Regras de negocio:
+- Peso ate 500g: R$ 8,90 (fixo)
+- Peso de 501g a 2kg: R$ 15,90 + R$ 2,00 por kg adicional
+- Peso acima de 2kg: R$ 25,90 + R$ 3,50 por kg adicional
+- Frete gratis para pedidos acima de R$ 200,00
+- CEPs da regiao Sul: desconto de 10%
+- CEPs invalidos devem lancar erro especifico
+
+Linguagem: Python 3.12
+Framework de teste: pytest
+
+Entregue:
+1. A funcao calcular_frete(peso_gramas, valor_pedido, cep)
+2. Testes unitarios cobrindo:
+   - Cada faixa de peso (boundary values)
+   - Frete gratis
+   - Desconto regional
+   - CEP invalido
+   - Valores limites (edge cases): 0g, 500g, 501g, 2000g, 2001g
+3. Docstring com exemplos (doctest)
+
+Nao use mocks. A funcao deve ser pura (sem I/O).
+\end{lstlisting}
+
+\subsection{Pedindo Explicações com Código}
+
+\begin{lstlisting}[language={}, caption={Prompt para código explicado}]
+Implemente um rate limiter usando o algoritmo Token Bucket em Go.
+
+Requisitos:
+- Thread-safe (sera usado em servidor HTTP concorrente)
+- Configuravel: tokens por segundo e burst maximo
+- Interface simples: Allow() bool
+
+Para cada bloco de codigo (5-10 linhas), adicione um comentario
+explicando:
+1. O QUE o bloco faz
+2. POR QUE esta abordagem foi escolhida
+3. Qual ALTERNATIVA existiria e por que nao foi usada
+
+Ao final, adicione uma secao "## Como Usar" com exemplo de
+integracao em um middleware HTTP.
+\end{lstlisting}
+
+% ============================================================
 \section{Prompts para Revisão de Código}
+% ============================================================
 
-% [Placeholder: IA como revisor]
-% - Prompt para encontrar bugs
-% - Prompt para avaliar segurança
-% - Prompt para sugerir melhorias de design
-% - Prompt para verificar legibilidade
-% - Exemplos práticos
+A IA como revisora de código funciona melhor quando recebe critérios explícitos.
+Sem critérios, ela tende a fazer comentários superficiais (``considere adicionar
+tratamento de erro'') em vez de análises profundas.
 
+\subsection{Prompt para Encontrar Bugs}
+
+\begin{lstlisting}[language={}, caption={Prompt para análise de bugs}]
+Revise o codigo abaixo procurando EXCLUSIVAMENTE por bugs.
+Nao sugira melhorias de estilo ou refatoracoes --- apenas bugs reais
+que causariam comportamento incorreto em producao.
+
+[cole o codigo]
+
+Para cada bug encontrado:
+1. Linha(s) afetada(s)
+2. Descricao do bug em uma frase
+3. Cenario que dispara o bug (input especifico)
+4. Correcao sugerida (diff minimo)
+5. Severidade: critica / alta / media / baixa
+
+Se nao encontrar bugs, diga explicitamente "Nenhum bug identificado"
+em vez de inventar problemas inexistentes.
+\end{lstlisting}
+
+\subsection{Prompt para Análise de Segurança}
+
+\begin{lstlisting}[language={}, caption={Prompt para análise de segurança}]
+Atue como engenheiro de seguranca realizando uma revisao de codigo
+focada em vulnerabilidades.
+
+[cole o codigo]
+
+Verifique especificamente:
+1. Injecao (SQL, NoSQL, OS command, LDAP)
+2. Cross-Site Scripting (XSS) --- stored e reflected
+3. Autenticacao e autorizacao quebradas
+4. Exposicao de dados sensiveis (logs, respostas de API)
+5. Deserializacao insegura
+6. Dependencias com vulnerabilidades conhecidas
+7. Criptografia fraca ou mal implementada
+8. Race conditions que afetem seguranca
+
+Para cada vulnerabilidade:
+- Classifique usando OWASP Top 10 (categoria)
+- Estime CVSS simplificado (1-10)
+- Mostre o codigo vulneravel e o codigo corrigido
+- Explique o vetor de ataque em linguagem simples
+
+Formato: tabela Markdown com colunas:
+Vulnerabilidade | OWASP | CVSS | Linha | Correcao
+\end{lstlisting}
+
+\subsection{Prompt para Melhoria de Design}
+
+\begin{lstlisting}[language={}, caption={Prompt para sugestões de melhoria de design}]
+Revise o codigo abaixo do ponto de vista de DESIGN, nao de bugs.
+Assuma que o codigo funciona corretamente.
+
+[cole o codigo]
+
+Avalie nos seguintes eixos:
+1. Coesao: cada classe/funcao tem uma unica responsabilidade?
+2. Acoplamento: ha dependencias desnecessarias entre modulos?
+3. Testabilidade: e facil escrever testes unitarios?
+4. Extensibilidade: adicionar um novo caso requer mudar codigo existente?
+5. Legibilidade: um dev pleno entenderia em 5 minutos?
+
+Para cada problema encontrado:
+- Cite o principio violado (SOLID, KISS, DRY, etc.)
+- Mostre o antes e o depois (refatoracao minima)
+- Explique o beneficio da mudanca
+
+Priorize: liste primeiro os problemas com maior impacto na
+manutenibilidade.
+\end{lstlisting}
+
+% ============================================================
 \section{Prompts para Refatoração}
+% ============================================================
 
-% [Placeholder: Refatorando com assistência]
-% - Identificando code smells
-% - Solicitando refatorações específicas
-% - Mantendo comportamento durante refatoração
-% - Exemplos práticos
+Refatorar com IA exige cuidado especial: o comportamento deve ser preservado.
+Prompts vagos (``melhore este código'') geram mudanças que parecem melhores
+mas podem quebrar contratos implícitos.
 
+\subsection{Identificando Code Smells}
+
+\begin{lstlisting}[language={}, caption={Prompt para identificação de code smells}]
+Analise o codigo abaixo e identifique code smells conforme o catalogo
+de Martin Fowler (Refactoring, 2nd Edition).
+
+[cole o codigo]
+
+Para cada smell encontrado:
+1. Nome do smell (ex: Long Method, Feature Envy, Data Clump)
+2. Localizacao no codigo (linhas)
+3. Por que e um problema neste contexto
+4. Refatoracao recomendada (nome da tecnica de Fowler)
+5. Prioridade: alta (afeta bugs), media (afeta manutencao),
+   baixa (afeta legibilidade)
+
+Nao liste mais de 7 smells. Foque nos mais impactantes.
+\end{lstlisting}
+
+\subsection{Refatorações Específicas}
+
+\begin{lstlisting}[language={}, caption={Prompt para refatoração dirigida}]
+Refatore o codigo abaixo aplicando EXCLUSIVAMENTE a tecnica
+"Replace Conditional with Polymorphism".
+
+[cole o codigo com switch/case ou if/else longo]
+
+Restricoes:
+- O comportamento externo deve ser IDENTICO (mesmos inputs = mesmos outputs)
+- Mantenha os mesmos nomes de metodos publicos
+- Adicione interfaces/tipos para o polimorfismo
+- Cada classe resultante deve ter no maximo 30 linhas
+
+Entregue:
+1. Codigo refatorado completo
+2. Teste que prova equivalencia de comportamento (antes e depois
+   produzem os mesmos resultados para os mesmos inputs)
+3. Explicacao de 3 frases sobre por que esta refatoracao melhora
+   o design
+\end{lstlisting}
+
+\subsection{Mantendo Comportamento Durante Refatoração}
+
+A regra de ouro da refatoração é: mudanças de estrutura não devem mudar
+comportamento. Ao usar IA para refatorar, sempre exija evidência de que o
+comportamento foi preservado.
+
+\begin{itemize}
+    \item \textbf{Peça testes de equivalência}: solicite que a IA gere testes
+    que rodem contra a versão original e a refatorada, verificando que ambas
+    produzem os mesmos resultados.
+    \item \textbf{Refatore em passos pequenos}: em vez de ``refatore tudo'',
+    peça uma refatoração por vez. ``Extraia o método X'', depois ``mova a
+    classe Y'', depois ``elimine o parâmetro Z''.
+    \item \textbf{Use o compilador como aliado}: peça código que compile sem
+    warnings. Se compila e os testes passam, a chance de regressão é menor.
+    \item \textbf{Desconfie de refatorações que mudam assinaturas públicas}: se
+    a API pública mudou, não é refatoração --- é redesign. Trate de forma
+    diferente.
+\end{itemize}
+
+% ============================================================
 \section{Padrões Avançados de Prompting}
+% ============================================================
 
-% [Placeholder: Técnicas avançadas]
-% - Chain of Thought prompting
-% - Tree of Thoughts
-% - Iteração e refinamento
-% - Prompt chaining para tarefas complexas
-% - System prompts e personalização
+Além dos prompts diretos, existem técnicas avançadas que melhoram
+significativamente a qualidade das respostas para problemas complexos.
 
+\subsection{Chain of Thought (CoT) para Arquitetura}
+
+Chain of Thought força a IA a ``mostrar o trabalho'' --- raciocinar passo a
+passo antes de apresentar a conclusão. Para decisões arquiteturais, isso é
+especialmente valioso porque expõe premissas que podem estar erradas.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.85\textwidth]{imagens/05-prompts-arquitetura-codigo-01-chain-of-thought-para-decisao-arquitetural.png}
+    \caption{Chain of Thought para decisão arquitetural}
+\end{figure}
+
+\begin{lstlisting}[language={}, caption={Prompt usando Chain of Thought}]
+Preciso decidir como implementar busca textual no nosso sistema de
+e-commerce (catalogo de 500k produtos, em portugues).
+
+Pense passo a passo:
+
+1. Primeiro, liste os requisitos implicitos e explicitos de uma
+   busca textual em e-commerce (relevancia, velocidade, typos,
+   sinonimos, filtros)
+2. Depois, identifique as restricoes do nosso cenario
+   (equipe de 3 devs, stack Python/Django, budget limitado)
+3. Entao, enumere pelo menos 4 alternativas tecnicas
+   (Elasticsearch, PostgreSQL full-text, Typesense, Algolia, etc.)
+4. Para cada alternativa, analise: custo, complexidade, qualidade
+   de busca em portugues, facilidade de operacao
+5. Finalmente, recomende UMA opcao com justificativa clara
+
+Mostre seu raciocinio completo em cada passo. Nao pule para a
+conclusao.
+\end{lstlisting}
+
+\subsection{Tree of Thoughts para Design Complexo}
+
+Enquanto Chain of Thought é linear, Tree of Thoughts explora múltiplos caminhos
+simultaneamente e seleciona o melhor. É útil para problemas onde a primeira
+abordagem que vem à mente raramente é a melhor.
+
+\begin{lstlisting}[language={}, caption={Prompt usando Tree of Thoughts}]
+Preciso projetar o sistema de permissoes do nosso SaaS multi-tenant.
+
+Explore 3 caminhos de design diferentes:
+
+Caminho 1: RBAC (Role-Based Access Control)
+- Desenvolva este caminho completamente
+- Identifique onde ele falha para nosso caso
+
+Caminho 2: ABAC (Attribute-Based Access Control)
+- Desenvolva este caminho completamente
+- Identifique onde ele falha para nosso caso
+
+Caminho 3: Uma abordagem hibrida
+- Desenvolva este caminho completamente
+- Identifique onde ele falha para nosso caso
+
+Para cada caminho, avalie:
+- Simplicidade de implementacao
+- Flexibilidade para requisitos futuros
+- Performance com 10k usuarios e 500 permissoes
+- Facilidade de auditoria
+
+Depois de explorar os 3 caminhos, selecione o melhor e justifique
+a escolha com base na avaliacao.
+\end{lstlisting}
+
+\subsection{Refinamento Iterativo}
+
+Raramente o primeiro prompt produz o resultado perfeito. O refinamento iterativo
+é uma técnica onde cada prompt subsequente corrige e aprofunda o anterior.
+
+\begin{itemize}
+    \item \textbf{Prompt 1}: peça a visão geral (alto nível).
+    \item \textbf{Prompt 2}: peça detalhamento de um componente específico.
+    \item \textbf{Prompt 3}: peça análise de riscos do componente detalhado.
+    \item \textbf{Prompt 4}: peça a implementação com base nos prompts anteriores.
+    \item \textbf{Princípio}: cada prompt deve referenciar e construir sobre
+    a resposta anterior, não recomeçar do zero.
+\end{itemize}
+
+\subsection{Prompt Chaining para Tarefas Complexas}
+
+Prompt chaining decompõe uma tarefa complexa em subtarefas sequenciais, onde a
+saída de um prompt alimenta o próximo.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.85\textwidth]{imagens/05-prompts-arquitetura-codigo-02-workflow-de-prompt-engineering.png}
+    \caption{Workflow de Prompt Engineering}
+\end{figure}
+
+Exemplo prático de chaining para criar um microsserviço:
+
+\begin{enumerate}
+    \item \textbf{Prompt 1}: ``Defina as interfaces e contratos do serviço de
+    pagamentos'' (saída: interfaces TypeScript).
+    \item \textbf{Prompt 2}: ``Com base nessas interfaces [cole], implemente o
+    serviço usando Clean Architecture'' (saída: código).
+    \item \textbf{Prompt 3}: ``Gere testes unitários para esta implementação
+    [cole]'' (saída: testes).
+    \item \textbf{Prompt 4}: ``Revise o código [cole] e os testes [cole]
+    buscando bugs e gaps de cobertura'' (saída: revisão).
+    \item \textbf{Prompt 5}: ``Gere o Dockerfile e o docker-compose para este
+    serviço'' (saída: infra).
+\end{enumerate}
+
+Cada passo produz um artefato validável. Se o Prompt 3 revela que o código do
+Prompt 2 é difícil de testar, isso é feedback para refatorar antes de avançar.
+
+\subsection{System Prompts e Personalização}
+
+Muitas ferramentas de IA permitem configurar um \textit{system prompt} --- uma
+instrução persistente que molda todas as interações. Para engenheiros de
+software, um bom system prompt padroniza a qualidade das respostas.
+
+\begin{lstlisting}[language={}, caption={Exemplo de system prompt para engenharia de software}]
+Voce e um engenheiro de software senior com 15 anos de experiencia.
+
+Principios que voce segue:
+- Simplicidade sobre complexidade (KISS)
+- Codigo testavel por padrao
+- Erros explicitos, nunca silenciosos
+- Imutabilidade quando possivel
+- Nomes descritivos, nunca abreviacoes
+
+Quando eu pedir codigo:
+- Use TypeScript com strict mode
+- Inclua tipos explicitos (sem 'any')
+- Adicione tratamento de erro
+- Sugira testes relevantes
+- Comente decisoes nao obvias, nao o obvio
+
+Quando eu pedir arquitetura:
+- Considere equipe de 5-8 devs
+- Assuma cloud AWS
+- Priorize operabilidade sobre elegancia
+- Sempre mencione trade-offs
+
+Quando eu pedir revisao:
+- Seja direto e especifico
+- Cite principios quando relevante
+- Sugira correcao, nao apenas aponte problema
+- Priorize por impacto
+\end{lstlisting}
+
+\subsection{Estratégias de Conversa Multi-turno}
+
+Em conversas longas com LLMs, o contexto se degrada. Técnicas para manter a
+qualidade:
+
+\begin{itemize}
+    \item \textbf{Resumos periódicos}: a cada 5--10 turnos, peça à IA para
+    resumir o que foi decidido até agora. Use esse resumo como contexto para
+    os próximos prompts.
+    \item \textbf{Referência explícita}: ``Com base na arquitetura que definimos
+    no turno 3 [resuma brevemente], agora implemente o módulo X''.
+    \item \textbf{Contexto incremental}: adicione informação nova a cada turno,
+    não repita tudo. Mas reafirme restrições críticas que não podem ser
+    esquecidas.
+    \item \textbf{Checkpoints de validação}: periodicamente, peça à IA para
+    listar todas as premissas que está assumindo. Corrija as incorretas antes
+    de prosseguir.
+\end{itemize}
+
+% ============================================================
 \section{Anti-padrões de Prompting}
+% ============================================================
 
-% [Placeholder: O que não fazer]
-% - Prompts vagos e genéricos
-% - Assumir que a IA entende contexto implícito
-% - Aceitar a primeira resposta sem validação
-% - Não fornecer exemplos
-% - Ignorar limitações do modelo
+Conhecer o que \textbf{não} fazer é tão importante quanto saber o que fazer.
+Anti-padrões de prompting desperdiçam tempo e geram falsa confiança.
 
+\subsection{Catálogo de Anti-padrões}
+
+\begin{table}[ht]
+\centering
+\caption{Padrão vs Anti-padrão de Prompting}
+\begin{tabular}{@{}p{5.5cm}p{6.5cm}@{}}
+\toprule
+\textbf{Anti-padrão} & \textbf{Padrão Correto} \\
+\midrule
+``Escreva um código bom de autenticação'' &
+``Implemente autenticação JWT com refresh token em Node.js, usando bcrypt
+para hashing, tokens com expiração de 15min, e middleware de validação'' \\
+\addlinespace
+``Melhore este código'' &
+``Refatore este código aplicando Extract Method para funções com mais de 20
+linhas, mantenha a mesma API pública'' \\
+\addlinespace
+``Isso está certo?'' &
+``Revise este código verificando: null safety, tratamento de erros, e
+conformidade com o contrato da interface X'' \\
+\addlinespace
+``Faça um sistema de pagamentos'' &
+``Projete o módulo de checkout: integração com gateway Stripe, suporte a
+Pix e cartão, idempotência, e webhook de confirmação'' \\
+\addlinespace
+``Use as melhores práticas'' &
+``Siga os princípios SOLID, use injeção de dependência via construtor,
+e aplique o padrão Repository para acesso a dados'' \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Anti-padrão 1: Prompts Vagos}
+
+O anti-padrão mais comum. ``Faça X'' sem especificar \textbf{como}, \textbf{por
+quê}, \textbf{para quem}, e \textbf{com quais restrições}.
+
+\begin{lstlisting}[language={}, caption={Anti-padrão: prompt vago vs. prompt específico}]
+--- RUIM ---
+Crie uma API REST de usuarios.
+
+--- BOM ---
+Crie uma API REST de usuarios com os seguintes endpoints:
+
+POST /users - Criar usuario
+  - Campos: nome (string, 2-100 chars), email (unico, validado),
+    senha (min 8 chars, 1 maiuscula, 1 numero)
+  - Retorno: 201 com usuario criado (sem senha) ou 422 com erros
+
+GET /users/:id - Buscar usuario
+  - Retorno: 200 com usuario ou 404
+
+PUT /users/:id - Atualizar usuario
+  - Apenas campos enviados sao atualizados (patch semantics)
+  - Retorno: 200 com usuario atualizado
+
+DELETE /users/:id - Soft delete
+  - Marca deleted_at, nao remove do banco
+  - Retorno: 204
+
+Stack: Python 3.12, FastAPI, SQLAlchemy 2.0, PostgreSQL
+Padrao: Repository Pattern + Service Layer
+Validacao: Pydantic v2
+Testes: pytest com fixtures para cada endpoint
+\end{lstlisting}
+
+\subsection{Anti-padrão 2: Contexto Implícito}
+
+Assumir que a IA ``sabe'' sobre seu projeto, sua equipe, suas convenções.
+A IA não tem memória entre sessões (a menos que configurada) e não conhece
+seu repositório (a menos que você forneça o código).
+
+\begin{itemize}
+    \item \textbf{Errado}: ``Adicione autenticação no nosso backend.''
+    \item \textbf{Certo}: ``Adicione autenticação JWT ao backend Node.js/Express
+    existente. Usamos PostgreSQL, Prisma ORM, e o padrão de middleware que
+    segue: [cole exemplo de middleware existente].''
+\end{itemize}
+
+\subsection{Anti-padrão 3: Aceitar a Primeira Resposta}
+
+A primeira resposta da IA é um rascunho, não um produto final.
+
+\begin{itemize}
+    \item \textbf{Sempre revise}: leia o código linha por linha. A IA pode gerar
+    código que compila mas tem bugs lógicos sutis.
+    \item \textbf{Questione decisões}: ``Por que você usou recursão aqui em vez
+    de iteração? Qual o comportamento com input vazio?''
+    \item \textbf{Peça alternativas}: ``Mostre outra abordagem para este
+    problema. Quais são os trade-offs de cada uma?''
+    \item \textbf{Execute testes}: código gerado por IA deve passar pelo mesmo
+    rigor de code review que código humano.
+\end{itemize}
+
+\subsection{Anti-padrão 4: Não Fornecer Exemplos}
+
+Quando o formato de saída importa, descrever é inferior a demonstrar.
+
+\begin{itemize}
+    \item \textbf{Errado}: ``Gere documentação para esta função.''
+    \item \textbf{Certo}: ``Gere documentação para esta função seguindo este
+    formato: [cole exemplo de documentação existente do projeto].''
+\end{itemize}
+
+\subsection{Anti-padrão 5: Super-restrição vs. Sub-restrição}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.85\textwidth]{imagens/05-prompts-arquitetura-codigo-03-arvore-de-decisao-para-nivel-de-restricao.png}
+    \caption{Árvore de decisão para nível de restrição}
+\end{figure}
+
+\begin{table}[ht]
+\centering
+\caption{Quando usar cada técnica de prompting}
+\begin{tabular}{@{}p{3.5cm}p{3.5cm}p{5cm}@{}}
+\toprule
+\textbf{Técnica} & \textbf{Quando usar} & \textbf{Exemplo de situação} \\
+\midrule
+Prompt direto & Tarefas simples e bem definidas & ``Converta esta função de
+    Python 2 para Python 3'' \\
+\addlinespace
+Few-shot & Formato de saída específico & Gerar ADRs, documentação
+    padronizada, logs estruturados \\
+\addlinespace
+Chain of Thought & Decisões com múltiplas variáveis & Escolher entre
+    tecnologias, definir arquitetura \\
+\addlinespace
+Tree of Thoughts & Problemas com múltiplas soluções viáveis & Design de
+    sistemas de permissões, estratégias de migração \\
+\addlinespace
+Prompt Chaining & Tarefas complexas decomponíveis & Criar um microsserviço
+    completo (interface, código, testes, infra) \\
+\addlinespace
+Refinamento iterativo & Qualquer tarefa onde o primeiro resultado é
+    insuficiente & Revisão de código, otimização de queries \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% ============================================================
 \section{Conclusão}
+% ============================================================
 
-% [Placeholder: Resumo]
-% - Prompts são especificações formais
-% - Qualidade do prompt = qualidade do resultado
+Prompt engineering é engenharia de comunicação. Assim como um engenheiro não
+entrega uma especificação ambígua ao time de construção, não deveria entregar
+um prompt ambíguo à IA.
 
+\begin{itemize}
+    \item \textbf{Prompts são especificações}: trate-os com o mesmo rigor que
+    daria a um documento de requisitos.
+    \item \textbf{Qualidade do prompt = qualidade do resultado}: a IA reflete
+    a precisão (ou a vagueza) da sua comunicação.
+    \item \textbf{Itere}: o primeiro prompt raramente é o melhor. Refine,
+    teste, melhore --- como qualquer código.
+    \item \textbf{Construa uma biblioteca}: mantenha seus melhores prompts em
+    um repositório. Eles são ativos reutilizáveis, não descartáveis.
+    \item \textbf{O meta-skill}: saber \textbf{quando} e \textbf{como} usar IA
+    é a habilidade que separa o engenheiro que desperdiça tempo com IA do
+    engenheiro que multiplica sua produtividade com ela.
+\end{itemize}
+
+No próximo capítulo, aplicaremos esses padrões de prompting ao contexto
+específico de revisão de código, onde a IA pode ser uma segunda opinião
+valiosa --- desde que seja instruída corretamente.
+
+% ============================================================
 \section*{Exercícios}
+% ============================================================
 
-% [Placeholder: Exercícios]
-% 1. Escreva um prompt para gerar a arquitetura de um sistema de
-%    autenticação. Compare com uma arquitetura que você desenharia.
-% 2. Crie um prompt para revisar um trecho de código complexo.
-%    Avalie a qualidade da análise.
-% 3. Experimente chain of thought em um problema de design.
-%    Documente o processo.
+\begin{enumerate}
+    \item \textbf{Anatomia de prompt}: Pegue um prompt que você usou
+    recentemente com uma IA e reescreva-o usando o framework CRISP. Compare os
+    resultados obtidos com a versão original e a versão CRISP. Documente as
+    diferenças em qualidade de resposta.
+
+    \item \textbf{Exploração arquitetural}: Escolha um sistema que você conhece
+    bem (pode ser do trabalho ou um projeto pessoal). Escreva um prompt para
+    pedir à IA que analise 3 alternativas arquiteturais para um componente
+    específico. Avalie se a IA identificou alternativas que você não tinha
+    considerado e se os trade-offs apontados são realistas.
+
+    \item \textbf{Geração com testes}: Usando o template de geração de código
+    com testes deste capítulo, peça à IA para implementar uma funcionalidade
+    com testes. Execute os testes gerados. Quantos passam de primeira? Quais
+    foram os problemas encontrados? Refine o prompt e repita.
+
+    \item \textbf{Chain of Thought}: Pegue uma decisão técnica que sua equipe
+    tomou recentemente. Reconstrua o processo usando um prompt com Chain of
+    Thought. A IA chegou à mesma conclusão? Se não, os argumentos alternativos
+    são válidos? Documente o processo em formato de ADR.
+
+    \item \textbf{Anti-padrões na prática}: Colete 5 prompts ``ruins'' (vagos,
+    sem contexto, genéricos) e reescreva cada um como prompt ``bom''. Para cada
+    par, envie ambas as versões à IA e compare as respostas. Crie uma tabela
+    documentando: prompt original, prompt melhorado, diferença qualitativa na
+    resposta.
+
+    \item \textbf{Biblioteca de prompts}: Crie uma biblioteca pessoal de
+    prompts com pelo menos 10 templates reutilizáveis para suas tarefas mais
+    frequentes (revisão de código, geração de testes, refatoração, documentação,
+    análise de arquitetura). Para cada template, inclua: nome, descrição, prompt
+    completo com placeholders, e exemplo de uso preenchido.
+\end{enumerate}

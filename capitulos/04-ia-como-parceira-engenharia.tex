@@ -1,78 +1,1116 @@
 % ============================================================
-% Capítulo 4: IA como Parceira de Engenharia
+% Capítulo 04: IA como Parceira de Engenharia
 % ============================================================
 \chapter{IA como Parceira de Engenharia}
 
+% ------------------------------------------------------------
 \section{Introdução}
 
-% [Placeholder: O novo paradigma]
-% - A IA não vai substituir engenheiros, mas engenheiros que usam IA
-%   vão substituir os que não usam
-% - Mudança de mentalidade: de operador a supervisor
-% - O que a IA faz bem e o que ela não faz
+A inteligência artificial não vai substituir engenheiros de software. Mas
+engenheiros que usam IA vão substituir os que não usam. Essa frase, repetida
+à exaustão em conferências e artigos, carrega uma verdade incômoda: a IA
+mudou permanentemente a forma como software é construído, e ignorar isso é
+tão imprudente quanto ignorar o surgimento dos compiladores nos anos 1950.
 
+No entanto, a mudança não é a que muitos imaginam. A IA não transformou
+programação em uma atividade trivial --- ela transformou o \textbf{tipo de
+trabalho} que importa. A digitação de código, que já era uma fração pequena
+do trabalho real do engenheiro, ficou ainda menos relevante. O que cresceu
+em importância foi justamente o que este livro defende desde o Capítulo 0:
+o \textbf{pensamento de engenharia}.
+
+\begin{itemize}[leftmargin=2em]
+    \item \textbf{Mudança de mentalidade}: o engenheiro deixa de ser um
+    operador de IDE e passa a ser um \textbf{supervisor intelectual}. Seu
+    trabalho é definir o problema, validar a solução e garantir que o código
+    gerado atende requisitos não-funcionais que a IA sequer conhece.
+    \item \textbf{O que a IA faz bem}: gerar boilerplate, sugerir alternativas
+    de implementação, explicar código desconhecido, encontrar bugs óbvios,
+    escrever testes repetitivos, traduzir entre linguagens, resumir
+    documentação extensa.
+    \item \textbf{O que a IA não faz bem}: entender contexto de negócio, tomar
+    decisões de trade-off, garantir segurança, avaliar impacto sistêmico,
+    compreender requisitos implícitos, lidar com ambiguidade do mundo real.
+    \item \textbf{A metáfora correta}: a IA é um estagiário extremamente
+    rápido, com memória enciclopédica, que às vezes alucina com absoluta
+    confiança. Você é o engenheiro sênior que revisa, questiona e decide.
+\end{itemize}
+
+Este capítulo mergulha fundo na relação entre engenheiros e IA. Vamos
+entender como os modelos de linguagem funcionam por dentro, explorar padrões
+de colaboração, analisar ferramentas do ecossistema, discutir segurança e
+custos, e construir um modelo mental para saber \textbf{quando} e
+\textbf{como} usar IA --- e quando \textbf{não} usar.
+
+% ------------------------------------------------------------
 \section{O Que São LLMs e Como Funcionam}
 
-% [Placeholder: Fundamentos técnicos acessíveis]
-% - Treinamento e predição de tokens
-% - Limitações intrínsecas (alucinação, contexto, conhecimento)
-% - Por que LLMs não "pensam" — elas simulam padrões
-% - Implicações para geração de código
+Para usar uma ferramenta com eficácia, é preciso entender suas capacidades
+e limitações fundamentais. Você não precisa ser um pesquisador de machine
+learning, mas precisa ter um modelo mental correto de como LLMs operam.
+Sem isso, você vai tratá-los como oráculos mágicos --- e vai se frustrar
+quando eles falharem de formas aparentemente inexplicáveis.
 
+\subsection{A Arquitetura Transformer}
+
+Todo LLM moderno (GPT, Claude, Gemini, LLaMA) é baseado na arquitetura
+\textbf{Transformer}, proposta no artigo ``Attention Is All You Need''
+(Vaswani et al., 2017). Para o engenheiro de software, a analogia mais
+útil é:
+
+\begin{itemize}[leftmargin=2em]
+    \item Imagine um sistema que recebe uma sequência de \textbf{tokens}
+    (palavras, subpalavras ou caracteres) e, para cada token, calcula
+    \textbf{quanto atenção} dar a cada outro token na sequência.
+    \item Essa atenção é computada por meio de operações de álgebra linear
+    (multiplicação de matrizes), usando três vetores por token: \textbf{Query}
+    (o que estou procurando), \textbf{Key} (o que eu ofereço) e
+    \textbf{Value} (o que eu entrego se for relevante).
+    \item O mecanismo de \textbf{self-attention} permite que o modelo capture
+    dependências de longo alcance. Quando o modelo gera código, o token
+    ``\texttt{return}'' pode ``prestar atenção'' ao nome da função 50 linhas
+    acima para decidir o tipo de retorno.
+    \item Múltiplas ``cabeças'' de atenção operam em paralelo, cada uma
+    capturando um tipo diferente de relação (sintática, semântica, estrutural).
+\end{itemize}
+
+\subsection{Tokenização e Predição}
+
+\begin{itemize}[leftmargin=2em]
+    \item \textbf{Tokenização}: antes de processar, o texto é dividido em
+    tokens. A palavra ``engenharia'' pode ser um token único ou ser dividida
+    em ``engen'' + ``haria''. Código é tokenizado de forma diferente de
+    texto natural --- um \texttt{===} pode ser um ou três tokens dependendo
+    do tokenizador.
+    \item \textbf{Predição autorregressiva}: o modelo prevê o \textbf{próximo
+    token} com base em todos os anteriores. Ele não ``pensa'' --- calcula uma
+    distribuição de probabilidade sobre todo o vocabulário e escolhe o token
+    mais provável (ou amostra dessa distribuição com temperatura).
+    \item \textbf{Implicação fundamental}: o modelo não entende seu código.
+    Ele aprendeu \textbf{padrões estatísticos} de trilhões de tokens de
+    código, documentação, fóruns e repositórios open source. Quando gera
+    algo correto, é porque esse padrão existia nos dados de treinamento.
+    Quando alucina, é porque o padrão mais provável \textbf{não é} o correto
+    para seu contexto específico.
+\end{itemize}
+
+\subsection{Context Window: A Memória de Trabalho}
+
+\begin{itemize}[leftmargin=2em]
+    \item A \textbf{janela de contexto} é a quantidade máxima de tokens que
+    o modelo ``vê'' de uma vez. Em 2024, variava de 8K tokens (modelos
+    menores) a 200K tokens (Claude 3) e até 1M--2M tokens (modelos
+    especializados).
+    \item \textbf{Analogia}: a janela de contexto é a memória de trabalho do
+    modelo. Se seu codebase tem 500 mil linhas e a janela é de 100K tokens,
+    o modelo está literalmente cego para a maior parte do sistema.
+    \item \textbf{Lost in the middle}: pesquisas mostram que informações no
+    meio de contextos longos tendem a ser ``esquecidas''. Coloque as
+    informações mais importantes no início e no final do prompt.
+    \item \textbf{Implicação prática}: fornecer contexto relevante e
+    \textbf{apenas} contexto relevante é uma habilidade crítica. Jogar todo
+    o repositório no prompt não funciona --- curar o contexto, sim.
+\end{itemize}
+
+\subsection{Alucinação: Feature, Não Bug}
+
+\begin{itemize}[leftmargin=2em]
+    \item A alucinação ocorre quando o modelo gera conteúdo factualmente
+    incorreto com aparência de correção. No contexto de código: APIs que não
+    existem, bibliotecas inventadas, parâmetros fictícios.
+    \item Isso não é um defeito --- é consequência direta do mecanismo de
+    predição probabilística. O modelo gera o token \textbf{mais provável},
+    não o \textbf{mais correto}.
+    \item \textbf{Cutoff de conhecimento}: o modelo sabe apenas até a data
+    de corte do treinamento. Uma biblioteca lançada ontem é invisível.
+    Versões novas de frameworks podem ter APIs diferentes das que o modelo
+    conhece.
+    \item \textbf{Regra de ouro}: nunca confie cegamente. Sempre valide.
+    Trate toda saída de IA como um \textbf{rascunho} que precisa de revisão,
+    não como uma resposta definitiva.
+\end{itemize}
+
+% ------------------------------------------------------------
+\section{RAG: Retrieval Augmented Generation}
+
+Uma das limitações mais críticas dos LLMs --- o conhecimento estático e a
+falta de contexto específico do projeto --- pode ser significativamente
+mitigada com \textbf{RAG} (Retrieval Augmented Generation, ou Geração
+Aumentada por Recuperação).
+
+\subsection{O Conceito}
+
+RAG combina dois componentes:
+
+\begin{enumerate}[leftmargin=2em]
+    \item \textbf{Retrieval (Recuperação)}: dado um prompt do usuário, busca
+    documentos relevantes em uma base de conhecimento (codebase, documentação,
+    wikis, specs).
+    \item \textbf{Generation (Geração)}: injeta os documentos recuperados no
+    contexto do LLM, que então gera uma resposta \textbf{fundamentada} nessas
+    fontes.
+\end{enumerate}
+
+\subsection{Arquitetura de RAG para Código}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.85\textwidth]{imagens/04-ia-como-parceira-engenharia-01-arquitetura-rag-para-engenharia-de-software-plantuml.png}
+    \caption{Arquitetura RAG para Engenharia de Software (PlantUML)}
+\end{figure}
+
+\subsection{RAG na Prática para Engenheiros}
+
+\begin{itemize}[leftmargin=2em]
+    \item \textbf{Indexação do codebase}: ferramentas como Cursor e Continue.dev
+    criam embeddings do seu repositório. Quando você faz uma pergunta, o
+    sistema busca os arquivos mais relevantes e os injeta no contexto do LLM.
+    \item \textbf{Documentação como contexto}: ao invés de esperar que o LLM
+    ``saiba'' sobre sua API interna, indexe a documentação e deixe o RAG
+    trazer as specs relevantes automaticamente.
+    \item \textbf{Chunking inteligente}: código não deve ser dividido em
+    blocos arbitrários de N tokens. O ideal é usar o AST (Abstract Syntax
+    Tree) para dividir por funções, classes e módulos --- preservando a
+    semântica.
+    \item \textbf{Conexão com RM-ODP}: as especificações de viewpoints do
+    Capítulo 1 são excelentes documentos para indexação RAG. Quando o
+    engenheiro pergunta ``como implementar o serviço de pagamento?'', o RAG
+    pode trazer automaticamente as specs de Enterprise e Information viewpoint.
+\end{itemize}
+
+% ------------------------------------------------------------
+\section{Níveis de Autonomia da IA}
+
+Assim como carros autônomos têm níveis de autonomia (SAE 0-5), podemos
+classificar ferramentas de IA para engenharia de software em cinco níveis
+progressivos.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.85\textwidth]{imagens/04-ia-como-parceira-engenharia-02-niveis-de-autonomia-da-ia-na-engenharia-de-software-mermaid.png}
+    \caption{Níveis de Autonomia da IA na Engenharia de Software (Mermaid)}
+\end{figure}
+
+\subsection{Nível 1: Autocompletar}
+
+O nível mais básico. A IA completa a linha ou instrução atual com base no
+contexto imediato. Exemplos: IntelliSense avançado, Copilot em modo de
+sugestão inline.
+
+\begin{itemize}[leftmargin=2em]
+    \item \textbf{Risco}: baixo. O engenheiro controla cada aceitação.
+    \item \textbf{Valor}: economia de digitação, redução de erros de sintaxe.
+    \item \textbf{Exigência cognitiva}: mínima --- basta validar a sugestão.
+\end{itemize}
+
+\subsection{Nível 2: Sugestão de Blocos}
+
+A IA sugere funções inteiras, classes ou blocos lógicos. O engenheiro
+descreve a intenção (via comentário ou docstring) e a IA gera a
+implementação.
+
+\begin{itemize}[leftmargin=2em]
+    \item \textbf{Risco}: moderado. Blocos maiores podem conter erros sutis.
+    \item \textbf{Valor}: aceleração significativa para lógica bem definida.
+    \item \textbf{Exigência cognitiva}: revisão atenta de cada bloco gerado.
+\end{itemize}
+
+\subsection{Nível 3: Par Programador (Pair Programmer)}
+
+Interação conversacional bidirecional. O engenheiro e a IA discutem
+design, exploram alternativas e iteram sobre implementações. A IA mantém
+contexto da conversa e do projeto.
+
+\begin{itemize}[leftmargin=2em]
+    \item \textbf{Risco}: moderado a alto. A IA pode influenciar decisões de
+    design se o engenheiro não tiver opinião formada.
+    \item \textbf{Valor}: brainstorm técnico, exploração rápida de alternativas.
+    \item \textbf{Exigência cognitiva}: alta --- exige julgamento crítico
+    constante.
+\end{itemize}
+
+\subsection{Nível 4: Agente Supervisionado}
+
+A IA executa tarefas multi-passo de forma autônoma (criar branch, escrever
+código, rodar testes, iterar), mas requer aprovação humana em pontos-chave.
+
+\begin{itemize}[leftmargin=2em]
+    \item \textbf{Risco}: alto. Erros podem se propagar por múltiplos
+    arquivos antes da revisão.
+    \item \textbf{Valor}: automação de tarefas completas (implementar feature,
+    corrigir bug, refatorar módulo).
+    \item \textbf{Exigência cognitiva}: muito alta --- revisão de changeset
+    completo, não de linhas individuais.
+\end{itemize}
+
+\subsection{Nível 5: Agente Autônomo}
+
+A IA opera com mínima supervisão: recebe um objetivo de alto nível e
+entrega a solução. Atualmente experimental e inadequado para produção na
+maioria dos cenários.
+
+\begin{itemize}[leftmargin=2em]
+    \item \textbf{Risco}: muito alto. Sem supervisão, erros podem ser
+    catastróficos.
+    \item \textbf{Valor}: potencialmente transformador para tarefas repetitivas
+    e bem definidas.
+    \item \textbf{Exigência cognitiva}: paradoxalmente altíssima --- definir
+    objetivos precisos e validar resultados complexos.
+\end{itemize}
+
+% ------------------------------------------------------------
 \section{Modelos de Colaboração Humano-IA}
 
-% [Placeholder: Formas de trabalhar com IA]
-% - IA como par programador
-% - IA como revisor de código
-% - IA como gerador de boilerplate
-% - IA como tutor e explicador
-% - IA como explorador de alternativas
+A eficácia da IA depende fundamentalmente do \textbf{padrão de interação}
+que o engenheiro adota. Não existe um modo único --- diferentes tarefas
+exigem diferentes modelos de colaboração.
 
-\section{Limitações e Armadilhas}
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.85\textwidth]{imagens/04-ia-como-parceira-engenharia-03-padroes-de-colaboracao-humano-ia-plantuml.png}
+    \caption{Padrões de Colaboração Humano-IA (PlantUML)}
+\end{figure}
 
-% [Placeholder: O que a IA não faz bem]
-% - Código que compila mas não resolve o problema
-% - Falta de compreensão do domínio
-% - Vieses do training data
-% - Segurança e vazamento de informações sensíveis
-% - Dependência excessiva e perda de pensamento crítico
+\subsection{IA como Par Programador}
 
-\section{O Papel do Julgamento Humano}
+Você descreve o problema, a IA implementa. Você revisa, ela ajusta.
+Funciona excepcionalmente bem para lógica bem definida e algoritmos
+conhecidos.
 
-% [Placeholder: Onde o engenheiro é insubstituível]
-% - Compreensão do contexto de negócio
-% - Decisões de trade-off
-% - Avaliação de impacto sistêmico
-% - Responsabilidade final pelo código
+\begin{lstlisting}[language=Python, caption={Exemplo de interação com IA como par programador}]
+# Engenheiro fornece contexto e especificacao:
+# "Implemente uma funcao que valide CPF brasileiro.
+#  Deve verificar digitos verificadores, aceitar
+#  formato com e sem pontuacao, rejeitar sequencias
+#  repetidas como 111.111.111-11."
 
+def validar_cpf(cpf: str) -> bool:
+    """Valida CPF brasileiro com verificacao de digitos."""
+    # Remove caracteres nao numericos
+    cpf_limpo = ''.join(c for c in cpf if c.isdigit())
+
+    # Verifica tamanho
+    if len(cpf_limpo) != 11:
+        return False
+
+    # Rejeita sequencias repetidas
+    if cpf_limpo == cpf_limpo[0] * 11:
+        return False
+
+    # Calcula primeiro digito verificador
+    soma = sum(int(cpf_limpo[i]) * (10 - i) for i in range(9))
+    resto = soma % 11
+    digito1 = 0 if resto < 2 else 11 - resto
+
+    if int(cpf_limpo[9]) != digito1:
+        return False
+
+    # Calcula segundo digito verificador
+    soma = sum(int(cpf_limpo[i]) * (11 - i) for i in range(10))
+    resto = soma % 11
+    digito2 = 0 if resto < 2 else 11 - resto
+
+    return int(cpf_limpo[10]) == digito2
+
+# REVISAO DO ENGENHEIRO: codigo correto, mas falta:
+# - Type hints mais especificos (poderia retornar um Result type)
+# - Logging para auditoria
+# - Tratamento de None/empty string
+# - Testes unitarios (pedir a IA para gerar)
+\end{lstlisting}
+
+\subsection{IA como Revisor de Código}
+
+Submeta seu código ou PR para análise. A IA encontra bugs, sugere
+melhorias de estilo e identifica potenciais problemas de performance. Mas
+\textbf{não substitui} review humano de design e adequação ao domínio.
+
+\subsection{IA como Gerador de Boilerplate}
+
+O caso de uso com melhor relação custo-benefício. ``Crie um CRUD de
+usuários com Express + TypeScript + Prisma'' economiza horas de digitação
+repetitiva. O engenheiro foca em customizar a lógica de negócio, não em
+escrever getters e setters.
+
+\subsection{IA como Tutor}
+
+``Explique como funciona o Event Loop do JavaScript'' ou ``Compare as
+estratégias de particionamento do Kafka''. Para explicações
+contextualizadas e interativas, a IA supera documentação estática.
+
+\subsection{IA como Explorador de Alternativas}
+
+``Quais abordagens existem para implementar rate limiting distribuído?''
+--- brainstorm técnico onde a IA apresenta múltiplas abordagens com
+trade-offs, permitindo ao engenheiro tomar uma decisão informada.
+
+% ------------------------------------------------------------
+\section{Agentic Coding: O Estado Atual}
+
+O termo \textbf{agentic coding} (programação agêntica) refere-se à
+capacidade da IA de executar tarefas de programação de forma autônoma,
+tomando decisões intermediárias sem intervenção humana constante.
+
+\subsection{O Que Define um Agente de Código}
+
+Um agente de código se diferencia de um chatbot por quatro características:
+
+\begin{enumerate}[leftmargin=2em]
+    \item \textbf{Planejamento}: decompõe uma tarefa complexa em passos
+    menores.
+    \item \textbf{Uso de ferramentas}: executa comandos no terminal, lê e
+    escreve arquivos, roda testes, navega na web.
+    \item \textbf{Loop de feedback}: observa resultados (erros de compilação,
+    falhas de teste) e itera automaticamente.
+    \item \textbf{Memória de sessão}: mantém contexto ao longo de múltiplas
+    interações dentro de uma tarefa.
+\end{enumerate}
+
+\subsection{Exemplos Práticos de Agentic Coding}
+
+\begin{lstlisting}[language={}, caption={Fluxo típico de um agente de código}]
+Tarefa: "Adicione paginacao ao endpoint GET /api/users"
+
+Agente executa:
+1. Le o arquivo routes/users.ts para entender a implementacao atual
+2. Le o schema do banco (prisma/schema.prisma)
+3. Modifica routes/users.ts para aceitar query params ?page=1&limit=20
+4. Atualiza a query do Prisma com skip/take
+5. Adiciona headers X-Total-Count e Link para navegacao
+6. Gera testes para o novo comportamento
+7. Roda os testes: 2 falham
+8. Analisa as falhas, corrige o codigo
+9. Roda os testes novamente: todos passam
+10. Apresenta o changeset para revisao humana
+\end{lstlisting}
+
+\subsection{Limitações Atuais dos Agentes}
+
+\begin{itemize}[leftmargin=2em]
+    \item \textbf{Propagação de erros}: um erro no passo 3 pode se propagar
+    silenciosamente até o passo 9, criando uma solução que ``funciona'' mas
+    está conceitualmente errada.
+    \item \textbf{Escopo limitado}: agentes funcionam bem para tarefas
+    contidas (um endpoint, um módulo). Tarefas que cruzam múltiplos serviços
+    ou exigem mudanças coordenadas ainda são problemáticas.
+    \item \textbf{Custo computacional}: cada iteração do loop de feedback
+    consome tokens. Tarefas complexas podem custar dezenas de dólares em
+    chamadas de API.
+    \item \textbf{Falsa confiança}: o agente pode declarar ``tarefa concluída''
+    quando na verdade cobriu apenas o caminho feliz (happy path).
+\end{itemize}
+
+\subsection{Direção Futura}
+
+O futuro aponta para agentes que:
+
+\begin{itemize}[leftmargin=2em]
+    \item Integram-se nativamente com CI/CD, executando em branches isoladas.
+    \item Usam verificação formal (type checking, property-based testing) como
+    guardrails automáticos.
+    \item Operam em pares --- um agente gera, outro revisa --- implementando
+    adversarial review automatizado.
+    \item Mantêm memória persistente do projeto, aprendendo padrões e
+    convenções ao longo do tempo.
+\end{itemize}
+
+% ------------------------------------------------------------
 \section{Ferramentas e Ecossistema}
 
-% [Placeholder: Panorama de ferramentas]
-% - GitHub Copilot e similares
-% - Agents autônomos
-% - IDEs com integração de IA
-% - Como escolher ferramentas
+O mercado de ferramentas de IA para engenharia de software evolui
+rapidamente. Esta seção apresenta uma análise comparativa das principais
+ferramentas disponíveis, com foco em aplicação prática.
 
-\section{Workflow com IA}
+\subsection{Comparativo de Ferramentas de IA para Código}
 
-% [Placeholder: Integrando IA no dia a dia]
-% - Quando usar IA e quando não usar
-% - Estrutura de uma sessão de trabalho com IA
-% - Validação sistemática do código gerado
-% - Mantendo o controle do design
-% - Conexão com Capítulo 1: TDD como guardrail da IA
-% - Spec Driven Development + RM-ODP como contexto para prompts (Cap. 1)
+\begin{longtable}{>{\raggedright\arraybackslash}p{2.2cm}
+                  >{\raggedright\arraybackslash}p{2.5cm}
+                  >{\raggedright\arraybackslash}p{2.8cm}
+                  >{\raggedright\arraybackslash}p{2.5cm}
+                  >{\raggedright\arraybackslash}p{2.5cm}}
+\toprule
+\textbf{Ferramenta} & \textbf{Tipo} & \textbf{Pontos Fortes} &
+\textbf{Limitações} & \textbf{Melhor Para} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Ferramenta} & \textbf{Tipo} & \textbf{Pontos Fortes} &
+\textbf{Limitações} & \textbf{Melhor Para} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
 
+GitHub Copilot &
+Autocomplete no editor &
+Integração nativa com VS Code/JetBrains; sugestões rápidas; baixa fricção &
+Contexto limitado ao arquivo atual; sem chat multi-turno robusto &
+Boilerplate, lógica local, completar padrões \\
+\midrule
+
+Cursor &
+IDE com IA nativa &
+Contexto do projeto inteiro; edição multi-arquivo; chat integrado; RAG
+embutido &
+Custo mais alto; curva de aprendizado; dependência de um editor específico &
+Refatoração ampla, features que cruzam arquivos, projetos grandes \\
+\midrule
+
+Claude (Anthropic) &
+Chat / API / CLI (Claude Code) &
+Contexto muito longo (200K+ tokens); raciocínio forte; modo agêntico via
+Claude Code &
+Sem integração direta no editor (exceto via plugins); custo por token &
+Design, revisão, discussão arquitetural, tarefas agênticas \\
+\midrule
+
+ChatGPT (OpenAI) &
+Chat / API &
+Ecossistema amplo; plugins; GPT-4 com bom raciocínio; GPTs customizáveis &
+Janela de contexto menor que concorrentes; alucinação em código complexo &
+Prototipagem rápida, exploração, aprendizado \\
+\midrule
+
+Gemini (Google) &
+Chat / API / Studio &
+Contexto de 1M+ tokens; integração com Google Cloud; multimodal &
+Menos especializado em código que concorrentes; resultados variáveis &
+Projetos Google Cloud, análise de documentos longos, multimodal \\
+\midrule
+
+Agentes (Devin, OpenHands, SWE-Agent) &
+Agente autônomo &
+Execução end-to-end; loop de feedback automático &
+Imaturos; custo alto; resultados inconsistentes; risco de propagação de
+erros &
+Experimentação, tarefas repetitivas bem definidas, pesquisa \\
+
+\end{longtable}
+
+\subsection{Como Escolher}
+
+A escolha da ferramenta depende do contexto:
+
+\begin{itemize}[leftmargin=2em]
+    \item \textbf{Para código rápido no editor}: Copilot (menor fricção,
+    melhor integração).
+    \item \textbf{Para refatoração e features complexas}: Cursor (contexto do
+    projeto, edição multi-arquivo).
+    \item \textbf{Para design e discussão arquitetural}: Claude ou ChatGPT
+    (conversação longa, raciocínio profundo).
+    \item \textbf{Para automação com supervisão}: Claude Code ou agentes
+    similares (execução de tarefas multi-passo).
+    \item \textbf{Para times enterprise}: avalie políticas de dados,
+    compliance e integração com ferramentas existentes antes de escolher.
+\end{itemize}
+
+% ------------------------------------------------------------
+\section{Limitações e Armadilhas}
+
+Conhecer as limitações da IA é tão importante quanto conhecer suas
+capacidades. O engenheiro que ignora as armadilhas vai inevitavelmente
+introduzir bugs, vulnerabilidades e débito técnico no codebase.
+
+\subsection{Código que Compila mas Não Resolve}
+
+A IA otimiza para satisfazer o prompt literalmente, não a intenção por
+trás dele. Se você pedir ``uma função que retorne os usuários ativos'', a
+IA pode gerar uma função sintaticamente correta que retorna todos os
+usuários --- porque ``ativo'' no seu domínio tem uma definição específica
+que não foi explicitada.
+
+\subsection{Falta de Compreensão do Domínio}
+
+A IA não sabe que ``cliente'' no seu sistema tem regras específicas de CPF,
+limite de crédito, e que clientes pessoa jurídica têm tratamento diferente
+de pessoa física. Ela generaliza a partir de padrões do training data ---
+e esses padrões podem não se aplicar ao seu caso.
+
+\subsection{Vieses do Training Data}
+
+A IA tende a sugerir padrões \textbf{populares}, não necessariamente os
+\textbf{melhores} para seu caso. Se 80\% dos repositórios no GitHub usam
+MongoDB para tudo, a IA vai sugerir MongoDB mesmo quando PostgreSQL seria
+mais adequado.
+
+\subsection{Dependência Excessiva}
+
+Usar IA para tudo atrofia o pensamento crítico. É como usar GPS para ir à
+padaria --- um dia o GPS vai errar, e você não vai saber voltar a pé.
+
+\begin{lstlisting}[language=Python, caption={Exemplo: uso ruim vs. uso bom de IA}]
+# USO RUIM: aceitar cegamente sem entender
+# Engenheiro pede: "faca um cache distribuido"
+# IA gera 200 linhas de codigo complexo
+# Engenheiro faz copy-paste sem ler
+# 3 meses depois: memory leak em producao, ninguem
+# entende o codigo para corrigir
+
+# USO BOM: usar IA como ponto de partida
+# Engenheiro pede: "quais estrategias de cache
+#   distribuido existem? Compare Redis vs Memcached
+#   vs cache local com invalidacao."
+# IA apresenta trade-offs
+# Engenheiro decide por Redis com TTL
+# Engenheiro pede: "implemente cache com Redis,
+#   pattern cache-aside, TTL de 5min, com fallback
+#   para banco em caso de miss ou falha do Redis"
+# Engenheiro revisa, ajusta para o dominio,
+# adiciona metricas de hit/miss, escreve testes
+\end{lstlisting}
+
+\subsection{Quando Usar IA vs. Quando NÃO Usar IA}
+
+\begin{longtable}{>{\raggedright\arraybackslash}p{6cm}
+                  >{\raggedright\arraybackslash}p{6.5cm}}
+\toprule
+\textbf{Quando USAR IA} & \textbf{Quando NÃO USAR IA} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Quando USAR IA} & \textbf{Quando NÃO USAR IA} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+
+Geração de boilerplate e scaffolding &
+Lógica de negócio crítica com regras sutis \\
+\midrule
+
+Testes unitários repetitivos &
+Decisões de arquitetura de sistema \\
+\midrule
+
+Explicação de código desconhecido &
+Código de segurança (autenticação, criptografia) \\
+\midrule
+
+Brainstorm de alternativas técnicas &
+Refatoração de sistema complexo sem cobertura de testes \\
+\midrule
+
+Tradução entre linguagens &
+Otimização de performance sem profiling \\
+\midrule
+
+Prototipagem rápida e PoCs &
+Código que lida com dados sensíveis (PII, financeiro) \\
+\midrule
+
+Documentação de código existente &
+Debugging de problemas de concorrência \\
+\midrule
+
+Geração de SQL/queries simples &
+Migração de dados em produção \\
+\midrule
+
+Scripts de automação pontuais &
+Código de infraestrutura crítica sem revisão \\
+
+\end{longtable}
+
+% ------------------------------------------------------------
+\section{Segurança e Privacidade}
+
+O uso de ferramentas de IA introduz vetores de risco que muitos engenheiros
+e organizações subestimam. Esta seção aborda os principais aspectos de
+segurança e privacidade.
+
+\subsection{Vazamento de Informações}
+
+\begin{itemize}[leftmargin=2em]
+    \item \textbf{Código proprietário}: enviar código para APIs de IA
+    significa que ele trafega (e pode ser armazenado) em servidores de
+    terceiros. Verifique as políticas de retenção de dados de cada
+    provedor.
+    \item \textbf{Segredos no código}: chaves de API, tokens de acesso,
+    connection strings --- se estiverem no código enviado à IA, foram
+    potencialmente expostos.
+    \item \textbf{Dados de clientes}: logs, dumps de banco, dados de
+    produção usados como contexto para prompts podem violar LGPD/GDPR.
+    \item \textbf{Mitigação}: use ferramentas com processamento local quando
+    possível. Para APIs cloud, use versões enterprise com contratos de
+    não-retenção (como Copilot Business, Claude API com DPA).
+\end{itemize}
+
+\subsection{Vulnerabilidades no Código Gerado}
+
+\begin{itemize}[leftmargin=2em]
+    \item A IA pode gerar código com vulnerabilidades que existiam no
+    training data: SQL injection, XSS, SSRF, deserialização insegura.
+    \item \textbf{Estudo relevante}: pesquisas de Stanford (2023) mostraram
+    que engenheiros usando Copilot produziram código \textbf{menos seguro}
+    que os sem IA, em parte porque confiaram demais nas sugestões.
+    \item \textbf{Mitigação}: trate código gerado por IA com o mesmo rigor
+    de segurança que código de um contribuidor júnior --- revisão obrigatória,
+    análise estática (SAST), testes de segurança.
+\end{itemize}
+
+\subsection{Prompt Injection e Ataques à Cadeia}
+
+\begin{itemize}[leftmargin=2em]
+    \item Se seu sistema usa LLMs em produção, entradas maliciosas podem
+    manipular o comportamento do modelo (\textbf{prompt injection}).
+    \item Código gerado por IA pode introduzir dependências com
+    vulnerabilidades conhecidas ou pacotes com nomes semelhantes a pacotes
+    legítimos (\textbf{typosquatting}).
+    \item \textbf{Mitigação}: valide todas as dependências sugeridas,
+    use lock files, execute \texttt{npm audit} / \texttt{pip audit} após
+    aceitar sugestões de IA.
+\end{itemize}
+
+% ------------------------------------------------------------
+\section{Análise de Custo-Benefício}
+
+Adotar ferramentas de IA tem custos diretos e indiretos. Uma análise sóbria
+é essencial para justificar o investimento e evitar expectativas irreais.
+
+\subsection{Custos}
+
+\begin{itemize}[leftmargin=2em]
+    \item \textbf{Licenças}: Copilot (\$19--39/mês por dev), Cursor
+    (\$20--40/mês), APIs de LLM (variável por uso).
+    \item \textbf{Treinamento}: tempo para a equipe aprender a usar
+    ferramentas efetivamente. Estima-se 2--4 semanas para proficiência
+    básica.
+    \item \textbf{Revisão adicional}: código gerado por IA precisa de
+    revisão mais cuidadosa, especialmente no início.
+    \item \textbf{Infraestrutura}: se usar modelos locais ou RAG, há custos
+    de GPU/servidor.
+    \item \textbf{Risco de débito técnico}: código aceito sem revisão
+    adequada pode gerar custos de manutenção futuros.
+\end{itemize}
+
+\subsection{Benefícios}
+
+\begin{itemize}[leftmargin=2em]
+    \item \textbf{Produtividade}: estudos indicam ganhos de 25--55\% em
+    tarefas de codificação (variável por tipo de tarefa e senioridade).
+    \item \textbf{Onboarding}: novos membros exploram o codebase mais
+    rápido com IA como tutor contextualizado.
+    \item \textbf{Satisfação}: engenheiros reportam maior satisfação ao
+    delegar tarefas repetitivas para IA.
+    \item \textbf{Qualidade}: quando usada corretamente, a IA pode melhorar
+    cobertura de testes e consistência de código.
+\end{itemize}
+
+\subsection{Modelo de Maturidade de IA para Times de Engenharia}
+
+\begin{longtable}{>{\raggedright\arraybackslash}p{2cm}
+                  >{\raggedright\arraybackslash}p{3cm}
+                  >{\raggedright\arraybackslash}p{3.5cm}
+                  >{\raggedright\arraybackslash}p{4cm}}
+\toprule
+\textbf{Nível} & \textbf{Descrição} & \textbf{Características} &
+\textbf{Próximos Passos} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Nível} & \textbf{Descrição} & \textbf{Características} &
+\textbf{Próximos Passos} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+
+1 --- Inicial &
+Uso individual e ad-hoc &
+Cada dev usa (ou não) ferramentas diferentes; sem guidelines; sem medição &
+Definir ferramentas aprovadas; criar guidelines de uso; medir adoção \\
+\midrule
+
+2 --- Definido &
+Guidelines e ferramentas padronizadas &
+Ferramentas aprovadas; guidelines de segurança; treinamento básico &
+Integrar IA ao workflow (PRs, CI); medir impacto; compartilhar boas práticas \\
+\midrule
+
+3 --- Integrado &
+IA no workflow padrão &
+IA em code review automatizado; RAG com codebase; prompts padronizados para tarefas comuns &
+Automatizar tarefas com agentes; medir qualidade do código gerado; otimizar custos \\
+\midrule
+
+4 --- Otimizado &
+IA como multiplicador estratégico &
+Agentes supervisionados em CI/CD; métricas de ROI; cultura de experimentação contínua &
+Explorar agentes autônomos para tarefas específicas; contribuir para ferramentas internas \\
+
+\end{longtable}
+
+% ------------------------------------------------------------
+\section{O Papel do Julgamento Humano}
+
+Com toda a capacidade das ferramentas de IA, o julgamento humano permanece
+não apenas relevante, mas \textbf{mais importante do que nunca}. A IA
+aumentou a velocidade de geração de código, mas não a capacidade de
+\textbf{decidir o que construir}.
+
+\subsection{Compreensão do Domínio}
+
+Só quem vive o problema sabe suas nuances. A IA generaliza a partir de
+padrões estatísticos; você contextualiza a partir de experiência real.
+Quando um stakeholder diz ``o sistema precisa ser rápido'', só o engenheiro
+que conhece o domínio sabe que ``rápido'' significa latência p99 abaixo de
+200ms para a tela de checkout, mas pode ser 2 segundos para relatórios
+batch.
+
+\subsection{Decisões de Trade-off}
+
+``Usamos consistência eventual ou forte?'' A IA pode explicar os trade-offs
+de cada abordagem, mas a \textbf{decisão} depende do seu negócio: um sistema
+bancário exige consistência forte; um feed de rede social tolera eventual.
+Nenhum modelo de linguagem pode tomar essa decisão por você.
+
+\subsection{Avaliação de Impacto Sistêmico}
+
+Mudar um endpoint afeta 3 frontends, 2 jobs batch e o time de data
+science. A IA não tem visibilidade sobre essas dependências organizacionais
+--- e frequentemente sugere mudanças que são localmente corretas mas
+sistemicamente destrutivas.
+
+\subsection{Responsabilidade Final}
+
+Quando o código falha em produção às 3 da manhã, quem é acionado não é a
+IA. A culpa não é do Copilot que sugeriu o código --- é do engenheiro que
+o aprovou, do revisor que não pegou o bug, e da organização que não tinha
+testes adequados. \textbf{A IA é uma ferramenta. A responsabilidade é
+humana.}
+
+% ------------------------------------------------------------
+\section{Workflow com IA: Integrando ao Dia a Dia}
+
+\subsection{Fluxo de Desenvolvimento Aumentado por IA}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.85\textwidth]{imagens/04-ia-como-parceira-engenharia-04-workflow-de-desenvolvimento-aumentado-por-ia-mermaid.png}
+    \caption{Workflow de Desenvolvimento Aumentado por IA (Mermaid)}
+\end{figure}
+
+\subsection{Árvore de Decisão: IA ou Manual?}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.85\textwidth]{imagens/04-ia-como-parceira-engenharia-05-arvore-de-decisao-quando-usar-ia-vs-codificar-manualmente-me.png}
+    \caption{Árvore de decisão: quando usar IA vs. codificar manualmente (Mermaid)}
+\end{figure}
+
+\subsection{Estrutura de uma Sessão com IA}
+
+\begin{enumerate}[leftmargin=2em]
+    \item \textbf{Defina o problema claramente}: quanto mais preciso o
+    prompt, melhor o resultado. ``Implemente autenticação'' é vago.
+    ``Implemente login com JWT, refresh token com rotação, bcrypt para
+    hash de senha, rate limiting de 5 tentativas por minuto'' é preciso.
+    \item \textbf{Forneça contexto suficiente}: código existente, specs,
+    restrições, convenções do projeto. A IA não pode adivinhar que seu
+    projeto usa snake\_case ou que todas as respostas seguem um envelope
+    padrão.
+    \item \textbf{Peça implementação incremental}: ao invés de pedir
+    ``implemente o sistema inteiro'', peça módulo por módulo. Revise cada
+    parte antes de avançar.
+    \item \textbf{Revise linha por linha}: não aceite código que você não
+    entende. Se não consegue explicar o que cada linha faz, não deveria
+    estar no codebase.
+    \item \textbf{Execute testes}: rode a suíte de testes após cada
+    integração. Peça à IA para gerar testes antes ou junto com a
+    implementação (TDD assistido por IA).
+    \item \textbf{Refatore se necessário}: código gerado por IA tende a
+    ser verboso e genérico. Adapte ao estilo e padrões do seu projeto.
+\end{enumerate}
+
+\subsection{Conexão com Capítulos Anteriores}
+
+\begin{itemize}[leftmargin=2em]
+    \item \textbf{Capítulo 0 (Fundamentos)}: o pensamento sistêmico é o
+    guardrail contra código gerado por IA que resolve localmente mas
+    quebra globalmente.
+    \item \textbf{Capítulo 1 (RM-ODP)}: as specs de viewpoints são contexto
+    ideal para prompts. Enterprise viewpoint define o \textbf{porquê},
+    Information viewpoint define \textbf{o quê}, Engineering viewpoint
+    define \textbf{como} --- juntos, formam o prompt perfeito.
+    \item \textbf{Capítulo 2 (Arquitetura)}: decisões arquiteturais devem
+    ser tomadas \textbf{antes} de pedir para a IA implementar. A IA
+    implementa dentro de uma arquitetura --- não a define.
+    \item \textbf{Capítulo 3 (Princípios de Design)}: SOLID, KISS, YAGNI
+    são critérios para \textbf{revisar} código gerado por IA. Se a IA
+    gerou uma classe com 5 responsabilidades, o princípio S diz: refatore.
+\end{itemize}
+
+% ------------------------------------------------------------
+\section{Um Dia na Vida de um Engenheiro Aumentado por IA}
+
+Para concretizar os conceitos deste capítulo, vamos acompanhar um dia
+típico de Marina, engenheira sênior em uma fintech brasileira, que usa
+IA como parte integral do seu workflow.
+
+\subsection{8:30 --- Triagem de Issues}
+
+Marina abre o backlog e encontra 3 bugs e 1 feature request. Usa Claude
+para analisar os stack traces dos bugs, colando os logs e pedindo uma
+análise de causa raiz. Em 10 minutos, tem hipóteses para os 3 bugs ---
+algo que tomaria 40 minutos analisando manualmente.
+
+\textbf{Nível de autonomia}: 3 (par programador). Marina valida cada
+hipótese antes de aceitar.
+
+\subsection{9:00 --- Correção de Bug Crítico}
+
+Um bug de race condition no processamento de pagamentos. Marina
+\textbf{não} pede para a IA corrigir diretamente --- race conditions são
+sutis e dependem de compreensão profunda do fluxo concorrente. Ela analisa
+o código manualmente, identifica o ponto de contenção, e usa a IA apenas
+para sugerir estratégias de lock otimista vs. lock pessimista, comparando
+trade-offs no contexto específico.
+
+\textbf{Nível de autonomia}: 2 (sugestão de blocos) para a solução
+técnica. A decisão e implementação são manuais.
+
+\subsection{10:30 --- Implementação de Feature}
+
+A feature request: adicionar suporte a PIX como método de pagamento.
+Marina já tem a spec do RM-ODP (Capítulo 1) definida. Usa Cursor com RAG
+do codebase para implementar:
+
+\begin{lstlisting}[language=Java, caption={Prompt contextualizado para implementação (TypeScript)}]
+// Marina fornece como contexto:
+// 1. Interface PaymentMethod existente
+// 2. Implementacao de CartaoCredito (como exemplo)
+// 3. Spec do PIX do Banco Central
+// 4. Regras de negocio da fintech para PIX
+
+// Prompt: "Implemente PixPayment seguindo o mesmo
+// padrao de CartaoCreditoPayment. Use a API do PSP
+// (Payment Service Provider) conforme a interface
+// PspClient que ja existe. Inclua validacao de
+// chave PIX (CPF, email, telefone, aleatoria)."
+
+export class PixPayment implements PaymentMethod {
+  constructor(
+    private readonly pspClient: PspClient,
+    private readonly pixValidator: PixKeyValidator,
+    private readonly logger: Logger,
+  ) {}
+
+  async process(payment: PaymentRequest): Promise<PaymentResult> {
+    // Valida chave PIX
+    const keyValidation = this.pixValidator
+      .validate(payment.pixKey);
+    if (!keyValidation.isValid) {
+      return PaymentResult.failed(
+        `Chave PIX invalida: ${keyValidation.reason}`
+      );
+    }
+
+    // Gera cobranca via PSP
+    try {
+      const charge = await this.pspClient.createPixCharge({
+        amount: payment.amount,
+        pixKey: payment.pixKey,
+        description: payment.description,
+        expiresInMinutes: 30,
+      });
+
+      this.logger.info('PIX charge created', {
+        chargeId: charge.id,
+        amount: payment.amount,
+      });
+
+      return PaymentResult.pending(charge.id, charge.qrCode);
+    } catch (error) {
+      this.logger.error('PIX charge failed', { error });
+      return PaymentResult.failed(
+        'Falha ao gerar cobranca PIX'
+      );
+    }
+  }
+}
+
+// Marina revisa: estrutura OK, segue o padrao existente.
+// Ajustes: adicionar idempotency key, tratar timeout
+// do PSP separadamente, adicionar metricas de latencia.
+\end{lstlisting}
+
+\textbf{Nível de autonomia}: 3 (par programador). A IA gerou 80\% do
+código; Marina ajustou 20\% com conhecimento de domínio.
+
+\subsection{13:30 --- Geração de Testes}
+
+Marina pede à IA para gerar testes unitários e de integração para o
+\texttt{PixPayment}, fornecendo os testes de \texttt{CartaoCreditoPayment}
+como exemplo de padrão. A IA gera 15 testes cobrindo happy path, erros de
+validação, timeout do PSP, e idempotência.
+
+Marina revisa: 12 testes estão corretos, 2 testam cenários irrelevantes
+(remove), 1 tem assertion errado (corrige). Adiciona 3 testes que a IA
+não pensou: expiração do QR Code, valor abaixo do mínimo permitido pelo
+Banco Central, e chave PIX de pessoa jurídica.
+
+\textbf{Nível de autonomia}: 2 (sugestão de blocos). Testes gerados são
+bom ponto de partida, mas nunca cobertura completa.
+
+\subsection{15:00 --- Code Review}
+
+Marina recebe um PR de um colega. Usa a IA para uma primeira passada
+automatizada (linting, padrões, potenciais bugs). A IA identifica uma
+possível SQL injection em um query builder. Marina confirma, comenta no PR,
+e então faz a revisão de design manualmente --- verificando se a
+abordagem está alinhada com a arquitetura do sistema.
+
+\textbf{Nível de autonomia}: 2 (sugestão). A IA é um filtro inicial; a
+revisão real é humana.
+
+\subsection{16:30 --- Documentação}
+
+Marina usa a IA para gerar documentação do novo módulo PIX: README do
+módulo, comentários em pontos complexos, e diagrama de sequência da
+integração com o PSP. Revisa para garantir precisão e adiciona contexto de
+negócio que a IA não tem.
+
+\subsection{17:30 --- Retrospectiva do Dia}
+
+\begin{itemize}[leftmargin=2em]
+    \item \textbf{Tempo economizado estimado}: 2--3 horas (de um dia de 8h).
+    \item \textbf{Decisões que a IA NÃO tomou}: corrigir race condition,
+    escolher estratégia de idempotência, definir casos de teste de borda,
+    aprovar PR.
+    \item \textbf{Valor real}: não foi ``a IA programou para mim'' --- foi
+    ``a IA me liberou para focar no que importa''.
+\end{itemize}
+
+% ------------------------------------------------------------
+\section{Boas Práticas e Anti-Padrões}
+
+\subsection{Boas Práticas}
+
+\begin{enumerate}[leftmargin=2em]
+    \item \textbf{Sempre forneça contexto}: a qualidade do output é
+    proporcional à qualidade do input. Inclua interfaces existentes,
+    convenções do projeto, e restrições de negócio.
+    \item \textbf{Peça explicação antes de implementação}: ``Como você
+    abordaria X?'' antes de ``Implemente X''. Isso permite validar a
+    abordagem antes de investir em código.
+    \item \textbf{Use TDD assistido}: escreva (ou peça à IA) os testes
+    primeiro, depois a implementação. Os testes são a especificação
+    executável.
+    \item \textbf{Itere em blocos pequenos}: peça funções, não sistemas
+    inteiros. Revise cada bloco antes de avançar.
+    \item \textbf{Mantenha um ``prompt library''}: documente prompts que
+    funcionam bem para tarefas recorrentes no seu projeto.
+    \item \textbf{Versionamento de prompts}: se prompts são usados em
+    pipelines de CI/CD, trate-os como código --- versionados, revisados,
+    testados.
+\end{enumerate}
+
+\subsection{Anti-Padrões}
+
+\begin{enumerate}[leftmargin=2em]
+    \item \textbf{Copy-paste cego}: aceitar código gerado sem ler ou
+    entender. O anti-padrão mais perigoso e mais comum.
+    \item \textbf{Prompt vago}: ``faça uma API'' sem especificar
+    endpoints, autenticação, formato de resposta, tratamento de erros.
+    \item \textbf{Ausência de testes}: se não há testes, não há como
+    validar o código gerado. A IA + ausência de testes é a receita para
+    desastre.
+    \item \textbf{Over-reliance para decisões}: usar a IA para decidir
+    arquitetura, stack tecnológica ou priorização de backlog. Essas
+    decisões exigem contexto organizacional que a IA não tem.
+    \item \textbf{Ignorar segurança}: não revisar código gerado para
+    vulnerabilidades. A IA não é security-aware por default.
+    \item \textbf{Vergonha de perguntar}: engenheiros seniores às vezes
+    evitam usar IA por orgulho. A IA é uma ferramenta, não uma muleta ---
+    usá-la é inteligência, não fraqueza.
+\end{enumerate}
+
+% ------------------------------------------------------------
+\section{O Futuro da Parceria Humano-IA}
+
+A velocidade de evolução das ferramentas de IA é sem precedentes. Algumas
+tendências já visíveis:
+
+\begin{itemize}[leftmargin=2em]
+    \item \textbf{Agentes cada vez mais capazes}: a fronteira do que
+    agentes conseguem fazer sozinhos se expande a cada trimestre. Tarefas
+    que hoje exigem supervisão constante serão automatizáveis em 2--3 anos.
+    \item \textbf{IA especializada por domínio}: modelos fine-tuned para
+    fintech, healthtech, infraestrutura --- com conhecimento profundo de
+    regulamentações e padrões específicos.
+    \item \textbf{Verificação formal integrada}: ao invés de confiar que o
+    código está correto, agentes usarão type systems avançados, model
+    checking e property-based testing como guardrails automáticos.
+    \item \textbf{Collaborative AI}: múltiplos agentes trabalhando juntos
+    --- um escreve código, outro revisa, outro escreve testes, outro
+    verifica segurança --- replicando a dinâmica de um time humano.
+    \item \textbf{O engenheiro como arquiteto e curador}: à medida que
+    mais código é gerado por IA, o papel do engenheiro se desloca para
+    arquitetura, curadoria de qualidade e tomada de decisão estratégica.
+\end{itemize}
+
+O ponto central permanece: \textbf{a IA é uma amplificadora}. Ela amplifica
+tanto a competência quanto a incompetência. Um engenheiro com bons
+fundamentos (Capítulo 0), modelagem sólida (Capítulo 1), arquitetura clara
+(Capítulo 2) e princípios de design (Capítulo 3) vai extrair enormemente
+mais valor da IA do que alguém que pula direto para ``me dê o código''.
+
+% ------------------------------------------------------------
 \section{Conclusão}
 
-% [Placeholder: Resumo]
-% - IA é uma ferramenta poderosa, não uma solução mágica
-% - O pensamento de engenharia é mais importante que nunca
+IA é uma ferramenta poderosa, não uma solução mágica. O pensamento de
+engenharia é mais importante do que nunca --- porque agora há mais código
+sendo gerado, mais rápido, e alguém precisa decidir se é código bom. Esse
+alguém é você.
 
+A adoção eficaz de IA na engenharia de software não começa com ferramentas
+--- começa com \textbf{mentalidade}. O engenheiro que entende os
+fundamentos, modela o domínio, define a arquitetura e aplica princípios de
+design está preparado para usar qualquer ferramenta de IA que surgir. O
+que muda é a velocidade de execução, não a natureza do trabalho.
+
+Use IA para o que ela faz bem: gerar, sugerir, explicar, automatizar o
+repetitivo. Reserve para si o que só humanos fazem bem: entender o
+problema real, tomar decisões com informação incompleta, assumir
+responsabilidade, e construir sistemas que servem pessoas.
+
+% ------------------------------------------------------------
 \section*{Exercícios}
 
-% [Placeholder: Exercícios]
-% 1. Use uma ferramenta de IA para gerar código para um problema
-%    simples. Analise criticamente o resultado.
-% 2. Liste 5 situações em que você NÃO usaria IA para gerar código.
-% 3. Crie um checklist de validação para código gerado por IA.
+\begin{enumerate}[leftmargin=2em]
+    \item Use uma ferramenta de IA para gerar código para um problema
+    simples (ex: validação de CNPJ, parser de CSV, API REST básica).
+    Analise criticamente o resultado: o que está certo, o que está errado,
+    o que faltou? Documente suas observações.
+
+    \item Liste 5 situações concretas do seu trabalho em que você
+    \textbf{não} usaria IA para gerar código. Justifique cada uma usando
+    os critérios discutidos neste capítulo.
+
+    \item Crie um checklist de validação para código gerado por IA (mínimo
+    10 itens). Use-o em 3 sessões de programação com IA e refine o
+    checklist com base na experiência.
+
+    \item Classifique suas 10 tarefas de programação mais frequentes nos
+    Níveis de Autonomia (1--5). Para cada uma, justifique por que aquele
+    nível é o mais adequado.
+
+    \item Implemente a mesma feature duas vezes: uma vez sem IA e outra
+    com IA. Compare: tempo gasto, qualidade do código, cobertura de
+    testes, bugs encontrados na revisão. Escreva um relatório de 1 página
+    com suas conclusões.
+
+    \item Monte um prompt para uma tarefa real do seu projeto, incluindo:
+    contexto do domínio, código existente relevante, restrições técnicas, e
+    padrões do projeto. Avalie a qualidade da resposta da IA. Depois,
+    refine o prompt e compare os resultados.
+
+    \item Faça uma análise de custo-benefício para adoção de ferramentas de
+    IA no seu time. Considere: custo de licenças, tempo de treinamento,
+    ganho de produtividade estimado, riscos de segurança. Apresente os
+    resultados em uma tabela com ROI estimado.
+
+    \item Desenhe um ``modelo de maturidade de IA'' para sua organização
+    atual. Em qual nível vocês estão? Quais seriam os próximos passos
+    concretos para avançar um nível?
+\end{enumerate}
