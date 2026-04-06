@@ -1,0 +1,229 @@
+\documentclass[12pt,a4paper]{book}
+
+% ============================================================
+% Packages
+% ============================================================
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[portuguese]{babel}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{tocloft}
+\usepackage{microtype}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{footmisc}
+\usepackage{csquotes}
+
+% ============================================================
+% Page geometry
+% ============================================================
+\geometry{
+    top=2.5cm,
+    bottom=2.5cm,
+    left=3cm,
+    right=2.5cm
+}
+
+% ============================================================
+% Colors
+% ============================================================
+\definecolor{codebg}{rgb}{0.95,0.95,0.98}
+\definecolor{codeframe}{rgb}{0.2,0.2,0.6}
+\definecolor{keywordcolor}{rgb}{0.0,0.4,0.6}
+\definecolor{commentcolor}{rgb}{0.4,0.4,0.4}
+\definecolor{stringcolor}{rgb}{0.6,0.1,0.1}
+
+% ============================================================
+% Code listings configuration
+% ============================================================
+\lstset{
+    backgroundcolor=\color{codebg},
+    frame=single,
+    framerule=0.5pt,
+    rulecolor=\color{codeframe},
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{keywordcolor}\bfseries,
+    commentstyle=\color{commentcolor}\itshape,
+    stringstyle=\color{stringcolor},
+    breaklines=true,
+    breakatwhitespace=true,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    numbersep=8pt,
+    tabsize=4,
+    showspaces=false,
+    showstringspaces=false,
+    captionpos=b,
+    xleftmargin=2em
+}
+
+% ============================================================
+% Header and footer
+% ============================================================
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE,RO]{\thepage}
+\fancyhead[RE]{\nouppercase\leftmark}
+\fancyhead[LO]{\nouppercase\rightmark}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% ============================================================
+% Chapter and section formatting
+% ============================================================
+\titleformat{\chapter}[display]
+    {\normalfont\huge\bfseries}
+    {\chaptertitlename\ \thechapter}{20pt}{\Huge}
+    
+\titleformat{\section}
+    {\normalfont\Large\bfseries}
+    {\thesection}{1em}{}
+
+\titleformat{\subsection}
+    {\normalfont\large\bfseries}
+    {\thesubsection}{1em}{}
+
+% ============================================================
+% Hyperlink configuration
+% ============================================================
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue!70!black,
+    citecolor=red!70!black,
+    urlcolor=blue!80!black,
+    pdfborder={0 0 0}
+}
+
+% ============================================================
+% Custom commands
+% ============================================================
+\newcommand{\booktitle}{O Pensamento do Engenheiro de Software}
+\newcommand{\booksubtitle}{Arquitetura e Código na Era da IA e dos LLMs}
+\newcommand{\authorname}{Afonso Lelis}
+
+% ============================================================
+% Document metadata
+% ============================================================
+\title{\booktitle}
+\author{\authorname}
+\date{\today}
+
+% ============================================================
+\begin{document}
+% ============================================================
+
+% Front matter
+\frontmatter
+
+% Title page
+\begin{titlepage}
+    \centering
+    \vspace*{2cm}
+    {\Huge\bfseries\booktitle\par}
+    \vspace{1cm}
+    {\Large\itshape\booksubtitle\par}
+    \vspace{2cm}
+    {\large\authorname\par}
+    \vfill
+    {\small\today\par}
+\end{titlepage}
+
+% Copyright page
+\cleardoublepage
+\pagestyle{empty}
+\begin{center}
+    \small
+    \copyright\ \the\year\ \authorname\\[0.5cm]
+    Todos os direitos reservados.\\
+    Nenhuma parte desta publicação pode ser reproduzida,\\
+    armazenada em sistema de recuperação ou transmitida\\
+    por qualquer forma ou meio, eletrônico, mecânico,\\
+    de fotocópia, gravação ou outro, sem a permissão\\
+    prévia por escrito do titular dos direitos autorais.\\[1cm]
+    \textbf{Primeira Edição}\\[1cm]
+    ISBN: 978-0-000000-00-0 (placeholder)
+\end{center}
+
+% Table of contents
+\cleardoublepage
+\pagestyle{fancy}
+\tableofcontents
+
+% Preface
+\cleardoublepage
+\chapter*{Prefácio}
+\addcontentsline{toc}{chapter}{Prefácio}
+
+Este livro nasce da necessidade de repensar o papel do engenheiro de software 
+em uma época em que inteligências artificiais e modelos de linguagem podem gerar 
+código em segundos. Não se trata mais apenas de saber escrever código — trata-se 
+de saber \textbf{pensar} sobre o código, sua arquitetura, seus trade-offs e seu 
+impacto a longo prazo.
+
+O objetivo aqui não é competir com a IA, mas sim aprender a colaborar com ela 
+de forma estratégica, mantendo os princípios de engenharia que permanecem 
+relevantes independentemente da ferramenta.
+
+\vspace{1cm}
+\noindent Boa leitura.
+
+% Main content
+\mainmatter
+
+% ============================================================
+% Chapters
+% ============================================================
+
+\include{capitulos/00-fundamentos-pensamento-engenharia}
+\include{capitulos/01-modelagem-negocio-rm-odp}
+\include{capitulos/02-arquitetura-antes-do-codigo}
+\include{capitulos/03-principios-design-moderno}
+\include{capitulos/04-ia-como-parceira-engenharia}
+\include{capitulos/05-prompts-arquitetura-codigo}
+\include{capitulos/06-revisao-codigo-era-ia}
+\include{capitulos/07-testes-qualidade-automatizada}
+\include{capitulos/08-seguranca-responsabilidade}
+\include{capitulos/09-documentacao-viva}
+\include{capitulos/10-devops-observabilidade}
+\include{capitulos/11-equipe-colaboracao-ia}
+\include{capitulos/12-futuro-engenharia-software}
+
+% Back matter
+\backmatter
+
+\cleardoublepage
+\chapter*{Sobre o Autor}
+\addcontentsline{toc}{chapter}{Sobre o Autor}
+
+Afonso Lelis é engenheiro de software com experiência em arquitetura de sistemas 
+distribuídos e apaixonado pelo impacto da inteligência artificial na forma como 
+construímos software.
+
+\cleardoublepage
+\chapter*{Índice Remissivo}
+\addcontentsline{toc}{chapter}{Índice Remissivo}
+
+% Placeholder for index
+
+\cleardoublepage
+\begin{center}
+    \vspace*{3cm}
+    {\Huge\bfseries FIM\par}
+    \vspace{1cm}
+    {\large\booktitle}
+\end{center}
+
+% ============================================================
+\end{document}
+% ============================================================

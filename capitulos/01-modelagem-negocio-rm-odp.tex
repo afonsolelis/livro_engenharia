@@ -1,0 +1,254 @@
+% ============================================================
+% Capítulo 0: Modelagem de Negócio e Arquitetura com RM-ODP
+% ============================================================
+\chapter{Modelagem de Negócio e Arquitetura com RM-ODP}
+
+\section{Introdução}
+
+% [Placeholder: Por que começar por modelagem de negócio]
+% - Antes de escrever código, é preciso entender o que se está construindo
+% - A lacuna entre requisitos de negócio e implementação técnica
+% - Como frameworks de modelagem e arquitetural dão clareza ao engenheiro
+% - O papel do RM-ODP e do IDEF-0 como ferramentas de pensamento
+
+\section{IDEF0: Modelagem do Negócio}
+
+% [Placeholder: Introdução ao IDEF-0]
+% - O que é o IDEF-0 (Integration DEFinition for Function Modeling)
+% - Origem e contexto histórico (ICAM da Força Aérea dos EUA)
+% - ICOM: Inputs, Controls, Outputs, Mechanisms
+% - Diagramas de contexto (A-0) e decomposição hierárquica
+% - Como o IDEF-0 revela a essência do negócio
+
+\subsection{Elementos do IDEF0}
+
+% [Placeholder: Detalhar cada componente]
+% - \textbf{Inputs}: O que entra no processo (matéria-prima, dados, informações)
+% - \textbf{Controls}: Regras, políticas, restrições que governam o processo
+% - \textbf{Outputs}: Resultados do processo (produtos, serviços, informações)
+% - \textbf{Mechanisms}: Quem ou o que executa o processo (pessoas, sistemas, ferramentas)
+% - Exemplo prático: modelando um sistema de pedidos com IDEF-0
+
+\subsection{Decomposição Funcional}
+
+% [Placeholder: Como decompor funções]
+% - Do nível de contexto ao detalhe
+% - Regra de 3 a 6 caixas por nível
+% - Identificando funções filhos de uma função pai
+% - Diagrama de decomposição (node index)
+% - Exemplo: decompondo "Gerenciar Pedidos" em subfunções
+
+\subsection{IDEF0 na Era da IA}
+
+% [Placeholder: IDEF-0 com assistência de IA]
+% - Usando IA para gerar diagramas IDEF-0 a partir de descrições textuais
+% - Validação de modelos com LLMs
+% - IDEF-0 como contexto para prompts de arquitetura
+% - Limitações: IA não substitui o entendimento do domínio
+
+\section{RM-ODP: Reference Model for Open Distributed Processing}
+
+% [Placeholder: Introdução ao RM-ODP]
+% - O que é o RM-ODP (ISO/IEC 10746 | ITU-T X.900)
+% - Por que um modelo de referência para sistemas distribuídos
+% - As cinco vistas (viewpoints) do RM-ODP
+% - Como o RM-ODP organiza o pensamento arquitetural
+
+\subsection{Enterprise Viewpoint (Vista Empresarial)}
+
+% [Placeholder: Vista Empresarial]
+% - Propósito, escopo e políticas organizacionais
+% - Objetivos de negócio e requisitos de qualidade
+% - Partes interessadas e suas responsabilidades
+% - \textbf{Como identificar}: Quem são os stakeholders? Qual o objetivo do sistema?
+%   Quais políticas o regem?
+% - Conexão com IDEF-0: os Controls e Mechanisms do nível mais alto
+% - Exemplo prático: Enterprise Viewpoint para um sistema de e-commerce
+
+\subsection{Information Viewpoint (Vista de Informação)}
+
+% [Placeholder: Vista de Informação]
+% - Estrutura, semântica e evolução da informação
+% - Modelo de dados independente de tecnologia
+% - Esquemas, invariantes e transformações
+% - \textbf{Como identificar}: Quais entidades existem? Quais seus relacionamentos?
+%   Como a informação muda ao longo do tempo?
+% - Relação com Domain-Driven Design (Entidades, Value Objects, Agregados)
+% - Exemplo prático: modelo de informação para o e-commerce
+
+\subsection{Computational Viewpoint (Vista Computacional)}
+
+% [Placeholder: Vista Computacional]
+% - Unidades funcionais (objetos computacionais) e interfaces
+% - Interações entre componentes via interfaces bem definidas
+% - Independência de distribuição e tecnologia
+% - \textbf{Como identificar}: Quais são as unidades funcionais coesas?
+%   Como elas se comunicam? Quais são os contratos de interface?
+% - Conexão com arquitetura hexagonal e microsserviços lógicos
+% - Exemplo prático: objetos computacionais do sistema de pedidos
+
+\subsection{Engineering Viewpoint (Vista de Engenharia)}
+
+% [Placeholder: Vista de Engenharia]
+% - Mecanismos de suporte à distribuição
+% - Comunicação, replicação, transações distribuídas
+% - Protocolos, middleware, infraestrutura de comunicação
+% - \textbf{Como identificar}: Como os componentes se comunicam na prática?
+%   Quais protocolos? Como garantir QoS, transações, consistência?
+% - Conexão com DevOps, service mesh, message brokers
+% - Exemplo prático: infraestrutura de comunicação do e-commerce
+
+\subsection{Technology Viewpoint (Vista Tecnológica)}
+
+% [Placeholder: Vista Tecnológica]
+% - Tecnologias concretas: linguagens, frameworks, hardware
+% - Decisões de implementação específicas
+% - A camada onde o código efetivamente vive
+% - \textbf{Como identificar}: Quais tecnologias atendem aos requisitos
+%   das vistas superiores? Quais trade-offs cada escolha implica?
+% - Conexão com decisões de implementação e ADRs
+% - Exemplo prático: stack tecnológica do e-commerce
+
+\section{Mapeando as Cinco Vistas: Pontos Chave pela Visão da Engenharia}
+
+% [Placeholder: Guia prático de identificação]
+% - Perguntas-chave para cada vista
+% - Matriz de rastreabilidade entre vistas
+% - Do abstrato ao concreto sem perder coerência
+% - Identificando gaps e inconsistências entre vistas
+% - O engenheiro como guardião da consistência arquitetural
+
+\subsection{Checklist de Identificação por Vista}
+
+% [Placeholder: Checklist prático]
+% \textbf{Enterprise}: Objetivos claros? Stakeholders identificados? Políticas mapeadas?
+% \textbf{Information}: Entidades definidas? Relacionamentos modelados?
+%   Ciclo de vida da informação?
+% \textbf{Computational}: Interfaces definidas? Responsabilidades separadas?
+%   Interações especificadas?
+% \textbf{Engineering}: Protocolos escolhidos? QoS garantido? Tolerância a falhas?
+% \textbf{Technology}: Stack definida? Trade-offs documentados? ADRs criados?
+
+\subsection{Exercício Guiado: Modelando um Sistema Completo}
+
+% [Placeholder: Exercício passo a passo]
+% - Cenário: Sistema de gestão hospitalar
+% - Passo 1: IDEF-0 do processo de agendamento
+% - Passo 2: Enterprise Viewpoint
+% - Passo 3: Information Viewpoint
+% - Passo 4: Computational Viewpoint
+% - Passo 5: Engineering Viewpoint
+% - Passo 6: Technology Viewpoint
+% - Revisão e validação do modelo
+
+\section{Spec Driven Development + RM-ODP}
+
+% [Placeholder: Integrando SDD com RM-ODP]
+% - O que é Spec Driven Development (SDD)
+% - Especificações como fonte da verdade
+% - Como as cinco vistas do RM-ODP enriquecem as especificações
+% - SDD sem RM-ODP = especificações rasas
+% - RM-ODP sem SDD = modelo sem execução
+
+\subsection{Camadas de Especificação Baseadas no RM-ODP}
+
+% [Placeholder: Especificando por camada]
+% - \textbf{Spec Enterprise}: Objetivos, regras de negócio, políticas
+%   (contratos de domínio)
+% - \textbf{Spec Information}: Schema de dados, invariantes, regras de validação
+% - \textbf{Spec Computational}: Interfaces, contratos de serviço, APIs
+% - \textbf{Spec Engineering}: Protocolos, SLAs, topologia de comunicação
+% - \textbf{Spec Technology}: Dependências, configurações, infraestrutura
+% - Exemplo de estrutura de specs para um microsserviço
+
+\subsection{Workflow SDD com RM-ODP}
+
+% [Placeholder: Processo integrado]
+% - Passo 1: Modelar negócio com IDEF-0
+% - Passo 2: Definir Enterprise + Information viewpoint
+% - Passo 3: Especificar interfaces (Computational viewpoint)
+% - Passo 4: Gerar scaffolding a partir das specs
+% - Passo 5: Implementar guiado pelas specs
+% - Passo 6: Validar implementação contra as specs
+% - Passo 7: Evolver specs e implementação em paralelo
+% - Onde a IA entra nesse workflow
+
+\subsection{Ferramentas para Spec Driven Development}
+
+% [Placeholder: Ecossistema de ferramentas]
+% - OpenAPI / Swagger para APIs
+% - JSON Schema / Protobuf para dados
+% - Cucumber / SpecFlow para comportamento
+% - Architectural fitness functions
+% - IA gerando specs a partir de modelos RM-ODP
+% - Validação automática de specs em CI/CD
+
+\section{TDD como Guardrail da IA}
+
+% [Placeholder: TDD protegendo contra código ruim de IA]
+% - O problema: IA gera código sem entendimento do domínio
+% - TDD como especificação executável
+% - Testes definem o "quê", IA sugere o "como"
+% - Red-Green-Refactor com IA como implementadora
+
+\subsection{TDD + IA: O Workflow}
+
+% [Placeholder: Processo prático]
+% - Passo 1: Engenheiro escreve o teste (falhando)
+% - Passo 2: IA gera implementação para passar no teste
+% - Passo 3: Engenheiro revisa e refatora
+% - Passo 4: IA auxilia na refatoração mantendo testes verdes
+% - Vantagem: testes garantem corretude, engenheiro garante design
+
+\subsection{Testes como Especificação de Comportamento}
+
+% [Placeholder: Tests as specs]
+% - Testes unitários como documentação viva
+% - Nome do teste como descrição do requisito
+% - Given-When-Then como ponte entre negócio e código
+% - IA gerando testes a partir de specs RM-ODP
+% - Validação cruzada: specs $\leftrightarrow$ testes $\leftrightarrow$ código
+
+\subsection{Guardrails Avançados}
+
+% [Placeholder: Múltiplas camadas de proteção]
+% - TDD em nível unitário
+% - Testes de contrato em nível de interface
+% - Testes de integração em nível de componente
+% - Testes E2E em nível de sistema
+% - IA navegando pelos guardrails
+% - O engenheiro definindo os limites
+
+\section{Integração com os Demais Capítulos}
+
+% [Placeholder: Conexão com o restante do livro]
+% - Capítulo 0: Fundamentos do pensamento de engenharia como base conceitual
+% - Como RM-ODP e IDEF-0 concretizam o pensamento arquitetural (Cap. 2)
+% - Princípios de design aplicados a cada vista (Cap. 3)
+% - IA como parceira na modelagem (Cap. 4)
+% - Prompts para gerar modelos e specs (Cap. 5)
+% - Revisão de modelos e specs (Cap. 6)
+% - TDD como guardrail da IA — aprofundamento no Cap. 7
+
+\section{Conclusão}
+
+% [Placeholder: Resumo e transição]
+% - Modelagem de negócio e arquitetura são a base de tudo
+% - RM-ODP oferece estrutura de pensamento em cinco dimensões
+% - IDEF-0 conecta negócio a funcionalidade
+% - Spec Driven Development transforma modelo em especificação
+% - TDD garante que a IA construa o que realmente importa
+
+\section*{Exercícios}
+
+% [Placeholder: Exercícios]
+% 1. Modele com IDEF-0 o processo de matrícula em uma universidade.
+%    Identifique Inputs, Controls, Outputs e Mechanisms.
+% 2. Para o mesmo processo, crie as cinco vistas do RM-ODP.
+%    Compare com uma modelagem que você faria sem o framework.
+% 3. Escreva uma spec (OpenAPI ou similar) para um serviço identificado
+%    na Computational Viewpoint. Gere código com IA e valide com testes.
+% 4. Aplique TDD com IA como implementadora em uma funcionalidade.
+%    Compare o resultado com uma implementação gerada diretamente pela IA.
+% 5. Crie um checklist que mapeie elementos do IDEF-0 para as vistas
+%    do RM-ODP em um projeto real.
