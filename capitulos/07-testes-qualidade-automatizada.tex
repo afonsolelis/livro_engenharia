@@ -13,7 +13,7 @@ Pense nos testes, antes de tudo, como uma rede de segurança. Quando você
 refatora uma classe, adiciona uma nova funcionalidade a um módulo existente ou
 corrige um bug reportado por um usuário irritado, os testes são o mecanismo que
 garante que o comportamento existente não foi silenciosamente destruído no
-processo. É o equivalente a escalar uma parede rochosa com corda e arnês ---
+processo. É o equivalente a escalar uma parede rochosa com corda e arnês:
 você pode ousar movimentos mais arriscados, experimentar caminhos diferentes,
 porque sabe que a queda é controlada. Sem essa rede, cada mudança exige um
 nível de cautela que paralisa equipes inteiras. Desenvolvedores começam a evitar
@@ -23,7 +23,7 @@ o risco; ela torna o risco gerenciável.
 
 Mas os testes são mais do que proteção contra regressões. Um bom teste funciona
 como documentação executável, uma forma de documentação que se recusa a
-envelhecer. Comentários no código podem ficar desatualizados --- um comentário
+envelhecer. Comentários no código podem ficar desatualizados. Um comentário
 que diz ``este método retorna o preço com desconto'' pode continuar lá mesmo
 depois que alguém mudou o método para retornar o preço sem desconto. O
 comentário mente, e ninguém percebe até que um bug aparece em produção. Um
@@ -35,7 +35,7 @@ que a documentação ainda é verdadeira.
 
 Há ainda uma terceira dimensão dos testes que muitos engenheiros subestimam: o
 teste como feedback de design. Se é difícil testar uma função, o problema
-raramente está no teste --- está no design da função. Código com muitas
+raramente está no teste. Está no design da função. Código com muitas
 dependências entrelaçadas, estado global espalhado por todo o sistema e efeitos
 colaterais escondidos em lugares inesperados é naturalmente resistente a testes.
 Quando você tenta escrever um teste para uma função e percebe que precisa
@@ -49,16 +49,16 @@ estivesse grande demais para ser facilmente reestruturado.
 \subsection{O Custo dos Bugs em Cada Fase}
 
 O custo de corrigir um bug cresce exponencialmente conforme ele avança no ciclo
-de vida do software. Essa não é uma observação nova --- Barry Boehm documentou
+de vida do software. Essa não é uma observação nova. Barry Boehm documentou
 isso nos anos 1980 em seu trabalho seminal sobre economia de engenharia de
-software --- mas continua sendo ignorada com frequência impressionante.
+software, mas a lição continua sendo ignorada com frequência impressionante.
 
 Na fase de requisitos, corrigir um erro tem custo relativo de \textbf{1x}. Um
 requisito mal escrito, ambíguo ou contraditório custa uma reunião de
 alinhamento, talvez duas, uma correção no documento de especificação e um email
 para a equipe. O impacto é mínimo porque nenhuma linha de código foi escrita,
 nenhum sistema foi configurado, nenhum usuário foi afetado. É o momento mais
-barato para errar --- e, paradoxalmente, o momento em que as equipes investem
+barato para errar, e, paradoxalmente, o momento em que as equipes investem
 menos em validação.
 
 Na fase de design, o custo relativo salta para \textbf{5x}. Redesenhar uma
@@ -73,7 +73,7 @@ Na fase de codificação, o custo relativo chega a \textbf{10x}. Corrigir códig
 que já foi integrado a um repositório compartilhado exige entender não apenas o
 bug em si, mas todas as dependências que podem ser afetadas pela correção, as
 possíveis regressões em funcionalidades adjacentes, e o impacto em branches
-paralelos de desenvolvimento. O código já não é mais uma entidade isolada ---
+paralelos de desenvolvimento. O código já não é mais uma entidade isolada;
 ele está entrelaçado com o trabalho de outros desenvolvedores.
 
 Na fase de teste, o custo relativo atinge \textbf{20x}. Quando um bug é
@@ -86,7 +86,7 @@ e aprovados, criando um efeito dominó que invalida trabalho considerado
 
 Em produção, o custo relativo explode para \textbf{100x ou mais}. Aqui o custo
 transcende o técnico e entra no domínio do impacto no negócio. Inclui o impacto
-direto no usuário --- que pode perder dados, ter transações incorretas ou
+direto no usuário, que pode perder dados, ter transações incorretas ou
 simplesmente não conseguir usar o sistema. Inclui a perda de receita durante o
 período de indisponibilidade ou mau funcionamento. Inclui o dano à reputação da
 empresa, que em mercados competitivos pode significar perda permanente de
@@ -99,24 +99,24 @@ quando o custo de correção ainda é gerenciável.
 
 \subsection{Como a IA Muda o Panorama de Testes}
 
-A IA generativa trouxe uma mudança real na prática de testes, mas é uma mudança
-que precisa ser entendida com nuance, não com hype.
+A IA generativa trouxe uma mudança real na prática de testes, mas essa mudança
+precisa ser entendida com nuance, não com hype.
 
 No lado positivo, LLMs conseguem gerar dezenas de testes unitários em segundos.
 Dado um código existente, um modelo como GPT-4 ou Claude consegue analisar os
 caminhos de execução, identificar os edge cases mais óbvios (valores nulos,
 listas vazias, limites de faixa), e produzir testes coerentes que cobrem
 cenários que o desenvolvedor poderia esquecer por fadiga ou pressa. A velocidade
-de geração é impressionante, e para tarefas mecânicas --- como cobrir todas as
+de geração é impressionante: para tarefas mecânicas, como cobrir todas as
 branches de um switch-case ou gerar testes para todos os códigos de status HTTP
-de uma API --- a IA é genuinamente mais eficiente que o humano.
+de uma API, a IA é genuinamente mais eficiente que o humano.
 
-Entretanto, há uma limitação fundamental que nenhuma quantidade de treinamento
+Há, porém, uma limitação que nenhuma quantidade de treinamento
 resolve no curto prazo: a IA testa o que o código \textbf{faz}, não o que ele
 \textbf{deveria fazer}. Ela não conhece seu domínio, suas regras de negócio
 específicas, seus edge cases regulatórios, as decisões de produto que levaram a
 determinado comportamento. Ela replica padrões que observou nos dados de
-treinamento --- não valida intenções de negócio. Um teste gerado por IA para um
+treinamento, sem validar intenções de negócio. Um teste gerado por IA para um
 cálculo de impostos vai verificar que o código retorna o valor que retorna, mas
 não vai questionar se a alíquota aplicada está correta para aquela jurisdição.
 
@@ -141,12 +141,12 @@ máquina. Exploraremos esse workflow em profundidade na seção sobre TDD.
 % ============================================================
 
 A pirâmide de testes é um dos modelos mentais mais influentes da engenharia de
-software moderna, e para entendê-la profundamente, vale a pena conhecer sua
+software moderna. Para entendê-la bem, vale a pena conhecer sua
 história. O modelo foi popularizado por Mike Cohn em seu livro \textit{Succeeding
 with Agile}, publicado em 2010, embora a ideia já circulasse em conversas sobre
 Extreme Programming e práticas ágeis desde o início dos anos 2000. Cohn não
-inventou os tipos de teste que compõem a pirâmide --- testes unitários, de
-integração e end-to-end já existiam há décadas --- mas ele articulou de forma
+inventou os tipos de teste que compõem a pirâmide (testes unitários, de
+integração e end-to-end já existiam há décadas), mas ele articulou de forma
 visual e memorável como esses tipos deveriam ser distribuídos em proporção e
 prioridade.
 
@@ -154,8 +154,8 @@ O problema que a pirâmide resolveu era real e doloroso. No final dos anos 2000,
 muitas equipes ágeis que adotavam testes automatizados cometiam o mesmo erro:
 investiam a maior parte do esforço em testes end-to-end, que simulavam fluxos
 completos do sistema usando ferramentas como Selenium. A lógica parecia
-irrefutável --- se o teste simula o que o usuário faz, ele é o mais confiável,
-certo? Na prática, essas equipes descobriam que suítes compostas majoritariamente
+irrefutável: se o teste simula o que o usuário faz, ele é o mais confiável,
+certo? Só que essas equipes descobriam que suítes compostas majoritariamente
 por testes E2E eram lentas (executavam em horas), frágeis (falhavam por mudanças
 cosméticas na interface), caras de manter (cada mudança de UI exigia atualizar
 dezenas de testes) e frequentemente flaky (falhavam intermitentemente por
@@ -164,10 +164,10 @@ possível: suítes que ninguém confiava, que ninguém queria rodar, e que ningu
 ousava deletar.
 
 A pirâmide de Cohn propôs uma inversão radical dessa distribuição. A base da
-pirâmide --- larga, estável, volumosa --- deveria ser composta por testes
+pirâmide, larga, estável e volumosa, deveria ser composta por testes
 unitários: rápidos, isolados, baratos. O meio da pirâmide seria ocupado por
-testes de integração, em quantidade moderada. E o topo --- estreito, caro,
-estratégico --- seria reservado para poucos testes E2E que verificam os fluxos
+testes de integração, em quantidade moderada. E o topo, estreito e
+estratégico, seria reservado para poucos testes E2E que verificam os fluxos
 mais críticos do negócio. A metáfora visual é poderosa: assim como uma pirâmide
 real precisa de uma base larga para se sustentar, uma suíte de testes precisa de
 uma fundação sólida de testes rápidos e confiáveis.
@@ -180,8 +180,8 @@ uma fundação sólida de testes rápidos e confiáveis.
 
 \subsection{Testes Unitários: A Base}
 
-Testes unitários verificam uma unidade isolada de código --- tipicamente uma
-função ou método --- sem dependências externas. Eles são os tijolos da base da
+Testes unitários verificam uma unidade isolada de código, tipicamente uma
+função ou método, sem dependências externas. Eles são os tijolos da base da
 pirâmide, e sua importância vai muito além do que sua simplicidade sugere.
 
 A velocidade é a primeira e mais óbvia vantagem dos testes unitários. Um teste
@@ -189,13 +189,13 @@ unitário bem escrito executa em milissegundos, e milhares deles rodam em poucos
 segundos. Essa velocidade transforma o ciclo de feedback do desenvolvedor: em
 vez de esperar minutos ou horas para saber se uma mudança quebrou algo, o
 desenvolvedor descobre em segundos. Esse ciclo rápido é o que torna possível
-práticas como TDD e refatoração contínua --- quando o custo de verificação é
+práticas como TDD e refatoração contínua, pois quando o custo de verificação é
 quase zero, a frequência de verificação pode ser máxima.
 
 O isolamento é a segunda propriedade fundamental. Testes unitários não dependem
 de banco de dados, rede, sistema de arquivos ou outros serviços externos.
-Qualquer dependência externa é substituída por um test double --- um mock, stub
-ou fake que simula o comportamento da dependência real. Esse isolamento tem duas
+Qualquer dependência externa é substituída por um test double (um mock, stub
+ou fake que simula o comportamento da dependência real). Esse isolamento tem duas
 consequências importantes: primeiro, o teste é determinístico, ou seja, dado o
 mesmo código, ele sempre produz o mesmo resultado, eliminando a classe inteira
 de problemas de testes flaky causados por infraestrutura instável. Segundo, o
@@ -215,8 +215,8 @@ componentes funcionam juntos. Cada peça pode passar individualmente em todos os
 seus testes e o sistema pode falhar espetacularmente na integração. O método
 que formata a data pode funcionar perfeitamente com o formato que o teste
 unitário usa, mas falhar quando o banco de dados retorna a data em outro
-formato. Essa limitação não é um defeito --- é o preço do isolamento. Os testes
-de integração existem precisamente para cobrir esse gap.
+formato. Essa limitação não é um defeito; é o preço do isolamento. Os testes
+de integração existem para cobrir esse gap.
 
 \begin{lstlisting}[language=Python, caption={Teste unitário com pytest}]
 # calculadora.py
@@ -262,7 +262,7 @@ externa, um sistema de filas ou outro microserviço.
 A velocidade dos testes de integração é significativamente menor que a dos
 unitários, variando de segundos a minutos por teste, pois envolvem I/O real:
 conexões TCP, queries a bancos de dados, chamadas HTTP a APIs. Essa lentidão
-é o preço inevitável de testar interações reais, e é precisamente por isso que
+é o preço inevitável de testar interações reais, e por isso
 eles ocupam o meio da pirâmide, não a base. Se você tivesse milhares de testes
 de integração, sua suíte levaria horas para executar, e o ciclo de feedback
 rápido que testes unitários proporcionam seria destruído.
@@ -277,7 +277,7 @@ A proporção recomendada é de 15\% a 20\% da suíte de testes. O custo é
 moderado: testes de integração exigem infraestrutura (bancos de dados,
 containers, serviços auxiliares) e são mais frágeis que testes unitários, pois
 dependem do estado e disponibilidade dessa infraestrutura. Mas seu valor é
-insubstituível: eles capturam bugs que testes unitários nunca encontrariam ---
+insubstituível: eles capturam bugs que testes unitários nunca encontrariam,
 exatamente o tipo de bug que aparece quando ``cada peça funciona sozinha mas o
 sistema não funciona junto''. O serializador JSON serializa perfeitamente, o
 endpoint da API espera JSON perfeitamente, mas o formato de data que um produz
@@ -287,16 +287,15 @@ conversam de verdade, e é por isso que testes de integração existem.
 \subsection{Testes End-to-End (E2E): O Topo}
 
 Testes E2E simulam o comportamento real do usuário, percorrendo fluxos completos
-do sistema --- do clique no botão até a resposta na tela. Eles estão no topo da
+do sistema, do clique no botão até a resposta na tela. Eles estão no topo da
 pirâmide, e essa posição não é acidental.
 
 A velocidade é a primeira razão. Testes E2E são lentos, consumindo de segundos a
 minutos por teste individual. Eles envolvem um browser real (ou headless),
 comunicação de rede, interação com o banco de dados, e frequentemente chamadas
-a serviços externos. Um fluxo completo de checkout --- adicionar item ao
-carrinho, preencher dados de pagamento, confirmar pedido, verificar confirmação
---- pode levar 30 segundos ou mais. Uma suíte com centenas de testes E2E pode
-levar horas.
+a serviços externos. Um fluxo completo de checkout (adicionar item ao
+carrinho, preencher dados de pagamento, confirmar pedido) pode levar 30
+segundos ou mais. Uma suíte com centenas de testes E2E pode levar horas.
 
 O escopo, por outro lado, é o mais amplo possível: testes E2E verificam fluxos
 de negócio completos, exatamente como o usuário os experimenta. Não há mocks,
@@ -306,7 +305,7 @@ os dados, o serviço de pagamento responde, e o email de confirmação é dispar
 É o teste que mais se aproxima da realidade.
 
 A proporção recomendada é de 5\% a 10\% da suíte. Poucos, mas estratégicos.
-Cada teste E2E deve cobrir um fluxo de negócio crítico --- o tipo de fluxo que,
+Cada teste E2E deve cobrir um fluxo de negócio crítico, o tipo de fluxo que,
 se quebrar em produção, acorda o CTO às 3 da manhã. O custo de escrever e
 manter testes E2E é alto, e eles são notoriamente propensos a serem flaky,
 falhando intermitentemente por problemas de timing, rede ou estado residual.
@@ -315,8 +314,8 @@ do ponto de vista de quem realmente importa: o usuário.
 
 \subsection{Testes de Contrato}
 
-Testes de contrato verificam que a interface entre dois serviços --- produtor e
-consumidor --- respeita um acordo formal. São especialmente importantes em
+Testes de contrato verificam que a interface entre dois serviços (produtor e
+consumidor) respeita um acordo formal. São especialmente importantes em
 arquiteturas de microserviços, onde dezenas ou centenas de serviços se comunicam
 através de APIs, e uma mudança aparentemente inofensiva em um produtor pode
 quebrar silenciosamente três consumidores que ninguém lembrava que existiam.
@@ -325,7 +324,7 @@ O modelo mais eficaz é o de Consumer-Driven Contracts, onde o consumidor define
 explicitamente o que espera da API do produtor. Por exemplo, o serviço de
 pedidos (consumidor) declara: ``espero que GET /usuarios/1 retorne um JSON com
 os campos nome e email''. O serviço de usuários (produtor) então executa seus
-testes contra essa declaração, verificando que de fato atende a essas
+testes contra essa declaração, verificando que atende a essas
 expectativas. Ferramentas como \textbf{Pact} automatizam esse fluxo, gerando
 contratos a partir dos testes do consumidor e verificando-os contra o produtor.
 A grande vantagem desse modelo é que ele detecta quebras de contrato antes do
@@ -356,13 +355,13 @@ entre componentes, não dentro de componentes individuais. Testar um botão
 isoladamente prova muito pouco; testar o formulário inteiro com seus callbacks
 e validações prova muito mais.
 
-Na prática, a escolha entre pirâmide e troféu depende do contexto. Sistemas com
-lógica de negócio complexa e algoritmos sofisticados --- como um sistema
-financeiro que calcula juros compostos, impostos e câmbio --- se beneficiam
+A escolha entre pirâmide e troféu depende do contexto. Sistemas com
+lógica de negócio complexa e algoritmos sofisticados, como um sistema
+financeiro que calcula juros compostos, impostos e câmbio, se beneficiam
 enormemente de testes unitários extensos, porque a complexidade está nas
-funções individuais. Sistemas com muitas integrações e pouca lógica isolada ---
+funções individuais. Sistemas com muitas integrações e pouca lógica isolada,
 como um BFF (Backend for Frontend) que orquestra chamadas a vários
-microserviços --- se beneficiam mais de testes de integração, porque a
+microserviços, se beneficiam mais de testes de integração, porque a
 complexidade está nas interações. O verdadeiro erro não é escolher pirâmide ou
 troféu; o erro é não ter estratégia nenhuma e testar aleatoriamente, escrevendo
 testes onde for mais fácil em vez de onde for mais necessário.
@@ -390,8 +389,8 @@ Performance & min--h & Sistema & Alto & Antes de releases, SLAs \\
 % ============================================================
 
 TDD não é uma técnica de teste. TDD é uma \textbf{técnica de design} que usa
-testes como veículo. Essa distinção é fundamental, e para entendê-la
-profundamente, vale a pena conhecer a história de como TDD surgiu e por que
+testes como veículo. Essa distinção é central, e para entendê-la
+bem, vale a pena conhecer a história de como TDD surgiu e por que
 seu criador insiste nessa distinção até hoje.
 
 Kent Beck, um dos signatários do Manifesto Ágil e criador do Extreme Programming,
@@ -406,7 +405,7 @@ O resultado foi publicado em 2002 no livro \textit{Test-Driven Development: By
 Example}, que se tornou um dos textos mais influentes da engenharia de software
 moderna.
 
-O insight central de Beck não era sobre testes --- era sobre medo. Ele observou
+O insight central de Beck não era sobre testes; era sobre medo. Ele observou
 que programadores frequentemente ficavam paralisados pelo medo de que seus
 programas não funcionassem, e que esse medo levava a comportamentos
 contraproducentes: postergação, over-engineering, código defensivo em excesso.
@@ -434,7 +433,7 @@ O ciclo Red-Green-Refactor é a mecânica operacional do TDD, e cada fase tem um
 disciplina específica que precisa ser respeitada para que o processo funcione.
 
 A fase \textbf{Red} é onde tudo começa. Você escreve um teste que descreve o
-comportamento desejado --- um comportamento que ainda não existe no código. Então
+comportamento desejado, um comportamento que ainda não existe no código. Então
 você executa o teste. Ele deve falhar. Se não falhar, algo está errado: ou o
 comportamento já existe (e portanto o teste não está testando nada novo), ou o
 teste está mal escrito e não verifica o que deveria. A falha é essencial. Ela
@@ -462,9 +461,9 @@ estão corretas.
 
 \subsection{TDD como Técnica de Design}
 
-O valor do TDD não está nos testes que ele produz --- está nas decisões de
+O valor do TDD não está nos testes que ele produz. Está nas decisões de
 design que ele força. Essa é uma afirmação que parece paradoxal até que você
-a experimenta na prática.
+a experimenta.
 
 Ao escrever o teste primeiro, você é obrigado a definir \textit{o que} o código
 deve fazer antes de pensar em \textit{como} fazer. Essa inversão é poderosa
@@ -490,8 +489,8 @@ que exige seu comportamento. Se nenhum teste precisa de uma feature, essa featur
 não é escrita. O escopo é controlado pela realidade dos requisitos, não pela
 imaginação do desenvolvedor.
 
-E quando chega a hora de reestruturar o código --- extrair uma classe, renomear
-um módulo, mudar uma hierarquia de herança --- os testes que foram acumulados
+E quando chega a hora de reestruturar o código (extrair uma classe, renomear
+um módulo, mudar uma hierarquia de herança), os testes que foram acumulados
 ao longo do processo fornecem a rede de segurança que torna a refatoração
 segura. Você pode reestruturar com confiança, sabendo que se algum
 comportamento for inadvertidamente alterado, um teste vai falhar e apontar
@@ -505,7 +504,7 @@ faz.
 TDD vale a pena quando você está trabalhando com lógica de negócio complexa,
 onde as regras têm muitos edge cases e as consequências de um erro são
 significativas. Algoritmos financeiros, cálculos de impostos, regras de
-elegibilidade em seguros, validações regulatórias --- todos esses domínios se
+elegibilidade em seguros, validações regulatórias: todos esses domínios se
 beneficiam enormemente da disciplina do TDD, porque os testes acumulados se
 tornam uma especificação viva das regras de negócio, e a abordagem incremental
 garante que cada regra é implementada e verificada individualmente. TDD também
@@ -523,7 +522,7 @@ estrutura do ciclo Red-Green-Refactor.
 
 Como regra prática: se o código vai durar mais de uma semana e contém lógica
 que pode quebrar, TDD compensa. Se é genuinamente descartável, escreva o teste
-depois --- ou não escreva.
+depois, ou não escreva.
 
 \subsection{TDD + IA: O Workflow do Capítulo 4}
 
@@ -533,18 +532,18 @@ para o dia a dia do engenheiro de software.
 
 O workflow começa com o engenheiro escrevendo o teste. Essa é a etapa que exige
 conhecimento do domínio, compreensão das regras de negócio, e julgamento sobre
-quais edge cases são relevantes --- exatamente o tipo de competência que a IA
+quais edge cases são relevantes, o tipo de competência que a IA
 não possui. O engenheiro define o comportamento esperado, as pré-condições e
 pós-condições, os valores de fronteira que separam um caso de outro, as exceções
-que devem ser lançadas em condições inválidas. Esse teste é, em essência, uma
+que devem ser lançadas em condições inválidas. Esse teste é, na prática, uma
 especificação formal e executável.
 
 Em seguida, a IA recebe o teste como entrada e implementa o código que o
 satisfaz. Dado um teste claro, modelos como GPT-4 ou Claude geram implementações
 corretas com frequência impressionante. O teste funciona como um contrato
 verificável: se a IA gerar código que não passa no teste, ela sabe que errou e
-pode tentar novamente. Essa dinâmica é fundamentalmente diferente de pedir à IA
-que ``implemente um cálculo de desconto'' sem testes --- nesse caso, a IA não tem
+pode tentar novamente. Essa dinâmica é diferente de pedir à IA
+que ``implemente um cálculo de desconto'' sem testes. Sem testes, a IA não tem
 como saber se acertou, e o engenheiro precisa verificar manualmente.
 
 Por fim, o engenheiro revisa a implementação gerada pela IA, verificando se ela é
@@ -571,7 +570,7 @@ Acima de R\$500, desconto de 10\%.
 Antes de escrever qualquer código, vamos pensar sobre essa regra. Temos três
 faixas, dois limites (100 e 500), e a pergunta imediata é: os limites são
 inclusivos ou exclusivos? ``Até R\$100'' inclui R\$100 ou não? ``De R\$100 a
-R\$500'' --- R\$100 está nessa faixa ou na anterior? Essas ambiguidades são
+R\$500'': R\$100 está nessa faixa ou na anterior? Essas ambiguidades são
 exatamente o tipo de detalhe que TDD força a resolver antes de qualquer
 implementação, porque o teste precisa de valores concretos e resultados
 concretos.
@@ -607,7 +606,7 @@ def calcular_desconto_progressivo(valor: float) -> float:
 Sim, a implementação simplesmente retorna o valor original. Parece ridículo?
 É proposital. No estado atual, com apenas testes para a faixa sem desconto,
 retornar o valor original é a implementação mais simples que satisfaz todos os
-testes. Nenhuma refatoração necessária --- o código é trivial. Seguimos para o
+testes. Nenhuma refatoração necessária; o código é trivial. Seguimos para o
 próximo ciclo, onde um novo teste forçará a implementação a ficar mais
 sofisticada.
 
@@ -619,7 +618,7 @@ def test_desconto_5_porcento_entre_100_e_500():
     assert calcular_desconto_progressivo(500.0) == 475.0
 \end{lstlisting}
 
-Agora o \texttt{return valor} não é mais suficiente --- o teste para R\$200
+Agora o \texttt{return valor} não é mais suficiente: o teste para R\$200
 espera R\$190, e a implementação atual retornaria R\$200. O teste está
 vermelho, exatamente como queremos. Implementamos o mínimo:
 
@@ -644,9 +643,9 @@ def test_desconto_10_porcento_acima_de_500():
 \end{lstlisting}
 
 Agora precisamos de uma terceira faixa. O teste para R\$500,01 é
-particularmente importante --- é o valor de fronteira que testa se a
+particularmente importante: é o valor de fronteira que testa se a
 implementação realmente distingue entre ``até R\$500'' e ``acima de R\$500''.
-Esses valores de fronteira são exatamente o tipo de teste que a IA tende a
+Esses valores de fronteira são o tipo de teste que a IA tende a
 pular e que o engenheiro, com conhecimento da regra de negócio, sabe que são
 críticos.
 
@@ -689,7 +688,7 @@ Observe: após a refatoração, todos os testes anteriores continuam passando. A
 faixas agora são dados configuráveis, não lógica hardcoded. Se uma nova faixa
 surgir, basta adicionar uma tupla à lista. A refatoração melhorou o design sem
 alterar o comportamento, e os testes são a prova viva disso. É assim que TDD
-funciona na prática: não como uma cerimônia burocrática, mas como um diálogo
+funciona: não como uma cerimônia burocrática, mas como um diálogo
 contínuo entre intenção (testes) e implementação (código), mediado pela
 refatoração.
 
@@ -713,7 +712,7 @@ uma em segundos. Um humano levaria minutos ou horas para o mesmo trabalho, com
 risco maior de esquecer algum caminho por fadiga cognitiva.
 
 O segundo talento é a geração de boilerplate de testes. Setup, teardown,
-fixtures, mocks, configuração de ambientes de teste --- toda a infraestrutura
+fixtures, mocks, configuração de ambientes de teste: toda a infraestrutura
 repetitiva que precisa existir antes que o teste real possa ser escrito. Em
 projetos grandes, esse boilerplate pode representar 60\% ou mais do código de
 teste. A IA gera essa infraestrutura rapidamente e com boa qualidade, liberando
@@ -721,9 +720,9 @@ o engenheiro para focar no que realmente importa: as assertions que verificam
 comportamento.
 
 A IA também se destaca na geração de testes de regressão. Quando um bug é
-reportado --- ``quando o usuário tenta aplicar um cupom de desconto com
-caracteres especiais, o sistema retorna erro 500'' --- a IA pode rapidamente
-gerar um teste que reproduz exatamente esse cenário. O teste falha (confirmando
+reportado (``quando o usuário tenta aplicar um cupom de desconto com
+caracteres especiais, o sistema retorna erro 500''), a IA pode rapidamente
+gerar um teste que reproduz esse cenário. O teste falha (confirmando
 o bug), e então o desenvolvedor corrige o código até o teste passar. Esse
 workflow é particularmente eficiente porque a IA é boa em traduzir descrições
 de bugs em código de teste.
@@ -740,7 +739,7 @@ seu tempo em testes que exigem julgamento humano.
 As limitações da IA em testes são tão importantes quanto suas capacidades, e
 ignorá-las é a receita para uma suíte de testes que dá falsa confiança.
 
-A limitação mais fundamental é que a IA não valida intenção. Ela não sabe se o
+A limitação mais grave é que a IA não valida intenção. Ela não sabe se o
 código \textit{deveria} retornar 42 ou 43. Ela observa que o código retorna 42
 e escreve um teste que verifica que ele retorna 42. Se o código tem um bug e
 retorna 42 quando deveria retornar 43, a IA vai fielmente escrever um teste que
@@ -762,9 +761,9 @@ execução com igual importância: o cálculo de juros que move milhões de reai
 a formatação de uma data em um relatório recebem o mesmo nível de atenção. O
 engenheiro sabe que um bug no cálculo de juros pode causar um processo judicial,
 enquanto um bug na formatação de data é um inconveniente menor. Essa
-priorização, baseada em risco e impacto, é fundamentalmente humana.
+priorização, baseada em risco e impacto, é inerentemente humana.
 
-E talvez a limitação mais sutil: a IA não gera testes para funcionalidades que
+E a limitação mais sutil: a IA não gera testes para funcionalidades que
 deveriam existir mas não foram implementadas. Se um requisito diz que o sistema
 deve enviar notificação por SMS quando o pedido é despachado, mas o código
 simplesmente não tem essa funcionalidade, a IA não vai gerar um teste para ela.
@@ -819,8 +818,8 @@ atenção especial porque a qualidade dos dados de teste frequentemente determin
 a qualidade dos próprios testes.
 
 Na geração de fixtures complexas, a IA brilha. Objetos com muitos campos e
-relações entre si --- um pedido com itens, cada item com produto, cada produto
-com categoria, cada categoria com regras fiscais --- exigem código de setup
+relações entre si (um pedido com itens, cada item com produto, cada produto
+com categoria, cada categoria com regras fiscais) exigem código de setup
 tedioso e propenso a erros quando escritos manualmente. A IA gera essas
 fixtures com campos preenchidos de forma coerente, respeitando tipos e
 relacionamentos, economizando tempo significativo do desenvolvedor.
@@ -829,7 +828,7 @@ Para dados limítrofes, a IA é particularmente útil porque é incansável na
 exploração de fronteiras. Valores no limite exato de faixas (R\$100,00 vs.
 R\$100,01), strings com caracteres especiais e emojis que podem quebrar
 parsers, datas em 29 de fevereiro de anos bissextos, timestamps no exato
-momento de mudança de fuso horário, inteiros no limite de \texttt{MAX\_INT} ---
+momento de mudança de fuso horário, inteiros no limite de \texttt{MAX\_INT}:
 a IA gera todos esses casos automaticamente, enquanto o humano tenderia a
 testar com valores ``confortáveis'' como 100, 200, 500.
 
@@ -850,14 +849,14 @@ falsa confiança.
 
 A afirmação ``100\% de cobertura não significa 100\% de qualidade'' é repetida
 com tanta frequência que virou clichê, mas poucas equipes realmente entendem o
-que ela significa na prática. Você pode cobrir todas as linhas de uma função sem
+que ela significa. Você pode cobrir todas as linhas de uma função sem
 verificar nada útil: basta chamar a função e escrever \texttt{assert True}. A
 linha foi executada, a cobertura registra que foi coberta, mas nenhum
 comportamento foi verificado. Isso é pior que não ter teste, porque dá a ilusão
 de segurança sem a substância.
 
 A postura correta é tratar cobertura como piso, não como teto. Defina um mínimo
-aceitável --- por exemplo, 80\% --- e então concentre-se na qualidade dos testes,
+aceitável (por exemplo, 80\%) e então concentre-se na qualidade dos testes,
 não no número. Um módulo com 75\% de cobertura e testes que verificam todos os
 cenários críticos de negócio é infinitamente mais confiável que um módulo com
 95\% de cobertura e testes que apenas executam o código sem verificar resultados.
@@ -868,7 +867,7 @@ desses testes são \textit{tautológicos}: verificam que o código faz o que faz
 sem questionar se deveria. Uma equipe que pede à IA para ``aumentar a cobertura
 para 90\%'' pode receber dezenas de testes que atingem a meta numérica sem
 adicionar confiança real. A métrica melhora; a qualidade não. E a equipe, olhando
-o dashboard verde com 90\% de cobertura, acredita estar protegida --- até o
+o dashboard verde com 90\% de cobertura, acredita estar protegida, até o
 próximo bug em produção provar o contrário.
 
 \subsection{Comparação: Teste Gerado por IA vs. Teste Escrito por Humano}
@@ -932,18 +931,18 @@ testes frágeis e difíceis de manter.
 \end{figure}
 
 Um \textbf{Stub} fornece respostas pré-definidas a chamadas feitas durante o
-teste. Imagine que você está testando um serviço de pedidos que precisa
+teste. Suponha que você está testando um serviço de pedidos que precisa
 consultar o serviço de estoque para verificar disponibilidade. Em vez de chamar
 o serviço de estoque real (que pode estar fora do ar, pode ser lento, pode
 retornar dados diferentes a cada chamada), você cria um stub que sempre retorna
 ``produto disponível, 50 unidades em estoque''. O stub não verifica como foi
 chamado; ele simplesmente retorna dados fixos quando consultado. É como
-perguntar a hora para um relógio parado que mostra 15:00 --- ele sempre dá a
-mesma resposta, e isso é exatamente o que você quer quando precisa de
+perguntar a hora para um relógio parado que mostra 15:00: ele sempre dá a
+mesma resposta, e isso é o que você quer quando precisa de
 previsibilidade.
 
 Um \textbf{Mock} vai além: ele não apenas retorna dados, mas também verifica
-que foi chamado da maneira esperada. Imagine que você está testando o envio de
+que foi chamado da maneira esperada. Suponha que você está testando o envio de
 email após a criação de um pedido. Você quer verificar não apenas que o email
 foi enviado, mas que foi enviado para o destinatário correto, com o assunto
 correto, no momento correto. O mock registra essas chamadas e, ao final do
@@ -958,8 +957,8 @@ real. O exemplo clássico é um banco de dados em memória: em vez de conectar a
 um PostgreSQL real, você usa um dicionário Python que implementa as mesmas
 operações (inserir, buscar, atualizar, deletar) mas armazena tudo na memória.
 O fake se comporta como o banco real para todos os efeitos do teste, mas é
-ordens de magnitude mais rápido e não requer infraestrutura externa. Imagine
-testar um gateway de pagamento: em vez de processar transações reais no Stripe,
+ordens de magnitude mais rápido e não requer infraestrutura externa. Para
+testar um gateway de pagamento, por exemplo: em vez de processar transações reais no Stripe,
 você cria um fake que aceita qualquer cartão com número começando em ``4'' e
 rejeita os demais. O comportamento simula o real o suficiente para o teste,
 sem os custos e riscos de transações reais.
@@ -1049,7 +1048,7 @@ A escolha entre mock e fake revela uma tensão fundamental nos testes: mocks
 testam \textit{como} o código interage com suas dependências (verificação de
 comportamento), enquanto fakes testam \textit{o que} o código produz como
 resultado (verificação de estado). Em geral, testes de estado são mais
-resilientes a refatorações --- se você muda a implementação interna mas produz
+resilientes a refatorações. Se você muda a implementação interna mas produz
 o mesmo resultado, testes com fakes continuam passando, enquanto testes com
 mocks podem quebrar porque a sequência de chamadas mudou. Reserve mocks para
 situações onde a interação em si é o comportamento que importa (como envio de
@@ -1100,9 +1099,9 @@ def test_inserir_e_buscar_pedido(postgres_engine):
     assert resultado.status == "pendente"
 \end{lstlisting}
 
-A vantagem fundamental do Testcontainers é que os testes executam contra um
-banco de dados real --- PostgreSQL, MySQL, Redis, MongoDB, o que for necessário
---- não contra mocks que simulam o comportamento do banco. Isso significa que
+A vantagem principal do Testcontainers é que os testes executam contra um
+banco de dados real (PostgreSQL, MySQL, Redis, MongoDB, o que for necessário),
+não contra mocks que simulam o comportamento do banco. Isso significa que
 queries SQL reais são executadas contra um engine real, com todas as nuances de
 tipos de dados, colações, locks e comportamentos de transação que um mock não
 consegue reproduzir fielmente. O número de bugs causados por diferenças entre o
@@ -1117,9 +1116,9 @@ tem estado diferente.
 
 A integração com CI/CD é transparente: qualquer pipeline que tenha Docker
 disponível pode executar esses testes sem configuração adicional de
-infraestrutura. O custo é aceitável para testes de integração --- containers
-levam tipicamente de 2 a 10 segundos para iniciar, dependendo da imagem --- mas
-seria inaceitável para testes unitários, onde cada milissegundo conta. É por isso
+infraestrutura. O custo é aceitável para testes de integração; containers
+levam tipicamente de 2 a 10 segundos para iniciar, dependendo da imagem. Seria
+inaceitável para testes unitários, onde cada milissegundo conta. É por isso
 que Testcontainers vive no meio da pirâmide, não na base.
 
 \subsection{Testes de API e Contrato}
@@ -1144,8 +1143,8 @@ mas é mais fácil de adotar e mantém a documentação da API sincronizada com 
 implementação.
 
 O snapshot testing captura a resposta completa da API e a compara com um
-snapshot salvo anteriormente. Qualquer mudança na resposta --- um campo
-adicionado, um valor default alterado, um formato de data modificado --- é
+snapshot salvo anteriormente. Qualquer mudança na resposta (um campo
+adicionado, um valor default alterado, um formato de data modificado) é
 detectada. É útil para identificar mudanças inesperadas, mas requer disciplina
 para manter os snapshots atualizados quando mudanças intencionais acontecem.
 
@@ -1158,12 +1157,12 @@ O \textbf{Playwright}, criado pela Microsoft, oferece suporte a múltiplos
 browsers (Chromium, Firefox e WebKit), uma API moderna disponível em Python,
 JavaScript, Java e .NET, e capacidades excelentes para testes cross-browser.
 Sua arquitetura permite controlar o browser de fora do processo, o que oferece
-mais poder e flexibilidade, além de suporte nativo a funcionalidades como
+mais poder e flexibilidade, com suporte nativo a funcionalidades como
 interceptação de rede, emulação de dispositivos e testes de acessibilidade.
 
 O \textbf{Cypress} conquistou a comunidade JavaScript com uma developer
 experience excepcional. Ele executa dentro do próprio browser, o que permite
-funcionalidades como time-travel debugging --- onde o desenvolvedor pode
+funcionalidades como time-travel debugging, onde o desenvolvedor pode
 ``voltar no tempo'' e ver o estado exato da aplicação em cada passo do teste.
 A desvantagem é que sua arquitetura limita o suporte a browsers baseados em
 Chromium, o que pode ser insuficiente para equipes que precisam garantir
@@ -1173,7 +1172,7 @@ A IA está encontrando um papel interessante na criação de testes E2E. LLMs
 podem gerar scripts a partir de descrições em linguagem natural (``teste o
 fluxo de checkout: adicionar item ao carrinho, ir para pagamento, preencher
 dados, confirmar pedido''). O resultado é um bom ponto de partida que captura a
-estrutura geral do fluxo. Entretanto, quase sempre requer ajustes manuais para
+estrutura geral do fluxo. Quase sempre, porém, o script requer ajustes manuais para
 seletores CSS/XPath específicos do projeto, estratégias de espera adequadas
 (\texttt{waitForSelector} vs. \texttt{waitForNavigation}), e assertions que
 verificam não apenas que elementos existem, mas que contêm o conteúdo esperado.
@@ -1192,7 +1191,7 @@ histórias reais, porque os números secos não capturam o caos que um sistema s
 testes de performance pode causar.
 
 Considere o caso clássico de Black Friday. Um e-commerce que nunca testou carga
---- porque ``funcionava bem no dia a dia'' --- caiu nos primeiros cinco minutos
+(porque ``funcionava bem no dia a dia'') caiu nos primeiros cinco minutos
 de uma promoção massiva. O banco de dados, dimensionado para 500 conexões
 simultâneas, recebeu 5.000. As filas de processamento, que normalmente tinham
 latência de milissegundos, acumularam atraso de minutos. O cache que deveria
@@ -1200,7 +1199,7 @@ absorver o pico de leitura foi invalidado por uma atualização de preço em mas
 feita minutos antes da promoção começar. O resultado: milhões em perda de vendas,
 dano à reputação da marca nas redes sociais, e semanas de trabalho para
 diagnosticar e corrigir todos os gargalos. Tudo isso poderia ter sido antecipado
-com um teste de carga que simulasse o cenário --- não para impedir o problema,
+com um teste de carga que simulasse o cenário. Não para impedir o problema,
 mas para descobri-lo semanas antes, quando ainda havia tempo de corrigir.
 
 Outro caso igualmente instrutivo é o da latência crescente silenciosa. Um
@@ -1213,8 +1212,8 @@ performance, o problema foi detectado em produção, pelo monitoramento de
 alertas, horas depois do deploy. Com teste de performance, teria sido detectado
 em staging, minutos depois do commit.
 
-E quando o negócio depende de SLAs --- contratos que exigem 99.9\% de
-disponibilidade e latência p95 abaixo de 200ms --- testes de performance deixam
+E quando o negócio depende de SLAs (contratos que exigem 99.9\% de
+disponibilidade e latência p95 abaixo de 200ms), testes de performance deixam
 de ser ``nice to have'' e passam a ser obrigação contratual. Você precisa provar
 que o sistema atende a esses requisitos com dados, não com esperança.
 
@@ -1252,8 +1251,8 @@ A tradução de métricas de produção em scripts de teste é o caso de uso mai
 comum. Quando uma equipe sabe que tem 10.000 usuários simultâneos com 60\% de
 reads e 40\% de writes, a IA pode transformar essa descrição em um script k6 ou
 Locust com os ratios corretos, os endpoints certos, e a distribuição temporal
-adequada. O que levaria uma hora de trabalho manual --- configurar cenários,
-definir ramp-up, calibrar think-times --- a IA gera em minutos.
+adequada. O que levaria uma hora de trabalho manual (configurar cenários,
+definir ramp-up, calibrar think-times), a IA gera em minutos.
 
 A geração de dados variados é outra área de destaque. Distribuições realistas
 de tamanhos de payload (nem todos os requests são iguais), tempos de think-time
@@ -1278,7 +1277,7 @@ forma superficial.
 A \textbf{latência} deve ser analisada em percentis, nunca em média. A média
 é uma das métricas mais enganosas em performance: se o p50 (mediana) é 50ms mas
 o p99 é 5 segundos, a média pode ser 150ms, que parece aceitável. Mas significa
-que 1\% dos seus usuários --- potencialmente milhares de pessoas por dia --- está
+que 1\% dos seus usuários (potencialmente milhares de pessoas por dia) está
 tendo uma experiência péssima. Use p50 para entender a experiência típica, p95
 para entender a experiência da maioria, e p99 para entender a experiência dos
 usuários mais azarados (que frequentemente são os mais importantes, porque estão
@@ -1293,20 +1292,20 @@ ponto de inflexão entre o platô e a degradação é o limite real do seu siste
 
 A \textbf{taxa de erros} mede o percentual de requisições que falham sob carga.
 Em condições normais, essa taxa deve ser zero ou próxima de zero. Ela começa a
-subir quando o sistema atinge seu limite de capacidade --- timeouts,
+subir quando o sistema atinge seu limite de capacidade: timeouts,
 connection refused, out of memory. Monitorar a taxa de erros em função da carga
-revela exatamente onde o sistema quebra.
+revela onde o sistema quebra.
 
-A \textbf{saturação} de recursos --- CPU, memória, conexões de banco, threads,
-file descriptors --- identifica o gargalo antes que ele cause falhas visíveis.
+A \textbf{saturação} de recursos (CPU, memória, conexões de banco, threads,
+file descriptors) identifica o gargalo antes que ele cause falhas visíveis.
 Se a CPU está a 95\% enquanto a memória está a 30\%, você sabe que o próximo
 investimento deve ser em otimização de CPU (ou mais instâncias), não em memória.
 
-Na prática, a estratégia mais reveladora é rodar testes com carga crescente
+A estratégia mais reveladora é rodar testes com carga crescente
 (ramp-up linear) e plotar latência, throughput e taxa de erros em função do
 número de usuários simultâneos. O ponto de inflexão onde a latência começa a
-crescer exponencialmente é o limite real do seu sistema, e é esse número ---
-não a capacidade teórica --- que deve informar decisões de dimensionamento.
+crescer exponencialmente é o limite real do seu sistema, e é esse número,
+não a capacidade teórica, que deve informar decisões de dimensionamento.
 
 % ============================================================
 \section{Mutation Testing e Qualidade de Testes}
@@ -1318,24 +1317,24 @@ mede se o teste \textit{detecta} mudanças no código. A diferença é enorme.
 \subsection{O Que É Mutation Testing}
 
 A melhor analogia para mutation testing é testar um alarme de incêndio. Você
-pode verificar se o alarme está ligado (cobertura de código --- o código foi
+pode verificar se o alarme está ligado (cobertura de código, ou seja, o código foi
 executado), ou pode acender um fósforo embaixo dele para ver se ele dispara
-(mutation testing --- o teste detectou uma mudança). Um alarme que está ligado
-mas não dispara quando há fogo é pior que inútil --- é perigosamente
+(mutation testing, ou seja, o teste detectou uma mudança). Um alarme que está ligado
+mas não dispara quando há fogo é pior que inútil; é perigosamente
 tranquilizante. Da mesma forma, testes que executam o código mas não detectam
 mudanças no comportamento dão uma falsa sensação de segurança.
 
 O mecanismo funciona assim: uma ferramenta de mutation testing cria
 ``mutantes'' do código original. Cada mutante é uma cópia do código com uma
-pequena alteração semântica --- trocar \texttt{>} por \texttt{>=}, substituir
+pequena alteração semântica: trocar \texttt{>} por \texttt{>=}, substituir
 \texttt{+} por \texttt{-}, inverter \texttt{True} para \texttt{False}, remover
 uma linha, trocar o valor de retorno. Essas alterações são pequenas o suficiente
 para serem plausíveis (representam bugs que um programador poderia realmente
 introduzir) mas grandes o suficiente para alterar o comportamento observável.
 
 Para cada mutante, a ferramenta executa toda a suíte de testes. Se algum teste
-falha ao rodar contra o mutante, isso significa que o teste detectou a mutação
---- o mutante é considerado \textbf{morto}. Isso é bom: significa que seus
+falha ao rodar contra o mutante, isso significa que o teste detectou a mutação,
+e o mutante é considerado \textbf{morto}. Isso é bom: significa que seus
 testes são sensíveis a essa classe de mudança. Se nenhum teste falha, o mutante
 \textbf{sobreviveu}. Isso é preocupante: significa que você pode introduzir
 aquela mudança no código e nenhum teste vai perceber. O mutante sobrevivente
@@ -1344,7 +1343,7 @@ aponta diretamente para uma lacuna na sua suíte de testes.
 Voltando à analogia do alarme de incêndio: cada mutante é como um pequeno foco
 de fogo controlado em um cômodo diferente do prédio. Se o alarme dispara para
 todos os focos, o sistema de proteção funciona. Se o alarme não dispara no foco
-da cozinha, você sabe exatamente onde instalar um detector adicional.
+da cozinha, você sabe onde instalar um detector adicional.
 
 \begin{figure}[htbp]
     \centering
@@ -1365,10 +1364,10 @@ determinado mutante). Para equipes Java, PIT é a escolha padrão e raramente
 decepciona.
 
 O \textbf{mutmut} é a opção principal para Python. Sua configuração é
-deliberadamente simples --- em muitos projetos, basta executar
+deliberadamente simples; em muitos projetos, basta executar
 \texttt{mutmut run} na raiz do projeto e ele encontra o código e os testes
 automaticamente. Funciona com pytest e produz relatórios claros que indicam
-exatamente qual linha foi mutada e qual mutante sobreviveu.
+qual linha foi mutada e qual mutante sobreviveu.
 
 O \textbf{Stryker} domina o ecossistema JavaScript e TypeScript, com suporte a
 Jest, Mocha e Karma. Seu diferencial é um dashboard web com relatórios visuais
@@ -1394,7 +1393,7 @@ Mutation score diz ``85\% dos mutantes foram detectados pelos testes''. Isso med
 diretamente se os testes verificam o comportamento, não apenas se o código é
 executado. Um mutation score de 85\% significa que, de cada 100 mudanças
 plausíveis no código, 85 seriam detectadas pelos testes. As 15 restantes
-passariam despercebidas --- e cada uma delas é um bug potencial que nenhum
+passariam despercebidas, e cada uma delas é um bug potencial que nenhum
 teste pegaria.
 
 O exemplo que ilustra essa diferença de forma mais dramática é um teste que
@@ -1403,7 +1402,7 @@ a cobertura (a função foi executada), mas não mata nenhum mutante (nenhuma
 mudança no retorno da função é detectada). A cobertura sobe; o mutation score
 permanece zero. A métrica superficial melhora; a proteção real não existe.
 
-Na prática, um mutation score abaixo de 60\% indica testes fracos, mesmo que a
+Um mutation score abaixo de 60\% indica testes fracos, mesmo que a
 cobertura de código seja alta. Acima de 80\% é considerado bom para a maioria
 dos projetos. Acima de 90\% é excelente e tipicamente encontrado apenas em
 código crítico (bibliotecas financeiras, sistemas de segurança) onde o
@@ -1433,8 +1432,8 @@ rapidamente quando o código é simples o suficiente para ser verificado por
 inspeção visual.
 
 A estratégia mais pragmática é não rodar mutation testing em todo o código.
-Identifique os módulos mais críticos do seu sistema --- aqueles que, se
-falharem, causam o maior impacto --- e aplique mutation testing apenas neles.
+Identifique os módulos mais críticos do seu sistema, aqueles que, se
+falharem, causam o maior impacto, e aplique mutation testing apenas neles.
 Use como uma auditoria periódica (por exemplo, a cada release ou a cada sprint),
 não como um gate em cada pull request. Dessa forma, você obtém o benefício da
 informação (saber onde seus testes são fracos) sem o custo de executar em cada
@@ -1445,8 +1444,8 @@ commit.
 % ============================================================
 
 Um pipeline de testes bem desenhado segue um princípio simples: \textbf{feedback
-rápido primeiro, validação profunda depois}. Esse princípio não é apenas uma
-questão de eficiência --- é uma questão de psicologia de desenvolvimento. Se o
+rápido primeiro, validação completa depois}. Esse princípio não é apenas uma
+questão de eficiência; é uma questão de psicologia de desenvolvimento. Se o
 desenvolvedor precisa esperar 20 minutos para saber que esqueceu um ponto e
 vírgula, ele vai odiar o pipeline. Se descobre em 10 segundos, corrige e segue
 em frente. A velocidade do feedback determina se o pipeline é um aliado ou um
@@ -1475,7 +1474,7 @@ surpreendente de problemas.
 
 O segundo estágio são os \textbf{Testes Unitários}, que levam tipicamente cerca
 de 30 segundos. Esta é a primeira linha de defesa real. Os testes unitários
-executam rapidamente porque não têm dependências externas --- sem banco, sem
+executam rapidamente porque não têm dependências externas: sem banco, sem
 rede, sem containers. Se algum teste unitário falha, o desenvolvedor sabe em
 menos de um minuto que algo está errado com a lógica do código. A maioria dos
 bugs é capturada aqui, e o custo de feedback é mínimo.
@@ -1501,8 +1500,8 @@ um usuário faria. Esses testes são caros e lentos, mas são os únicos que
 verificam que toda a pilha funciona do ponto de vista do usuário final.
 
 O sexto e último estágio são os \textbf{Testes de Performance}, que levam de
-10 a 30 minutos. Estes tipicamente não são executados em cada pull request ---
-o custo seria proibitivo. Em vez disso, são executados em releases, em branches
+10 a 30 minutos. Estes tipicamente não são executados em cada pull request,
+pois o custo seria proibitivo. Em vez disso, são executados em releases, em branches
 específicas, ou periodicamente (diariamente ou semanalmente). Eles verificam
 que o sistema atende aos SLAs de latência e throughput sob carga realista.
 
@@ -1516,7 +1515,7 @@ falhariam de qualquer forma.
 O loop de feedback rápido é o coração de um pipeline eficaz, e a regra dos 10
 minutos é o benchmark mais citado: se o desenvolvedor precisa esperar mais de
 10 minutos para saber se seu código está correto, algo está errado no pipeline.
-Acima de 10 minutos, o desenvolvedor troca de contexto --- abre outra tarefa,
+Acima de 10 minutos, o desenvolvedor troca de contexto: abre outra tarefa,
 lê emails, vai buscar café. Quando o resultado chega, ele já perdeu o contexto
 mental e precisa de tempo para reconstruí-lo. O custo real não é o tempo de
 espera do pipeline, mas o tempo de retomada de contexto.
@@ -1549,15 +1548,15 @@ seja integrado ao branch principal. É a última linha de defesa antes que o
 código entre no tronco compartilhado e passe a afetar todos os
 desenvolvedores.
 
-A condição mais óbvia --- e mais frequentemente violada por pressão de prazo
---- é que todos os testes passem. Parece trivial, mas a quantidade de equipes
+A condição mais óbvia, e mais frequentemente violada por pressão de prazo,
+é que todos os testes passem. Parece trivial, mas a quantidade de equipes
 que fazem merge com testes falhando ``porque é só um teste flaky'' ou ``porque
 o prazo é amanhã'' é alarmante. Cada merge com testes falhando corrói a
 confiança da equipe na suíte, criando um ciclo vicioso onde mais falhas são
 toleradas.
 
 A cobertura mínima é outro gate comum: exigir que novas linhas de código tenham
-ao menos 80\% de cobertura por testes. Não exija 100\% --- isso incentiva a
+ao menos 80\% de cobertura por testes. Não exija 100\%; isso incentiva a
 criação de testes inúteis apenas para atingir a métrica. O objetivo é garantir
 que código novo é testado, não que cada getter e setter trivial tem um teste
 dedicado.
@@ -1605,7 +1604,7 @@ outra causa frequente: testes que dependem do estado deixado por testes
 anteriores funcionam quando executados em sequência mas falham quando executados
 em ordem aleatória ou em paralelo. A correção é garantir que cada teste é
 independente, com seu próprio setup e teardown. Estado compartilhado entre
-testes --- variáveis globais, singletons, dados em banco --- é uma variação do
+testes (variáveis globais, singletons, dados em banco) é uma variação do
 mesmo problema. Race conditions em testes que envolvem concorrência e
 dependência de rede em testes que chamam serviços externos completam a lista
 dos suspeitos habituais.
@@ -1625,7 +1624,7 @@ setup e teardown isolados que não dependem de estado externo.
 Quando a correção imediata não é possível (porque a causa é complexa ou o tempo
 é curto), a estratégia de quarentena é preferível a ignorar. Mova o teste para
 uma suíte separada, marcada como flaky, que é executada separadamente e não
-bloqueia o pipeline principal. Não delete o teste --- ele está apontando para um
+bloqueia o pipeline principal. Não delete o teste: ele está apontando para um
 problema real, mesmo que intermitente. Corrija-o na próxima sprint, antes que a
 quarentena vire um cemitério de testes esquecidos.
 
@@ -1645,14 +1644,14 @@ que passou por todos os filtros baratos chega aos filtros caros.
 
 Recover faster significa que, quando a build quebra no branch principal, a
 prioridade absoluta da equipe é restaurar o verde. Não ``investigar quando
-tiver tempo'' --- restaurar agora. A regra prática que muitas equipes adotam
+tiver tempo''; restaurar agora. A regra prática que muitas equipes adotam
 é: se a build está vermelha por mais de 30 minutos, reverta o commit
 problemático e investigue offline. A build verde é um recurso compartilhado da
 equipe; deixá-la vermelha bloqueia todos.
 
 As notificações devem ser direcionadas, não genéricas. Alerte o autor do commit
 que quebrou a build, não a equipe inteira. Um canal no Slack que publica ``build
-quebrada'' a cada push treina a equipe a ignorar alertas --- o mesmo efeito
+quebrada'' a cada push treina a equipe a ignorar alertas, o mesmo efeito
 corrosivo dos testes flaky, aplicado às notificações. A notificação ideal vai
 direto ao autor, com o link para a falha e o log relevante, e escala para a
 equipe apenas se o autor não responder em tempo hábil.
@@ -1664,21 +1663,21 @@ equipe apenas se o autor não responder em tempo hábil.
 Testes não são custo. São investimento. O retorno vem na forma de confiança para
 mudar código, documentação que não envelhece e feedback de design que nenhuma
 review consegue substituir. Ao longo deste capítulo, exploramos cada faceta
-dessa disciplina, e vale a pena condensar os princípios centrais em uma visão
+dessa disciplina, e vale condensar os princípios centrais em uma visão
 unificada.
 
 Tenha estratégia. Não teste aleatoriamente, escrevendo testes onde for mais
 fácil ou onde a ferramenta de cobertura apontar gaps. Defina deliberadamente a
 proporção de cada tipo de teste. Use a pirâmide de Mike Cohn como ponto de
-partida --- muitos unitários, integração moderada, poucos E2E --- e ajuste ao
+partida (muitos unitários, integração moderada, poucos E2E) e ajuste ao
 seu contexto. Se seu sistema é um backend com lógica financeira complexa,
 invista pesadamente em unitários. Se é um BFF que orquestra microserviços,
 invista mais em integração. Se é um e-commerce onde o fluxo de checkout é
 sagrado, invista em E2E para esse fluxo específico. A estratégia depende do
 contexto, mas a ausência de estratégia é sempre errada.
 
-Lembre-se de que TDD é design, não apenas teste. Use TDD não para ter testes,
-mas para ter um design melhor. O teste é o subproduto valioso --- o design é o
+TDD é design, não apenas teste. Use TDD não para ter testes,
+mas para ter um design melhor. O teste é o subproduto valioso; o design é o
 objetivo. Kent Beck não criou TDD para aumentar cobertura; criou para reduzir o
 medo e melhorar decisões de design. Quando você escreve o teste primeiro, está
 projetando a interface antes da implementação, o que naturalmente produz código
@@ -1687,14 +1686,14 @@ mais modular, mais coeso e mais fácil de manter.
 Use IA como aceleradora, não como substituta. A IA gera boilerplate de testes
 com velocidade impressionante, aumenta cobertura mecânica de forma eficiente, e
 explora permutações de entrada que o humano esqueceria. Mas a definição do que
-testar e por quê --- a estratégia, a priorização, a validação de intenção de
-negócio --- continua sendo responsabilidade exclusiva do engenheiro. A IA testa
+testar e por quê (a estratégia, a priorização, a validação de intenção de
+negócio) continua sendo responsabilidade exclusiva do engenheiro. A IA testa
 o que é. O engenheiro testa o que deveria ser.
 
 Quando a cobertura é alta mas a confiança é baixa, mutation testing revela a
 verdade sobre a qualidade dos seus testes. Aqueles 90\% de cobertura podem
 esconder testes tautológicos que não verificam nada. Um mutation score de 60\%
-expõe essa fragilidade de forma inequívoca, apontando exatamente onde os testes
+expõe essa fragilidade de forma inequívoca, apontando onde os testes
 precisam ser fortalecidos.
 
 O pipeline é o guardião que automatiza toda essa disciplina. Quality gates
@@ -1708,7 +1707,7 @@ O teste mais importante é aquele que testa o cenário que mantém você acordad
 à noite. O cálculo financeiro que move milhões. O fluxo de checkout que gera
 receita. A validação de segurança que protege dados de usuários. Comece por
 ele. Escreva esse teste primeiro, com a atenção e o cuidado que o risco merece.
-Todo o resto pode ser complementado depois --- por você, por sua equipe, ou
+Todo o resto pode ser complementado depois, por você, por sua equipe, ou
 pela IA. Mas esse teste crítico precisa ser escrito por alguém que entende o
 que está em jogo.
 

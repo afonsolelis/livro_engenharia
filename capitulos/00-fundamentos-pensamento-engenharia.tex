@@ -9,7 +9,7 @@ O que diferencia um engenheiro de software de alguém que apenas escreve
 código? A resposta não está na linguagem de programação dominada, no
 framework da moda ou na velocidade com que se digita. Está na forma de
 \textbf{pensar}. A engenharia de software é, antes de tudo, uma disciplina
-do pensamento --- uma maneira estruturada de abordar problemas complexos,
+do pensamento, uma maneira estruturada de abordar problemas complexos,
 antecipar consequências e tomar decisões sob incerteza. Assim como um
 médico não é definido pelo estetoscópio que carrega, mas pela capacidade
 de diagnosticar a partir de sintomas ambíguos, o engenheiro de software
@@ -23,7 +23,7 @@ Diante dessa realidade, surge uma pergunta inevitável: qual é o papel do
 engenheiro de software quando a máquina já sabe programar? A resposta está
 justamente nos fundamentos que este capítulo apresenta. A inteligência
 artificial já escreve código que funciona. O diferencial humano é
-\textbf{saber qual código escrever} --- e, talvez mais importante, qual
+\textbf{saber qual código escrever} e, talvez mais importante, qual
 código \textbf{não} escrever. É como a diferença entre um robô que coloca
 tijolos com precisão milimétrica e o arquiteto que decide onde o prédio
 deve ficar, quantos andares terá e qual a distância segura do terreno
@@ -35,14 +35,13 @@ testes passam, a tarefa está concluída. Um engenheiro, por outro lado,
 pergunta qual é o \emph{problema real}, quem será afetado pela solução,
 o que acontece quando o sistema falha às três da manhã de um domingo, e
 como a decisão de hoje vai reverberar nos próximos dois, cinco ou dez anos.
-Essa diferença de perspectiva não é um luxo acadêmico --- é o que separa
+Essa diferença de perspectiva não é um luxo acadêmico. É o que separa
 sistemas que prosperam de sistemas que desmoronam sob o peso de suas
-próprias decisões acumuladas. Imagine que você está construindo uma casa.
-O pedreiro se preocupa com a parede que está levantando agora. O engenheiro
-civil se preocupa com a fundação, com o solo, com a carga que o telhado
-vai exercer, com o encanamento que passará dentro daquela parede e com o
-terremoto que talvez nunca aconteça --- mas que, se acontecer, não pode
-derrubar a estrutura.
+próprias decisões acumuladas. Você está construindo uma casa. O pedreiro
+se preocupa com a parede que está levantando agora. O engenheiro civil se
+preocupa com a fundação, com o solo, com a carga que o telhado vai exercer,
+com o encanamento que passará dentro daquela parede e com o terremoto que
+talvez nunca aconteça, mas que, se acontecer, não pode derrubar a estrutura.
 
 \begin{quote}
 ``A essência da engenharia de software é gerenciar complexidade, não
@@ -51,11 +50,11 @@ produzi-la.'' --- Grady Booch
 
 O pensamento sistêmico, a análise de trade-offs, a mentalidade de longo
 prazo e a responsabilidade ética formam os quatro pilares sobre os quais
-se constrói a identidade profissional do engenheiro. Cada decisão técnica
---- desde a escolha de um banco de dados até a definição de um contrato
-de API --- afeta o todo. Uma mudança aparentemente inofensiva em um módulo
+se constrói a identidade profissional do engenheiro. Cada decisão técnica,
+desde a escolha de um banco de dados até a definição de um contrato
+de API, afeta o todo. Uma mudança aparentemente inofensiva em um módulo
 pode provocar falhas em cascata em componentes que, à primeira vista, não
-possuem relação alguma. Pense na engenharia de software como uma rede de
+possuem relação alguma. A engenharia de software funciona como uma rede de
 dominós tridimensional: derrubar uma peça pode desencadear uma reação que
 atravessa camadas inteiras do sistema de maneiras que ninguém previu.
 
@@ -63,7 +62,7 @@ A responsabilidade do engenheiro de software transcende o código. Falhas
 em sistemas de software já causaram mortes reais. O caso do Therac-25,
 uma máquina de radioterapia cujo software defeituoso administrou doses
 letais de radiação a pacientes nos anos 1980, é um lembrete sombrio de
-que código não é abstração --- é ação no mundo real. O caso do Boeing
+que código não é abstração: é ação no mundo real. O caso do Boeing
 737 MAX, cujo software MCAS contribuiu para dois acidentes fatais que
 mataram 346 pessoas, reforça que decisões de engenharia carregam peso
 moral. Não estamos apenas escrevendo instruções para máquinas. Estamos
@@ -74,24 +73,24 @@ Este capítulo estabelece os alicerces conceituais que sustentam todo o
 restante do livro. Antes de falar sobre arquitetura, padrões de design,
 inteligência artificial ou DevOps, precisamos alinhar a forma como
 pensamos. Porque ferramentas mudam, linguagens evoluem, frameworks
-nascem e morrem --- mas os princípios fundamentais do pensamento de
+nascem e morrem, mas os princípios fundamentais do pensamento de
 engenharia permanecem. Eles permaneceram relevantes desde os primeiros
 mainframes até a era da computação em nuvem, e continuarão relevantes
 quando a próxima revolução tecnológica chegar. Esses princípios são o
 equivalente às leis da física para o engenheiro civil: não importa que
 material novo surja no mercado, a gravidade continuará existindo.
 
-Considere a trajetória das linguagens de programação nas últimas três
-décadas. Nos anos 1990, Java era a linguagem do futuro. Nos anos 2000,
-Ruby on Rails revolucionou o desenvolvimento web. Nos anos 2010,
-JavaScript dominou com Node.js no backend e React no frontend. Nos anos
-2020, Rust e Go ganharam tração para sistemas e infraestrutura. Cada
-uma dessas ondas trouxe novas ferramentas, novos ecossistemas e novas
-modas. Mas os engenheiros que prosperaram em todas essas eras foram
-aqueles que dominavam os fundamentos: pensamento sistêmico, análise de
-trade-offs, design modular, testes automatizados e comunicação clara.
-As linguagens eram o veículo, não o destino. O pensamento de engenharia
-era --- e continua sendo --- o motor.
+A trajetória das linguagens de programação nas últimas três
+décadas ilustra bem esse ponto. Nos anos 1990, Java era a linguagem do
+futuro. Nos anos 2000, Ruby on Rails revolucionou o desenvolvimento web.
+Nos anos 2010, JavaScript dominou com Node.js no backend e React no
+frontend. Nos anos 2020, Rust e Go ganharam tração para sistemas e
+infraestrutura. Cada uma dessas ondas trouxe novas ferramentas, novos
+ecossistemas e novas modas. Mas os engenheiros que prosperaram em todas
+essas eras foram aqueles que dominavam os fundamentos: pensamento
+sistêmico, análise de trade-offs, design modular, testes automatizados
+e comunicação clara. As linguagens eram o veículo, não o destino. O
+pensamento de engenharia era, e continua sendo, o motor.
 
 \section{O que é Engenharia de Software}
 
@@ -103,26 +102,26 @@ de engenharia de software, estamos aplicando essa mesma disciplina a uma
 matéria-prima peculiar: o código. Diferente do aço, do concreto ou dos
 circuitos, o código é intangível, infinitamente maleável e aparentemente
 sem custo de replicação. Essa natureza cria uma ilusão perigosa: a de
-que ``consertar depois'' é fácil e barato. Na prática, não é. É apenas
+que ``consertar depois'' é fácil e barato. Na realidade, não é. É apenas
 mais barato no curtíssimo prazo, acumulando juros compostos de
 complexidade que eventualmente cobram seu preço.
 
-A engenharia civil não testa o prédio depois de pronto --- calcula antes
+A engenharia civil não testa o prédio depois de pronto. Calcula antes
 de construir. Um engenheiro estrutural não ergue vinte andares para ``ver
 se aguenta''. Ele modela, simula, calcula margens de segurança e só então
 autoriza a construção. A engenharia de software deveria operar com a mesma
-disciplina. No entanto, a cultura do ``move fast and break things''
+disciplina. Porém, a cultura do ``move fast and break things''
 popularizada pelo Vale do Silício normalizou uma abordagem que seria
-impensável em qualquer outra disciplina de engenharia. Imagine um
-engenheiro civil dizendo ``vamos construir a ponte rápido e ver se
-aguenta o tráfego --- se cair, a gente conserta''. Parece absurdo, mas é
-exatamente o que fazemos quando lançamos software sem testes adequados,
-sem revisão de arquitetura e sem consideração pelos cenários de falha.
+impensável em qualquer outra disciplina de engenharia. Um engenheiro civil
+dizendo ``vamos construir a ponte rápido e ver se aguenta o tráfego; se
+cair, a gente conserta'' parece absurdo, mas é exatamente o que fazemos
+quando lançamos software sem testes adequados, sem revisão de arquitetura
+e sem consideração pelos cenários de falha.
 
-Vale notar que o próprio Facebook, berço do lema ``move fast and break
-things'', abandonou esse mantra em 2014, substituindo-o por ``move fast
-with stable infrastructure''. Mark Zuckerberg explicou que a velocidade
-sem estabilidade eventualmente se torna mais lenta, porque a equipe passa
+O próprio Facebook, berço do lema ``move fast and break things'',
+abandonou esse mantra em 2014, substituindo-o por ``move fast with stable
+infrastructure''. Mark Zuckerberg explicou que a velocidade sem
+estabilidade eventualmente se torna mais lenta, porque a equipe passa
 mais tempo corrigindo problemas do que construindo funcionalidades novas.
 Essa evolução é reveladora: até a empresa que mais pregou a velocidade
 irresponsável percebeu que engenharia sólida é, paradoxalmente, o caminho
@@ -137,7 +136,7 @@ engenheiro civil projeta uma ponte, ela será construída uma vez e atenderá
 uma região específica. Quando um engenheiro de software escreve um serviço
 de autenticação, ele pode ser implantado instantaneamente para milhões de
 usuários em todo o planeta. Essa capacidade de escala torna as consequências
-de erros proporcionalmente maiores --- e a responsabilidade do engenheiro
+de erros proporcionalmente maiores, e a responsabilidade do engenheiro
 proporcionalmente mais pesada.
 
 Outra peculiaridade da engenharia de software é a \textbf{invisibilidade
@@ -148,22 +147,23 @@ ou anos, acumulando problemas invisíveis que só se manifestam quando o
 sistema atinge uma escala ou uma condição de uso que ninguém testou. Essa
 invisibilidade torna a disciplina de engenharia ainda mais importante:
 como não podemos ``ver'' os problemas a olho nu, precisamos de práticas
-sistemáticas --- testes automatizados, monitoramento contínuo, revisão de
-código, análise estática --- para tornar visível o que o software esconde.
+sistemáticas (testes automatizados, monitoramento contínuo, revisão de
+código, análise estática) para tornar visível o que o software esconde.
 
-Considere também o conceito de \textbf{entropia do software}, uma analogia
-com a termodinâmica que captura uma verdade profunda: todo sistema de
-software tende naturalmente à desordem. Sem investimento contínuo em
-manutenção, refatoração e atualização de dependências, o software degrada.
-Bibliotecas ficam desatualizadas, vulnerabilidades de segurança se acumulam,
-o conhecimento sobre decisões antigas se perde, e o que era uma base de
-código elegante se transforma em um emaranhado impenetrável. A engenharia
-de software não termina quando o sistema entra em produção --- na verdade,
-é quando o trabalho mais difícil começa. Estudos do Standish Group estimam
-que 60\% a 80\% do custo total de um sistema de software ocorre na fase de
-manutenção, não na fase de desenvolvimento. Isso significa que as decisões
-que tornam o código mais fácil de manter são, em termos econômicos, mais
-importantes que as decisões que tornam o código mais rápido de escrever.
+Outro conceito relevante é o de \textbf{entropia do software}, uma
+analogia com a termodinâmica que captura uma verdade importante: todo
+sistema de software tende naturalmente à desordem. Sem investimento
+contínuo em manutenção, refatoração e atualização de dependências, o
+software degrada. Bibliotecas ficam desatualizadas, vulnerabilidades de
+segurança se acumulam, o conhecimento sobre decisões antigas se perde, e
+o que era uma base de código elegante se transforma em um emaranhado
+impenetrável. A engenharia de software não termina quando o sistema entra
+em produção. Na verdade, é quando o trabalho mais difícil começa. Estudos
+do Standish Group estimam que 60\% a 80\% do custo total de um sistema de
+software ocorre na fase de manutenção, não na fase de desenvolvimento.
+Isso significa que as decisões que tornam o código mais fácil de manter
+são, em termos econômicos, mais importantes que as decisões que tornam o
+código mais rápido de escrever.
 
 \subsection{O Custo Exponencial da Mudança}
 
@@ -192,7 +192,7 @@ Produção & 100--1000$\times$ & Migrar banco com milhões de registros \\
 
 Esses números, derivados de estudos clássicos de Barry Boehm e confirmados
 pela experiência da indústria, explicam por que investir tempo em arquitetura
-e design não é ``perfeccionismo'' --- é economia. O Netflix, por exemplo,
+e design não é ``perfeccionismo'': é economia. O Netflix, por exemplo,
 investiu anos construindo sua infraestrutura de microsserviços e ferramentas
 de resiliência como o Chaos Monkey precisamente porque entendeu que o custo
 de corrigir problemas de escalabilidade em produção seria catastrófico. A
@@ -202,27 +202,26 @@ investimento paciente é o que permite hoje que o serviço atenda mais de 200
 milhões de assinantes em mais de 190 países com uma disponibilidade de
 99,97\%.
 
-Para tornar essa abstração mais concreta, considere o seguinte cenário.
-Imagine que você está projetando um sistema de e-commerce e decide, por
-simplicidade, armazenar preços como números inteiros em centavos. Três
-anos depois, a empresa se expande para mercados internacionais e precisa
-lidar com moedas que têm três casas decimais (como o dinar do Kuwait) ou
-nenhuma (como o iene japonês). Aquela decisão ``simples'' agora exige
-alterar o schema do banco de dados, migrar milhões de registros, atualizar
-dezenas de microsserviços que leem e escrevem preços, modificar todas as
-camadas de API, ajustar o frontend e retestar todo o fluxo de compra. O
-que teria sido uma conversa de trinta minutos na fase de requisitos se
-transforma em um projeto de três meses com risco de introduzir bugs
-financeiros.
+Para tornar essa abstração mais concreta, veja o cenário a seguir.
+Você está projetando um sistema de e-commerce e decide, por simplicidade,
+armazenar preços como números inteiros em centavos. Três anos depois, a
+empresa se expande para mercados internacionais e precisa lidar com moedas
+que têm três casas decimais (como o dinar do Kuwait) ou nenhuma (como o
+iene japonês). Aquela decisão ``simples'' agora exige alterar o schema do
+banco de dados, migrar milhões de registros, atualizar dezenas de
+microsserviços que leem e escrevem preços, modificar todas as camadas de
+API, ajustar o frontend e retestar todo o fluxo de compra. O que teria
+sido uma conversa de trinta minutos na fase de requisitos se transforma
+em um projeto de três meses com risco de introduzir bugs financeiros.
 
 Essa realidade não significa que devemos tentar prever todos os cenários
-futuros --- isso é impossível e contraproducente. Significa que devemos
+futuros, pois isso é impossível e contraproducente. Significa que devemos
 investir tempo nas decisões que são \textbf{difíceis de reverter}: a
 escolha do banco de dados, o modelo de dados fundamental, o protocolo
 de comunicação entre serviços, a estratégia de autenticação. São essas
 decisões de ``porta de mão única'', como Jeff Bezos as chama na Amazon,
-que merecem análise cuidadosa. As decisões de ``porta de mão dupla'' ---
-aquelas facilmente reversíveis --- podem e devem ser tomadas rapidamente.
+que merecem análise cuidadosa. As decisões de ``porta de mão dupla''
+(aquelas facilmente reversíveis) podem e devem ser tomadas rapidamente.
 
 A metáfora das portas merece ser aprofundada, pois é extraordinariamente
 útil no cotidiano do engenheiro. Uma decisão de ``porta de mão única''
@@ -237,9 +236,9 @@ basta sair. Escolher o nome de uma variável, definir o formato de um
 log, ou testar uma biblioteca para uma funcionalidade isolada são
 exemplos. Essas decisões devem ser tomadas em minutos, não em dias.
 O erro mais comum que observo em equipes é tratar decisões de porta de
-mão dupla como se fossem de mão única --- gastando semanas debatendo
+mão dupla como se fossem de mão única, gastando semanas debatendo
 escolhas facilmente reversíveis. O segundo erro mais comum é o oposto:
-tratar decisões de mão única como se fossem de mão dupla --- tomando
+tratar decisões de mão única como se fossem de mão dupla, tomando
 decisões estruturais com pressa e sem análise.
 
 \subsection{A Interdisciplinaridade da Engenharia de Software}
@@ -247,8 +246,8 @@ decisões estruturais com pressa e sem análise.
 A engenharia de software não é uma ilha isolada na ciência da computação.
 Ela bebe de múltiplas disciplinas, e o engenheiro eficaz é aquele que
 transita entre elas com fluência. Compreender essa interdisciplinaridade
-é fundamental para entender por que a engenharia de software é tão
-desafiadora --- e tão fascinante.
+é importante para entender por que a engenharia de software é tão
+desafiadora e tão fascinante.
 
 A primeira e mais óbvia conexão é com a \textbf{Ciência da Computação}:
 algoritmos, estruturas de dados e teoria da computação formam as fundações
@@ -258,7 +257,7 @@ funciona perfeitamente com cem registros no ambiente de desenvolvimento,
 mas que se torna inutilizável com cem mil registros em produção. Saber
 que um algoritmo de busca linear em uma lista tem complexidade O(n)
 enquanto uma busca em uma tabela hash tem complexidade O(1) não é trivia
-acadêmica --- é a diferença entre uma página que carrega em 50
+acadêmica: é a diferença entre uma página que carrega em 50
 milissegundos e uma que leva 30 segundos.
 
 A \textbf{Matemática} fornece a linguagem da precisão: lógica formal,
@@ -276,14 +275,14 @@ igualmente importante. Código é lido por seres humanos, e seres humanos
 têm limitações cognitivas bem documentadas. A memória de trabalho comporta
 cerca de sete itens simultaneamente (o famoso ``número mágico'' de George
 Miller). Isso significa que uma função com quinze parâmetros é literalmente
-impossível de ser compreendida de uma vez --- o cérebro humano não foi
+impossível de ser compreendida de uma vez, porque o cérebro humano não foi
 projetado para isso. O conceito de \emph{code smell}, popularizado por
 Martin Fowler, é essencialmente um catálogo de padrões de código que
-violam princípios de cognição humana. Além disso, os vieses cognitivos
-afetam profundamente as estimativas de prazo e esforço. O viés de otimismo
+violam princípios de cognição humana. Os vieses cognitivos também
+afetam muito as estimativas de prazo e esforço. O viés de otimismo
 faz com que desenvolvedores subestimem consistentemente o tempo necessário
 para completar tarefas, e o efeito Dunning-Kruger faz com que os menos
-experientes sejam os mais confiantes em suas estimativas --- uma
+experientes sejam os mais confiantes em suas estimativas, uma
 combinação perigosa.
 
 A \textbf{Economia} permeia cada decisão técnica, mesmo quando não a
@@ -294,33 +293,33 @@ engenheiro faz ao decidir entre ``construir do zero'' e ``usar uma
 biblioteca pronta'' é idêntica em estrutura à análise que um CFO faz
 ao decidir entre ``contratar mais gente'' e ``terceirizar''. A teoria
 dos jogos explica por que equipes às vezes tomam decisões que são
-localmente ótimas mas globalmente desastrosas --- cada time otimiza
+localmente ótimas mas globalmente desastrosas: cada time otimiza
 para seu próprio serviço, criando um sistema global incoerente.
 Entender incentivos econômicos é essencial para projetar não apenas
 sistemas técnicos, mas os processos organizacionais que os produzem.
 
 A \textbf{Comunicação} é o lubrificante sem o qual engenharia de software
 simplesmente não funciona. Documentação, diagramas, apresentações,
-mensagens no Slack, comentários em pull requests --- um sistema que
+mensagens no Slack, comentários em pull requests. Um sistema que
 ninguém entende é um sistema que ninguém mantém. Estudos da disciplina
 de SRE do Google estimam que engenheiros passam cerca de 30\% do tempo
 comunicando decisões técnicas, e esse número sobe para mais de 50\%
 em posições de liderança técnica. A habilidade de explicar um conceito
-complexo de forma simples não é um ``soft skill'' secundário --- é uma
-competência técnica fundamental.
+complexo de forma simples não é um ``soft skill'' secundário; é uma
+competência técnica de primeira ordem.
 
 Por fim, a \textbf{Sociologia} molda a arquitetura de software de formas
 que muitos engenheiros subestimam. A Lei de Conway, formulada por Melvin
 Conway em 1967, afirma que ``organizações que projetam sistemas são
 inevitavelmente constrangidas a produzir designs que são cópias das
-estruturas de comunicação dessas organizações''. Em outras palavras, se
+estruturas de comunicação dessas organizações''. Ou seja, se
 sua empresa tem três times, seu sistema provavelmente terá três módulos
 principais. Essa observação, aparentemente trivial, tem implicações
-profundas: a arquitetura do software é indissociável da arquitetura
-organizacional. A Amazon entendeu isso tão profundamente que reestruturou
-suas equipes para se adequarem à arquitetura desejada, criando as famosas
-``two-pizza teams'' --- equipes pequenas o suficiente para serem
-alimentadas por duas pizzas, cada uma responsável por um serviço
+sérias: a arquitetura do software é indissociável da arquitetura
+organizacional. A Amazon entendeu isso a ponto de reestruturar suas
+equipes para se adequarem à arquitetura desejada, criando as famosas
+``two-pizza teams'' (equipes pequenas o suficiente para serem
+alimentadas por duas pizzas), cada uma responsável por um serviço
 independente. Essa decisão organizacional, tomada por Jeff Bezos no início
 dos anos 2000, foi a semente que eventualmente germinou na arquitetura de
 microsserviços da AWS. A estrutura do time \emph{determinou} a estrutura
@@ -337,14 +336,14 @@ reforçam mutuamente: o engenheiro que comunica melhor toma decisões
 melhores, que resultam em sistemas mais simples, que são mais fáceis
 de comunicar.
 
-Para ilustrar a interdisciplinaridade na prática, considere o seguinte
-cenário. Você está projetando um sistema de checkout para um e-commerce.
+Para ilustrar a interdisciplinaridade, veja um cenário concreto. Você
+está projetando um sistema de checkout para um e-commerce.
 O conhecimento de \textbf{ciência da computação} lhe diz como implementar
 a lógica de carrinho e cálculo de frete. O conhecimento de
 \textbf{matemática} lhe permite modelar regras de desconto compostas e
 calcular impostos corretamente. O conhecimento de \textbf{psicologia
 cognitiva} lhe alerta que um formulário com muitos campos aumenta o
-abandono de carrinho --- pesquisas mostram que cada campo adicional
+abandono de carrinho; pesquisas mostram que cada campo adicional
 reduz a taxa de conversão em 3\% a 5\%. O conhecimento de
 \textbf{economia} lhe ajuda a calcular que investir duas semanas em
 otimizar o checkout se paga em três dias de aumento na conversão. O
@@ -390,14 +389,13 @@ perfeitamente à engenharia de software. O diagrama de arquitetura que
 você desenha no quadro branco é uma simplificação grosseira do sistema
 real. Mas é essa simplificação que permite raciocinar sobre ele,
 comunicar decisões e identificar problemas antes que se manifestem em
-produção. Pense em um mapa do metrô de São Paulo: ele não representa
-as distâncias reais entre estações, nem as curvas dos trilhos, nem a
-profundidade dos túneis. Mas para o propósito de navegar de uma estação
-a outra, ele é mais útil que um mapa topográfico perfeitamente preciso.
-O modelo mental funciona da mesma forma: sacrifica precisão em favor da
-utilidade.
+produção. Um mapa do metrô de São Paulo não representa as distâncias
+reais entre estações, nem as curvas dos trilhos, nem a profundidade dos
+túneis. Mas para o propósito de navegar de uma estação a outra, ele é
+mais útil que um mapa topográfico perfeitamente preciso. O modelo mental
+funciona da mesma forma: sacrifica precisão em favor da utilidade.
 
-Os modelos mentais não são estáticos --- eles evoluem com a experiência.
+Os modelos mentais não são estáticos; eles evoluem com a experiência.
 O engenheiro júnior que acabou de aprender sobre bancos de dados tem um
 modelo mental simples: ``o banco armazena dados e responde queries''.
 Com o tempo, esse modelo se enriquece: ele incorpora conceitos como
@@ -407,7 +405,7 @@ cada conversa com um colega mais experiente adiciona uma camada de nuance
 ao modelo. É por isso que experiência é tão valorizada na engenharia de
 software: não pela quantidade de código escrito, mas pela qualidade dos
 modelos mentais acumulados. Um engenheiro com dez anos de experiência
-não é dez vezes mais rápido que um iniciante --- mas seus modelos mentais
+não é dez vezes mais rápido que um iniciante, mas seus modelos mentais
 são ordens de magnitude mais ricos, permitindo que ele antecipe problemas
 que o iniciante nem consegue imaginar.
 
@@ -419,7 +417,7 @@ cultivam o hábito de questionar seus próprios modelos. Eles perguntam:
 ``em que circunstâncias meu modelo se torna inválido?'' e ``quais
 premissas estou assumindo implicitamente?''. Charlie Munger, sócio de
 Warren Buffett, construiu uma fortuna aplicando o que ele chama de
-``latticework of mental models'' --- uma rede de modelos mentais de
+``latticework of mental models'', uma rede de modelos mentais de
 múltiplas disciplinas que permite abordar problemas de ângulos diferentes.
 O engenheiro de software pode adotar a mesma filosofia: combinar modelos
 de ciência da computação, economia, psicologia e teoria de sistemas para
@@ -438,9 +436,9 @@ uma verdade que não pode ser decomposta.
 
 Na engenharia de software, pensar por primeiros princípios significa
 questionar pressupostos que frequentemente são aceitos sem exame.
-Considere a afirmação ``precisamos de microsserviços'', que se tornou
-quase um mantra na indústria nos últimos anos. O engenheiro que pensa
-por primeiros princípios não aceita essa afirmação como dado. Ele
+A afirmação ``precisamos de microsserviços'', que se tornou quase um
+mantra na indústria nos últimos anos, é um bom exemplo. O engenheiro que
+pensa por primeiros princípios não aceita essa afirmação como dado. Ele
 pergunta: por quê? Qual problema de escalabilidade, deploy ou ownership
 de equipe justifica a complexidade inerente de um sistema distribuído?
 Quantos desenvolvedores temos? Qual o volume de tráfego? Precisamos
@@ -460,13 +458,13 @@ que todo engenheiro deveria dominar? A MongoDB Inc. reportou que uma
 fração significativa de seus clientes eventualmente migra de volta para
 bancos relacionais ou adota uma arquitetura poliglota, porque descobrem
 que dados que pareciam não-relacionais na verdade possuem relações
-profundas que se tornam evidentes apenas em produção.
+complexas que se tornam evidentes apenas em produção.
 
 Pense também na afirmação ``precisamos de Kubernetes''. Quantos requests
 por segundo o sistema atende? Três containers em um Docker Compose não
-resolveriam? A complexidade operacional de um cluster Kubernetes --- com
+resolveriam? A complexidade operacional de um cluster Kubernetes, com
 seu control plane, networking overlay, service mesh, ingress controllers
-e a curva de aprendizado necessária --- se justifica para uma equipe de
+e a curva de aprendizado necessária, se justifica para uma equipe de
 cinco pessoas com tráfego moderado? A Basecamp, empresa que criou o Ruby
 on Rails e que atende milhões de usuários, opera sua infraestrutura em
 servidores dedicados com ferramentas de deploy tradicionais, sem
@@ -474,7 +472,7 @@ Kubernetes. Eles fizeram a conta e concluíram que a complexidade
 adicional não se justificava para seu contexto.
 
 O pensamento por primeiros princípios é um antídoto contra o \emph{hype-driven
-development} --- a tendência de adotar tecnologias porque são populares, e
+development}, a tendência de adotar tecnologias porque são populares, e
 não porque resolvem o problema em questão. Essa tendência é particularmente
 insidiosa porque se disfarça de progresso técnico. O engenheiro que a combate
 não é um luddita resistente à mudança; é um profissional que exige
@@ -487,16 +485,16 @@ Para praticar o pensamento por primeiros princípios no cotidiano, o
 engenheiro pode adotar a técnica dos \textbf{cinco porquês}. Originada no
 Sistema Toyota de Produção, a técnica consiste em perguntar ``por quê?''
 cinco vezes consecutivas para chegar à causa raiz de uma decisão ou
-problema. Considere o seguinte cenário: ``Precisamos reescrever o sistema.''
+problema. Veja este cenário: ``Precisamos reescrever o sistema.''
 Por quê? ``Porque está muito lento.'' Por quê está lento? ``Porque as
 queries no banco demoram muito.'' Por quê demoram? ``Porque não temos
 índices adequados.'' Por quê não temos índices? ``Porque ninguém analisou
 os padrões de acesso quando o volume cresceu.'' A resposta, que começou
 como ``precisamos reescrever tudo'', revelou-se ``precisamos de um DBA
-revisando os índices'' --- uma solução ordens de magnitude mais simples
+revisando os índices''. Uma solução ordens de magnitude mais simples
 e mais barata.
 
-Um outro aspecto importante do pensamento por primeiros princípios é a
+Outro aspecto importante do pensamento por primeiros princípios é a
 capacidade de distinguir entre \textbf{complexidade essencial} e
 \textbf{complexidade acidental}. O conceito, introduzido por Fred Brooks
 no clássico ensaio ``No Silver Bullet'' de 1986, é fundamental.
@@ -518,8 +516,8 @@ em diferentes altitudes, e o engenheiro eficaz sabe transitar entre elas
 com fluidez. Essa capacidade de ``zoom'' mental é análoga à de um piloto
 de helicóptero: às vezes você precisa ver a cidade inteira do alto para
 planejar a rota, outras vezes precisa descer ao nível da rua para
-encontrar o local de pouso. Permanecer em apenas uma altitude --- seja
-alto demais ou baixo demais --- produz decisões desequilibradas.
+encontrar o local de pouso. Permanecer em apenas uma altitude, seja
+alto demais ou baixo demais, produz decisões desequilibradas.
 
 \begin{figure}[htbp]
     \centering
@@ -533,7 +531,7 @@ ecossistema da empresa?''. É o nível onde se define a visão de produto,
 as restrições de orçamento, os mercados-alvo e os diferenciais
 competitivos. Um engenheiro que opera no nível estratégico entende que
 a decisão entre construir uma API REST ou uma API GraphQL não é apenas
-técnica --- depende de quem são os consumidores da API, qual o modelo
+técnica. Depende de quem são os consumidores da API, qual o modelo
 de negócio da plataforma e como a empresa pretende crescer nos próximos
 anos.
 
@@ -553,7 +551,7 @@ O nível \textbf{operacional} é onde o código é efetivamente escrito, os
 testes são executados e os bugs são corrigidos. É o nível do dia a dia,
 das linhas de código, das configurações de CI/CD e das revisões de pull
 request. A maioria dos desenvolvedores passa a maior parte do tempo nesse
-nível --- e isso é natural e necessário. Sem excelência operacional,
+nível, e isso é natural e necessário. Sem excelência operacional,
 nenhuma estratégia brilhante se materializa. O problema surge quando se
 permanece \emph{exclusivamente} nele, sem consciência dos níveis
 superiores que deveriam orientar cada decisão.
@@ -562,7 +560,7 @@ O erro mais comum entre desenvolvedores juniores é permanecer
 exclusivamente no nível operacional, escrevendo código sem entender o
 contexto tático e estratégico que deveria orientar cada linha. Eles se
 tornam excelentes em resolver o problema imediato, mas incapazes de
-questionar se o problema deveria ser resolvido dessa forma --- ou se
+questionar se o problema deveria ser resolvido dessa forma, ou se
 deveria ser resolvido de todo. O erro mais comum entre arquitetos
 seniores é flutuar exclusivamente no nível estratégico, produzindo
 diagramas elegantes que não sobrevivem ao contato com a realidade do
@@ -608,7 +606,7 @@ Conhecimento chave & Linguagem e frameworks & Design, testes, infra & Domínio d
 \label{tab:programador-engenheiro-arquiteto}
 \end{table}
 
-É importante notar que esses perfis não são cargos mutuamente exclusivos.
+Esses perfis não são cargos mutuamente exclusivos.
 Um engenheiro sênior eficaz transita entre os três modos de pensar
 conforme a necessidade. A tabela descreve \emph{modos de operação}, não
 títulos em um crachá. Na verdade, a ideia de que ``o arquiteto não
@@ -622,15 +620,15 @@ programador para engenheiro para arquiteto. É uma \textbf{expansão de
 repertório}: o profissional que começa dominando o nível operacional
 gradualmente incorpora o pensamento tático e estratégico ao seu arsenal,
 tornando-se capaz de operar em qualquer nível conforme o contexto exige.
-Pense nessa expansão como a formação de um músico de jazz. Um estudante
-de música começa dominando as escalas e os acordes --- o equivalente ao
-nível operacional. Com o tempo, ele aprende harmonia e composição ---
-o equivalente ao nível tático. E eventualmente, se dedicar-se o
-suficiente, desenvolve a visão artística para criar obras originais
---- o equivalente ao nível estratégico. Mas em nenhum momento ele para
-de tocar seu instrumento. Da mesma forma, o dia em que um arquiteto de
-software para de escrever código é o dia em que seus diagramas começam
-a divergir da realidade.
+Essa expansão se parece com a formação de um músico de jazz. Um estudante
+de música começa dominando as escalas e os acordes, o equivalente ao
+nível operacional. Com o tempo, ele aprende harmonia e composição, o
+equivalente ao nível tático. E eventualmente, se dedicar-se o suficiente,
+desenvolve a visão artística para criar obras originais, o equivalente ao
+nível estratégico. Mas em nenhum momento ele para de tocar seu
+instrumento. Da mesma forma, o dia em que um arquiteto de software para
+de escrever código é o dia em que seus diagramas começam a divergir da
+realidade.
 
 A tabela também revela algo sutil sobre a natureza do crescimento
 profissional: conforme o escopo de preocupação se expande, a
@@ -652,9 +650,9 @@ Se os modelos mentais são as lentes através das quais o engenheiro
 enxerga o mundo, o pensamento sistêmico é a lente de maior poder de
 ampliação. Ele revela conexões invisíveis, efeitos colaterais inesperados
 e padrões que só se manifestam quando observamos o sistema como um todo.
-A transição do pensamento linear --- ``se eu fizer A, acontece B'' ---
-para o pensamento sistêmico --- ``se eu fizer A, acontece B, que causa C,
-que retroalimenta A de forma que ninguém previu'' --- é uma das evoluções
+A transição do pensamento linear (``se eu fizer A, acontece B'') para o
+pensamento sistêmico (``se eu fizer A, acontece B, que causa C, que
+retroalimenta A de forma que ninguém previu'') é uma das evoluções
 intelectuais mais importantes na carreira de um engenheiro.
 
 \subsection{Vendo o Todo, Não Apenas as Partes}
@@ -667,11 +665,11 @@ engenharia de software, o pensamento sistêmico é o que permite ao
 engenheiro antecipar que uma mudança ``simples'' em um módulo pode
 provocar efeitos em cascata por todo o sistema.
 
-O sistema não é a soma de suas partes --- é o produto das interações
+O sistema não é a soma de suas partes. É o produto das interações
 entre elas. Um banco de dados relacional, um servidor de aplicação e uma
 fila de mensagens são componentes simples quando analisados individualmente.
-Mas as interações entre eles --- latência de rede, consistência eventual,
-retentativas, timeouts --- criam comportamentos emergentes que nenhum dos
+Mas as interações entre eles (latência de rede, consistência eventual,
+retentativas, timeouts) criam comportamentos emergentes que nenhum dos
 componentes possui isoladamente. É nesses interstícios que a maioria dos
 bugs graves se esconde. Uma analogia do mundo da culinária torna isso
 mais concreto: farinha, ovos e açúcar são ingredientes simples e
@@ -679,15 +677,15 @@ previsíveis. Mas a interação entre eles --- a ordem em que são misturados,
 a temperatura do forno, o tempo de descanso --- é o que determina se o
 resultado será um bolo ou uma massa queimada.
 
-Pense em como o corpo humano funciona: o coração, os pulmões, o fígado
-e os rins são órgãos que podem ser estudados individualmente. Mas a
-saúde do organismo depende das interações entre eles --- a circulação
-que conecta tudo, os hormônios que regulam processos cruzados, o sistema
-nervoso que coordena respostas. Um cardiologista que ignora o estado dos
-rins do paciente pode prescrever um tratamento que resolve o problema
-cardíaco mas devasta a função renal. Da mesma forma, um engenheiro que
-otimiza o banco de dados sem considerar o impacto na aplicação, na rede
-e nos sistemas downstream está praticando engenharia míope.
+Compare com o corpo humano: o coração, os pulmões, o fígado e os rins
+são órgãos que podem ser estudados individualmente. Mas a saúde do
+organismo depende das interações entre eles, da circulação que conecta
+tudo, dos hormônios que regulam processos cruzados, do sistema nervoso
+que coordena respostas. Um cardiologista que ignora o estado dos rins do
+paciente pode prescrever um tratamento que resolve o problema cardíaco
+mas devasta a função renal. Da mesma forma, um engenheiro que otimiza o
+banco de dados sem considerar o impacto na aplicação, na rede e nos
+sistemas downstream está praticando engenharia míope.
 
 O conceito de \textbf{comportamento emergente} é central aqui.
 Comportamento emergente é aquele que surge da interação entre componentes,
@@ -697,7 +695,7 @@ interação entre milhares de carros em uma rede viária limitada produz
 congestionamentos. Em software, latência de cauda (\emph{tail latency})
 é um comportamento emergente: o request que percorre uma cadeia de dez
 microsserviços, cada um com 99\% de disponibilidade, tem uma
-probabilidade de falha de quase 10\% --- muito maior do que qualquer
+probabilidade de falha de quase 10\%, muito maior do que qualquer
 serviço individual sugeriria. A Netflix aprendeu essa lição ao migrar
 para microsserviços e perceber que a disponibilidade do sistema
 \emph{como um todo} era significativamente menor que a disponibilidade
@@ -709,7 +707,7 @@ conectava os serviços da AWS entre si. Nenhum serviço individual estava
 ``quebrado'' no sentido tradicional. O que falhou foi a \emph{interação}
 entre os serviços: quando a rede interna ficou congestionada, os serviços
 começaram a acumular retentativas, que congestionaram ainda mais a rede,
-que causou mais retentativas --- um ciclo de feedback positivo que
+que causou mais retentativas. Um ciclo de feedback positivo que
 amplificou um problema inicial modesto em uma falha catastrófica. O
 pensamento sistêmico é o que permite prever esse tipo de comportamento
 emergente antes que ele aconteça.
@@ -718,7 +716,7 @@ emergente antes que ele aconteça.
 
 No coração do pensamento sistêmico está o conceito de
 \textbf{interdependência}. O módulo A depende do módulo B, que depende
-do módulo C, que --- surpresa --- depende do módulo A. Essas dependências
+do módulo C, que (surpresa) depende do módulo A. Essas dependências
 circulares são mais comuns do que gostaríamos de admitir, e cada uma
 delas é um ponto de fragilidade. Quando tudo funciona, as dependências
 são invisíveis. Quando algo falha, elas se revelam com brutalidade.
@@ -732,7 +730,7 @@ são invisíveis. Quando algo falha, elas se revelam com brutalidade.
 O \textbf{acoplamento} é a medida de quanto dois módulos sabem um do
 outro. Para entender o acoplamento, pense em dois músicos tocando juntos.
 Se um violinista e um pianista tocam a mesma peça seguindo uma partitura,
-eles estão acoplados pela partitura --- mas cada um pode ser substituído
+eles estão acoplados pela partitura, mas cada um pode ser substituído
 por outro músico que saiba ler a mesma notação. Isso é acoplamento fraco:
 a interação acontece por meio de uma interface bem definida (a partitura).
 Agora imagine dois músicos improvisando livremente, onde cada nota de um
@@ -744,11 +742,11 @@ Acoplamento forte em software significa que mudar a implementação interna
 de um módulo obriga a modificar o outro. Acoplamento fraco significa que
 módulos interagem por meio de interfaces bem definidas, permitindo que
 cada um evolua independentemente. O objetivo não é eliminar todo
-acoplamento --- isso é impossível e indesejável, pois componentes que
-não se comunicam não formam um sistema. O objetivo é tornar o acoplamento
-\emph{explícito e gerenciável}. Quando o acoplamento é implícito ---
+acoplamento, pois isso é impossível e indesejável (componentes que
+não se comunicam não formam um sistema). O objetivo é tornar o acoplamento
+\emph{explícito e gerenciável}. Quando o acoplamento é implícito,
 escondido em chamadas indiretas, em schemas de banco compartilhados ou
-em arquivos de configuração que ninguém documenta --- ele se torna uma
+em arquivos de configuração que ninguém documenta, ele se torna uma
 bomba-relógio. Você descobre sua existência apenas quando ela explode.
 
 O caso da Amazon nos anos 2000 ilustra bem como o acoplamento pode ser
@@ -757,7 +755,7 @@ combatido sistematicamente. Em 2002, Jeff Bezos enviou um memorando famoso
 os times deveriam expor seus dados e funcionalidades exclusivamente
 através de interfaces de serviço. Nenhum time poderia acessar diretamente
 o banco de dados de outro time. Toda comunicação deveria acontecer por
-APIs bem definidas. Essa decisão --- que na época pareceu draconiana ---
+APIs bem definidas. Essa decisão, que na época pareceu draconiana,
 desacoplou os times e os sistemas, permitindo que cada equipe evoluísse
 seu serviço independentemente. Foi essa decisão de desacoplamento que
 tornou possível, anos depois, oferecer esses mesmos serviços internos
@@ -769,13 +767,13 @@ Um dos conceitos mais importantes do pensamento sistêmico são os
 \textbf{efeitos de segunda ordem}: as consequências indiretas de uma
 decisão que não são imediatamente óbvias. Enquanto efeitos de primeira
 ordem são as consequências diretas e intencionais de uma ação, efeitos
-de segunda ordem são as consequências \emph{das consequências} --- os
+de segunda ordem são as consequências \emph{das consequências}, os
 desdobramentos que se revelam somente com o tempo ou em condições que
 não foram previstas. A capacidade de antecipar efeitos de segunda ordem
 é o que distingue o engenheiro experiente do iniciante.
 
-Considere um exemplo concreto: sua aplicação está lenta. A solução óbvia
-é adicionar uma camada de cache. O efeito de primeira ordem é positivo:
+Um exemplo concreto: sua aplicação está lenta. A solução óbvia é
+adicionar uma camada de cache. O efeito de primeira ordem é positivo:
 as respostas ficam mais rápidas. Mas os efeitos de segunda ordem incluem:
 dados potencialmente desatualizados servidos ao usuário, complexidade
 adicional na invalidação do cache, uso de memória que pode impactar
@@ -870,14 +868,14 @@ retraining de toda a equipe de engenharia em um novo ecossistema,
 dificuldade de contratação (programadores Scala eram escassos no
 mercado), aumento da complexidade de build e deploy, e divisão cultural
 entre os engenheiros que preferiam o antigo stack e os que abraçaram o
-novo. A migração foi, no balanço final, a decisão certa --- mas custou
+novo. A migração foi, no balanço final, a decisão certa, mas custou
 muito mais do que a análise de primeira ordem sugeria.
 
 \subsection{Ferramentas para o Pensamento Sistêmico}
 
-Para aplicar o pensamento sistêmico na prática, o engenheiro dispõe de
-diversas ferramentas conceituais e técnicas que transformam o abstrato
-em concreto, o invisível em visível.
+Para aplicar o pensamento sistêmico, o engenheiro dispõe de diversas
+ferramentas conceituais e técnicas que transformam o abstrato em concreto,
+o invisível em visível.
 
 Os \textbf{diagramas de dependência} são mapas visuais que mostram quais
 componentes dependem de quais, revelando pontos únicos de falha e
@@ -910,7 +908,7 @@ Structure101 automatizam essa análise.
 Os \textbf{diagramas de contexto C4}, criados por Simon Brown, oferecem
 uma modelagem hierárquica do sistema em quatro níveis de zoom: Contexto
 (quem usa o sistema e como ele se conecta a sistemas externos), Containers
-(as unidades de deploy --- servidores, bancos de dados, filas), Componentes
+(as unidades de deploy, como servidores, bancos de dados e filas), Componentes
 (os módulos internos de cada container) e Código (classes e funções). Essa
 abordagem em camadas é particularmente poderosa porque permite comunicar a
 arquitetura em diferentes níveis de detalhe para diferentes audiências: o
@@ -921,7 +919,7 @@ Por fim, os \textbf{mapas de calor de mudanças} são visualizações de
 quais arquivos ou módulos mudam juntos com frequência, revelando
 acoplamento implícito. Se toda vez que você altera o módulo de
 pagamentos precisa também alterar o módulo de notificações, esses dois
-módulos estão acoplados --- mesmo que não haja uma dependência explícita
+módulos estão acoplados, mesmo que não haja uma dependência explícita
 no código. Ferramentas como o CodeScene e o git log com análise de
 co-change detectam esses padrões automaticamente, revelando a
 ``arquitetura real'' do sistema, que frequentemente diverge da
@@ -945,7 +943,7 @@ perguntas poderosas se tornam possíveis. O que acontece se o componente
 X falhar? Quais componentes seriam afetados? Existem caminhos
 alternativos ou o sistema para completamente?
 
-O pensamento sistêmico é, em última análise, uma forma de
+No fim das contas, o pensamento sistêmico é uma forma de
 \textbf{humildade intelectual}. É o reconhecimento de que sistemas são
 mais complexos do que qualquer indivíduo pode compreender completamente,
 e que a única forma de lidar com essa complexidade é adotar ferramentas,
@@ -968,7 +966,7 @@ essa realidade é o primeiro passo para tomar decisões maduras.
 Se há uma verdade universal na engenharia de software, é esta:
 \textbf{não existe solução perfeita}. Existe apenas a solução adequada
 para um determinado contexto, conjunto de restrições e momento no tempo.
-Toda decisão técnica é um trade-off --- ao ganhar em uma dimensão,
+Toda decisão técnica é um trade-off; ao ganhar em uma dimensão,
 necessariamente perdemos em outra. O engenheiro imaturo busca a
 ``melhor'' solução em abstrato. O engenheiro maduro busca a solução mais
 adequada para o contexto concreto em que opera.
@@ -978,11 +976,11 @@ mais elegante dessa realidade no campo de sistemas distribuídos: é
 impossível para um sistema distribuído oferecer simultaneamente
 Consistência, Disponibilidade e Tolerância a Partições. Você pode ter,
 no máximo, duas dessas três propriedades. Não é uma limitação de
-implementação --- é uma impossibilidade matemática. O banco DynamoDB da
+implementação. É uma impossibilidade matemática. O banco DynamoDB da
 Amazon, por exemplo, prioriza Disponibilidade e Tolerância a Partições,
 aceitando consistência eventual. O Google Spanner prioriza Consistência
 e Tolerância a Partições, usando relógios atômicos para minimizar o
-impacto na disponibilidade. Nenhum dos dois está ``errado'' --- cada um
+impacto na disponibilidade. Nenhum dos dois está ``errado''; cada um
 fez uma escolha consciente sobre qual atributo sacrificar, baseada nas
 necessidades de seus respectivos casos de uso.
 
@@ -995,7 +993,7 @@ Essa definição de Fowler é particularmente iluminadora porque identifica
 a \emph{essência} da arquitetura: não é a escolha de padrões bonitos ou
 tecnologias elegantes. É a arte de tomar, com rigor e consciência,
 exatamente aquelas decisões que terão consequências duradouras. Se uma
-decisão é facilmente reversível, ela não é arquitetural --- é tática.
+decisão é facilmente reversível, ela não é arquitetural, é tática.
 Se uma decisão vai moldar o sistema por anos, ela é arquitetural e
 merece a análise correspondente.
 
@@ -1006,7 +1004,7 @@ software enfrenta ao longo de sua carreira:
 
 \textbf{Performance versus Legibilidade.} Código ultra-otimizado, com
 truques de bit manipulation e loops desenrolados, pode ser
-significativamente mais rápido --- mas também significativamente mais
+significativamente mais rápido, mas também significativamente mais
 difícil de entender e manter. Na vasta maioria dos casos, a legibilidade
 vence. Como Donald Knuth famosamente declarou: ``a otimização prematura
 é a raiz de todo mal''. O engenheiro sábio escreve código legível
@@ -1020,7 +1018,7 @@ da segurança dos motoristas que vão trafegar nela durante décadas.
 
 \textbf{Velocidade de entrega versus Qualidade.} Entregar rápido gera
 dívida técnica. Entregar com perfeição pode significar entregar tarde
-demais --- quando o mercado já mudou ou o concorrente já lançou. O caso
+demais, quando o mercado já mudou ou o concorrente já lançou. O caso
 do Knight Capital Group, em 2012, ilustra o extremo perigoso desse
 trade-off: uma atualização de software mal feita, lançada com pressa,
 causou um prejuízo de 440 milhões de dólares em apenas 45 minutos,
@@ -1036,7 +1034,7 @@ ajustando o curso.
 \textbf{Flexibilidade versus Simplicidade.} Um sistema genérico demais,
 projetado para atender qualquer caso futuro, é inerentemente complexo.
 Um sistema simples demais, que atende apenas o caso atual, precisará ser
-reescrito quando os requisitos mudarem --- e eles sempre mudam. O
+reescrito quando os requisitos mudarem (e eles sempre mudam). O
 princípio YAGNI (\emph{You Aren't Gonna Need It}) sugere errar para o
 lado da simplicidade, adicionando flexibilidade apenas quando a
 necessidade se manifesta concretamente. Kent Beck, criador do Extreme
@@ -1049,8 +1047,8 @@ levou três semanas para construir, mas que é usado de apenas uma forma,
 personalização e independência de fornecedores. Comprar ou adotar soluções
 prontas economiza tempo, reduz risco e permite focar no diferencial
 competitivo. A Amazon construiu internamente praticamente toda sua
-infraestrutura e acabou criando a AWS. A maioria das empresas, no entanto,
-não é a Amazon --- e a decisão de construir um banco de dados próprio
+infraestrutura e acabou criando a AWS. A maioria das empresas, porém,
+não é a Amazon, e a decisão de construir um banco de dados próprio
 quando o PostgreSQL resolve o problema é, na maioria dos contextos, uma
 demonstração de ego, não de engenharia. A regra de ouro é: construa
 apenas aquilo que é seu diferencial competitivo. Use soluções prontas
@@ -1059,8 +1057,8 @@ para tudo o mais.
 Há ainda outros trade-offs que merecem reflexão. \textbf{Consistência
 versus Disponibilidade}, já mencionado no contexto do Teorema CAP, é
 uma tensão que permeia todo sistema distribuído. \textbf{Segurança versus
-Usabilidade}: cada camada de segurança adicional --- autenticação
-multifator, CAPTCHA, expiração rápida de sessão --- aumenta a proteção
+Usabilidade}: cada camada de segurança adicional (autenticação
+multifator, CAPTCHA, expiração rápida de sessão) aumenta a proteção
 mas também aumenta a fricção para o usuário legítimo. \textbf{Observabilidade
 versus Performance}: cada log, métrica e trace que você adiciona ao
 sistema consome CPU, memória e bandwidth. Sistemas com observabilidade
@@ -1088,8 +1086,8 @@ em argumentos.
 O processo começa com a \textbf{definição explícita dos atributos de
 qualidade} que importam para o sistema em questão. Performance?
 Disponibilidade? Segurança? Manutenibilidade? Custo? Tempo de entrega?
-Listar esses atributos e priorizá-los --- idealmente com o envolvimento
-de stakeholders de negócio --- elimina a ambiguidade que causa a maioria
+Listar esses atributos e priorizá-los, idealmente com o envolvimento
+de stakeholders de negócio, elimina a ambiguidade que causa a maioria
 das discussões técnicas improdutivas. Em seguida, para cada decisão, o
 engenheiro identifica as alternativas viáveis e analisa como cada uma
 afeta cada atributo de qualidade.
@@ -1099,7 +1097,7 @@ especialmente valioso nesse processo. Um ADR é um documento curto que
 registra uma decisão de arquitetura, o contexto em que foi tomada, as
 alternativas consideradas e as razões para a escolha. Meses ou anos
 depois, quando alguém perguntar ``por que usamos MongoDB em vez de
-PostgreSQL?'', o ADR terá a resposta --- em vez de depender da memória
+PostgreSQL?'', o ADR terá a resposta, em vez de depender da memória
 de alguém que talvez nem trabalhe mais na empresa. O formato, popularizado
 por Michael Nygard, é deliberadamente enxuto: deve caber em uma página,
 porque documentos longos não são lidos.
@@ -1138,7 +1136,7 @@ Premissas implícitas se tornam explícitas. Alternativas que não foram
 consideradas se tornam evidentes. Consequências que pareciam distantes se
 tornam concretas. Muitas vezes, ao escrever o ADR, o engenheiro percebe
 que a decisão que parecia óbvia na conversa verbal não sobrevive ao
-escrutínio do texto escrito. Esse é precisamente o ponto: melhorar a
+escrutínio do texto escrito. Esse é o ponto: melhorar a
 decisão \emph{antes} de implementá-la, quando o custo de mudar de ideia
 é próximo de zero.
 
@@ -1148,7 +1146,7 @@ Diante de qualquer decisão técnica, a pergunta mais poderosa que o
 engenheiro pode fazer é: \textbf{``Qual problema estamos otimizando?''}
 Essa pergunta simples corta camadas de discussão improdutiva e força a
 equipe a explicitar suas prioridades. Quando dois engenheiros discordam
-sobre a melhor abordagem, frequentemente o desacordo não é técnico ---
+sobre a melhor abordagem, frequentemente o desacordo não é técnico;
 é sobre qual atributo de qualidade priorizar. Um está otimizando para
 performance, o outro para manutenibilidade. Ambos estão ``certos'' dentro
 de seu próprio enquadramento. A pergunta de ouro revela o enquadramento
@@ -1162,7 +1160,7 @@ problema estamos otimizando?'', a discussão muda de natureza. Se o
 problema é latência de resposta ao usuário, request-response pode ser a
 resposta. Se o problema é desacoplamento entre times que precisam evoluir
 independentemente, eventos podem ser a resposta. A pergunta não resolve
-o debate --- ela o torna \emph{resolvível}, ancorando a discussão em
+o debate; ela o torna \emph{resolvível}, ancorando a discussão em
 prioridades concretas em vez de preferências abstratas.
 
 O Netflix aplica esse princípio com maestria. Quando debatem decisões de
@@ -1173,13 +1171,13 @@ negócio. Da mesma forma, o Google usa o conceito de ``error budget'' em
 SRE: o orçamento de erros define quanto de indisponibilidade é aceitável,
 e todas as decisões de confiabilidade versus velocidade de entrega são
 calibradas contra esse orçamento objetivo. Não há debate filosófico sobre
-``o quão confiável devemos ser'' --- há um número, acordado entre
+``o quão confiável devemos ser''. Há um número, acordado entre
 engenharia e produto, que orienta todas as decisões subsequentes.
 
 \section{O Ciclo de Feedback}
 
 Os trade-offs, por mais bem analisados que sejam, são baseados em
-premissas --- e premissas podem estar erradas. É aqui que entra o ciclo
+premissas, e premissas podem estar erradas. É aqui que entra o ciclo
 de feedback: o mecanismo que permite ao engenheiro validar suas decisões
 com dados da realidade e corrigir o curso quando necessário. Sem feedback,
 engenharia se torna adivinhação. Com feedback rápido, engenharia se torna
@@ -1189,7 +1187,7 @@ aprendizado acelerado.
 
 O conceito de ciclo de feedback rápido, popularizado por Eric Ries no
 \emph{Lean Startup}, aplica-se com igual força à engenharia de software.
-Cada decisão técnica é, em essência, uma hipótese. ``Acreditamos que
+Cada decisão técnica é, no fundo, uma hipótese. ``Acreditamos que
 usar cache Redis reduzirá a latência do P95 de 800ms para 200ms.'' Essa
 hipótese precisa ser validada com dados, não com opiniões. Um engenheiro
 que implementa uma otimização sem medir o antes e o depois está navegando
@@ -1202,7 +1200,7 @@ Na escala de \textbf{segundos}, o compilador ou linter informa se o código
 está sintaticamente correto. Esse feedback quase instantâneo é tão
 incorporado ao fluxo de trabalho que raramente pensamos nele, mas sua
 ausência seria paralisante. Imagine escrever código por horas sem saber
-se ele sequer compila --- é assim que se programava nos anos 1960, com
+se ele sequer compila. Era assim que se programava nos anos 1960, com
 cartões perfurados enviados em lote.
 
 Na escala de \textbf{minutos}, testes unitários validam se a lógica
@@ -1213,8 +1211,8 @@ evolução contínua do código.
 
 Na escala de \textbf{horas}, testes de integração revelam se os
 componentes interagem corretamente. É nessa escala que problemas de
-interface --- formatos de dados incompatíveis, contratos de API quebrados,
-falhas de serialização --- se manifestam. Testes de integração são mais
+interface se manifestam: formatos de dados incompatíveis, contratos de
+API quebrados, falhas de serialização. Testes de integração são mais
 lentos e mais frágeis que testes unitários, mas capturam uma classe
 inteira de defeitos que testes unitários não conseguem detectar.
 
@@ -1226,8 +1224,8 @@ Estudos da SmartBear mostram que a taxa ideal de review é de 200 a 400
 linhas por sessão; acima disso, a eficácia cai dramaticamente.
 
 Na escala de \textbf{semanas}, métricas de produção mostram se o sistema
-atende os requisitos não-funcionais. Latência, throughput, taxa de erros,
-uso de recursos --- esses indicadores revelam a verdade sobre o
+atende os requisitos não-funcionais. Latência, throughput, taxa de erros
+e uso de recursos: esses indicadores revelam a verdade sobre o
 comportamento do sistema sob carga real, que frequentemente diverge das
 previsões feitas no design.
 
@@ -1238,11 +1236,11 @@ não apenas a implementação técnica, mas a própria decisão de construir
 aquela funcionalidade. Este é o feedback mais valioso e mais ignorado.
 
 A chave para um ciclo de feedback eficaz é a \textbf{instrumentação
-deliberada}. Não basta coletar dados --- é preciso coletar os dados
+deliberada}. Não basta coletar dados; é preciso coletar os dados
 \emph{certos} e apresentá-los de forma que facilitem a tomada de decisão.
 A distinção entre \emph{vanity metrics} (métricas que parecem
 impressionantes mas não informam decisões) e \emph{actionable metrics}
-(métricas que apontam diretamente para ações) é fundamental.
+(métricas que apontam diretamente para ações) é central.
 
 \begin{figure}[htbp]
     \centering
@@ -1282,7 +1280,7 @@ ferramenta mais famosa do arsenal de Chaos Engineering da Netflix, desliga
 aleatoriamente instâncias de servidores em produção para forçar os
 sistemas a serem resilientes a falhas de infraestrutura. O Chaos Kong
 simula a perda de uma região inteira da AWS. Essas ferramentas não são
-exercícios teóricos --- são executadas continuamente em produção real,
+exercícios teóricos; são executadas continuamente em produção real,
 com tráfego real.
 
 O princípio fundamental é: \textbf{quanto mais rápido o feedback, menor
@@ -1298,18 +1296,18 @@ bug cresce exponencialmente com o tempo entre a introdução do bug e sua
 detecção. O conceito de \emph{shift left} --- mover a detecção de
 problemas para as fases mais iniciais do ciclo de desenvolvimento --- é
 a aplicação prática dessa compreensão. Análise estática de código, type
-checking rigoroso, testes de contrato de API, linting automatizado ---
+checking rigoroso, testes de contrato de API, linting automatizado:
 todas essas práticas existem para dar feedback ao engenheiro o mais cedo
 possível, quando o custo de correção ainda é baixo.
 
 Há também uma dimensão humana do feedback que não pode ser ignorada. O
-feedback não serve apenas para detectar erros técnicos --- serve para
+feedback não serve apenas para detectar erros técnicos. Serve para
 \textbf{calibrar a intuição do engenheiro}. Quando você faz uma
 estimativa de prazo e depois compara com o tempo real, está calibrando
 sua capacidade de estimar. Quando você prevê que uma mudança será segura
 e depois observa os resultados em produção, está calibrando sua
 capacidade de avaliar risco. Com o tempo, essas calibrações acumuladas
-se tornam o que chamamos de ``intuição de engenharia'' --- aquela
+se tornam o que chamamos de ``intuição de engenharia'', aquela
 capacidade aparentemente misteriosa de engenheiros seniores de ``sentir''
 que algo está errado antes de ter dados concretos.
 
@@ -1320,7 +1318,7 @@ feedback. Mas seu valor vai além de ``verificar se funciona''. Testes
 bem escritos servem como \textbf{documentação viva} das intenções do
 desenvolvedor. Diferente de comentários no código, que podem ficar
 desatualizados sem que ninguém perceba, testes desatualizados
-\emph{falham} --- e falhas são impossíveis de ignorar.
+\emph{falham}, e falhas são impossíveis de ignorar.
 
 \begin{lstlisting}[language=Python, caption={Testes como documentação de comportamento esperado}]
 import pytest
@@ -1364,23 +1362,23 @@ class TestCalculadoraDeDesconto:
 
 Observe como os nomes dos testes e os docstrings comunicam \emph{intenção}
 e \emph{contexto de negócio}, não detalhes de implementação. Quando um
-teste falha, a mensagem de erro não apenas indica que algo quebrou ---
-indica \emph{qual regra de negócio} foi violada. Isso é profundamente
+teste falha, a mensagem de erro não apenas indica que algo quebrou;
+indica \emph{qual regra de negócio} foi violada. Isso é muito
 valioso para um novo membro da equipe que precisa entender como o sistema
 funciona.
 
 Os testes também funcionam como uma rede de segurança que permite a
-evolução do código com confiança. Imagine que você precisa refatorar o
-módulo de descontos para suportar um novo tipo de promoção. Se você tem
-uma suite de testes abrangente, pode fazer as mudanças e verificar em
-minutos se todas as regras existentes continuam funcionando. Sem testes,
-cada refatoração é uma aposta --- e o medo de quebrar algo faz com que
+evolução do código com confiança. Se você precisa refatorar o módulo de
+descontos para suportar um novo tipo de promoção e tem uma suite de
+testes abrangente, pode fazer as mudanças e verificar em minutos se
+todas as regras existentes continuam funcionando. Sem testes, cada
+refatoração é uma aposta, e o medo de quebrar algo faz com que
 engenheiros evitem melhorar o código, criando um ciclo vicioso de
 degradação.
 
 Kent Beck, criador do Test-Driven Development (TDD), descreve os testes
 como ``coragem concretizada''. A coragem de refatorar, de simplificar,
-de melhorar o design --- tudo isso depende da confiança de que os testes
+de melhorar o design: tudo isso depende da confiança de que os testes
 detectarão se algo quebrar. Em equipes sem testes automatizados, o
 comportamento predominante é o oposto da coragem: é o medo. ``Não mexa
 nisso, está funcionando.'' ``Melhor não refatorar, pode quebrar.'' Essas
@@ -1399,7 +1397,7 @@ comportamentos, não nos detalhes de implementação.
 
 Os ciclos de feedback validam decisões individuais, mas é a mentalidade
 de longo prazo que garante a sustentabilidade do sistema ao longo do
-tempo. Um sistema não é um projeto com início e fim --- é um organismo
+tempo. Um sistema não é um projeto com início e fim. É um organismo
 vivo que precisa ser mantido, adaptado e, eventualmente, substituído.
 Engenheiros com mentalidade de longo prazo constroem sistemas que não
 apenas funcionam hoje, mas que continuam funcionando e evoluindo amanhã,
@@ -1407,12 +1405,12 @@ no próximo ano e na próxima década.
 
 \subsection{Código é Lido Mais do que é Escrito}
 
-Uma das verdades mais citadas --- e menos praticadas --- da engenharia
+Uma das verdades mais citadas (e menos praticadas) da engenharia
 de software é que código é lido dez vezes mais do que é escrito. Robert
 C. Martin, em \emph{Clean Code}, dedica capítulos inteiros a essa ideia.
 Quando você escreve uma função, está criando algo que será lido,
 interpretado e possivelmente modificado por dezenas de pessoas ao longo
-de anos. Investir tempo em legibilidade não é vaidade estética --- é
+de anos. Investir tempo em legibilidade não é vaidade estética; é
 respeito profissional com seus futuros colegas, que talvez incluam você
 mesmo daqui a seis meses, quando já terá esquecido o que aquele código
 faz.
@@ -1423,7 +1421,7 @@ tempo em legibilidade. Mas o código gerado pela IA será \emph{mantido}
 por humanos, e humanos precisam \emph{entender} o que mantêm. Código
 incompreensível gerado por IA é ainda mais perigoso que código
 incompreensível gerado por humanos, porque frequentemente ninguém o
-entende desde o momento da criação --- nem sequer o ``autor'' que
+entende desde o momento da criação, nem sequer o ``autor'' que
 aceitou o output do modelo.
 
 \begin{lstlisting}[language=Python, caption={Contraste entre código obscuro e código expressivo}]
@@ -1453,7 +1451,7 @@ def filtrar_transacoes_ativas_recentes(
 Ambas as funções fazem exatamente a mesma coisa. A diferença é que a
 segunda pode ser entendida em cinco segundos por qualquer membro da
 equipe, enquanto a primeira exige que o leitor deduza o significado de
-cada variável abreviada --- um exercício que consome tempo e introduz
+cada variável abreviada, um exercício que consome tempo e introduz
 risco de interpretação equivocada. A questão não é performance (ambas
 são igualmente rápidas). A questão é que o tempo do leitor é mais caro
 que o tempo do escritor, porque haverá muitos leitores e apenas um
@@ -1464,7 +1462,7 @@ escritor. É economia básica: otimize para o recurso mais escasso.
 O termo ``dívida técnica'', cunhado por Ward Cunningham, é frequentemente
 usado como sinônimo de ``código ruim''. Mas a metáfora original é mais
 sutil e mais rica. Dívida técnica é um \textbf{atalho consciente} que
-acelera a entrega no curto prazo em troca de trabalho futuro --- exatamente
+acelera a entrega no curto prazo em troca de trabalho futuro, exatamente
 como uma dívida financeira. E assim como na vida financeira, o problema
 não é ter dívida: é não gerenciá-la.
 
@@ -1502,12 +1500,12 @@ fazendo uma análise de investimento com custos e retornos concretos''.
 
 \subsection{Manutenibilidade e a Regra do Escoteiro}
 
-A manutenibilidade --- a facilidade com que um sistema pode ser modificado
+A manutenibilidade (a facilidade com que um sistema pode ser modificado
 para corrigir defeitos, melhorar performance ou adaptar-se a novos
-requisitos --- é talvez o atributo de qualidade mais subvalorizado na
+requisitos) é talvez o atributo de qualidade mais subvalorizado na
 indústria. Sistemas que são fáceis de manter custam menos, evoluem mais
 rápido e atraem engenheiros melhores (porque ninguém quer trabalhar em
-um código ilegível e frágil). No entanto, manutenibilidade raramente
+um código ilegível e frágil). Contudo, manutenibilidade raramente
 aparece em especificações de requisitos e quase nunca é medida
 formalmente. É como a saúde: todo mundo concorda que é importante, mas
 poucos investem consistentemente nela até que surja um problema grave.
@@ -1533,8 +1531,8 @@ nunca parar o desenvolvimento de funcionalidades.
 
 A filosofia oposta à Regra do Escoteiro é a ``teoria das janelas
 quebradas'', adaptada da criminologia para o software: quando o codebase
-tem ``janelas quebradas'' --- trechos de código feios, testes desativados,
-warnings ignorados --- a mensagem implícita é ``aqui, ninguém se
+tem ``janelas quebradas'' (trechos de código feios, testes desativados,
+warnings ignorados), a mensagem implícita é ``aqui, ninguém se
 importa''. Essa mensagem é contagiosa. Novos membros da equipe, ao ver
 código de baixa qualidade sendo tolerado, naturalmente calibram seus
 próprios padrões para baixo. O resultado é uma espiral descendente de
@@ -1545,7 +1543,7 @@ disciplina coletiva e liderança técnica que dê o exemplo.
 
 Duas horas escrevendo documentação economizam vinte horas explicando a
 mesma coisa verbalmente para diferentes pessoas ao longo dos próximos
-meses. Documentação não é burocracia --- é \textbf{alavancagem}. É a
+meses. Documentação não é burocracia: é \textbf{alavancagem}. É a
 forma mais eficiente de multiplicar conhecimento sem exigir a presença
 física do detentor original da informação. Em uma equipe de cinco pessoas,
 o custo de comunicação verbal é administrável. Em uma equipe de cinquenta,
@@ -1564,15 +1562,15 @@ trabalho inclui garantir que a documentação esteja atualizada e acessível.
 
 Uma forma prática de pensar sobre documentação é o conceito de ``bus
 factor'': quantas pessoas precisam ser atropeladas por um ônibus
-(metaforicamente --- sair de férias ou mudar de emprego são cenários
+(metaforicamente, sair de férias ou mudar de emprego são cenários
 mais realistas) para que o conhecimento sobre uma parte do sistema seja
-perdido? Se o bus factor é 1 --- uma única pessoa detém todo o
-conhecimento --- o sistema está em risco existencial. Documentação é a
+perdido? Se o bus factor é 1 (uma única pessoa detém todo o
+conhecimento), o sistema está em risco existencial. Documentação é a
 ferramenta mais eficaz para aumentar o bus factor, distribuindo
 conhecimento de forma durável e pesquisável.
 
 Há um tipo de documentação frequentemente negligenciado que merece menção
-especial: os \textbf{runbooks} --- guias operacionais que descrevem como
+especial: os \textbf{runbooks}, guias operacionais que descrevem como
 responder a incidentes específicos. ``O que fazer quando o serviço de
 pagamentos fica indisponível às três da manhã?'' Um runbook bem escrito
 transforma um incidente assustador em um procedimento executável,
@@ -1581,11 +1579,11 @@ Google, em suas práticas de SRE, trata runbooks como artefatos de
 engenharia de primeira classe, com revisão de código, versionamento e
 testes regulares.
 
-A documentação também tem um papel fundamental no \textbf{onboarding} de
+A documentação também tem um papel importante no \textbf{onboarding} de
 novos membros da equipe. Uma empresa que leva três meses para tornar um
 novo engenheiro produtivo está desperdiçando dinheiro e talento. Uma
-empresa com documentação de qualidade --- incluindo diagramas de
-arquitetura atualizados, ADRs, runbooks e guias de contribuição --- pode
+empresa com documentação de qualidade (incluindo diagramas de
+arquitetura atualizados, ADRs, runbooks e guias de contribuição) pode
 reduzir esse tempo para semanas. O Stripe é famoso na indústria pela
 qualidade de sua documentação interna. Novos engenheiros reportam que
 conseguem fazer seu primeiro deploy significativo na primeira semana.
@@ -1619,7 +1617,7 @@ feedback da realidade é mais confiável do que nossas suposições. Os
 melhores engenheiros que já conheci compartilham essa humildade. Eles não
 dizem ``isso vai funcionar''; dizem ``acredito que isso vai funcionar, e
 aqui está como vamos verificar''. Essa diferença sutil na linguagem
-reflete uma diferença profunda no modo de pensar: a disposição de ser
+reflete uma diferença grande no modo de pensar: a disposição de ser
 provado errado, que é o pré-requisito para o aprendizado contínuo.
 
 Jeff Bezos capturou essa ideia ao dizer que ``as pessoas que mais acertam
@@ -1631,8 +1629,8 @@ qualidade do sistema. O engenheiro que muda de abordagem quando o feedback
 indica que deve mudar está praticando engenharia de verdade.
 
 Há um conceito relacionado que merece ser explorado: o \textbf{pensamento
-probabilístico}. Em vez de pensar em termos de certeza --- ``isso vai
-funcionar'' ou ``isso vai falhar'' --- o engenheiro eficaz pensa em
+probabilístico}. Em vez de pensar em termos de certeza (``isso vai
+funcionar'' ou ``isso vai falhar''), o engenheiro eficaz pensa em
 termos de probabilidade e impacto. ``Há 80\% de chance de que essa
 abordagem funcione, e se falhar, o impacto é baixo porque podemos
 reverter em minutos.'' Essa forma de pensar permite tomar decisões mesmo
@@ -1648,12 +1646,12 @@ feedback, e ajusta o suficiente para convergir na solução adequada.
 
 \section{Ética e Responsabilidade Profissional}
 
-Os fundamentos técnicos --- modelos mentais, pensamento sistêmico,
-trade-offs, feedback, mentalidade de longo prazo --- são necessários
+Os fundamentos técnicos (modelos mentais, pensamento sistêmico,
+trade-offs, feedback, mentalidade de longo prazo) são necessários
 mas não suficientes. Falta uma dimensão que muitos cursos de engenharia
 de software negligenciam, mas que é indissociável da prática profissional:
 a \textbf{ética}. Um engenheiro que constrói sistemas eficientes mas
-prejudiciais não está fazendo boa engenharia --- está fazendo engenharia
+prejudiciais não está fazendo boa engenharia. Está fazendo engenharia
 a serviço do dano. A competência técnica sem consciência moral é uma
 arma, não uma ferramenta.
 
@@ -1664,27 +1662,27 @@ pessoas, frequentemente sem perceber. O algoritmo de recomendação que
 você treina influencia o que milhões de pessoas assistem, leem e pensam.
 O sistema de scoring de crédito que você implementa determina quem recebe
 um empréstimo e quem não recebe. O software embarcado que você escreve
-controla sistemas que podem matar se falharem. Pense nisso: um
-engenheiro de software em uma grande plataforma de redes sociais pode,
-com uma mudança de poucas linhas em um algoritmo de ranking, alterar o
-humor, as opiniões e o comportamento de centenas de milhões de pessoas.
-Esse é um poder que monarcas absolutistas do passado não possuíam.
+controla sistemas que podem matar se falharem. Um engenheiro de software
+em uma grande plataforma de redes sociais pode, com uma mudança de poucas
+linhas em um algoritmo de ranking, alterar o humor, as opiniões e o
+comportamento de centenas de milhões de pessoas. Esse é um poder que
+monarcas absolutistas do passado não possuíam.
 
 Esse poder vem acompanhado de uma responsabilidade proporcional. ``Foi o
 QA que deveria ter pego'' não é uma desculpa aceitável. ``O product
 manager pediu para entregar rápido'' não absolve o engenheiro de ter
 cortado testes de segurança. A responsabilidade profissional do
-engenheiro não é delegável --- ela é inerente ao ato de escrever código
+engenheiro não é delegável; ela é inerente ao ato de escrever código
 que será executado no mundo real. Um médico não pode dizer ``o hospital
 me pressionou a atender mais pacientes, por isso não lavei as mãos''.
 Da mesma forma, um engenheiro não pode usar pressão de cronograma como
 justificativa para negligência técnica que coloca usuários em risco.
 
-É importante distinguir entre \textbf{erro honesto} e
+É preciso distinguir entre \textbf{erro honesto} e
 \textbf{negligência}. Todo engenheiro vai, ao longo de sua carreira,
 introduzir bugs que causam problemas em produção. Isso é inevitável e
 humano. O que não é aceitável é a falha em estabelecer as salvaguardas
---- testes, code review, monitoramento, circuit breakers --- que
+(testes, code review, monitoramento, circuit breakers) que
 minimizam a probabilidade e o impacto desses erros. O erro é inevitável;
 a ausência de defesas contra o erro é uma escolha.
 
@@ -1698,8 +1696,8 @@ redundante (presente em modelos anteriores mas removido porque ``o
 software cuida disso'') e uma cultura organizacional que descartava
 relatórios de falha. O caso Therac-25 é ensinado em cursos de engenharia
 de software no mundo inteiro como o exemplo definitivo de por que
-validação, testes e humildade são inegociáveis. O erro mais profundo não
-foi técnico --- foi cultural: a crença arrogante de que o software era
+validação, testes e humildade são inegociáveis. O erro mais grave não
+foi técnico. Foi cultural: a crença arrogante de que o software era
 tão confiável que dispensava verificação independente. Quando operadores
 reportavam comportamentos estranhos, os engenheiros respondiam que
 ``isso é impossível, o software não permite''. Essa certeza injustificada
@@ -1711,14 +1709,14 @@ característica aerodinâmica resultante da instalação de motores maiores.
 O software dependia de um \textbf{único} sensor de ângulo de ataque, sem
 redundância. Quando esse sensor falhava, o MCAS empurrava o nariz do
 avião para baixo repetidamente, e os pilotos não conseguiam sobrepor o
-sistema. Dois acidentes --- Lion Air 610 e Ethiopian Airlines 302 ---
+sistema. Dois acidentes (Lion Air 610 e Ethiopian Airlines 302)
 mataram 346 pessoas. A investigação revelou pressões de cronograma,
 falhas de comunicação entre engenheiros e gerência, e uma cultura que
 priorizou custo sobre segurança. Engenheiros internos levantaram
 preocupações sobre o design do MCAS, mas foram ignorados ou pressionados
 a não documentar formalmente suas objeções. O caso 737 MAX é um lembrete
 de que a responsabilidade do engenheiro não termina quando ele expressa
-uma preocupação --- ela persiste enquanto o risco existe.
+uma preocupação. Ela persiste enquanto o risco existe.
 
 \textbf{Knight Capital Group (2012).} Uma atualização de software
 implantada incorretamente fez com que o sistema de trading da Knight
@@ -1737,7 +1735,7 @@ Esses casos não são curiosidades históricas. São lembretes de que as
 decisões que tomamos como engenheiros têm consequências reais, às vezes
 irreversíveis. Eles devem ser estudados não com mórbida fascinação, mas
 com a seriedade de quem reconhece que, em circunstâncias diferentes,
-qualquer um de nós poderia ter cometido erros semelhantes --- e que a
+qualquer um de nós poderia ter cometido erros semelhantes, e que a
 única defesa é a disciplina sistemática, não a confiança na
 infalibilidade individual.
 
@@ -1745,16 +1743,16 @@ infalibilidade individual.
 
 Coletar dados ``porque podemos'' não é ético. A LGPD no Brasil e o GDPR
 na Europa estabelecem \textbf{mínimos legais} para o tratamento de dados
-pessoais --- não máximos morais. O engenheiro ético vai além da
+pessoais, não máximos morais. O engenheiro ético vai além da
 conformidade legal e pergunta: ``essa coleta de dados é realmente
 necessária para o serviço que prestamos? Estamos coletando o mínimo
 necessário? Os dados estão adequadamente protegidos? O que acontece se
-houver um vazamento?'' Essas perguntas não são paranoia --- são prudência
+houver um vazamento?'' Essas perguntas não são paranoia; são prudência
 profissional em um mundo onde vazamentos de dados se tornaram tão
 frequentes que mal fazem notícia.
 
-O princípio de \textbf{minimização de dados} --- coletar apenas o
-estritamente necessário para a finalidade declarada --- não é apenas um
+O princípio de \textbf{minimização de dados} (coletar apenas o
+estritamente necessário para a finalidade declarada) não é apenas um
 requisito legal. É uma postura de engenharia: dados que não existem não
 podem vazar, não precisam ser migrados e não geram custo de armazenamento.
 É também uma postura de respeito: cada dado pessoal coletado é um
@@ -1778,7 +1776,7 @@ perpetuam e amplificam discriminação. Algoritmos de reconhecimento
 facial que funcionam bem para homens brancos mas falham para mulheres
 negras. Sistemas de recrutamento que penalizam currículos de mulheres
 porque foram treinados com dados históricos de empresas predominantemente
-masculinas --- como aconteceu com o sistema de triagem de currículos da
+masculinas, como aconteceu com o sistema de triagem de currículos da
 Amazon, abandonado em 2018 quando se descobriu que penalizava qualquer
 menção à palavra ``women's''. Modelos de reincidência criminal que
 atribuem risco maior a réus negros, como o sistema COMPAS analisado
@@ -1789,14 +1787,14 @@ responsabilidade de questionar os dados de treinamento, testar para viés
 em subgrupos demográficos e ser transparente sobre as limitações do
 modelo. ``O algoritmo decidiu'' não é uma resposta aceitável quando o
 algoritmo perpetua injustiça. Um algoritmo é a cristalização de decisões
-humanas --- na escolha dos dados, na definição das features, na seleção
+humanas, na escolha dos dados, na definição das features, na seleção
 da função de perda, na interpretação dos resultados.
 
 A justiça computacional não é um problema que se resolve com uma métrica
 única ou uma biblioteca mágica. É um compromisso contínuo que exige
 diversidade nas equipes que constroem os sistemas, pluralidade nas
 perspectivas que avaliam os resultados e humildade para reconhecer que
-nenhum modelo é neutro --- porque os dados que o alimentam refletem um
+nenhum modelo é neutro, porque os dados que o alimentam refletem um
 mundo que não é neutro.
 
 Na prática, combater o viés algorítmico exige ações concretas em cada
@@ -1816,20 +1814,20 @@ do que a pacientes brancos com condições de saúde equivalentes. A razão
 era insidiosa: o modelo usava custo de tratamento como proxy para
 gravidade da condição. Como pacientes negros historicamente tinham menos
 acesso a tratamentos caros, o modelo interpretava isso como ``menos
-doentes''. O viés não estava no código --- estava na premissa.
+doentes''. O viés não estava no código. Estava na premissa.
 
 \subsection{Whistleblowing: O Dever Desconfortável}
 
 Quando um engenheiro identifica um problema grave que está sendo
-deliberadamente ignorado pela gerência --- uma vulnerabilidade de
+deliberadamente ignorado pela gerência (uma vulnerabilidade de
 segurança, uma violação de privacidade, um risco à segurança física
-dos usuários --- ele enfrenta um dilema ético real. Reportar internamente
+dos usuários), ele enfrenta um dilema ético real. Reportar internamente
 pode ser ignorado. Reportar externamente pode custar o emprego. Mas o
 silêncio tem um custo que pode ser medido em vidas, dinheiro ou direitos
 violados.
 
-A história da engenharia --- não apenas de software, mas de todas as
-engenharias --- está repleta de casos em que profissionais que levantaram
+A história da engenharia, não apenas de software, mas de todas as
+engenharias, está repleta de casos em que profissionais que levantaram
 alarmes foram silenciados, retaliados ou marginalizados. Os engenheiros
 da Morton Thiokol que alertaram sobre o risco dos O-rings antes do
 desastre do Challenger em 1986 foram ignorados pela gerência. Os
@@ -1841,7 +1839,7 @@ pessoas que confiaram que o sistema era seguro.
 Não existe resposta fácil para esse dilema. O que existe é o
 reconhecimento de que o engenheiro profissional não é um executor
 acrítico de ordens. Ele é um agente moral, com a responsabilidade de
-levantar a voz quando identifica que algo está errado --- mesmo quando
+levantar a voz quando identifica que algo está errado, mesmo quando
 isso é desconfortável. Culturas organizacionais saudáveis facilitam
 esse processo, criando canais seguros para reportar preocupações e
 protegendo quem os utiliza. Culturas tóxicas punem o mensageiro, e as
@@ -1858,9 +1856,9 @@ limites que não está disposto a cruzar.
 
 \section{Conclusão}
 
-Os fundamentos do pensamento de engenharia --- modelos mentais robustos,
+Os fundamentos do pensamento de engenharia (modelos mentais robustos,
 pensamento sistêmico, análise disciplinada de trade-offs, mentalidade de
-longo prazo, ciclos de feedback rápidos e responsabilidade ética ---
+longo prazo, ciclos de feedback rápidos e responsabilidade ética)
 formam a base sobre a qual todo o restante deste livro se constrói. Sem
 essa mentalidade, ferramentas como inteligência artificial, frameworks e
 metodologias são martelos procurando pregos: poderosos em potencial, mas
@@ -1881,13 +1879,13 @@ Esses fundamentos não são teoria para ser memorizada e esquecida. São
 hábitos mentais para ser praticados diariamente, em cada decisão, em
 cada linha de código, em cada conversa com colegas e stakeholders. O
 engenheiro que internaliza esses princípios não precisa pensar
-conscientemente sobre eles a cada momento --- eles se tornam parte de
+conscientemente sobre eles a cada momento; eles se tornam parte de
 seu repertório natural de pensamento, como a gramática se torna parte
 natural da fala. E assim como a boa gramática permite expressar ideias
 com clareza, os bons fundamentos de engenharia permitem construir
 sistemas com intenção, coerência e responsabilidade.
 
-Vale recapitular as lições centrais que atravessam este capítulo. Os
+Recapitulando as lições centrais que atravessam este capítulo: os
 \textbf{modelos mentais} são as ferramentas cognitivas que o engenheiro
 usa para raciocinar sobre sistemas complexos; sua qualidade determina a
 qualidade das decisões. O \textbf{pensamento sistêmico} revela que o
@@ -1898,23 +1896,23 @@ adequadas a contextos específicos. O \textbf{ciclo de feedback}
 transforma cada decisão em uma hipótese verificável, permitindo
 aprendizado e correção de curso. A \textbf{mentalidade de longo prazo}
 prioriza sustentabilidade sobre velocidade imediata. E a \textbf{ética}
-nos lembra que engenharia de software não é um exercício abstrato ---
-é uma prática que afeta vidas reais.
+nos lembra que engenharia de software não é um exercício abstrato. É
+uma prática que afeta vidas reais.
 
 Cada um desses pilares será aprofundado nos capítulos seguintes, aplicado
-a contextos concretos --- da modelagem de negócios à arquitetura de
+a contextos concretos, da modelagem de negócios à arquitetura de
 sistemas, dos princípios de design à integração de inteligência
 artificial. Mas os fundamentos permanecem os mesmos. Assim como um
 músico que domina escalas e harmonia pode tocar qualquer gênero, o
 engenheiro que domina esses fundamentos pode enfrentar qualquer desafio
-tecnológico --- não porque conhece a resposta de antemão, mas porque
+tecnológico, não porque conhece a resposta de antemão, mas porque
 possui o arcabouço mental para encontrá-la.
 
 O próximo capítulo avança dos fundamentos conceituais para os modelos
 concretos: IDEF-0 e RM-ODP, ferramentas de modelagem que permitem
 transformar o pensamento de engenharia em representações formais,
 comunicáveis e verificáveis. Veremos como passar da reflexão abstrata
-à estruturação rigorosa de sistemas --- o próximo passo natural para
+à estruturação rigorosa de sistemas, o próximo passo natural para
 quem já domina a arte de pensar como engenheiro.
 
 \section*{Exercícios}

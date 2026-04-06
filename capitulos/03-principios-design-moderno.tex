@@ -9,11 +9,11 @@ Princípios são bússolas. Padrões são mapas. Mapas são úteis, mas quando o
 território muda, a bússola continua apontando o norte.
 
 Essa distinção pode parecer sutil à primeira vista, mas ela carrega uma
-implicação profunda para a carreira de qualquer engenheiro de software.
+implicação forte para a carreira de qualquer engenheiro de software.
 Princípios de design sobrevivem a frameworks, linguagens e modas
-tecnológicas. Enquanto ferramentas específicas nascem, brilham e eventualmente
-caem no esquecimento --- basta pensar em quantos frameworks JavaScript surgiram
-e desapareceram na última década ---, os princípios que orientam boas decisões
+tecnológicas. Ferramentas específicas nascem, brilham e eventualmente
+caem no esquecimento (basta pensar em quantos frameworks JavaScript surgiram
+e desapareceram na última década), mas os princípios que orientam boas decisões
 de design permanecem relevantes através das eras. O SOLID, formulado nos anos
 1990 e 2000, continua guiando decisões em codebases escritas em linguagens que
 sequer existiam quando Robert C. Martin articulou esses conceitos pela
@@ -24,18 +24,17 @@ dogmática. Princípios guiam, não governam. Um engenheiro que aplica
 cegamente o Single Responsibility Principle a um script de dez linhas está
 tão equivocado quanto aquele que ignora o princípio em um monólito de cem
 mil linhas. O contexto determina a intensidade da aplicação, e a capacidade
-de calibrar essa intensidade é precisamente o que distingue um engenheiro
-experiente de um iniciante que acabou de ler seu primeiro livro sobre design
-de software.
+de calibrar essa intensidade é o que distingue um engenheiro experiente de
+um iniciante que acabou de ler seu primeiro livro sobre design de software.
 
 Na era dos LLMs e das ferramentas de geração de código assistidas por IA,
-essa distinção se torna ainda mais crucial. A IA conhece padrões --- ela foi
+essa distinção se torna ainda mais crucial. A IA conhece padrões: ela foi
 treinada em bilhões de linhas de código e consegue reproduzir estruturas com
 impressionante fidelidade mecânica. Mas o engenheiro conhece princípios. Ele
 entende \emph{por que} um padrão existe, \emph{quando} aplicá-lo e, talvez
 mais importante, \emph{quando não aplicá-lo}. Essa é a vantagem humana que
 nenhum modelo de linguagem, por mais sofisticado que seja, consegue substituir
-plenamente.
+por completo.
 
 Neste capítulo, vamos dissecar cada princípio com exemplos concretos de código,
 mostrando o \textbf{antes} e o \textbf{depois} de cada refatoração. Vamos além da
@@ -61,15 +60,15 @@ princípios entram em conflito.
 % ============================================================
 
 SOLID continua relevante, mas precisa ser entendido com nuance. Os cinco princípios
-propostos por Robert C. Martin nas décadas de 1990 e 2000 não são dogmas religiosos
---- são heurísticas que, aplicadas com bom senso, produzem código mais manutenível,
+propostos por Robert C. Martin nas décadas de 1990 e 2000 não são dogmas religiosos.
+São heurísticas que, aplicadas com bom senso, produzem código mais manutenível,
 extensível e compreensível.
 
 A história do SOLID é, em si mesma, uma história sobre o amadurecimento da
 engenharia de software como disciplina. Os princípios não surgiram de uma
 reflexão acadêmica abstrata, mas da experiência dolorosa de desenvolvedores
-que viveram as consequências de código mal projetado. Robert C. Martin --- o
-``Uncle Bob'' --- não inventou esses princípios do zero; ele os sintetizou e
+que viveram as consequências de código mal projetado. Robert C. Martin,
+o ``Uncle Bob'', não inventou esses princípios do zero; ele os sintetizou e
 nomeou a partir de décadas de observação sobre o que fazia projetos de
 software falharem ou prosperarem. O acrônimo SOLID em si foi cunhado por
 Michael Feathers, que percebeu que as cinco letras iniciais dos princípios
@@ -86,8 +85,8 @@ princípios transcendem o paradigma porque endereçam problemas fundamentais da
 complexidade do software, não peculiaridades de uma forma específica de
 programar.
 
-A questão não é ``SOLID ainda é relevante?'' --- a resposta a essa pergunta é
-um inequívoco sim. A verdadeira questão é ``como aplicar SOLID com sabedoria
+A questão não é ``SOLID ainda é relevante?''. A resposta a essa pergunta é
+um inequívoco sim. A questão real é ``como aplicar SOLID com sabedoria
 no contexto tecnológico de 2025?'' E é isso que exploraremos nas próximas
 seções, princípio por princípio, com a profundidade que cada um merece.
 
@@ -100,10 +99,10 @@ O Single Responsibility Principle é, paradoxalmente, o princípio SOLID mais
 simples de enunciar e mais difícil de aplicar corretamente. Sua formulação
 mais conhecida diz que uma classe deve ter uma, e apenas uma, razão para
 mudar. Mas essa formulação aparentemente simples esconde uma sutileza que
-muitos engenheiros levam anos para compreender plenamente.
+muitos engenheiros levam anos para compreender.
 
 A chave para entender o SRP está na definição precisa de ``razão para mudar''.
-Martin não está falando de ``uma função'' ou ``uma tarefa'' --- ele está
+Martin não está falando de ``uma função'' ou ``uma tarefa''. Ele está
 falando de ``um ator do domínio''. Um ator é uma pessoa, um departamento ou
 um stakeholder que pode solicitar mudanças no software. Quando Martin diz que
 \texttt{RelatorioDeVendas} não deve também \texttt{EnviarPorEmail}, ele está
@@ -116,24 +115,24 @@ pode inadvertidamente quebrar a funcionalidade que outro ator utiliza.
 A origem intelectual do SRP remonta ao conceito de coesão, articulado por Tom
 DeMarco e Meilir Page-Jones nos anos 1970 e 1980. DeMarco falava de
 ``coesão funcional'' como a forma mais desejável de organizar módulos, onde
-cada módulo executa exatamente uma função bem definida. Martin pegou essa
+cada módulo executa uma única função bem definida. Martin pegou essa
 ideia e a reformulou em termos de responsabilidades e atores, tornando-a mais
 aplicável ao design orientado a objetos.
 
-Reconhecer violações do SRP na prática requer um olho treinado. Os sintomas
+Reconhecer violações do SRP requer um olho treinado. Os sintomas
 mais comuns incluem classes cujo nome contém ``And'' ou ``Manager'' ou
-``Handler'' --- nomes que sugerem múltiplas responsabilidades. Outro sinal
+``Handler'', nomes que sugerem múltiplas responsabilidades. Outro sinal
 é quando mudanças em funcionalidades aparentemente não relacionadas exigem
 alterar a mesma classe. Se uma mudança na lógica de cálculo de impostos e
 uma mudança no formato de um e-mail ambas requerem editar
 \texttt{ProcessadorDePedidos}, essa classe tem responsabilidades demais.
 
 As consequências de ignorar o SRP são cumulativas e insidiosas. No início, a
-classe ``faz-tudo'' parece conveniente --- tudo está em um só lugar, fácil de
+classe ``faz-tudo'' parece conveniente: tudo está em um só lugar, fácil de
 encontrar. Mas à medida que o sistema cresce, essa classe se torna o ponto de
 convergência de todos os conflitos de merge, de todos os bugs de regressão e
 de todos os testes frágeis. Equipes diferentes pisam nos pés umas das outras
-ao editar o mesmo arquivo. A classe cresce até se tornar uma God Class ---
+ao editar o mesmo arquivo. A classe cresce até se tornar uma God Class,
 um anti-padrão que discutiremos em detalhes mais adiante neste capítulo.
 
 Em linguagens funcionais, o SRP se manifesta de forma diferente mas igualmente
@@ -144,7 +143,7 @@ tipo de dado coerente e servem a um propósito unificado.
 
 \subsubsection{Antes: Violando o SRP}
 
-\begin{lstlisting}[language=Python, caption={Violação do SRP --- classe com múltiplas responsabilidades}]
+\begin{lstlisting}[language=Python, caption={Violação do SRP: classe com múltiplas responsabilidades}]
 class Pedido:
     def __init__(self, itens, cliente):
         self.itens = itens
@@ -190,7 +189,7 @@ de fragilidade é a consequência direta de violar o SRP.
 
 \subsubsection{Depois: Aplicando o SRP}
 
-\begin{lstlisting}[language=Python, caption={SRP aplicado --- cada classe com uma responsabilidade}]
+\begin{lstlisting}[language=Python, caption={SRP aplicado: cada classe com uma responsabilidade}]
 class Pedido:
     """Responsabilidade unica: regras de negocio do pedido."""
     def __init__(self, itens, cliente):
@@ -240,9 +239,9 @@ nota fiscal não afeta a persistência. A troca do serviço de e-mail não afeta
 regras de negócio. Cada classe pode ser testada em isolamento, versionada
 independentemente e compreendida sem precisar entender o sistema inteiro.
 
-Observe que o resultado não é necessariamente ``mais código'' --- é código melhor
+Observe que o resultado não é necessariamente ``mais código''; é código melhor
 organizado. O número total de linhas pode até aumentar ligeiramente, mas a
-complexidade cognitiva de cada unidade diminui dramaticamente. Um desenvolvedor
+complexidade cognitiva de cada unidade diminui drasticamente. Um desenvolvedor
 novo na equipe pode entender o \texttt{GeradorNotaFiscal} sem precisar saber nada
 sobre envio de e-mails ou persistência em banco de dados.
 
@@ -254,8 +253,8 @@ sobre envio de e-mails ou persistência em banco de dados.
 O Open/Closed Principle carrega em seu nome uma aparente contradição que intrigou
 gerações de desenvolvedores: como algo pode ser simultaneamente aberto e fechado?
 A resposta está na distinção entre dois tipos de mudança. O software deve ser
-aberto para extensão --- deve ser possível adicionar novos comportamentos ---
-mas fechado para modificação --- o código existente não precisa ser alterado
+aberto para extensão, ou seja, deve ser possível adicionar novos comportamentos,
+mas fechado para modificação: o código existente não precisa ser alterado
 para acomodar esses novos comportamentos.
 
 A genealogia intelectual do OCP remonta a Bertrand Meyer, que o formulou
@@ -291,7 +290,7 @@ entrada, sem modificar o código existente.
 
 \subsubsection{Antes: Violando o OCP}
 
-\begin{lstlisting}[language=Python, caption={Violação do OCP --- cada novo tipo exige modificação}]
+\begin{lstlisting}[language=Python, caption={Violação do OCP: cada novo tipo exige modificação}]
 class CalculadoraDesconto:
     def calcular(self, cliente, valor):
         # Cada novo tipo de cliente exige alterar este metodo
@@ -308,7 +307,7 @@ class CalculadoraDesconto:
 
 \subsubsection{Depois: Aplicando o OCP}
 
-\begin{lstlisting}[language=Python, caption={OCP aplicado --- extensão sem modificação}]
+\begin{lstlisting}[language=Python, caption={OCP aplicado: extensão sem modificação}]
 from abc import ABC, abstractmethod
 
 class EstrategiaDesconto(ABC):
@@ -363,7 +362,7 @@ tipos: se S é um subtipo de T, então objetos do tipo T podem ser substituídos
 por objetos do tipo S sem alterar a corretude do programa.
 
 Essa formulação pode parecer abstrata, mas suas implicações práticas são
-profundas e frequentemente contra-intuitivas. O exemplo clássico é o do
+amplas e frequentemente contra-intuitivas. O exemplo clássico é o do
 Quadrado e do Retângulo. Na geometria, todo quadrado é um retângulo. Mas em
 termos de comportamento de software, um Quadrado que herda de Retângulo
 viola o LSP porque altera as invariantes do tipo base. Quando um cliente
@@ -372,15 +371,15 @@ Um Quadrado que força ambas as dimensões a serem iguais quebra essa expectativ
 
 O problema fundamental que o LSP endereça é a confiabilidade do polimorfismo.
 Se subclasses podem silenciosamente alterar o comportamento esperado pela
-classe base, então o polimorfismo --- o mecanismo mais poderoso da programação
-orientada a objetos --- se torna perigoso. Código que funciona perfeitamente
+classe base, o polimorfismo (o mecanismo mais poderoso da programação
+orientada a objetos) se torna perigoso. Código que funciona perfeitamente
 com uma instância da classe base pode falhar misteriosamente quando recebe
 uma instância de uma subclasse. Esse tipo de bug é particularmente pernicioso
 porque viola o contrato implícito do sistema de tipos.
 
-Reconhecer violações do LSP na prática exige atenção a sinais específicos.
+Reconhecer violações do LSP exige atenção a sinais específicos.
 O mais óbvio é quando uma subclasse lança uma exceção \texttt{NotImplementedError}
-para um método herdado --- se a classe base define um método e a subclasse diz
+para um método herdado: se a classe base define um método e a subclasse diz
 ``eu não faço isso'', a substituição é claramente inválida. Outro sinal é quando
 código cliente precisa verificar o tipo concreto de um objeto antes de usá-lo,
 com \texttt{isinstance} ou equivalentes. Se o polimorfismo funcionasse
@@ -400,7 +399,7 @@ tipos inesperados, o princípio está sendo violado.
 
 \subsubsection{Antes: Violando o LSP}
 
-\begin{lstlisting}[language=Python, caption={Violação do LSP --- subclasse quebra o contrato da base}]
+\begin{lstlisting}[language=Python, caption={Violação do LSP: subclasse quebra o contrato da base}]
 class Retangulo:
     def __init__(self, largura, altura):
         self._largura = largura
@@ -451,7 +450,7 @@ def testar_area(retangulo):
 
 \subsubsection{Depois: Aplicando o LSP}
 
-\begin{lstlisting}[language=Python, caption={LSP aplicado --- composição em vez de herança quebrada}]
+\begin{lstlisting}[language=Python, caption={LSP aplicado: composição em vez de herança quebrada}]
 from abc import ABC, abstractmethod
 
 class Forma(ABC):
@@ -494,7 +493,7 @@ O Interface Segregation Principle nasceu de uma experiência concreta e dolorosa
 No início dos anos 1990, Robert C. Martin estava trabalhando como consultor para
 a Xerox, ajudando a redesenhar o software de impressoras multifuncionais. O
 sistema original tinha uma única interface monolítica que todos os tipos de
-dispositivos precisavam implementar --- impressoras, scanners, fax, copiadoras.
+dispositivos precisavam implementar: impressoras, scanners, fax, copiadoras.
 O resultado era que uma simples impressora precisava implementar (ou lançar
 \texttt{NotImplementedError} para) dezenas de métodos que não tinham nada a ver
 com impressão. Cada mudança na interface afetava todos os dispositivos, mesmo
@@ -525,17 +524,17 @@ irrelevantes. Desenvolvedores perdem tempo tentando entender métodos que não
 se aplicam. Testes se tornam mais complexos porque precisam lidar com
 comportamentos que não deveriam existir naquela classe. E refatorar a
 interface depois que dezenas de classes a implementam se torna uma
-operação de risco altíssimo.
+operação de alto risco.
 
 Em linguagens com suporte a múltiplas interfaces (como Java, C\# ou Python
 com classes abstratas), a aplicação do ISP é direta: divida interfaces
 grandes em interfaces menores e coerentes. Em linguagens como Go, o ISP
-está embutido na cultura da linguagem --- interfaces com um ou dois
+está embutido na cultura da linguagem, onde interfaces com um ou dois
 métodos são a norma, não a exceção.
 
 \subsubsection{Antes: Violando o ISP}
 
-\begin{lstlisting}[language=Python, caption={Violação do ISP --- interface monolítica}]
+\begin{lstlisting}[language=Python, caption={Violação do ISP: interface monolítica}]
 from abc import ABC, abstractmethod
 
 class Trabalhador(ABC):
@@ -569,7 +568,7 @@ class Estagiario(Trabalhador):
 
 \subsubsection{Depois: Aplicando o ISP}
 
-\begin{lstlisting}[language=Python, caption={ISP aplicado --- interfaces segregadas}]
+\begin{lstlisting}[language=Python, caption={ISP aplicado: interfaces segregadas}]
 from abc import ABC, abstractmethod
 
 class Programador(ABC):
@@ -614,11 +613,11 @@ class TechLead(Programador, Testador, Gerente, Deployer):
 \end{lstlisting}
 
 A transformação é reveladora. O \texttt{Estagiario} agora implementa apenas
-o que realmente faz --- programar e testar. Não há métodos fantasma lançando
+o que de fato faz: programar e testar. Não há métodos fantasma lançando
 exceções, não há contratos violados. O \texttt{TechLead}, por sua vez,
 compõe todas as interfaces que sua função exige. E se amanhã surgir um novo
-papel --- digamos, um ``DevOps Specialist'' que faz deploy e testa mas não
-programa --- basta combinar as interfaces \texttt{Deployer} e
+papel (um ``DevOps Specialist'' que faz deploy e testa mas não
+programa), basta combinar as interfaces \texttt{Deployer} e
 \texttt{Testador}, sem afetar nenhuma das classes existentes.
 
 
@@ -628,7 +627,7 @@ programa --- basta combinar as interfaces \texttt{Deployer} e
 
 O Dependency Inversion Principle é, para muitos engenheiros, o princípio SOLID
 mais difícil de internalizar e, ao mesmo tempo, o mais transformador quando
-plenamente compreendido. Sua formulação diz que módulos de alto nível não devem
+compreendido. Sua formulação diz que módulos de alto nível não devem
 depender de módulos de baixo nível; ambos devem depender de abstrações. E,
 complementarmente, abstrações não devem depender de detalhes; detalhes devem
 depender de abstrações.
@@ -643,11 +642,11 @@ aponta na direção oposta ao fluxo de controle. O domínio não sabe que o MySQ
 existe. O MySQL sabe que o domínio existe e implementa o que o domínio precisa.
 
 Essa inversão pode parecer um truque acadêmico, mas suas consequências
-práticas são enormes. Com o DIP, o módulo de domínio --- que contém as regras
-de negócio mais valiosas do sistema --- não depende de nenhum detalhe de
+práticas são enormes. Com o DIP, o módulo de domínio, que contém as regras
+de negócio mais valiosas do sistema, não depende de nenhum detalhe de
 infraestrutura. Você pode trocar o banco de dados de MySQL para PostgreSQL,
 ou de PostgreSQL para DynamoDB, sem alterar uma linha do domínio. Pode rodar
-os testes do domínio sem banco de dados, sem rede, sem nada --- apenas com
+os testes do domínio sem banco de dados, sem rede, sem nada. Apenas com
 implementações em memória das interfaces.
 
 A história do DIP está intimamente ligada à evolução das práticas de teste
@@ -666,7 +665,7 @@ ou que o e-mail é enviado via SMTP.
 
 \subsubsection{Antes: Violando o DIP}
 
-\begin{lstlisting}[language=Python, caption={Violação do DIP --- alto nível depende de baixo nível}]
+\begin{lstlisting}[language=Python, caption={Violação do DIP: alto nível depende de baixo nível}]
 import mysql.connector  # Dependencia concreta
 
 class ServicoUsuario:
@@ -693,7 +692,7 @@ class ServicoUsuario:
 
 \subsubsection{Depois: Aplicando o DIP}
 
-\begin{lstlisting}[language=Python, caption={DIP aplicado --- dependência em abstrações}]
+\begin{lstlisting}[language=Python, caption={DIP aplicado: dependência em abstrações}]
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 
@@ -764,7 +763,7 @@ class RepositorioUsuarioEmMemoria(RepositorioUsuario):
         self._proximo_id += 1
 \end{lstlisting}
 
-O diagrama a seguir ilustra a inversão de dependência na prática:
+O diagrama a seguir ilustra a inversão de dependência:
 
 \begin{figure}[htbp]
     \centering
@@ -772,9 +771,9 @@ O diagrama a seguir ilustra a inversão de dependência na prática:
     \caption{Inversão de Dependência --- Antes vs Depois (Mermaid)}
 \end{figure}
 
-Observe como a transformação muda fundamentalmente a topologia das dependências
+Observe como a transformação muda a topologia das dependências
 no sistema. Antes, o \texttt{ServicoUsuario} apontava diretamente para
-\texttt{mysql.connector} --- uma dependência concreta, frágil e impossível de
+\texttt{mysql.connector}, uma dependência concreta, frágil e impossível de
 substituir em testes. Depois, o \texttt{ServicoUsuario} aponta para
 \texttt{RepositorioUsuario}, uma abstração que ele próprio define. A
 implementação MySQL aponta para a mesma abstração, mas na direção oposta.
@@ -806,8 +805,8 @@ A solução mais simples que funciona é a melhor. Essa máxima, atribuída ao
 engenheiro aeronáutico Kelly Johnson da Lockheed Skunk Works nos anos 1960,
 transcende a engenharia de software. Johnson projetava aviões militares com a
 diretriz de que qualquer sistema deveria ser reparável por um mecânico no campo
-de batalha com ferramentas básicas. A complexidade não era apenas indesejável
---- era potencialmente fatal.
+de batalha com ferramentas básicas. A complexidade não era apenas indesejável;
+era potencialmente fatal.
 
 No contexto de software, o KISS nos lembra que complexidade é a inimiga número
 um da manutenibilidade. Cada abstração adicional, cada camada extra, cada
@@ -842,7 +841,7 @@ que precisa ser removida ou contornada.
 Generalização prematura é dívida técnica disfarçada de sofisticação. Antes de
 adicionar uma abstração, pergunte: ``Existe um segundo caso de uso
 \emph{agora}?'' Se a resposta é não, resista à tentação. Implemente a solução
-concreta. Quando o segundo caso surgir --- e pode ser que nunca surja ---,
+concreta. Quando o segundo caso surgir (e pode ser que nunca surja),
 você terá informação real para guiar a abstração, em vez de especulação.
 
 \subsection{DRY --- Don't Repeat Yourself}
@@ -863,7 +862,7 @@ surgir um terceiro caso ligeiramente diferente, você terá que adicionar um
 parâmetro booleano, depois outro, até que a abstração se torne mais complexa
 do que a duplicação original.
 
-Três repetições é um bom limiar para abstrair --- a chamada ``Regra de Três''.
+Três repetições é um bom limiar para abstrair, a chamada ``Regra de Três''.
 A primeira vez, escreva. A segunda vez, copie e ajuste. A terceira vez,
 refatore. Nesse ponto, você tem três exemplos concretos para guiar a
 abstração, e a probabilidade de que a semelhança seja essencial (não
@@ -948,7 +947,7 @@ Observe como a composição permite combinações que a herança não permitiria
 Um carro elétrico? Basta passar um \texttt{MotorEletrico}. Um carro voador
 com motor a combustão? Combine \texttt{MotorCombustao} com \texttt{AsaFixa}.
 Um carro voador elétrico? \texttt{MotorEletrico} com \texttt{AsaFixa}. Com
-herança, cada combinação exigiria uma nova subclasse --- uma explosão
+herança, cada combinação exigiria uma nova subclasse, uma explosão
 combinatória que rapidamente se torna ingerenciável.
 
 \subsection{Princípio da Menor Surpresa}
@@ -966,10 +965,10 @@ interno. Uma função \texttt{validar()} que além de validar também salva no
 banco de dados. Cada uma dessas violações cria uma armadilha para o próximo
 desenvolvedor que interagir com o código.
 
-A aplicação prática deste princípio exige disciplina na nomeação e no design
+A aplicação deste princípio exige disciplina na nomeação e no design
 de interfaces. Métodos que começam com ``get'' ou ``obter'' devem apenas
 retornar dados, sem efeitos colaterais. Métodos que começam com ``calcular''
-devem ser puros --- mesma entrada, mesma saída. Construtores devem apenas
+devem ser puros: mesma entrada, mesma saída. Construtores devem apenas
 inicializar o objeto, não executar lógica complexa. Quando um método faz mais
 do que seu nome sugere, o nome deve ser mudado ou o método deve ser dividido.
 
@@ -986,8 +985,8 @@ A Clean Architecture, proposta por Robert C. Martin, organiza o software em cama
 concêntricas onde a regra fundamental é: \textbf{dependências apontam para dentro}.
 Camadas externas dependem de camadas internas, nunca o contrário.
 
-Mas para entender verdadeiramente a Clean Architecture, é preciso rastrear sua
-genealogia intelectual. Martin não criou o conceito do zero --- ele sintetizou e
+Para entender a Clean Architecture, é preciso rastrear sua
+genealogia intelectual. Martin não criou o conceito do zero. Ele sintetizou e
 unificou ideias que vinham evoluindo na comunidade de software por décadas. A
 Hexagonal Architecture (Ports \& Adapters), proposta por Alistair Cockburn em
 2005, já articulava a ideia central de isolar o domínio da infraestrutura. A
@@ -996,14 +995,14 @@ concêntricas. Martin, em seu artigo de 2012 e posteriormente no livro
 \emph{Clean Architecture} (2017), unificou essas abordagens sob um framework
 conceitual elegante com uma regra de dependência clara e direcional.
 
-A insight central é deceptivamente simples: o código mais importante do sistema
---- as regras de negócio --- não deve depender de nada externo. Não deve saber
+A insight central é enganosamente simples: o código mais importante do sistema,
+as regras de negócio, não deve depender de nada externo. Não deve saber
 qual banco de dados é usado, qual framework web serve as requisições, nem qual
 serviço de e-mail envia as notificações. Essas são decisões de infraestrutura,
 e decisões de infraestrutura mudam. O banco de dados pode migrar. O framework
 pode ser substituído. O serviço de e-mail pode trocar de provedor. Se o domínio
 depende dessas coisas, cada mudança de infraestrutura exige alterar as regras
-de negócio --- exatamente o tipo de acoplamento que queremos evitar.
+de negócio, justamente o tipo de acoplamento que queremos evitar.
 
 \begin{figure}[htbp]
     \centering
@@ -1022,7 +1021,7 @@ total e aplicar regras de desconto, mas não tem a menor ideia de como esses
 dados chegam até ela ou para onde vão depois.
 
 Envolvendo o domínio está a camada de \textbf{Aplicação}, que contém os casos
-de uso --- as operações que o sistema oferece. Esta camada orquestra as
+de uso, as operações que o sistema oferece. Esta camada orquestra as
 entidades do domínio para realizar tarefas específicas. Um caso de uso
 \texttt{CriarPedido} coordena a validação do pedido, o cálculo do total, a
 persistência e a notificação. A camada de aplicação define \emph{o que} o
@@ -1050,7 +1049,7 @@ concreta de persistir dados em PostgreSQL.
 (banco, HTTP, filas), o domínio continua compilando e seus testes continuam passando.
 Essa é a prova de que a arquitetura está correta.
 
-Essa regra pode parecer restritiva, mas na prática ela é libertadora. Quando o
+Essa regra pode parecer restritiva, mas é libertadora. Quando o
 domínio é puro e independente, os testes de regras de negócio rodam em
 milissegundos, sem Docker, sem banco de dados, sem rede. O feedback durante o
 desenvolvimento é quase instantâneo. Mudanças de infraestrutura --- migrar de
@@ -1072,7 +1071,7 @@ adaptadores em memória. Para desenvolvimento local, talvez adaptadores SQLite.
 Para produção, adaptadores com a infraestrutura real. O domínio e os casos de
 uso não sabem (e não se importam) qual adaptador está conectado.
 
-\begin{lstlisting}[language=Python, caption={Ports \& Adapters --- domínio define a porta, infraestrutura implementa}]
+\begin{lstlisting}[language=Python, caption={Ports \& Adapters: domínio define a porta, infraestrutura implementa}]
 # === PORTA (definida no dominio) ===
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
@@ -1152,14 +1151,14 @@ Nem todo padrão do livro Gang of Four (GoF) é relevante no dia a dia moderno.
 Alguns, porém, continuam indispensáveis. A tabela a seguir resume os padrões
 mais úteis e quando aplicá-los.
 
-Antes de mergulhar nos padrões individuais, vale uma reflexão sobre como a relação
+Antes de mergulhar nos padrões individuais, cabe uma reflexão sobre como a relação
 dos desenvolvedores com design patterns evoluiu ao longo das décadas. Nos anos
 que se seguiram à publicação do livro do GoF (1994), houve uma euforia coletiva.
 Desenvolvedores aplicavam patterns em tudo, criando \texttt{AbstractSingletonProxyFactoryBean}
 para problemas que um simples \texttt{if} resolveria. Depois veio a reação:
 ``Design patterns são overengineering'', diziam os críticos. A maturidade veio
 com o equilíbrio: patterns são ferramentas, não troféus. Você não ``aplica''
-um pattern --- você \emph{descobre} que precisa de um quando um problema
+um pattern; você \emph{descobre} que precisa de um quando um problema
 específico surge no design.
 
 \begin{table}[h!]
@@ -1241,23 +1240,23 @@ processador.executar(150.00)
 O Strategy é provavelmente o padrão mais utilizado no dia a dia moderno, e com
 razão. Ele é a materialização direta do Open/Closed Principle: o processador
 está fechado para modificação e aberto para extensão via novas estratégias.
-Em linguagens funcionais, o Strategy se reduz a uma função de ordem superior
---- o ``padrão'' se dissolve na própria linguagem.
+Em linguagens funcionais, o Strategy se reduz a uma função de ordem superior,
+e o ``padrão'' se dissolve na própria linguagem.
 
 \subsection{Observer Pattern}
 
 O Observer Pattern surge naturalmente quando você percebe que componentes do
 seu sistema precisam reagir a eventos sem conhecer uns aos outros. O cenário
 clássico é o seguinte: um pedido foi criado, e agora várias coisas precisam
-acontecer --- enviar um e-mail de confirmação, registrar uma métrica, atualizar
+acontecer. Enviar um e-mail de confirmação, registrar uma métrica, atualizar
 o estoque, notificar o sistema de logística. Se o código de criação de pedido
 chama diretamente cada um desses sistemas, o acoplamento se torna ingerenciável.
 Cada novo ``interessado'' no evento exige modificar o código de criação.
 
 O Observer desacopla o emissor do evento dos interessados. O emissor apenas
 anuncia: ``um pedido foi criado''. Quem se importa, reage. Quem não se importa,
-ignora. Adicionar um novo observador --- digamos, um sistema de detecção de
-fraude --- não exige alterar o emissor. Essa é a essência do desacoplamento
+ignora. Adicionar um novo observador, como um sistema de detecção de
+fraude, não exige alterar o emissor. Essa é a essência do desacoplamento
 por eventos.
 
 \begin{lstlisting}[language=Python, caption={Observer Pattern em Python}]
@@ -1306,15 +1305,15 @@ emissor.emitir("pedido_criado", {"id": 42, "valor": 199.90})
 Um aviso importante sobre o Observer: o desacoplamento que ele oferece é uma
 faca de dois gumes. Quando a cadeia de observadores cresce demais, rastrear o
 fluxo de execução se torna difícil. ``O que acontece quando um pedido é
-criado?'' --- a resposta exige consultar todos os observadores registrados,
+criado?'' Para responder, é preciso consultar todos os observadores registrados,
 que podem estar espalhados por todo o codebase. Ferramentas de busca e boa
 documentação se tornam essenciais para manter a sanidade.
 
 \subsection{Decorator Pattern}
 
 Você descobre que precisa do Decorator Pattern quando se vê adicionando
-comportamentos transversais --- logging, cache, retry, autenticação,
-rate limiting --- a serviços existentes. A alternativa ingênua é modificar
+comportamentos transversais (logging, cache, retry, autenticação,
+rate limiting) a serviços existentes. A alternativa ingênua é modificar
 cada serviço para incluir esses comportamentos, mas isso viola o SRP (o
 serviço agora se preocupa com logging além de sua função principal) e cria
 duplicação (cada serviço repete a lógica de cache).
@@ -1389,11 +1388,11 @@ um novo decorator e encaixá-lo na pilha, sem modificar nada que já existe.
 \subsection{Repository Pattern}
 
 O Repository Pattern, já demonstrado na seção de DIP, merece uma reflexão
-mais profunda sobre quando e por que utilizá-lo. O Repository isola a lógica
+mais aprofundada sobre quando e por que utilizá-lo. O Repository isola a lógica
 de persistência do domínio, criando uma fronteira clara entre ``o que os dados
 significam'' e ``onde os dados moram''. Essa separação permite trocar a
-implementação de persistência --- de banco relacional para NoSQL, de NoSQL
-para memória, de memória para API REST --- sem afetar uma única linha das
+implementação de persistência, de banco relacional para NoSQL, de NoSQL
+para memória, de memória para API REST, sem afetar uma única linha das
 regras de negócio.
 
 A história de quando você descobre que precisa de um Repository começa
@@ -1404,8 +1403,8 @@ a interface do repositório e cria uma implementação em memória, os mesmos
 testes passam a rodar em milissegundos. Esse é o momento em que o valor do
 pattern se torna visceralmente real.
 
-No entanto, nem todo sistema precisa de um Repository formal. Para scripts
-simples, protótipos ou CRUDs verdadeiramente triviais, a indireção do
+Nem todo sistema precisa de um Repository formal, porém. Para scripts
+simples, protótipos ou CRUDs triviais, a indireção do
 Repository pode ser custo sem benefício. O Repository brilha quando há regras
 de negócio significativas para proteger, quando a testabilidade é importante,
 ou quando a possibilidade de trocar a infraestrutura de persistência é real.
@@ -1478,7 +1477,7 @@ de software.
 % ============================================================
 
 Anti-padrões são soluções recorrentes que parecem boas mas geram problemas. Code
-smells são sintomas --- indicadores de que algo pode estar errado no design.
+smells são sintomas, indicadores de que algo pode estar errado no design.
 A diferença entre um pattern e um anti-pattern não está na intenção do
 desenvolvedor, mas nas consequências da decisão. Ninguém cria uma God Class
 de propósito. Ela nasce aos poucos, linha por linha, feature por feature, até
@@ -1496,7 +1495,7 @@ sincroniza estoque e faz backup do banco de dados. Quando você pergunta ao
 colega que trabalhou no projeto como isso aconteceu, ele dá de ombros e diz:
 ``Foi crescendo...''
 
-É exatamente assim que God Classes nascem. Ninguém senta e decide criar uma
+É assim que God Classes nascem. Ninguém senta e decide criar uma
 classe com 3.000 linhas. O processo é gradual e insidioso. A classe começa
 pequena e focada. Então alguém adiciona ``só mais um método'' porque é
 conveniente ter tudo junto. Depois outro. E outro. Cada adição individual
@@ -1524,19 +1523,19 @@ class SistemaCompleto:
 \end{lstlisting}
 
 A solução para uma God Class é cirúrgica e metódica: extrair classes por
-responsabilidade. Identifique os agrupamentos naturais de métodos ---
-aqueles que compartilham estado e se chamam mutuamente --- e mova-os para
+responsabilidade. Identifique os agrupamentos naturais de métodos,
+aqueles que compartilham estado e se chamam mutuamente, e mova-os para
 classes próprias. Cada domínio funcional vira um serviço próprio:
 \texttt{ServicoAutenticacao}, \texttt{ServicoPedidos},
 \texttt{ProcessadorPagamentos}, \texttt{ServicoNotificacoes}. O processo é
 trabalhoso, mas cada passo melhora a situação. Não tente fazer tudo de uma
-vez --- refatore incrementalmente, extraindo uma responsabilidade por vez,
+vez. Refatore incrementalmente, extraindo uma responsabilidade por vez,
 garantindo que os testes continuam passando a cada passo.
 
 \subsubsection{Shotgun Surgery (Cirurgia de Espingarda)}
 
 O nome deste anti-padrão evoca uma imagem vívida e desconfortável, e é
-exatamente essa a intenção. Imagine que o product owner anuncia uma mudança
+essa a intenção. Imagine que o product owner anuncia uma mudança
 aparentemente simples: ``O formato do CPF nos relatórios precisa incluir
 pontuação.'' Você investiga e descobre que a formatação de CPF está
 espalhada por 15 arquivos diferentes: no formulário de cadastro, no
@@ -1548,7 +1547,7 @@ de integração com o governo... Uma única mudança de negócio exige alterar
 Esse é o Shotgun Surgery: a responsabilidade está espalhada como estilhaços
 por todo o codebase. Cada mudança conceitual vira uma operação coordenada
 em múltiplos pontos do sistema. O risco de esquecer um dos pontos é alto,
-e o resultado é inconsistência --- o CPF aparece com pontuação em alguns
+e o resultado é inconsistência, com o CPF aparecendo com pontuação em alguns
 lugares e sem em outros.
 
 A solução é consolidar a lógica relacionada em um único módulo. No exemplo
@@ -1608,7 +1607,7 @@ formato. A duplicação se multiplica, inconsistências surgem, e bugs
 aparecem quando alguém esquece de validar em um dos muitos pontos de
 entrada.
 
-A solução é criar Value Objects --- objetos pequenos e imutáveis que
+A solução é criar Value Objects, objetos pequenos e imutáveis que
 encapsulam a validação e a semântica do dado. Um \texttt{Email} valida no
 construtor que o valor contém \texttt{@}. Um \texttt{CPF} valida que tem
 11 dígitos e calcula o dígito verificador. Uma vez construído, o Value Object
@@ -1649,7 +1648,7 @@ de code smells menores mas igualmente relevantes que todo engenheiro deve
 aprender a reconhecer.
 
 O \textbf{Long Method} é talvez o code smell mais comum em codebases reais.
-Métodos com mais de 20 linhas geralmente estão fazendo coisas demais --- uma
+Métodos com mais de 20 linhas geralmente estão fazendo coisas demais, uma
 mistura de validação, cálculo, persistência e formatação que deveria ser
 separada em sub-métodos com nomes descritivos. A heurística é simples: se
 você precisa de um comentário para explicar o que um trecho do método faz,
@@ -1670,7 +1669,7 @@ configuração que tornem a intenção explícita:
 \texttt{processar(pedido, prioridade=Alta, desconto=Nenhum, entrega=Expressa)}.
 
 \textbf{Magic Numbers} são constantes numéricas soltas no código sem
-explicação. \texttt{if dias > 30} --- o que é 30? Dias de um mês? Prazo de
+explicação. \texttt{if dias > 30}: o que é 30? Dias de um mês? Prazo de
 pagamento? Período de retenção? Use constantes nomeadas que comuniquem a
 intenção: \texttt{PRAZO\_MAXIMO\_DIAS = 30}. O custo é uma linha a mais;
 o benefício é clareza permanente.
@@ -1689,13 +1688,13 @@ pode ser reativado acidentalmente. Delete-o sem piedade.
 Refatorar é alterar a estrutura interna do código sem mudar seu comportamento
 externo. Essa definição, consagrada por Martin Fowler em seu livro
 \emph{Refactoring} (1999), é precisa em sua simplicidade, mas esconde uma
-dimensão psicológica profunda que raramente é discutida.
+dimensão psicológica que raramente é discutida.
 
 A verdade incômoda é que a maioria das equipes resiste à refatoração. E essa
 resistência tem raízes racionais. Refatorar não adiciona funcionalidades
 visíveis ao produto. Não move a barra de progresso do sprint. Não impressiona
 stakeholders não técnicos. Em ambientes onde o valor é medido exclusivamente
-por features entregues, refatorar parece ``perda de tempo'' --- mesmo quando
+por features entregues, refatorar parece ``perda de tempo'', mesmo quando
 a ausência de refatoração está literalmente dobrando o tempo necessário para
 entregar cada nova feature.
 
@@ -1707,7 +1706,7 @@ owner entende. ``O código precisa ser mais coeso'' não é. A comunicação do
 valor da refatoração é, paradoxalmente, tão importante quanto a refatoração
 em si.
 
-A abordagem mais sustentável é a refatoração contínua --- a chamada ``regra
+A abordagem mais sustentável é a refatoração contínua, a chamada ``regra
 do escoteiro'' (Boy Scout Rule): deixe o código um pouco melhor do que
 encontrou. Cada vez que você toca em um arquivo para adicionar uma feature
 ou corrigir um bug, melhore um pouco a estrutura. Renomeie uma variável
@@ -1716,9 +1715,9 @@ acumuladas ao longo de semanas e meses, transformam gradualmente a qualidade
 do código sem exigir sprints dedicados a ``limpeza''.
 
 Para equipes que enfrentam dívida técnica significativa, a estratégia do
-``Strangler Fig'' --- envolver gradualmente o código legado com código novo
-e bem projetado, estrangulando o código antigo até que ele possa ser removido
---- é frequentemente mais viável do que uma reescrita completa. A reescrita
+``Strangler Fig'' funciona bem: envolver gradualmente o código legado com código novo
+e bem projetado, estrangulando o código antigo até que ele possa ser removido.
+Essa abordagem é frequentemente mais viável do que uma reescrita completa. A reescrita
 é tentadora mas perigosa: o segundo sistema quase sempre demora mais do que
 o previsto, e enquanto ele não está pronto, a equipe precisa manter dois
 sistemas em paralelo.
@@ -1730,7 +1729,7 @@ técnicas mais importantes do catálogo.
 
 O Extract Method é a técnica de refatoração mais fundamental e mais
 frequentemente utilizada. Seu momento de aplicação surge quando um trecho
-de código pode ser agrupado e nomeado --- quando você percebe que um
+de código pode ser agrupado e nomeado, quando você percebe que um
 bloco de linhas dentro de um método realiza uma subtarefa coerente que
 merece um nome próprio.
 
@@ -1781,7 +1780,7 @@ Observe como o método \texttt{processar\_pedido} se transforma em uma
 narrativa de alto nível: valide o pedido, calcule o total com imposto,
 salve no banco. Cada passo é um método com nome descritivo que pode ser
 lido, entendido e testado independentemente. Os comentários que antes
-eram necessários para explicar o código se tornaram redundantes --- os
+eram necessários para explicar o código se tornaram redundantes. Os
 nomes dos métodos comunicam a mesma informação de forma mais confiável,
 pois nomes de métodos são verificados pelo compilador enquanto comentários
 podem ficar desatualizados.
@@ -1838,16 +1837,16 @@ def buscar_transacoes(filtro: FiltroTransacoes):
 O benefício vai além da estética. O Parameter Object pode validar a
 consistência dos parâmetros (por exemplo, \texttt{data\_inicio} deve ser
 anterior a \texttt{data\_fim}), pode ter valores padrão sensatos, e pode
-ser versionado independentemente. Além disso, se a função precisar de um
+ser versionado independentemente. Se a função precisar de um
 novo parâmetro de filtro no futuro, basta adicionar um atributo ao
-dataclass --- as chamadas existentes que não usam o novo parâmetro
+dataclass, e as chamadas existentes que não usam o novo parâmetro
 continuam funcionando sem alteração.
 
 \subsection{Replace Inheritance with Delegation}
 
 Quando a herança cria acoplamento indesejado, substitua por composição e
 delegação. Essa refatoração já foi demonstrada em ``Composition over
-Inheritance'', mas vale enfatizar que ela não é sobre ``herança é sempre
+Inheritance'', mas o ponto aqui não é que ``herança é sempre
 ruim''. Herança é uma ferramenta legítima quando a relação ``é um'' é
 genuína e estável. A refatoração é necessária quando a herança foi usada
 para compartilhar código (``reúso'') em vez de modelar uma relação
@@ -1915,7 +1914,7 @@ de ferramentas conceituais que enriquecem qualquer estilo de programação.
 
 Princípios da programação funcional melhoram código em qualquer paradigma. Não é
 preciso usar Haskell para se beneficiar de imutabilidade, funções puras e
-composição. Na verdade, uma das tendências mais significativas da última
+composição. Uma das tendências mais significativas da última
 década em engenharia de software tem sido a incorporação gradual de
 conceitos funcionais em linguagens tradicionalmente imperativas e orientadas
 a objetos. Python ganhou dataclasses imutáveis. Java ganhou streams e records.
@@ -1925,13 +1924,13 @@ Essa convergência não é coincidência. Os conceitos funcionais resolvem
 problemas reais que são amplificados pela complexidade crescente dos
 sistemas modernos: concorrência, distribuição, testabilidade e raciocínio
 sobre estado. Um sistema onde o estado é imutável por padrão é
-dramaticamente mais fácil de depurar do que um sistema onde qualquer objeto
+drasticamente mais fácil de depurar do que um sistema onde qualquer objeto
 pode ser mutado a qualquer momento por qualquer componente.
 
 \subsection{Imutabilidade}
 
 Dados que não mudam são mais fáceis de raciocinar. Essa afirmação pode
-parecer banal, mas suas implicações são profundas. Quando um objeto é
+parecer banal, mas suas implicações são concretas. Quando um objeto é
 imutável, você pode compartilhá-lo livremente entre threads sem
 sincronização. Pode passá-lo como argumento para qualquer função com a
 certeza de que ele voltará intacto. Pode usá-lo como chave de dicionário.
@@ -2012,7 +2011,7 @@ os mesmos parâmetros, o resultado é determinístico, hoje e sempre.
 Nenhum sistema real pode ser inteiramente puro. Programas precisam ler
 arquivos, gravar em bancos de dados, enviar requisições HTTP e exibir
 informações na tela. O truque não é eliminar efeitos colaterais, mas
-\emph{controlá-los} --- isolá-los em camadas específicas enquanto o
+\emph{controlá-los}, isolando-os em camadas específicas enquanto o
 núcleo da lógica permanece puro.
 
 Esse é o padrão Functional Core, Imperative Shell. O ``core'' funcional
@@ -2040,7 +2039,7 @@ o programador de ignorar o caso de falha.
 
 Com o design funcional complementando os princípios orientados a objetos,
 temos agora um vocabulário rico para falar sobre qualidade de código.
-Mas princípios e técnicas só geram valor quando aplicados --- e a forma
+Princípios e técnicas, porém, só geram valor quando aplicados, e a forma
 mais direta de aplicá-los é através do design para testabilidade.
 
 
@@ -2050,9 +2049,9 @@ mais direta de aplicá-los é através do design para testabilidade.
 
 Código testável é código bem desenhado. Se é difícil testar, o design está
 pedindo ajuda. Essa é talvez a heurística mais poderosa que um engenheiro
-pode internalizar. Quando escrever um teste para uma classe é doloroso ---
+pode internalizar. Quando escrever um teste para uma classe é doloroso,
 quando requer instanciar meia dúzia de dependências, configurar estado global,
-ou mockar o sistema de arquivos --- o problema não é o teste. O problema é o
+ou mockar o sistema de arquivos, o problema não é o teste. O problema é o
 design da classe.
 
 A relação entre testabilidade e design é tão forte que muitos praticantes de
@@ -2113,8 +2112,8 @@ def test_gerar_relatorio():
 A transformação é reveladora. A primeira versão do \texttt{ServicoRelatorio}
 é um monólito que exige PostgreSQL e um servidor SMTP funcionando para ser
 testada. A segunda versão recebe abstrações que podem ser implementadas de
-qualquer forma --- inclusive como mocks simples para testes. O teste executa
-em milissegundos, sem infraestrutura externa, e verifica exatamente o
+qualquer forma, inclusive como mocks simples para testes. O teste executa
+em milissegundos, sem infraestrutura externa, e verifica o
 comportamento que nos importa.
 
 \subsection{Mocks e Stubs como Feedback de Design}
@@ -2168,7 +2167,7 @@ de design? A resposta é mais complexa do que parece.
 % ============================================================
 
 Ferramentas de IA como GitHub Copilot, ChatGPT e Claude são treinadas em bilhões
-de linhas de código --- incluindo código ruim. Isso gera padrões previsíveis de
+de linhas de código, incluindo código ruim. Isso gera padrões previsíveis de
 acerto e erro. Compreender esses padrões é essencial para o engenheiro que usa
 IA como ferramenta de produtividade: saber onde confiar no output e onde aplicar
 escrutínio rigoroso é a diferença entre acelerar o desenvolvimento e introduzir
@@ -2184,9 +2183,9 @@ reproduzidos com competência quando o prompt fornece contexto adequado. A IA
 ``viu'' milhares de implementações desses padrões e consegue sintetizar versões
 corretas e idiomáticas.
 
-Código boilerplate --- getters, setters, serialização, validação básica ---
-é onde a IA realmente brilha. Essas tarefas são mecânicas, repetitivas e
-bem definidas, exatamente o tipo de trabalho que modelos de linguagem
+Código boilerplate (getters, setters, serialização, validação básica)
+é onde a IA brilha. Essas tarefas são mecânicas, repetitivas e
+bem definidas, o tipo de trabalho que modelos de linguagem
 executam com excelência. O engenheiro ganha produtividade real ao delegar
 esse tipo de código à IA.
 
@@ -2195,8 +2194,8 @@ método com assinatura clara e comportamento determinístico, a IA gera
 suítes de testes com boa cobertura de casos, incluindo edge cases que o
 desenvolvedor poderia esquecer.
 
-Refatorações mecânicas --- renomear variáveis, extrair métodos, converter
-loops para list comprehensions, modernizar sintaxe --- são tarefas onde
+Refatorações mecânicas como renomear variáveis, extrair métodos, converter
+loops para list comprehensions ou modernizar sintaxe são tarefas onde
 a IA é rápida e confiável. Essas transformações seguem regras bem
 definidas que o modelo aprendeu com alta fidelidade.
 
@@ -2229,13 +2228,13 @@ viola o DIP.
 A ignorância do contexto arquitetural é talvez a limitação mais fundamental.
 A IA não sabe em qual camada da Clean Architecture o código deveria estar.
 Ela coloca lógica de banco no domínio sem perceber que está violando a
-regra de dependência. Para a IA, todo código é ``código'' --- a distinção
+regra de dependência. Para a IA, todo código é ``código''; a distinção
 entre camadas é um conceito arquitetural que ela não internaliza naturalmente.
 
 Nomes genéricos proliferam no código gerado por IA: \texttt{Manager},
 \texttt{Handler}, \texttt{Utils}, \texttt{Helper}. Esses nomes não
 comunicam responsabilidade. Um \texttt{UserManager} pode fazer qualquer
-coisa --- autenticação, CRUD, notificação, relatórios. O nome não ajuda
+coisa: autenticação, CRUD, notificação, relatórios. O nome não ajuda
 o leitor a entender o que a classe faz, e essa ambiguidade é um convite
 para que futuros desenvolvedores (humanos ou IA) adicionem cada vez mais
 responsabilidades.
@@ -2253,8 +2252,8 @@ módulos de infraestrutura.'' Com essa restrição, a IA geralmente respeita
 a fronteira.
 
 A segunda estratégia é pedir princípios explicitamente. Frases como ``Aplique
-SRP --- cada classe deve ter uma única responsabilidade'' ou ``Use injeção de
-dependência --- receba o repositório como parâmetro do construtor'' orientam
+SRP, cada classe deve ter uma única responsabilidade'' ou ``Use injeção de
+dependência, receba o repositório como parâmetro do construtor'' orientam
 a IA na direção correta. Sem essas instruções, ela segue o caminho de menor
 resistência, que frequentemente é o caminho de pior design.
 
@@ -2290,7 +2289,7 @@ para o contexto real.
 A habilidade de navegar conflitos entre princípios é o que separa o engenheiro
 sênior do engenheiro pleno. O pleno conhece os princípios e os aplica
 diligentemente. O sênior conhece os princípios, sabe quando eles conflitam,
-faz uma escolha consciente sobre qual priorizar, e --- fundamentalmente ---
+faz uma escolha consciente sobre qual priorizar, e, o que é central,
 documenta o raciocínio por trás dessa escolha. O código resultante pode
 ``violar'' um princípio, mas o ADR (Architecture Decision Record) explica
 por quê, tornando a decisão transparente e reversível.
@@ -2298,7 +2297,7 @@ por quê, tornando a decisão transparente e reversível.
 \subsection{SOLID vs KISS}
 
 Aplicar todos os princípios SOLID a um CRUD simples gera sobre-engenharia.
-Imagine um microsserviço que tem exatamente um endpoint: salvar e buscar
+Imagine um microsserviço que tem um único endpoint: salvar e buscar
 configurações em um banco de dados. Aplicar SRP, OCP, LSP, ISP e DIP
 rigorosamente a esse serviço resultaria em uma interface abstrata para o
 repositório, uma implementação concreta, uma factory para instanciar o
@@ -2339,13 +2338,13 @@ exige julgamento baseado na experiência e no conhecimento do domínio.
 
 A heurística que funciona na maioria dos casos é: não crie a abstração até
 precisar, mas quando criar, projete-a para ser extensível. A primeira
-implementação pode ser concreta --- uma classe que faz a coisa diretamente,
+implementação pode ser concreta, uma classe que faz a coisa diretamente,
 sem interface, sem factory, sem indireção. Quando surgir o segundo caso de
 uso que exige variação, refatore para abstração. Nesse ponto, você tem
 informação real (dois casos concretos) para guiar o design da abstração, em
 vez de especulação sobre um futuro que pode nunca chegar.
 
-Esse é o ``último momento responsável'' --- tomar a decisão de design no
+Esse é o ``último momento responsável'': tomar a decisão de design no
 ponto onde você tem a máxima informação, não no ponto onde tem a mínima. A
 abstração criada com dois casos reais em mente será quase certamente melhor
 do que a abstração criada especulativamente com zero casos.
@@ -2354,14 +2353,14 @@ do que a abstração criada especulativamente com zero casos.
 
 Levar o SRP ao extremo gera classes com um único método e centenas de arquivos
 minúsculos. O código fica ``bem projetado'' segundo métricas formais, mas
-impossível de navegar na prática. Um desenvolvedor que precisa entender o fluxo
+impossível de navegar. Um desenvolvedor que precisa entender o fluxo
 de um pedido teria que abrir 47 arquivos para rastrear a execução do início ao
 fim.
 
 A heurística aqui toca na definição original de Martin: SRP se aplica a
 \emph{razões para mudar}, não a \emph{quantidade de métodos}. Uma classe com
-cinco métodos que mudam pela mesma razão --- digamos, cinco métodos de cálculo
-financeiro que mudam quando as regras tributárias mudam --- está perfeitamente
+cinco métodos que mudam pela mesma razão, por exemplo cinco métodos de cálculo
+financeiro que mudam quando as regras tributárias mudam, está perfeitamente
 aderente ao SRP. Dividi-la em cinco classes não adiciona valor; apenas adiciona
 indireção.
 
@@ -2387,8 +2386,8 @@ Generalização & \texttt{AbstractSingletonProxyFactory} & Interface \texttt{Rep
 \end{tabular}
 \end{table}
 
-A capacidade de distinguir complexidade acidental de essencial é, em última
-análise, o que define a maturidade de um engenheiro. A complexidade acidental
+No fim das contas, a capacidade de distinguir complexidade acidental de essencial
+é o que define a maturidade de um engenheiro. A complexidade acidental
 é nosso inimigo: ela vem de más decisões, acoplamento desnecessário, abstrações
 prematuras e ferramentas inadequadas. A complexidade essencial é nossa
 responsabilidade: ela vem do problema real que estamos resolvendo e não pode
@@ -2399,9 +2398,9 @@ ser eliminada, apenas gerenciada.
 \section{Simplicidade Intencional}
 % ============================================================
 
-Simplicidade não é ausência de complexidade --- é complexidade \textbf{gerenciada}.
+Simplicidade não é ausência de complexidade; é complexidade \textbf{gerenciada}.
 Essa distinção é fundamental e frequentemente incompreendida. Um sistema simples
-não é um sistema que faz pouco --- é um sistema que esconde a complexidade
+não é um sistema que faz pouco. É um sistema que esconde a complexidade
 inerente ao problema atrás de interfaces claras e abstrações bem escolhidas.
 
 \subsection{Complexidade Acidental vs Essencial}
@@ -2413,8 +2412,8 @@ que a complexidade do software vem de duas fontes fundamentalmente diferentes.
 A \textbf{complexidade acidental} vem de más decisões, acoplamento excessivo,
 abstrações mal escolhidas e ferramentas inadequadas. Ela deve ser removida
 impiedosamente. Um sistema que usa microsserviços para um CRUD de três telas,
-que tem uma factory para cada classe, que implementa cache para dez registros
---- esse sistema está afogado em complexidade acidental. Cada camada extra de
+que tem uma factory para cada classe, que implementa cache para dez registros:
+esse sistema está afogado em complexidade acidental. Cada camada extra de
 indireção, cada abstração desnecessária, cada tecnologia adotada ``porque é
 moderna'' adiciona custo cognitivo sem adicionar valor.
 
@@ -2422,7 +2421,7 @@ A \textbf{complexidade essencial}, por outro lado, vem do problema real que o
 software resolve. O cálculo tributário brasileiro com 27 estados, cada um com
 regras próprias, é genuinamente complexo. Um motor de risco de crédito que
 avalia dezenas de variáveis é genuinamente complexo. Essa complexidade não pode
-ser eliminada --- tentar simplificá-la é produzir software incorreto. Ela deve
+ser eliminada. Tentar simplificá-la é produzir software incorreto. Ela deve
 ser encapsulada em módulos com interfaces claras, de modo que cada desenvolvedor
 precise compreender apenas a fatia que está editando.
 
@@ -2432,7 +2431,7 @@ complexidade existe por causa do \emph{problema} ou por causa da
 
 \subsection{Refatoração como Ferramenta de Simplificação}
 
-Código deve ficar mais simples com o tempo, não mais complexo --- se alguém
+Código deve ficar mais simples com o tempo, não mais complexo, se alguém
 cuidar disso. Essa é a grande condição: a simplificação não acontece
 automaticamente. Sem esforço deliberado e contínuo, a complexidade acidental
 cresce monotonicamente. Cada feature adicionada às pressas, cada ``gambiarra
@@ -2449,12 +2448,12 @@ porque não fazê-lo é acumular dívida técnica com juros compostos.
 Cada linha removida é uma linha que não precisa ser lida, testada, debugada e
 mantida. Código comentado é código morto. Delete-o. O Git guarda o histórico.
 
-Deletar código requer coragem porque vai contra um instinto profundo de
+Deletar código requer coragem porque vai contra um instinto de
 acumulação. ``E se precisarmos disso depois?'' é a pergunta que paralisa
 equipes inteiras. Mas a experiência mostra que código comentado quase nunca é
 reativado. E quando é, a versão reativada está tão desatualizada que precisa
-ser reescrita de qualquer forma. O controle de versão existe precisamente
-para eliminar essa ansiedade: se realmente precisarmos do código deletado,
+ser reescrita de qualquer forma. O controle de versão existe para
+eliminar essa ansiedade: se realmente precisarmos do código deletado,
 ele está a um \texttt{git log} de distância.
 
 A regra prática é liberadora em sua simplicidade: se você pode remover código
@@ -2491,7 +2490,7 @@ considere Extract Method. Métodos curtos com nomes descritivos são mais
 fáceis de ler, entender, testar e reusar do que métodos longos com
 comentários intercalados.
 
-Nenhuma dessas métricas é absoluta --- um método com complexidade ciclomática
+Nenhuma dessas métricas é absoluta. Um método com complexidade ciclomática
 12 que implementa uma máquina de estados genuinamente complexa pode estar
 perfeitamente justificado. Mas métricas consistentemente altas em todo o
 codebase são um sinal claro de que a complexidade acidental está ganhando a
@@ -2503,11 +2502,11 @@ batalha.
 % ============================================================
 
 Princípios são ferramentas de pensamento. Use-os com discernimento, não com
-fanatismo. O bom engenheiro sabe quando seguir e quando quebrar a regra ---
+fanatismo. O bom engenheiro sabe quando seguir e quando quebrar a regra,
 e, mais importante, sabe \emph{explicar por quê}.
 
-Os princípios que discutimos neste capítulo --- SOLID, KISS, YAGNI, DRY,
-composição sobre herança, Clean Architecture --- não são fins em si mesmos. São
+Os princípios que discutimos neste capítulo (SOLID, KISS, YAGNI, DRY,
+composição sobre herança, Clean Architecture) não são fins em si mesmos. São
 meios para atingir código que, fundamentalmente, atende a quatro propriedades
 essenciais.
 
@@ -2517,7 +2516,7 @@ graciosamente com condições de erro. Sem correção, nenhum outro atributo
 importa.
 
 A segunda propriedade é que o código \textbf{é compreensível}: outro
-engenheiro --- ou você mesmo, daqui a seis meses --- consegue ler o código e
+engenheiro, ou você mesmo daqui a seis meses, consegue ler o código e
 entender o que ele faz, por que faz, e como as peças se encaixam. Código
 que funciona mas que ninguém entende é código que ninguém ousa modificar,
 e código que ninguém modifica é código que apodrece.
@@ -2535,13 +2534,13 @@ com a frequência que o negócio exige.
 Na era da IA, esses princípios são mais importantes do que nunca. A IA gera
 código rápido. O engenheiro garante que esse código é \emph{bom}. A velocidade
 sem princípios produz débito técnico na velocidade da luz. As ferramentas
-mudarão --- novas IAs surgirão, novos frameworks aparecerão, novas linguagens
+mudarão. Novas IAs surgirão, novos frameworks aparecerão, novas linguagens
 ganharão popularidade. Mas os princípios que discutimos neste capítulo
 continuarão relevantes, porque eles endereçam a complexidade fundamental do
 software, não as peculiaridades de uma tecnologia específica.
 
 No próximo capítulo, exploraremos como a IA pode ser uma parceira eficaz na
-engenharia de software --- não como substituta do julgamento humano, mas como
+engenharia de software, não como substituta do julgamento humano, mas como
 amplificadora da capacidade do engenheiro de aplicar esses princípios em
 escala.
 

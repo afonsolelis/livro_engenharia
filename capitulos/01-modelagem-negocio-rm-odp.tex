@@ -9,23 +9,23 @@ Antes de escrever uma única linha de código, o engenheiro de software precisa
 responder a duas perguntas fundamentais: \textbf{o que} estamos construindo e
 \textbf{por quê}. Essas perguntas podem parecer triviais, mas a realidade da
 indústria mostra que a maioria dos fracassos em projetos de software não decorre
-de falhas técnicas --- decorre de \textbf{falhas de entendimento}. O sistema foi
+de falhas técnicas. Decorre de \textbf{falhas de entendimento}. O sistema foi
 construído corretamente, mas era o sistema errado. Ou pior: ninguém concordava
 sobre qual era o sistema certo. Pesquisas do Standish Group, que acompanham
 milhares de projetos ao redor do mundo, consistentemente apontam que os fatores
-mais correlacionados ao fracasso não são técnicos --- são comunicacionais e
+mais correlacionados ao fracasso não são técnicos; são comunicacionais e
 organizacionais. Requisitos mal compreendidos, expectativas desalinhadas e
 suposições não verificadas são os verdadeiros assassinos silenciosos de projetos
 de software.
 
 A lacuna entre os requisitos de negócio e a implementação técnica é um abismo
 silencioso. Ela não aparece nos sprints, não gera alertas no Jira e raramente é
-discutida nas retrospectivas. Mas é precisamente nesse vácuo que moram os maiores
+discutida nas retrospectivas. É nesse vácuo que moram os maiores
 desastres: sistemas que custaram milhões e nunca foram usados, migrações que
 paralisaram empresas, arquiteturas que pareciam elegantes no quadro branco mas
-colapsaram sob carga real. Pense em quantas vezes você já participou de uma
+colapsaram sob carga real. Quantas vezes você já participou de uma
 reunião onde todos pareciam concordar sobre o que o sistema deveria fazer, mas
-cada pessoa tinha uma imagem mental completamente diferente. O gerente de produto
+cada pessoa tinha uma imagem mental completamente diferente? O gerente de produto
 imaginava uma coisa, o designer outra, o desenvolvedor uma terceira. Sem uma
 linguagem comum e uma estrutura disciplinada para capturar essas visões, a
 divergência silenciosa se acumula como dívida técnica invisível, manifestando-se
@@ -53,24 +53,24 @@ impede o engenheiro de cometer o erro mais comum e mais caro: pular direto para 
 solução. O IDEF-0 conecta o negócio à funcionalidade; o RM-ODP conecta a
 funcionalidade à arquitetura. Quando combinados com práticas como Spec Driven
 Development e TDD, eles criam um pipeline intelectual que vai da compreensão do
-problema até a validação da solução, sem atalhos perigosos. Imagine esse pipeline
+problema até a validação da solução, sem atalhos perigosos. Esse pipeline funciona
 como uma ponte suspensa sobre o abismo que separa o negócio do código. Cada cabo
 dessa ponte é um artefato rastreável: um diagrama IDEF-0 que conecta uma função
 de negócio a um componente computacional, uma vista do RM-ODP que conecta um
 requisito de qualidade a uma escolha tecnológica, um teste que conecta uma
 invariante de domínio a uma implementação concreta. Sem esses cabos, a ponte
-desmorona --- e com ela, o projeto.
+desmorona, e com ela, o projeto.
 
 Na era da inteligência artificial generativa, esses modelos são ainda mais
 valiosos. Um LLM pode gerar código em segundos, mas ele não sabe \emph{qual}
 código gerar sem contexto adequado. IDEF-0 e RM-ODP fornecem exatamente isso:
 \textbf{contexto estruturado} para os prompts e \textbf{critérios objetivos}
 para validar o código gerado. Como discutimos no Capítulo~0, o diferencial do
-engenheiro não é escrever código --- é \emph{saber qual código escrever}. Este
+engenheiro não é escrever código, e sim \emph{saber qual código escrever}. Este
 capítulo lhe dará as ferramentas para fazer isso com rigor. A ironia é que, quanto
 mais poderosas se tornam as ferramentas de geração de código, mais importante se
 torna a capacidade de especificar o que deve ser gerado. Um carpinteiro que ganha
-uma serra elétrica não precisa menos de uma planta --- precisa mais, porque a
+uma serra elétrica não precisa menos de uma planta. Precisa mais, porque a
 velocidade de corte amplifica tanto os acertos quanto os erros.
 
 Ao longo das próximas seções, vamos construir um exemplo completo: modelaremos
@@ -81,7 +81,7 @@ elas eliminam as ambiguidades que costumam assombrar projetos reais. Esse exempl
 não é acadêmico: ele reflete decisões reais que engenheiros enfrentam todos os
 dias em empresas de tecnologia. Ao final do capítulo, você terá não apenas um
 entendimento teórico desses frameworks, mas uma experiência prática de como
-aplicá-los --- incluindo como usá-los para estruturar prompts mais efetivos para
+aplicá-los, incluindo como usá-los para estruturar prompts mais efetivos para
 LLMs e como transformar modelos conceituais em código testável.
 
 
@@ -96,7 +96,7 @@ Manufacturing), com o objetivo de modelar processos de manufatura de forma
 rigorosa e padronizada. A necessidade era clara: sistemas de fabricação aeronáutica
 são complexos demais para serem descritos informalmente, e qualquer ambiguidade
 poderia ter consequências catastróficas. Um parafuso instalado no lugar errado
-em uma asa de avião não é uma inconveniência --- é um risco de vida. E para
+em uma asa de avião não é uma inconveniência. É um risco de vida. E para
 garantir que cada parafuso estivesse no lugar certo, era preciso que cada processo
 fosse descrito com precisão milimétrica, sem espaço para interpretações pessoais.
 
@@ -116,7 +116,7 @@ mal colocados, temos bugs em produção.
 O que torna o IDEF-0 relevante décadas depois, em um contexto de microsserviços e
 inteligência artificial, é sua simplicidade conceitual aliada a um rigor
 surpreendente. Ele nos obriga a pensar em processos usando um vocabulário
-estruturado --- o acrônimo \textbf{ICOM} --- que elimina ambiguidades antes que
+estruturado (o acrônimo \textbf{ICOM}) que elimina ambiguidades antes que
 elas contaminem o design do sistema. Enquanto metodologias mais recentes como
 BPMN oferecem uma notação mais rica e expressiva, o IDEF-0 mantém seu valor
 justamente por sua parcimônia: com apenas quatro categorias de elementos e uma
@@ -127,7 +127,7 @@ forçando o modelador a confrontar suas próprias lacunas de entendimento.
 
 Todo processo no IDEF-0 é definido por exatamente quatro tipos de elementos, dispostos
 em posições fixas ao redor de uma caixa funcional. Essa rigidez posicional não é
-capricho estético --- ela é uma decisão de design que facilita a leitura e a
+capricho estético: ela facilita a leitura e a
 revisão dos diagramas. Quando você olha para qualquer diagrama IDEF-0 no mundo,
 independentemente do domínio, sabe que as setas que entram pela esquerda são inputs,
 as que entram por cima são controls, as que saem pela direita são outputs e as que
@@ -135,16 +135,16 @@ entram por baixo são mechanisms. Essa consistência elimina a necessidade de le
 elaboradas e permite que pessoas de diferentes formações leiam o mesmo diagrama sem
 ambiguidade.
 
-O primeiro elemento do acrônimo ICOM é o \textbf{I} de \textbf{Inputs} --- aquilo
+O primeiro elemento do acrônimo ICOM é o \textbf{I} de \textbf{Inputs}: aquilo
 que entra no processo pela esquerda para ser transformado. Inputs são os dados,
 materiais ou informações que o processo consome e transforma em algo diferente. A
 palavra-chave aqui é ``transformado'': um input não atravessa o processo inalterado;
 ele é processado, combinado, filtrado, enriquecido ou de alguma forma modificado
 para produzir um output. Em software, inputs típicos incluem requisições de
 usuários, dados de sensores, eventos de outros sistemas, arquivos enviados para
-processamento e mensagens recebidas de filas. Imagine que você está projetando
-um sistema de delivery de alimentos. O pedido do cliente --- contendo o restaurante
-escolhido, os itens selecionados, o endereço de entrega e o método de pagamento ---
+processamento e mensagens recebidas de filas. Para tornar isso concreto, considere
+um sistema de delivery de alimentos. O pedido do cliente, contendo o restaurante
+escolhido, os itens selecionados, o endereço de entrega e o método de pagamento,
 é o input primário do processo ``Processar Pedido''. Note que esse input será
 transformado: ele entrará como uma intenção de compra e sairá como um pedido
 confirmado, com preço calculado, tempo estimado de entrega e status de pagamento.
@@ -155,7 +155,7 @@ essa tabela é um control. A diferença é sutil mas consequencial: inputs preci
 interfaces de captura e validação em tempo de execução, enquanto controls precisam
 de repositórios de configuração e mecanismos de governança.
 
-O segundo elemento é o \textbf{C} de \textbf{Controls} --- aquilo que governa o
+O segundo elemento é o \textbf{C} de \textbf{Controls}: aquilo que governa o
 processo sem ser consumido por ele. Controls são as restrições, regras e políticas
 sob as quais o processo opera. Eles determinam \emph{como} o processo transforma os
 inputs em outputs, mas permanecem inalterados pelo processo em si. Regras de negócio,
@@ -167,14 +167,14 @@ vigentes (como ``frete grátis para pedidos acima de R\$50''). A distinção ent
 inputs e controls é uma das contribuições mais valiosas do IDEF-0, porque ela
 separa claramente o que é \emph{variável} (os inputs mudam a cada execução do
 processo) do que é \emph{estável} (os controls mudam raramente e de forma
-controlada). Essa separação tem implicações arquiteturais profundas: inputs sugerem
+controlada). Essa separação tem implicações arquiteturais significativas: inputs sugerem
 interfaces de entrada (APIs, formulários, filas de mensagens), enquanto controls
 sugerem repositórios de regras (bancos de configuração, feature flags, policy
 engines). Engenheiros que não fazem essa distinção acabam misturando lógica de
 negócio com lógica de processamento, criando sistemas frágeis onde mudar uma regra
 de preço exige redesenhar um fluxo inteiro.
 
-O terceiro elemento é o \textbf{O} de \textbf{Outputs} --- aquilo que sai do processo
+O terceiro elemento é o \textbf{O} de \textbf{Outputs}: aquilo que sai do processo
 como resultado da transformação. Outputs são os produtos, serviços, decisões,
 notificações e dados transformados que justificam a existência do processo. Todo
 processo existe para produzir seus outputs; se um processo não produz output algum,
@@ -186,15 +186,15 @@ que eles podem ser de vários tipos: outputs primários (o pedido processado, qu
 razão de ser do processo), outputs secundários (logs de auditoria, métricas de
 desempenho) e outputs de exceção (notificações de erro, registros de falha). Todos
 devem ser modelados explicitamente, porque outputs esquecidos se transformam em
-requisitos não funcionais descobertos tardiamente --- e requisitos descobertos
+requisitos não funcionais descobertos tardiamente, e requisitos descobertos
 tardiamente são os mais caros de implementar. Outro erro comum é confundir o output
 de um processo com o input de outro: o ``pedido confirmado'' é output de ``Processar
 Pedido'' e input de ``Preparar Refeição''. Essa cadeia de outputs-para-inputs é
-precisamente o que permite a decomposição hierárquica do IDEF-0 e, como veremos,
+o que permite a decomposição hierárquica do IDEF-0 e, como veremos,
 é o que permite rastrear a origem de cada componente do sistema.
 
-O quarto e último elemento é o \textbf{M} de \textbf{Mechanisms} --- quem ou o que
-executa o processo. Mechanisms são os viabilizadores --- as pessoas, sistemas,
+O quarto e último elemento é o \textbf{M} de \textbf{Mechanisms}: quem ou o que
+executa o processo. Mechanisms são os viabilizadores, ou seja, as pessoas, sistemas,
 máquinas, APIs externas e recursos que tornam possível a transformação de inputs em
 outputs, respeitando os controls. Sem mechanisms, o processo é apenas uma abstração
 teórica, uma intenção sem capacidade de realização. No sistema de delivery, os
@@ -221,14 +221,14 @@ outputs precisam de canais de distribuição. É como um médico que classifica
 sintomas: a mesma dor de cabeça pode indicar estresse (tratamento simples) ou
 um tumor (tratamento complexo). A classificação determina a ação, e uma
 classificação errada leva a uma ação errada. No IDEF-0, uma classificação ICOM
-errada leva a uma arquitetura errada --- e uma arquitetura errada é ordens de
+errada leva a uma arquitetura errada, e uma arquitetura errada é ordens de
 magnitude mais cara de corrigir do que um bug no código.
 
 \subsection{Do Diagrama A-0 à Decomposição}
 
 O IDEF-0 começa com o \textbf{diagrama A-0}: uma única caixa representando todo o
 sistema em seu contexto mais amplo. Esse diagrama de contexto é deliberadamente
-simplificado --- ele mostra \emph{o que} o sistema faz, não \emph{como}. É o
+simplificado. Ele mostra \emph{o que} o sistema faz, não \emph{como}. É o
 equivalente a descrever uma fábrica inteira como ``transforma matéria-prima em
 produtos acabados''. A simplicidade do A-0 é sua força: ele força o modelador a
 capturar a essência do sistema em uma única frase funcional, circundada pelos
@@ -250,8 +250,8 @@ humana. George Miller, em seu clássico artigo ``The Magical Number Seven, Plus 
 Minus Two'', demonstrou que a memória de trabalho humana consegue manipular entre
 5 e 9 itens simultaneamente. Manter cada nível de decomposição dentro de 3 a 6
 subfunções garante que qualquer pessoa consiga compreender o nível inteiro de uma
-só vez, sem precisar fazer anotações ou voltar atrás. É uma decisão de design
-que prioriza a comunicabilidade sobre a exaustividade --- e em modelagem de
+só vez, sem precisar fazer anotações ou voltar atrás. Trata-se de uma decisão de design
+que prioriza a comunicabilidade sobre a exaustividade, e em modelagem de
 negócio, comunicabilidade é tudo.
 
 A decomposição hierárquica é o mecanismo que permite ao IDEF-0 lidar com
@@ -269,7 +269,7 @@ Um aspecto crucial da decomposição é que os ICOMs devem ser \textbf{consisten
 entre níveis}. Os inputs e outputs do nível pai devem aparecer como inputs e
 outputs de alguma subfunção no nível filho. Se o nível 0 mostra ``pedido do
 cliente'' como input, esse input precisa aparecer entrando em alguma subfunção
-do nível 1. Se ele desaparece, há um erro na decomposição --- um ``vazamento''
+do nível 1. Se ele desaparece, há um erro na decomposição, um ``vazamento''
 que indica que alguma função foi esquecida ou mal especificada. Essa consistência
 entre níveis é o que dá ao IDEF-0 sua rastreabilidade: você pode seguir qualquer
 elemento desde o nível mais abstrato até o mais detalhado, verificando que nada
@@ -291,13 +291,13 @@ que o nível anterior deixou sem resposta.
     \caption{Decomposicao Funcional IDEF-0 em 3 Niveis}
 \end{figure}
 
-\textbf{Nível 0} --- \emph{Gerenciar Pedidos}: a função raiz que representa todo
+\textbf{Nível 0}, \emph{Gerenciar Pedidos}: a função raiz que representa todo
 o escopo do sistema. Os inputs são o pedido do cliente e seus dados de pagamento.
 Os controls incluem a política de preços, a legislação consumerista (CDC, LGPD)
 e as regras de negócio da empresa. Os outputs são o pedido processado, a nota
 fiscal eletrônica e as notificações ao cliente. Os mechanisms são o sistema ERP,
-o gateway de pagamento e a equipe de logística. Note que, neste nível, o sistema
-inteiro é uma caixa preta. Não sabemos --- e deliberadamente não nos importamos ---
+o gateway de pagamento e a equipe de logística. Neste nível, o sistema
+inteiro é uma caixa preta. Não sabemos, e deliberadamente não nos importamos,
 como o pedido é processado internamente. O que sabemos é o que entra, o que sai,
 o que restringe e o que viabiliza. Essa abstração é poderosa porque permite que
 stakeholders de negócio validem o modelo sem precisar entender detalhes técnicos.
@@ -305,37 +305,37 @@ O CEO pode olhar para este diagrama e dizer: ``Faltou o relatório de vendas com
 output'' ou ``A legislação tributária estadual deveria aparecer como control''.
 Essas correções, feitas no nível 0, evitam meses de retrabalho no futuro.
 
-\textbf{Nível 1} --- \emph{Decomposição de A0}: o processo de gerenciar pedidos
+\textbf{Nível 1}, \emph{Decomposição de A0}: o processo de gerenciar pedidos
 se decompõe em cinco subfunções. ``Receber Pedido'' (A1) captura e valida os dados
-iniciais --- é a porta de entrada do sistema, responsável por transformar a intenção
+iniciais, funcionando como a porta de entrada do sistema, responsável por transformar a intenção
 do cliente em uma estrutura de dados válida e processável. ``Validar Pagamento''
-(A2) processa a transação financeira --- verifica os dados do cartão, consulta
+(A2) processa a transação financeira: verifica os dados do cartão, consulta
 serviços de antifraude, processa a cobrança e emite comprovantes. ``Separar
-Produtos'' (A3) orquestra o processo de \emph{picking} no estoque --- localiza os
-itens no armazém, verifica quantidades, reserva o estoque e prepara o pacote.
-``Enviar Pedido'' (A4) gerencia a logística de entrega --- seleciona a
+Produtos'' (A3) orquestra o processo de \emph{picking} no estoque, localizando os
+itens no armazém, verificando quantidades, reservando o estoque e preparando o pacote.
+``Enviar Pedido'' (A4) gerencia a logística de entrega: seleciona a
 transportadora, gera a etiqueta de envio, registra o rastreamento e monitora o
 trânsito. ``Notificar Cliente'' (A5) mantém o cliente informado ao longo de todo
-o ciclo --- envia confirmação de pedido, atualização de pagamento, código de
+o ciclo, enviando confirmação de pedido, atualização de pagamento, código de
 rastreamento e confirmação de entrega. Observe que as cinco subfunções formam
 um fluxo natural, onde os outputs de uma alimentam os inputs da próxima. O output
 de A1 (pedido validado) é input de A2 (que precisa saber o que cobrar). O output
 de A2 (pagamento confirmado) habilita A3 (que só separa produtos para pedidos
-pagos). Esse encadeamento não é acidental --- é a manifestação do processo de
+pagos). Esse encadeamento não é acidental; é a manifestação do processo de
 negócio real.
 
-\textbf{Nível 2} --- \emph{Decomposição de A2 (Validar Pagamento)}: a função de
+\textbf{Nível 2}, \emph{Decomposição de A2 (Validar Pagamento)}: a função de
 validação de pagamento, por sua complexidade e criticidade, merece uma decomposição
 adicional. ``Verificar Dados do Cartão'' (A2.1) valida formato, data de validade e
-bandeira --- esta é uma validação sintática que pode rejeitar rapidamente dados
+bandeira. Trata-se de uma validação sintática que pode rejeitar rapidamente dados
 obviamente inválidos, economizando chamadas desnecessárias a serviços externos.
 ``Consultar Antifraude'' (A2.2) envia os dados para um serviço de análise
-de risco --- combina dados do pedido, histórico do cliente, geolocalização e
+de risco, combinando dados do pedido, histórico do cliente, geolocalização e
 padrões comportamentais para calcular um score de risco. ``Processar Cobrança''
-(A2.3) efetua a transação junto à adquirente --- é o momento em que o dinheiro
+(A2.3) efetua a transação junto à adquirente. É o momento em que o dinheiro
 efetivamente muda de mãos, a etapa mais crítica e irreversível do processo.
 ``Emitir Comprovante'' (A2.4) gera o registro da transação para o cliente e para
-o sistema contábil --- produz os artefatos necessários para auditoria, conciliação
+o sistema contábil, produzindo os artefatos necessários para auditoria, conciliação
 financeira e comprovação legal. A decisão de decompor A2 e não outra função não
 é aleatória: ela reflete a \textbf{criticidade} e a \textbf{complexidade}
 específicas do processo de pagamento. Um erro na notificação ao cliente (A5) é
@@ -344,7 +344,7 @@ financeiro, problemas legais e perda de confiança do cliente. O IDEF-0 nos dá 
 liberdade de decompor mais os processos que precisam de mais atenção, sem exigir
 uma decomposição uniforme de todos os processos.
 
-Observe como o \textbf{node index} --- a numeração A0, A1, A2.1 --- permite
+Observe como o \textbf{node index} (a numeração A0, A1, A2.1) permite
 rastrear a origem de cada função. Quando alguém pergunta ``de onde veio esse
 microsserviço de antifraude?'', a resposta é clara: é a realização técnica de
 A2.2, que faz parte de A2 (Validar Pagamento), que faz parte de A0 (Gerenciar
@@ -360,14 +360,14 @@ A2.3) com inputs, controls, outputs e mechanisms diferentes.
 
 Os LLMs atuais são capazes de gerar diagramas IDEF-0 a partir de descrições
 textuais, e essa capacidade é genuinamente útil para acelerar a fase inicial de
-modelagem. Você pode descrever um processo de negócio em linguagem natural ---
-``Queremos um sistema que permita a clientes encomendar refeições de restaurantes
-próximos, com pagamento online e entrega por motoboys'' --- e um LLM bem instruído
+modelagem. Você pode descrever um processo de negócio em linguagem natural,
+como ``Queremos um sistema que permita a clientes encomendar refeições de restaurantes
+próximos, com pagamento online e entrega por motoboys'', e um LLM bem instruído
 produzirá um diagrama A-0 razoável com ICOMs plausíveis. Essa capacidade reduz
 significativamente o tempo necessário para produzir um primeiro rascunho, que é
 o ponto de partida mais difícil de qualquer processo de modelagem.
 
-No entanto, \textbf{validar o modelo} continua sendo responsabilidade
+Porém, \textbf{validar o modelo} continua sendo responsabilidade
 exclusiva do engenheiro. Um LLM não sabe se sua empresa tem uma política de
 devolução em 7 dias ou em 30 dias. Ele não sabe que o serviço de antifraude é
 um requisito regulatório no seu segmento. Ele vai gerar algo plausível, mas
@@ -377,7 +377,7 @@ mas contém omissões sutis pode ser mais perigoso do que um modelo obviamente
 incompleto, porque o primeiro não levanta alertas. Um modelo que esquece de incluir
 ``legislação tributária estadual'' como control do processo de emissão de nota
 fiscal pode parecer completo para quem não conhece as nuances do domínio fiscal
-brasileiro --- mas essa omissão, se não detectada, resultará em um sistema que não
+brasileiro. Mas essa omissão, se não detectada, resultará em um sistema que não
 calcula ICMS corretamente, gerando passivos fiscais que podem comprometer a empresa.
 
 A abordagem recomendada é usar a IA como \emph{rascunhadora}: peça a ela para
@@ -385,9 +385,9 @@ gerar uma primeira versão do IDEF-0, depois revise criteriosamente cada element
 ICOM. Pergunte-se: ``Esse input realmente existe? Esse control está documentado?
 Esse mechanism está disponível? Esse output é o que o stakeholder espera?'' Conduza
 essa revisão com os stakeholders do negócio, não sozinho em frente ao computador.
-A modelagem IDEF-0 é, em sua essência, um exercício de comunicação, não de
+A modelagem IDEF-0 é, em seu núcleo, um exercício de comunicação, não de
 diagramação. O diagrama é apenas o artefato visível de um processo de alinhamento
-que acontece entre pessoas --- e nenhuma IA, por mais sofisticada que seja,
+que acontece entre pessoas, e nenhuma IA, por mais sofisticada que seja,
 substitui esse alinhamento humano. O que a IA pode fazer é acelerar a produção do
 artefato, liberando mais tempo para o que realmente importa: a conversa
 estruturada entre as pessoas que entendem o negócio e as pessoas que vão
@@ -397,7 +397,7 @@ A transição do IDEF-0 para o RM-ODP é natural e fluida. Uma vez que temos os
 processos de negócio modelados com seus ICOMs, estamos prontos para expandir esse
 entendimento em múltiplas dimensões arquiteturais. O IDEF-0 nos deu o ``o quê'' e
 o ``como'' do negócio; o RM-ODP nos dará o ``por quê'', o ``com o quê'' e o ``de
-que forma'' da arquitetura. Essa progressão --- do negócio para a arquitetura --- é
+que forma'' da arquitetura. Essa progressão, do negócio para a arquitetura, é
 o caminho que todo projeto deveria percorrer, mas que a urgência e a ansiedade por
 código frequentemente nos fazem pular.
 
@@ -416,10 +416,10 @@ revela preocupações diferentes dependendo da vista pela qual é examinado. O
 brilhante insight do RM-ODP é que essas preocupações são \emph{ortogonais}: elas
 podem ser analisadas independentemente, mas devem ser consistentes entre si.
 
-É importante entender o que o RM-ODP \emph{não} é. Ele não é um framework
+Convém entender o que o RM-ODP \emph{não} é. Ele não é um framework
 prescritivo que dita como construir sistemas. Não é uma metodologia com fases
 sequenciais. Não é um conjunto de templates a serem preenchidos mecanicamente.
-O RM-ODP é, fundamentalmente, uma \textbf{lente de pensamento} --- uma forma
+O RM-ODP é, fundamentalmente, uma \textbf{lente de pensamento}, uma forma
 disciplinada de garantir que você considerou todos os aspectos relevantes de
 um sistema antes de construí-lo. Essa distinção é importante porque muitos
 engenheiros, ao ouvirem ``padrão ISO'', imaginam um documento burocrático de 500
@@ -428,7 +428,7 @@ oposto disso: é um framework conceitual leve que pode ser aplicado com o nível
 formalidade que cada projeto demanda. Em um projeto de uma startup de 5 pessoas,
 as cinco vistas podem ser capturadas em um documento de 10 páginas. Em um projeto
 de um banco com centenas de desenvolvedores, elas podem gerar centenas de artefatos
-formais. O framework se adapta ao contexto --- o que não se adapta é a necessidade
+formais. O framework se adapta ao contexto; o que não se adapta é a necessidade
 de pensar em todas as cinco dimensões.
 
 \begin{quote}
@@ -459,14 +459,14 @@ o mesmo para sistemas de software: são cinco ``plantas'' que, juntas, cobrem do
 \end{figure}
 
 Originalmente concebido para sistemas distribuídos na década de 1990, o RM-ODP
-se aplica com perfeição a \textbf{qualquer} sistema de software moderno ---
+se aplica com perfeição a \textbf{qualquer} sistema de software moderno,
 especialmente em um mundo onde praticamente todo sistema é, de alguma forma,
 distribuído. Mesmo uma aplicação aparentemente monolítica que usa um banco de
 dados externo, um serviço de e-mail e uma CDN já é, na prática, um sistema
 distribuído. A ubiquidade dos serviços em nuvem, das APIs de terceiros, dos
 microsserviços e das arquiteturas orientadas a eventos tornou a distribuição não
 uma exceção, mas a norma. E onde há distribuição, há complexidade que precisa ser
-gerenciada --- complexidade que as cinco vistas do RM-ODP foram projetadas
+gerenciada, complexidade que as cinco vistas do RM-ODP foram projetadas
 especificamente para endereçar.
 
 Nas próximas subseções, exploraremos cada uma das cinco vistas usando nosso
@@ -482,15 +482,15 @@ A Enterprise Viewpoint é a vista que responde à pergunta mais fundamental:
 \textbf{por que este sistema existe?} Ela lida com o contexto organizacional,
 os objetivos de negócio, os stakeholders e as políticas que governam o sistema.
 É a vista que conecta a tecnologia ao propósito. Sem ela, todas as outras
-vistas flutuam no vácuo --- podem ser tecnicamente impecáveis, mas
+vistas flutuam no vácuo. Podem ser tecnicamente impecáveis, mas
 desconectadas da razão de ser do sistema.
 
 Muitos engenheiros de software consideram essa vista ``trabalho do analista de
 negócios'' e a ignoram. Esse é um erro caro. Sem uma compreensão clara do
 propósito empresarial, decisões arquiteturais são tomadas no vácuo. Você pode
 projetar um sistema com 99,999\% de disponibilidade quando o negócio toleraria
-99,9\% --- gastando dez vezes mais sem necessidade. Ou, inversamente, projetar
-para 99\% quando o negócio exige 99,99\% --- criando uma bomba-relógio. A
+99,9\%, gastando dez vezes mais sem necessidade. Ou, inversamente, projetar
+para 99\% quando o negócio exige 99,99\%, criando uma bomba-relógio. A
 Enterprise Viewpoint é o antídoto contra ambos os extremos: ela documenta, de
 forma explícita e verificável, o que o negócio espera do sistema e sob quais
 restrições o sistema deve operar.
@@ -523,16 +523,16 @@ pela manutenção e evolução do sistema, preocupando-se com manutenibilidade,
 escalabilidade e dívida técnica. Cada stakeholder vê o mesmo sistema por uma lente
 diferente, e a Enterprise Viewpoint é o lugar onde essas lentes são catalogadas e
 reconciliadas. Um sistema que satisfaz perfeitamente a equipe financeira mas frustra
-os clientes não é um sistema bem-sucedido --- mesmo que funcione perfeitamente do
+os clientes não é um sistema bem-sucedido, mesmo que funcione perfeitamente do
 ponto de vista técnico.
 
 As \textbf{políticas e regulamentações} que governam o sistema formam o arcabouço
 de restrições dentro do qual toda a arquitetura deve operar. A Lei Geral de
 Proteção de Dados (LGPD) impõe requisitos de consentimento, finalidade,
-minimização e portabilidade de dados pessoais --- o que tem impacto direto no
+minimização e portabilidade de dados pessoais, o que tem impacto direto no
 design dos bancos de dados, nas políticas de retenção e nos fluxos de exclusão
 de conta. O Código de Defesa do Consumidor (CDC) garante ao cliente direitos de
-arrependimento, troca e informação clara sobre preços --- o que impacta os fluxos
+arrependimento, troca e informação clara sobre preços, o que impacta os fluxos
 de cancelamento, devolução e apresentação de produtos. A política interna de
 devolução em até 7 dias e a política de preços com markup mínimo de 15\% são
 restrições de negócio que limitam as promoções possíveis e os fluxos de
@@ -542,18 +542,18 @@ intencionado implementou uma funcionalidade de ``excluir conta'' que simplesment
 apagava todos os dados do banco, violando a obrigação legal de manter registros
 fiscais por cinco anos?
 
-Os \textbf{requisitos de qualidade} --- frequentemente chamados de SLAs (Service
-Level Agreements) --- são a tradução quantitativa das expectativas de negócio. Para
+Os \textbf{requisitos de qualidade}, frequentemente chamados de SLAs (Service
+Level Agreements), são a tradução quantitativa das expectativas de negócio. Para
 o nosso e-commerce, esses requisitos incluem uma disponibilidade de 99,9\%, o que
 se traduz em um máximo de 8,76 horas de indisponibilidade por ano. O tempo de
 resposta do checkout deve ser inferior a 3 segundos no percentil 95, o que
 significa que 95 em cada 100 transações de checkout devem completar em menos de 3
-segundos. A recuperação de desastres deve acontecer em até 4 horas (RTO --- Recovery
-Time Objective), e a perda máxima de dados aceitável é de 1 hora (RPO --- Recovery
+segundos. A recuperação de desastres deve acontecer em até 4 horas (RTO, Recovery
+Time Objective), e a perda máxima de dados aceitável é de 1 hora (RPO, Recovery
 Point Objective). Esses números não são arbitrários: eles derivam diretamente do
 impacto financeiro da indisponibilidade. Se o e-commerce fatura R\$1.000.000 por
 dia, uma hora de indisponibilidade custa aproximadamente R\$42.000. Esse cálculo
-justifica --- ou não --- o investimento em infraestrutura redundante, multi-região
+justifica, ou não, o investimento em infraestrutura redundante, multi-região
 e failover automático.
 
 As \textbf{métricas de sucesso} são os indicadores que dirão se o sistema está
@@ -563,7 +563,7 @@ adicionam um item ao carrinho devem completar a compra. O NPS (Net Promoter Scor
 deve estar acima de 50, indicando que a maioria dos clientes recomendaria a
 plataforma. O tempo médio de entrega deve ser inferior a 48 horas, e a taxa de
 devolução deve ficar abaixo de 5\%. Essas métricas podem parecer distantes da
-engenharia de software, mas elas são, na verdade, os critérios finais de sucesso
+engenharia de software, mas são os critérios finais de sucesso
 ou fracasso do sistema. Um sistema com zero bugs mas com taxa de conversão de 0,5\%
 é um fracasso de negócio. Um sistema com alguns bugs conhecidos mas com NPS de 70
 pode ser um sucesso estrondoso. A Enterprise Viewpoint nos obriga a manter essas
@@ -576,7 +576,7 @@ a legislação e as regras de negócio que aparecem como Controls no IDEF-0 são
 exatamente as políticas da Enterprise Viewpoint. O sistema ERP e o gateway de
 pagamento que aparecem como Mechanisms são os viabilizadores que a Enterprise
 Viewpoint identifica como recursos necessários. Essa correspondência não é
-coincidência --- ela reflete o fato de que o IDEF-0 e o RM-ODP, embora
+coincidência; ela reflete o fato de que o IDEF-0 e o RM-ODP, embora
 desenvolvidos independentemente, compartilham uma visão comum sobre o que
 significa entender um sistema.
 
@@ -591,13 +591,13 @@ Viewpoint nos diz \emph{sobre o que} ele raciocina.
 
 Se a Enterprise Viewpoint é o ``porquê'', a Information Viewpoint é o ``o quê''.
 Ela é deliberadamente agnóstica em relação à tecnologia: não importa se os dados
-serão armazenados em PostgreSQL, MongoDB ou em rolos de papiro --- o que importa
+serão armazenados em PostgreSQL, MongoDB ou em rolos de papiro. O que importa
 é a \emph{estrutura semântica} da informação. Essa independência tecnológica não
 é um luxo acadêmico; ela é uma necessidade prática. Se você modela suas entidades
 pensando em tabelas SQL, vai criar um modelo enviesado pelas limitações e
 idiossincrasias do modelo relacional. Se modela pensando em documentos JSON, vai
 criar um modelo enviesado pela desnormalização. A Information Viewpoint pede que
-você pense nas entidades como \emph{conceitos do domínio} --- e só depois se
+você pense nas entidades como \emph{conceitos do domínio}, e só depois se
 preocupe com como armazená-las.
 
 Para nosso e-commerce, as entidades centrais e seus relacionamentos revelam a
@@ -608,17 +608,17 @@ na Computational Viewpoint.
 A entidade \textbf{Cliente} é o ator central do sistema. Ela possui nome, CPF
 (que deve ser único no sistema), e-mail (também único), uma lista de endereços de
 entrega e um histórico de pedidos. O CPF como identificador único reflete uma
-decisão de negócio --- a empresa precisa associar cada compra a uma pessoa física
+decisão de negócio, pois a empresa precisa associar cada compra a uma pessoa física
 para fins fiscais e de conformidade com o CDC. O e-mail único impede duplicações
 que gerariam confusão nas notificações e no atendimento ao cliente. A lista de
 endereços (e não um único endereço) reconhece que clientes frequentemente pedem
-entregas em locais diferentes --- casa, trabalho, endereço de presente. Um
+entregas em locais diferentes: casa, trabalho, endereço de presente. Um
 Cliente pode ter muitos Pedidos, refletindo a relação natural de fidelização.
 
 A entidade \textbf{Produto} representa aquilo que é vendido na plataforma. Ela
 possui SKU (Stock Keeping Unit, um identificador único no sistema de estoque),
 nome, descrição, preço base, categoria e quantidade em estoque. O SKU é o
-identificador canônico do produto em todo o sistema --- do catálogo ao estoque, do
+identificador canônico do produto em todo o sistema, do catálogo ao estoque, do
 carrinho à nota fiscal. O preço base é o preço de referência, que pode ser
 modificado por promoções, cupons e políticas de markup. A quantidade em estoque é
 um atributo volátil que muda a cada venda e a cada reposição, o que o torna um
@@ -632,7 +632,7 @@ valor total, status e timestamps de criação e atualização. O identificador �
 deve ser gerado de forma que não colida (UUIDs são a escolha usual) e que seja
 legível para atendimento ao cliente (frequentemente um código alfanumérico mais
 curto é derivado do UUID para comunicação com o cliente). Um Pedido pertence a um
-único Cliente e contém múltiplos Itens --- essa relação de composição significa que
+único Cliente e contém múltiplos Itens. Essa relação de composição significa que
 o Pedido é o ``dono'' de seus Itens; se o Pedido for excluído (logicamente), seus
 Itens vão junto.
 
@@ -641,7 +641,7 @@ com quantidade e preço unitário no momento da compra. Esse ``snapshot'' do pre
 uma decisão de design crucial que merece destaque: o preço gravado no Item de Pedido
 é o preço que o cliente concordou em pagar, independentemente de o preço do Produto
 mudar depois. Sem esse snapshot, uma alteração de preço no catálogo retroativamente
-alteraria o valor de pedidos já confirmados --- um pesadelo contábil e jurídico.
+alteraria o valor de pedidos já confirmados, um pesadelo contábil e jurídico.
 
 A entidade \textbf{Pagamento} está vinculada a um Pedido e contém o método
 (cartão de crédito, PIX, boleto bancário), status da transação, valor e referência
@@ -657,8 +657,8 @@ tem seu próprio ciclo de vida: ela é criada quando o pedido é despachado,
 atualizada à medida que o pacote transita e concluída quando o cliente confirma o
 recebimento (ou quando o prazo de confirmação tácita expira).
 
-As \textbf{invariantes} --- regras que devem ser verdadeiras em qualquer momento
---- são cruciais e frequentemente negligenciadas. Invariantes são a expressão
+As \textbf{invariantes} (regras que devem ser verdadeiras em qualquer momento)
+são cruciais e frequentemente negligenciadas. Invariantes são a expressão
 formal das regras de negócio invioláveis, e documentá-las explicitamente é uma
 das contribuições mais valiosas da Information Viewpoint. Sem invariantes
 documentadas, cada desenvolvedor inventa suas próprias suposições sobre o que é
@@ -668,7 +668,7 @@ produção.
 A primeira invariante fundamental é que um pedido não pode ter valor total
 negativo. Isso pode parecer óbvio, mas sem validação explícita, cenários de borda
 envolvendo descontos, cupons e estornos parciais podem levar a valores negativos.
-Imagine um cupom de R\$50 aplicado a um pedido de R\$30 --- sem a invariante, o
+Considere um cupom de R\$50 aplicado a um pedido de R\$30. Sem a invariante, o
 sistema poderia calcular um valor total de -R\$20, efetivamente ``pagando'' o
 cliente para comprar. A validação dessa invariante deve ocorrer tanto na criação
 quanto em qualquer modificação do pedido.
@@ -697,18 +697,18 @@ A quinta invariante estabelece que um pedido pago não pode ser alterado, apenas
 cancelado com estorno. Uma vez que o dinheiro mudou de mãos, qualquer ``alteração''
 no pedido é, na verdade, um cancelamento seguido de um novo pedido. Essa
 invariante simplifica enormemente a lógica de negócio ao eliminar a necessidade
-de gerenciar ``edições parciais'' de pedidos pagos --- um cenário que, se
+de gerenciar ``edições parciais'' de pedidos pagos, um cenário que, se
 permitido, introduziria complexidade combinatória explosiva.
 
 A sexta invariante exige que o CPF do cliente seja válido segundo o algoritmo de
 verificação. Essa invariante parece trivial, mas sua ausência permite a criação
 de contas com CPFs fictícios, facilitando fraudes e criando problemas de
 conciliação fiscal. A validação algorítmica do CPF (verificação dos dígitos
-verificadores) é uma primeira linha de defesa necessária, embora não suficiente
---- um CPF válido algoritmicamente pode pertencer a outra pessoa.
+verificadores) é uma primeira linha de defesa necessária, embora não suficiente:
+um CPF válido algoritmicamente pode pertencer a outra pessoa.
 
 O \textbf{ciclo de vida} da informação é outro aspecto fundamental. Um Pedido,
-por exemplo, não nasce e permanece estático --- ele evolui ao longo do tempo
+por exemplo, não nasce e permanece estático. Ele evolui ao longo do tempo
 através de estados bem definidos:
 
 \begin{center}
@@ -725,7 +725,7 @@ tenha sido efetivamente confirmado pelo gateway (não apenas iniciado) e como
 pós-condição que todos os itens do pedido tenham sido reservados no estoque. Se
 a pós-condição não puder ser satisfeita (por exemplo, porque um item ficou sem
 estoque entre o momento do pagamento e o início da separação), o sistema precisa
-de uma estratégia de compensação --- como cancelar o pedido com estorno, ou
+de uma estratégia de compensação, como cancelar o pedido com estorno ou
 oferecer ao cliente a opção de receber um pedido parcial. Essas decisões são de
 negócio, não de tecnologia, e devem ser capturadas na Information Viewpoint antes
 de serem implementadas em código.
@@ -734,7 +734,7 @@ A \textbf{conexão com Domain-Driven Design} é natural e poderosa. As entidades
 da Information Viewpoint correspondem diretamente às Entidades e Value Objects do
 DDD. As invariantes correspondem às regras de negócio dos Agregados. As transições
 de estado correspondem aos Domain Events. Se você já pratica DDD, a Information
-Viewpoint vai parecer familiar --- e se não pratica, ela é uma excelente porta
+Viewpoint vai parecer familiar, e se não pratica, ela é uma excelente porta
 de entrada, como exploraremos em mais detalhes no Capítulo~3. A grande vantagem
 de usar a Information Viewpoint como ponto de partida para o DDD é que ela fornece
 um vocabulário neutro, acessível tanto para engenheiros quanto para stakeholders de
@@ -757,11 +757,11 @@ O aspecto mais importante --- e mais contraintuitivo --- desta vista é que ela 
 não importa se dois componentes rodam no mesmo processo ou em continentes
 diferentes. Não importa se se comunicam via HTTP, gRPC ou pombo-correio. O que
 importa são as \emph{responsabilidades}, as \emph{interfaces} e os
-\emph{contratos}. Essa independência pode parecer artificial, mas é profundamente
+\emph{contratos}. Essa independência pode parecer artificial, mas é muito
 prática: ela permite que você tome decisões de decomposição com base na lógica do
 domínio, não nas limitações da infraestrutura. Se dois componentes têm
-responsabilidades distintas e ciclos de vida diferentes, eles devem ser separados
---- mesmo que, na implementação final, rodem no mesmo servidor. A separação
+responsabilidades distintas e ciclos de vida diferentes, eles devem ser separados,
+mesmo que, na implementação final, rodem no mesmo servidor. A separação
 conceitual precede e informa a separação física; não o contrário.
 
 Para nosso e-commerce, os objetos computacionais e suas interfaces foram
@@ -778,7 +778,7 @@ e paginação para suportar a navegação do catálogo pelo cliente, e
 comunique mudanças de disponibilidade. Esse componente é o guardião dos dados do
 catálogo e a única fonte de verdade sobre quais produtos existem, quanto custam e
 quantos estão disponíveis. Nenhum outro componente deve acessar diretamente o
-repositório de dados do catálogo --- todos devem usar as interfaces do
+repositório de dados do catálogo. Todos devem usar as interfaces do
 \texttt{CatalogoService}, garantindo que as invariantes do catálogo (como ``o
 preço não pode ser negativo'' e ``o estoque não pode ficar abaixo de zero'')
 sejam sempre respeitadas.
@@ -788,8 +788,8 @@ pedidos. Ele oferece \texttt{criarPedido(cliente, itens)} para iniciar o fluxo d
 compra, \texttt{cancelarPedido(pedidoId)} para abortar pedidos não finalizados,
 \texttt{consultarPedido(pedidoId)} para recuperar o estado atual de um pedido, e
 \texttt{atualizarStatus(pedidoId, novoStatus)} para avançar o pedido em seu ciclo
-de vida. Este é o componente que orquestra a saga do pedido --- desde a validação
-inicial até a entrega final --- coordenando as interações com os demais
+de vida. Este componente orquestra a saga do pedido, desde a validação
+inicial até a entrega final, coordenando as interações com os demais
 componentes.
 
 O \texttt{PagamentoGateway} é a abstração sobre os provedores de pagamento. Ele
@@ -804,8 +804,8 @@ permite que o \texttt{PedidoService} funcione sem conhecer os detalhes do
 provedor de pagamento escolhido.
 
 O \texttt{EstoqueManager} é responsável pela reserva e liberação de estoque. Suas
-operações --- \texttt{reservarItens(itens)}, \texttt{confirmarReserva(reservaId)},
-\texttt{liberarReserva(reservaId)} e \texttt{consultarDisponibilidade(sku)} ---
+operações (\texttt{reservarItens(itens)}, \texttt{confirmarReserva(reservaId)},
+\texttt{liberarReserva(reservaId)} e \texttt{consultarDisponibilidade(sku)})
 refletem o padrão de reserva temporária com confirmação ou liberação posterior.
 Esse padrão é necessário porque, entre o momento em que o cliente confirma o pedido
 e o momento em que o pagamento é processado, os itens precisam estar ``reservados''
@@ -816,7 +816,7 @@ por múltiplos canais. Sua interface \texttt{enviarNotificacao(destinatario, can
 template, dados)} é deliberadamente genérica: ela aceita qualquer combinação de
 destinatário, canal (e-mail, SMS, push notification, WhatsApp), template e dados.
 Essa genericidade permite que novos tipos de notificação sejam adicionados sem
-alterar a interface do componente --- apenas novos templates são criados.
+alterar a interface do componente; apenas novos templates são criados.
 
 O \texttt{EntregaTracker} é responsável pelo acompanhamento das entregas. Ele
 oferece \texttt{registrarEnvio(pedidoId, transportadora)} para registrar o despacho,
@@ -830,11 +830,11 @@ As \textbf{interações} entre esses objetos podem ser síncronas (uma chamada q
 espera resposta), assíncronas (uma mensagem que não espera resposta imediata) ou
 baseadas em publicação/assinatura (um evento que múltiplos interessados podem
 consumir). Na Computational Viewpoint, definimos a \emph{semântica} da interação,
-não o \emph{mecanismo}. Essa distinção é fundamental e merece ser desempacotada.
+não o \emph{mecanismo}. Essa distinção merece ser desempacotada.
 
 A interação entre \texttt{PedidoService} e \texttt{EstoqueManager} na operação de
 reserva de itens é definida como síncrona. Isso não significa que ela \emph{deve}
-ser implementada com uma chamada HTTP bloqueante --- significa que, semanticamente,
+ser implementada com uma chamada HTTP bloqueante. Significa que, semanticamente,
 o \texttt{PedidoService} precisa da confirmação da reserva antes de prosseguir com
 o fluxo. Ele não pode avançar para o processamento do pagamento sem saber se os
 itens estão reservados, porque cobrar o cliente por itens indisponíveis violaria
@@ -846,7 +846,7 @@ Por outro lado, quando o \texttt{PedidoService} publica o evento
 assíncrona. Isso reflete o fato de que enviar uma notificação ao cliente é
 importante mas não urgente: o fluxo de criação do pedido não precisa esperar que
 o e-mail seja enviado para se considerar completo. Se a notificação falhar ou
-demorar, o pedido continua válido --- a notificação será reenviada depois.
+demorar, o pedido continua válido. A notificação será reenviada depois.
 
 Da mesma forma, quando o \texttt{PagamentoGateway} publica o evento
 \texttt{PagamentoConfirmado}, tanto o \texttt{PedidoService} (que precisa atualizar
@@ -862,7 +862,7 @@ direta e iluminadora. A abordagem de microsserviços se manifesta naturalmente: 
 objeto computacional que definimos possui responsabilidades coesas, interfaces
 claras e estado independente, o que o torna um candidato natural a se tornar um
 microsserviço independente. Mas a Computational Viewpoint não \emph{exige} que cada
-componente seja um microsserviço --- ela apenas define a decomposição lógica. A
+componente seja um microsserviço. Ela apenas define a decomposição lógica. A
 decisão de deployar cada componente como um processo separado ou como módulos
 dentro de um monolito é tomada na Engineering e Technology Viewpoints, com base em
 critérios de desempenho, operação e custo.
@@ -875,7 +875,7 @@ entrada para criação, cancelamento e consulta de pedidos, e portas de saída p
 reserva de estoque, processamento de pagamento e publicação de eventos.
 
 A relação com a Clean Architecture segue o mesmo espírito: os objetos computacionais
-são organizados por camadas de abstração, com dependências apontando para dentro ---
+são organizados por camadas de abstração, com dependências apontando para dentro,
 do detalhe técnico para a regra de negócio, nunca no sentido contrário.
 Exploraremos essas conexões com profundidade nos Capítulos~2 e~3.
 
@@ -902,7 +902,7 @@ usam para conversar. No nosso e-commerce, o \texttt{PedidoService} chama o
 \texttt{EstoqueManager} via gRPC com TLS mútuo (mTLS). A escolha do gRPC se
 justifica pela necessidade de tipagem forte e alta performance em chamadas
 síncrona internas (entre serviços que vivem na mesma rede privada), enquanto o
-mTLS garante que ambas as partes da comunicação são autênticas --- prevenindo
+mTLS garante que ambas as partes da comunicação são autênticas, prevenindo
 ataques man-in-the-middle mesmo dentro da rede interna. Os eventos assíncronos
 são publicados via Apache Kafka com particionamento por \texttt{pedidoId}, o que
 garante que todos os eventos relacionados ao mesmo pedido sejam processados na
@@ -911,8 +911,8 @@ sem ela, eventos como ``PedidoCriado'' e ``PedidoPago'' poderiam ser processados
 fora de ordem por consumidores diferentes, levando a estados inconsistentes.
 
 A \textbf{qualidade de serviço} especifica os limites operacionais que cada
-interação deve respeitar. Chamadas síncronas têm timeout de 2 segundos --- se o
-\texttt{EstoqueManager} não responder em 2 segundos, a chamada é considerada
+interação deve respeitar. Chamadas síncronas têm timeout de 2 segundos, e se o
+\texttt{EstoqueManager} não responder nesse prazo, a chamada é considerada
 falha. Mensagens assíncronas devem ser processadas em até 30 segundos. O
 throughput esperado é de 500 pedidos por minuto no pico. Esses números não são
 chutes; eles derivam dos SLAs da Enterprise Viewpoint e das projeções de carga
@@ -922,21 +922,21 @@ menos de 1 segundo (com margem para processamento local), justificando o timeout
 de 2 segundos como um limite generoso mas necessário.
 
 A \textbf{tolerância a falhas} define como o sistema se comporta quando as coisas
-dão errado --- e em sistemas distribuídos, as coisas \emph{sempre} dão errado.
+dão errado, e em sistemas distribuídos, as coisas \emph{sempre} dão errado.
 A estratégia inclui retry com backoff exponencial para chamadas idempotentes,
 limitado a 3 tentativas. O backoff exponencial garante que, se o serviço de
 destino está sob carga, as retentativas não amplificam o problema. O circuit
 breaker é configurado com threshold de 50\% de falhas em uma janela de 30
 segundos: se mais da metade das chamadas ao \texttt{EstoqueManager} falham em
 30 segundos, o circuit breaker ``abre'' e todas as chamadas subsequentes falham
-imediatamente, sem sequer tentar --- dando ao serviço sobrecarregado tempo para
+imediatamente, sem sequer tentar, dando ao serviço sobrecarregado tempo para
 se recuperar. Uma dead letter queue captura mensagens que falharam após todas as
 tentativas, permitindo investigação e reprocessamento manual. Quando o serviço de
 catálogo está indisponível, um fallback para cache local permite que os clientes
 continuem navegando pelos produtos mais recentes, ainda que os dados possam estar
 ligeiramente desatualizados.
 
-A \textbf{consistência} é talvez o desafio mais profundo dos sistemas distribuídos.
+A \textbf{consistência} é talvez o desafio mais difícil dos sistemas distribuídos.
 No nosso e-commerce, a reserva de estoque usa o padrão Saga com compensação. Uma
 Saga é uma sequência de transações locais que, juntas, implementam uma transação
 distribuída. Se o pagamento falha após a reserva de estoque, uma mensagem de
@@ -945,7 +945,7 @@ A idempotência é garantida por uma chave de idempotência no header de cada
 requisição, permitindo que retentativas sejam seguras: processar a mesma
 requisição duas vezes produz o mesmo resultado que processá-la uma vez. Sem
 idempotência, retentativas poderiam debitar o cliente duas vezes ou reservar o
-dobro de itens --- falhas que são tanto tecnicamente graves quanto comercialmente
+dobro de itens. Essas falhas são tanto tecnicamente graves quanto comercialmente
 desastrosas.
 
 O \textbf{monitoramento} é o sistema nervoso da Engineering Viewpoint. Distributed
@@ -967,7 +967,7 @@ brokers como Kafka e RabbitMQ implementam os padrões de comunicação assíncro
 com garantias de ordering, durabilidade e dead letter. API gateways como Kong e
 AWS API Gateway implementam rate limiting, autenticação e roteamento na borda da
 rede. A Engineering Viewpoint não prescreve \emph{quais} ferramentas usar para
-implementar suas estratégias --- essa escolha é da Technology Viewpoint. O que a
+implementar suas estratégias. Essa escolha cabe à Technology Viewpoint. O que a
 Engineering Viewpoint faz é especificar os \emph{comportamentos} que essas
 ferramentas devem fornecer.
 
@@ -975,7 +975,7 @@ ferramentas devem fornecer.
 
 A Technology Viewpoint responde à pergunta final: \textbf{com quais tecnologias
 concretas construímos?} Esta é a vista mais familiar para a maioria dos
-engenheiros --- e, paradoxalmente, a que mais frequentemente é decidida
+engenheiros, e, paradoxalmente, a que mais frequentemente é decidida
 \emph{primeiro}, invertendo a ordem lógica. Escolher o banco de dados antes de
 entender as invariantes da informação, ou escolher o framework antes de definir
 as interfaces computacionais, é como escolher os tijolos antes de ter a planta
@@ -985,16 +985,16 @@ se revelam.
 
 A tentação de começar pela Technology Viewpoint é compreensível: escolher
 tecnologias é tangível, excitante e dá a sensação de progresso. Avaliar frameworks,
-comparar benchmarks, debater Go versus Rust --- tudo isso é mais atraente do que
+comparar benchmarks, debater Go versus Rust. Tudo isso é mais atraente do que
 o trabalho aparentemente abstrato de modelar entidades e invariantes. Mas essa
-tentação é uma armadilha. As quatro vistas anteriores existem precisamente para
+tentação é uma armadilha. As quatro vistas anteriores existem para
 informar as escolhas tecnológicas, transformando-as de opiniões pessoais em
 decisões fundamentadas. Quando você chega à Technology Viewpoint após percorrer as
-quatro vistas anteriores, as escolhas se tornam quase óbvias --- e quando não são
+quatro vistas anteriores, as escolhas se tornam quase óbvias, e quando não são
 óbvias, pelo menos os critérios de decisão são claros.
 
-Para nosso e-commerce, as escolhas tecnológicas --- que só devem ser feitas
-\emph{após} as quatro vistas anteriores --- poderiam ser organizadas em quatro
+Para nosso e-commerce, as escolhas tecnológicas (que só devem ser feitas
+\emph{após} as quatro vistas anteriores) poderiam ser organizadas em quatro
 dimensões.
 
 No que se refere a \textbf{linguagens e frameworks}, a escolha é guiada pelas
@@ -1015,7 +1015,7 @@ contribuir com esse serviço quando necessário.
 
 Para \textbf{bancos de dados}, as escolhas derivam diretamente da Information
 Viewpoint. PostgreSQL é selecionado para dados transacionais como pedidos e
-pagamentos, porque as invariantes do domínio exigem transações ACID ---
+pagamentos, porque as invariantes do domínio exigem transações ACID:
 consistência forte e isolamento são requisitos inegociáveis quando se trata de
 dinheiro. A maturidade do PostgreSQL, seu suporte nativo a JSON (para dados
 semi-estruturados) e seu ecossistema robusto de ferramentas e extensões consolidam
@@ -1045,18 +1045,18 @@ code smells, vulnerabilidades e dívida técnica. Swagger/OpenAPI é usado para
 documentação viva das APIs, gerada automaticamente a partir dos contratos definidos
 na Computational Viewpoint.
 
-A \textbf{conexão com ADRs} (Architecture Decision Records) é fundamental. Cada
+A \textbf{conexão com ADRs} (Architecture Decision Records) é central. Cada
 decisão tecnológica significativa deve ser documentada como um ADR, registrando
 o contexto, as alternativas consideradas, a decisão tomada e suas consequências.
-``Por que PostgreSQL e não DynamoDB?'' --- o ADR explica que a consistência forte
+``Por que PostgreSQL e não DynamoDB?'' O ADR explica que a consistência forte
 era um requisito da Information Viewpoint e que o custo operacional do PostgreSQL
 gerenciado (RDS) era aceitável para o volume esperado. ``Por que Go para o
-PagamentoGateway e não Python?'' --- o ADR explica que o domínio financeiro
+PagamentoGateway e não Python?'' O ADR explica que o domínio financeiro
 exige tipagem forte para reduzir erros em cálculos monetários e que os benchmarks
 mostram que Go processa o dobro de transações por segundo com metade da memória.
 ADRs são a memória institucional da arquitetura: quando a equipe rotacionar (e ela
 vai rotacionar), os ADRs explicam não apenas \emph{o que} foi decidido, mas
-\emph{por que} --- e, tão importante quanto, \emph{quais alternativas foram
+\emph{por que}, e, tão importante quanto, \emph{quais alternativas foram
 descartadas e por quê}. Sem ADRs, cada nova pessoa que entra no time questiona
 as mesmas decisões, e sem registro do raciocínio original, essas decisões podem
 ser revertidas por razões equivocadas.
@@ -1087,7 +1087,7 @@ própria. O CEO quer lançar a plataforma em 4 meses. Onde você começa? A tent
 é abrir o VS Code e começar a codar. A disciplina pede que você comece pela
 compreensão. Vamos seguir a disciplina.
 
-\textbf{Passo 1 --- Enterprise Viewpoint}: você reúne os stakeholders (CEO,
+\textbf{Passo 1, Enterprise Viewpoint}: você reúne os stakeholders (CEO,
 head de logística, head financeiro, representante jurídico) e documenta: o
 sistema deve permitir que clientes comprem de múltiplos lojistas em um único
 carrinho, com pagamento unificado e entrega consolidada. O SLA de disponibilidade
@@ -1101,7 +1101,7 @@ impacta o fluxo de pagamento. O head de logística pode esclarecer que ``entrega
 consolidada'' só é possível quando os lojistas estão no mesmo centro de
 distribuição, o que impacta o design do serviço de frete.
 
-\textbf{Passo 2 --- Information Viewpoint}: com o propósito claro, você modela
+\textbf{Passo 2, Information Viewpoint}: com o propósito claro, você modela
 as entidades. Descobre que ``Lojista'' é uma entidade que não existia no modelo
 inicial. Descobre que ``Carrinho'' e ``Pedido'' são entidades distintas (o
 carrinho é efêmero, o pedido é persistente). Descobre que o ``Valor Total''
@@ -1110,14 +1110,14 @@ precisa considerar frete por lojista. As invariantes revelam complexidades:
 único débito ao cliente''. Essa descoberta é o momento de ``aha!'' que justifica
 todo o exercício de modelagem. Sem a Information Viewpoint, um desenvolvedor
 provavelmente modelaria ``Pedido'' como uma entidade simples com uma lista de
-itens e um valor total. A complexidade do split de pagamento --- onde o cliente
+itens e um valor total. A complexidade do split de pagamento, onde o cliente
 paga uma vez mas o dinheiro é distribuído para múltiplos lojistas com diferentes
-taxas e prazos --- só se revela quando as invariantes são documentadas
+taxas e prazos, só se revela quando as invariantes são documentadas
 explicitamente. Descobrir essa complexidade na fase de modelagem custa horas;
 descobri-la em produção custa semanas de retrabalho e potencialmente milhares de
 reais em conciliação financeira manual.
 
-\textbf{Passo 3 --- Computational Viewpoint}: as entidades e invariantes guiam
+\textbf{Passo 3, Computational Viewpoint}: as entidades e invariantes guiam
 a decomposição em componentes. O \texttt{CarrinhoService} é separado do
 \texttt{PedidoService} porque têm ciclos de vida e requisitos de consistência
 diferentes. O \texttt{SplitPaymentService} emerge como componente necessário
@@ -1132,10 +1132,10 @@ fundamentalmente diferentes: o carrinho é um rascunho volátil que o cliente
 pode abandonar a qualquer momento sem consequências, enquanto o pedido é um
 compromisso formal com implicações financeiras e logísticas.
 
-\textbf{Passo 4 --- Engineering Viewpoint}: a natureza multi-lojista impõe
+\textbf{Passo 4, Engineering Viewpoint}: a natureza multi-lojista impõe
 requisitos específicos. O cálculo de frete deve ser paralelo (consultar
 múltiplas transportadoras simultaneamente, com timeout agressivo de 1 segundo).
-O split de pagamento é uma Saga com compensação --- se o débito ao cliente
+O split de pagamento é uma Saga com compensação: se o débito ao cliente
 falha, todas as reservas são liberadas. O catálogo de cada lojista é
 eventualmente consistente com o catálogo central (replicado via eventos Kafka).
 As decisões de Engineering são informadas por cenários concretos: ``O que
@@ -1145,7 +1145,7 @@ desatualizado?'' (eventual consistency com janela de propagação de 5 segundos)
 ``O que acontece quando o split de pagamento falha parcialmente?'' (Saga com
 compensação completa, revertendo todas as operações já executadas).
 
-\textbf{Passo 5 --- Technology Viewpoint}: com todos os requisitos claros, as
+\textbf{Passo 5, Technology Viewpoint}: com todos os requisitos claros, as
 escolhas tecnológicas se justificam. PostgreSQL para pedidos e pagamentos
 (transações ACID). Redis para carrinho (efêmero, alta velocidade). Elasticsearch
 para catálogo (busca full-text com filtros por lojista). Kafka para eventos
@@ -1162,7 +1162,7 @@ não teríamos descoberto a entidade Lojista. Sem a Computational Viewpoint, nã
 teríamos separado carrinho de pedido. Sem a Engineering Viewpoint, não teríamos
 definido a estratégia de consistência. E sem tudo isso, as escolhas tecnológicas
 seriam chutes educados, não decisões informadas. Essa cadeia de dependências não
-é uma burocracia --- é uma rede de segurança. Cada vista valida as anteriores e
+é burocracia. É uma rede de segurança. Cada vista valida as anteriores e
 informa as posteriores, criando um sistema de checks and balances que reduz
 drasticamente o risco de surpresas desagradáveis nas fases tardias do projeto.
 
@@ -1172,14 +1172,13 @@ drasticamente o risco de surpresas desagradáveis nas fases tardias do projeto.
 % ============================================================
 
 Um dos maiores valores de usar IDEF-0 e RM-ODP em conjunto é a capacidade de
-criar uma \textbf{matriz de rastreabilidade} --- um mapeamento explícito entre
+criar uma \textbf{matriz de rastreabilidade}, um mapeamento explícito entre
 os elementos de cada framework. Essa matriz serve como detector de lacunas e
 inconsistências: se uma função do IDEF-0 não aparece em nenhuma vista do RM-ODP,
 algo foi esquecido. Se a Enterprise Viewpoint promete ``entrega em 48 horas'' mas
 a Engineering Viewpoint usa processamento em lote diário, há uma contradição que
 precisa ser resolvida antes que se torne um bug em produção. A matriz de
-rastreabilidade é, em essência, uma ferramenta de auditoria intelectual --- ela
-força o engenheiro a confrontar suas próprias inconsistências antes que elas se
+rastreabilidade funciona como uma ferramenta de auditoria intelectual, forçando o engenheiro a confrontar suas próprias inconsistências antes que elas se
 materializem em código defeituoso.
 
 \begin{table}[htbp]
@@ -1280,7 +1279,7 @@ O uso regular deste checklist durante sessões de design review cria uma cultura
 de rigor que se propaga por todo o time. Novos membros aprendem rapidamente quais
 são as dimensões relevantes de uma arquitetura, e membros experientes são lembrados
 de verificar aspectos que, pela familiaridade, podem passar despercebidos. O
-checklist não substitui o julgamento --- ele complementa, garantindo que o
+checklist não substitui o julgamento. Ele complementa, garantindo que o
 julgamento seja aplicado a todas as dimensões relevantes.
 
 
@@ -1291,12 +1290,12 @@ julgamento seja aplicado a todas as dimensões relevantes.
 A grande objeção que engenheiros pragmáticos fazem a frameworks conceituais como
 o RM-ODP é: ``Isso é bonito no papel, mas como vira código?'' É uma pergunta
 legítima, e a resposta é que cada vista do RM-ODP se traduz diretamente em
-artefatos de código. Não se trata de uma tradução metafórica ou inspiracional ---
+artefatos de código. Não se trata de uma tradução metafórica ou inspiracional;
 é uma tradução literal. Os Enums de status vêm da Information Viewpoint. As
 interfaces abstratas vêm da Computational Viewpoint. As configurações de retry e
 timeout vêm da Engineering Viewpoint. Os Dockerfiles e Helm charts vêm da
 Technology Viewpoint. O RM-ODP não é um exercício que você faz antes de codar e
-depois esquece --- ele é o mapa que guia cada decisão de código.
+depois esquece. Ele é o mapa que guia cada decisão de código.
 
 Vamos demonstrar isso com exemplos concretos. Começaremos com a Computational
 Viewpoint, que é a mais próxima do código, e mostraremos como as interfaces
@@ -1370,8 +1369,8 @@ Observe como cada elemento do código tem rastreabilidade direta para uma vista
 do RM-ODP. Os \texttt{Enum} de status vêm do ciclo de vida da Information
 Viewpoint. Os \texttt{validators} implementam as invariantes da Information
 Viewpoint. As classes \texttt{Request} e \texttt{Response} são os contratos da
-Computational Viewpoint. Essa rastreabilidade não é apenas uma questão de
-documentação --- ela é uma ferramenta de verificação. Quando um novo desenvolvedor
+Computational Viewpoint. Essa rastreabilidade não é apenas questão de
+documentação; é uma ferramenta de verificação. Quando um novo desenvolvedor
 olha para o \texttt{StatusPedido} e pergunta ``por que não tem um estado
 PARCIALMENTE\_ENTREGUE?'', a resposta está na Information Viewpoint: o ciclo de
 vida do pedido foi modelado e validado com os stakeholders, e entregas parciais
@@ -1437,8 +1436,8 @@ class PedidoServiceInterface(ABC):
 A beleza dessa interface é que ela é ao mesmo tempo um contrato técnico e uma
 documentação de negócio. As pré-condições e pós-condições nos docstrings são
 as invariantes da Information Viewpoint expressas em linguagem de programação.
-Um desenvolvedor que lê essa interface sabe exatamente o que precisa ser verdade
-antes e depois de cada operação --- e pode escrever testes que verificam essas
+Um desenvolvedor que lê essa interface sabe o que precisa ser verdade
+antes e depois de cada operação, e pode escrever testes que verificam essas
 condições automaticamente.
 
 \subsection{TypeScript: Da Spec OpenAPI ao Contrato Tipado}
@@ -1491,8 +1490,8 @@ interface PedidoService {
 
 A equivalência entre os contratos Python e TypeScript demonstra um ponto central
 do RM-ODP: a Computational Viewpoint define a semântica das interações, não a
-sintaxe. O mesmo contrato --- ``criar um pedido requer pelo menos um item com
-quantidade positiva e preço positivo, e produz um pedido com status CRIADO'' ---
+sintaxe. O mesmo contrato (``criar um pedido requer pelo menos um item com
+quantidade positiva e preço positivo, e produz um pedido com status CRIADO'')
 é expressável em qualquer linguagem de programação. Essa independência de
 linguagem é o que permite que equipes poliglotas trabalhem no mesmo sistema sem
 ambiguidade: o contrato é o ponto de verdade, e cada equipe o implementa na
@@ -1532,7 +1531,7 @@ páginas do Confluence, revisadas em reuniões de arquitetura e celebradas como
 exemplo de rigor. Mas sem uma ponte formal para o código, esses modelos se tornam
 artefatos estáticos que divergem da realidade à medida que o código evolui. Em
 poucos meses, os modelos descrevem o sistema que foi planejado, não o sistema que
-foi construído --- e a lacuna entre os dois cresce silenciosamente.
+foi construído, e a lacuna entre os dois cresce silenciosamente.
 
 Quando SDD e RM-ODP são praticados juntos, eles criam um pipeline completo:
 modelo $\to$ especificação $\to$ código $\to$ validação. Cada passo é rastreável
@@ -1544,7 +1543,7 @@ vivos que coevoluem com o código.
 \subsection{Camadas de Especificação Baseadas no RM-ODP}
 
 Cada vista do RM-ODP se traduz em um tipo diferente de especificação formal.
-Essa correspondência não é arbitrária --- ela reflete a natureza das preocupações
+Essa correspondência não é arbitrária. Ela reflete a natureza das preocupações
 de cada vista:
 
 \begin{figure}[htbp]
@@ -1580,7 +1579,7 @@ Schema para APIs GraphQL e AsyncAPI para interfaces assíncronas. Cada spec defi
 contratos com tipos, validações e exemplos que correspondem diretamente às
 interfaces definidas na Computational Viewpoint. A OpenAPI spec do
 \texttt{PedidoService}, por exemplo, documenta cada endpoint com seu método HTTP,
-parâmetros, request body, respostas de sucesso e respostas de erro --- tudo
+parâmetros, request body, respostas de sucesso e respostas de erro, tudo
 derivado das assinaturas e contratos definidos na Computational Viewpoint.
 
 A \textbf{Spec Engineering} se materializa como contratos gRPC (arquivos
@@ -1599,15 +1598,15 @@ a tradução literal das escolhas da Technology Viewpoint em artefatos executáv
 Cada Dockerfile encapsula uma decisão sobre imagem base, dependências e
 configuração de runtime. Cada módulo Terraform encapsula uma decisão sobre
 recursos de nuvem, dimensionamento e rede. A beleza dessas specs é que elas são
-simultaneamente documentação e implementação --- o Terraform que descreve a
+simultaneamente documentação e implementação: o Terraform que descreve a
 infraestrutura é o mesmo Terraform que a provisiona.
 
 \subsection{Workflow SDD com RM-ODP}
 
 O workflow completo de Spec Driven Development guiado pelo RM-ODP segue uma
 progressão disciplinada que transforma entendimento de negócio em código
-validado. Embora apresentado como uma sequência linear, na prática ele é
-iterativo --- descobertas em passos posteriores frequentemente refinam passos
+validado. Embora apresentado como uma sequência linear, ele é
+iterativo; descobertas em passos posteriores frequentemente refinam passos
 anteriores. Essa seção mantém o formato numerado porque descreve uma sequência
 processual onde a ordem importa.
 
@@ -1646,13 +1645,13 @@ partir de descrições textuais, validar código contra specs existentes, sugeri
 melhorias nas specs baseado em padrões do domínio, e gerar implementações a
 partir de specs formais. O ponto crucial é que a spec funciona como
 \textbf{âncora}: mesmo que a IA gere código imperfeito, a spec fornece
-critérios objetivos para avaliar e corrigir. Imagine a spec como a partitura de
+critérios objetivos para avaliar e corrigir. A spec funciona como a partitura de
 uma orquestra: mesmo que um músico erre uma nota, a partitura permite identificar
 imediatamente o erro e corrigi-lo. Sem a partitura, cada músico toca o que acha
 melhor, e a cacofonia resultante é indistinguível da harmonia para quem não
 conhece a música. Da mesma forma, sem uma spec formal, o código gerado pela IA
-é indistinguível do código correto para quem não conhece profundamente o domínio
---- e essa indistinguibilidade é exatamente o que torna a IA generativa perigosa
+é indistinguível do código correto para quem não conhece bem o domínio,
+e essa indistinguibilidade é o que torna a IA generativa perigosa
 sem guardrails adequados.
 
 
@@ -1673,7 +1672,7 @@ invariantes, interfaces e restrições ativa padrões muito mais específicos,
 resultando em código que se aproxima do que você realmente precisa.
 
 Vamos ver exemplos concretos de como cada vista pode ser usada para estruturar
-prompts mais efetivos. Esses exemplos não são teóricos --- eles foram testados
+prompts mais efetivos. Esses exemplos não são teóricos. Foram testados
 com diversos LLMs e consistentemente produzem resultados superiores aos prompts
 não estruturados.
 
@@ -1743,8 +1742,8 @@ vagos porque fornecem ao LLM exatamente o que ele precisa: \textbf{contexto
 delimitado} e \textbf{restrições claras}. O RM-ODP funciona como um template
 mental que garante que nenhuma dimensão importante seja esquecida ao formular
 o prompt. A diferença é mensurável: em testes comparativos, prompts estruturados
-pelo RM-ODP produzem specs com 60 a 80\% menos omissões do que prompts livres
---- simplesmente porque o framework força o engenheiro a incluir informações que,
+pelo RM-ODP produzem specs com 60 a 80\% menos omissões do que prompts livres,
+simplesmente porque o framework força o engenheiro a incluir informações que,
 de outra forma, ficariam implícitas na sua cabeça e ausentes no prompt.
 
 Há um benefício adicional que não é imediatamente óbvio: o processo de estruturar
@@ -1752,7 +1751,7 @@ o prompt pelo RM-ODP é, em si, um exercício de pensamento que frequentemente
 revela lacunas no seu próprio entendimento. Quando você tenta preencher a seção
 ``Engineering Viewpoint'' do prompt e percebe que não sabe qual padrão de paginação
 usar, ou que não definiu como erros serão reportados, essas lacunas são
-oportunidades de aprendizado e decisão --- muito melhor descobertas durante a
+oportunidades de aprendizado e decisão. Melhor descobri-las durante a
 formulação do prompt do que após a geração do código.
 
 
@@ -1763,7 +1762,7 @@ formulação do prompt do que após a geração do código.
 A inteligência artificial generativa pode produzir código funcional em segundos.
 Mas ``funcional'' não significa ``correto'', e ``correto'' não significa ``bem
 projetado''. Uma IA que recebe a instrução ``crie um serviço de pedidos'' vai
-gerar algo que compila e talvez até rode --- mas que pode ignorar invariantes
+gerar algo que compila e talvez até rode, mas que pode ignorar invariantes
 do domínio, violar princípios de design, ou implementar uma lógica que é
 \emph{plausível} mas não \emph{correta} para o seu contexto específico. A
 plausibilidade, mais uma vez, é o perigo: código que parece correto à primeira
@@ -1774,10 +1773,10 @@ O Test-Driven Development (TDD) resolve esse problema ao inverter a equação:
 em vez de pedir à IA para gerar código e depois verificar se está correto,
 \textbf{você define o que é ``correto'' primeiro} (através de testes) e
 então usa a IA para gerar uma implementação que satisfaça essa definição.
-Essa inversão é profundamente transformadora. Ela muda o papel do engenheiro
-de ``escritor de código'' para ``definidor de comportamento esperado'' --- um
+Essa inversão transforma o processo. Ela muda o papel do engenheiro
+de ``escritor de código'' para ``definidor de comportamento esperado'', um
 papel que exige entendimento profundo do domínio, das invariantes e dos
-edge cases. A IA, por sua vez, assume o papel de ``implementadora'' --- ela
+edge cases. A IA, por sua vez, assume o papel de ``implementadora'': ela
 propõe soluções, e os testes determinam se as soluções são aceitáveis.
 
 \begin{quote}
@@ -1793,8 +1792,8 @@ satisfazer esse comportamento). Essa separação é benéfica porque elimina um 
 cognitivo comum: quando a mesma pessoa escreve teste e implementação, ela tende
 a testar o que sabe que implementou, em vez de testar o que deveria ser
 implementado. Com a IA como implementadora, o engenheiro é forçado a pensar nos
-testes \emph{antes} de saber como a implementação vai funcionar --- o que é
-exatamente o espírito original do TDD.
+testes \emph{antes} de saber como a implementação vai funcionar, o que é
+o espírito original do TDD.
 
 \subsection{TDD + IA: O Workflow Detalhado}
 
@@ -1807,37 +1806,37 @@ o rigor do TDD clássico com o poder de geração da IA:
     \caption{Workflow TDD com IA como Implementadora}
 \end{figure}
 
-O primeiro passo do ciclo é o engenheiro escrever o teste (fase vermelha). Esse
+No primeiro passo do ciclo, o engenheiro escreve o teste (fase vermelha). Esse
 teste é derivado diretamente das specs do RM-ODP: as invariantes da Information
 Viewpoint viram assertions que verificam se o estado do sistema é consistente
 após cada operação. As pré-condições da Computational Viewpoint viram cenários
 de teste que verificam se o sistema rejeita entradas inválidas. Os SLAs da
 Enterprise Viewpoint viram benchmarks que verificam se o sistema responde
 dentro dos limites de tempo prometidos. Escrever bons testes requer um
-entendimento profundo do domínio --- mais profundo, na verdade, do que o
+entendimento profundo do domínio, mais profundo, na verdade, do que o
 necessário para escrever a implementação. É por isso que o TDD é tão eficaz
 como ferramenta de design: ele força o engenheiro a pensar em comportamentos,
 edge cases e invariantes antes de pensar em algoritmos e estruturas de dados.
 
-O segundo passo é a IA gerar a implementação para passar no teste (fase verde).
+No segundo passo, a IA gera a implementação para passar no teste (fase verde).
 O engenheiro fornece o teste junto com o contexto das vistas relevantes do
 RM-ODP, e a IA produz código que satisfaz os critérios definidos. A chave aqui
-é que o engenheiro não pede à IA para ``criar um serviço de pedidos'' --- ele
+é que o engenheiro não pede à IA para ``criar um serviço de pedidos''. Ele
 pede à IA para ``criar uma implementação que faça estes testes passarem,
 respeitando estas interfaces e estas invariantes''. A especificidade do pedido
 direciona a IA para soluções muito mais aderentes ao domínio real.
 
-O terceiro passo é o engenheiro revisar o código gerado. Aqui está o diferencial
+No terceiro passo, o engenheiro revisa o código gerado. Aqui está o diferencial
 humano irredutível: a IA pode ter gerado código que passa no teste mas usa uma
-estrutura de dados ineficiente --- um \texttt{list.filter()} onde um
+estrutura de dados ineficiente, como um \texttt{list.filter()} onde um
 \texttt{dict.lookup()} seria O(1) em vez de O(n). Ou violou o princípio de
 responsabilidade única, colocando lógica de negócio dentro de um handler HTTP.
 Ou criou um acoplamento indesejado entre componentes que deveriam ser
 independentes. Os testes garantem a \emph{correção funcional}; a revisão humana
 garante a \emph{qualidade estrutural}.
 
-O quarto passo é a refatoração colaborativa. Se o design não está adequado,
-o engenheiro refatora --- possivelmente com auxílio da IA --- sempre mantendo
+No quarto passo vem a refatoração colaborativa. Se o design não está adequado,
+o engenheiro refatora, possivelmente com auxílio da IA, sempre mantendo
 os testes verdes. Os testes são o \textbf{guardrail} que impede que a
 refatoração quebre o comportamento. Sem testes verdes, refatoração é um
 exercício de fé; com testes verdes, é um exercício de engenharia. Cada
@@ -1947,8 +1946,8 @@ class TestCriarPedido:
 \end{lstlisting}
 
 Observe como cada teste tem um comentário que rastreia sua origem para uma
-invariante ou pós-condição documentada no modelo RM-ODP. Isso não é decoração
---- é \textbf{rastreabilidade}. Quando um teste falha, você sabe não apenas
+invariante ou pós-condição documentada no modelo RM-ODP. Isso não é decoração;
+é \textbf{rastreabilidade}. Quando um teste falha, você sabe não apenas
 \emph{o que} quebrou, mas \emph{qual requisito de negócio} está em risco. Essa
 rastreabilidade transforma a suíte de testes de uma ferramenta puramente técnica
 em uma ferramenta de comunicação: quando o teste
@@ -1969,14 +1968,14 @@ classe específica de defeitos.
 
 O \textbf{Nível 1} consiste em testes unitários, que validam a lógica interna de
 cada componente isoladamente. Esses testes são derivados das invariantes da
-Information Viewpoint e dos contratos da Computational Viewpoint. Eles são rápidos
---- executam em milissegundos --- e devem cobrir todos os caminhos lógicos: o
+Information Viewpoint e dos contratos da Computational Viewpoint. Eles são rápidos,
+executam em milissegundos, e devem cobrir todos os caminhos lógicos: o
 caminho feliz (input válido produz output esperado), os caminhos de erro (inputs
 inválidos são rejeitados com mensagens claras) e os edge cases (valores limite
 como zero, nulo, máximo). Testes unitários são a primeira linha de defesa contra
 regressões e a ferramenta mais eficaz para validar invariantes de domínio. Quando
 um LLM gera uma implementação que passa em todos os testes unitários, você tem
-uma garantia razoável de que a lógica de negócio está correta --- embora não tenha
+uma garantia razoável de que a lógica de negócio está correta, embora não tenha
 garantia de que o design é bom ou de que a integração funcionará.
 
 O \textbf{Nível 2} consiste em testes de contrato, que verificam que as interfaces
@@ -1986,7 +1985,7 @@ orientados pelo consumidor'': o consumidor de uma API define o que espera (quais
 endpoints, quais formatos, quais respostas de erro), e o provedor é testado contra
 essas expectativas. Se o consumidor espera um campo \texttt{valorTotal} do tipo
 \texttt{number} e o provedor começa a retornar \texttt{string}, o teste de contrato
-falha imediatamente --- antes que o bug chegue a produção. Testes de contrato são
+falha imediatamente, antes que o bug chegue a produção. Testes de contrato são
 particularmente valiosos em arquiteturas de microsserviços, onde múltiplas equipes
 evoluem componentes independentemente.
 
@@ -2009,16 +2008,16 @@ lentos (minutos) e os mais frágeis (dependem de toda a infraestrutura estar
 operacional), mas são os que mais se aproximam da experiência real do usuário. Um
 sistema que passa em todos os testes unitários, de contrato e de integração, mas
 falha no teste end-to-end, tem um problema sistêmico que nenhuma camada inferior
-conseguiu capturar --- frequentemente um problema de orquestração ou de timing
+conseguiu capturar, frequentemente um problema de orquestração ou de timing
 entre componentes.
 
 A IA navega \textbf{dentro} dos guardrails definidos por esses testes.
 O engenheiro define \textbf{onde} os guardrails estão. Essa divisão de
 responsabilidades é a chave para usar IA generativa de forma produtiva
-e segura no desenvolvimento de software. Pense em uma estrada de montanha com
+e segura no desenvolvimento de software. Compare com uma estrada de montanha com
 guard rails metálicos nas curvas: o motorista (a IA) pode acelerar à vontade nas
 retas, mas os guard rails (os testes) impedem que ele caia no precipício nas
-curvas perigosas. O engenheiro é quem decide onde colocar os guard rails --- e a
+curvas perigosas. O engenheiro é quem decide onde colocar os guard rails, e a
 qualidade dessa decisão determina a segurança de toda a viagem. Colocar guard
 rails demais torna a estrada lenta e frustrante; colocar de menos expõe a riscos
 inaceitáveis. A arte está no equilíbrio, e esse equilíbrio é informado pelas
@@ -2032,10 +2031,10 @@ Capítulo~4.
 
 Ao longo deste capítulo, percorremos um caminho que vai da compreensão do
 negócio até a validação do código, usando IDEF-0 e RM-ODP como guias
-estruturantes. Esses frameworks não são burocracia --- são \textbf{disciplina
+estruturantes. Esses frameworks não são burocracia; são \textbf{disciplina
 de pensamento}. Eles forçam o engenheiro a responder perguntas que, se
 ignoradas, inevitavelmente se transformam em bugs, retrabalho e frustração.
-A disciplina pode parecer custosa no início --- modelar entidades, documentar
+A disciplina pode parecer custosa no início: modelar entidades, documentar
 invariantes, definir interfaces formais, tudo isso leva tempo. Mas o custo
 de \emph{não} fazer é invariavelmente maior: horas de debugging que uma
 invariante bem documentada teria prevenido, semanas de retrabalho que uma
@@ -2044,7 +2043,7 @@ tecnológica fundamentada teria tornado desnecessária.
 
 O IDEF-0 nos ensina a decompor processos de negócio de forma rigorosa,
 garantindo que entendemos o problema antes de propor soluções. Sua simplicidade
---- quatro elementos dispostos ao redor de uma caixa --- esconde uma profundidade
+(quatro elementos dispostos ao redor de uma caixa) esconde uma profundidade
 surpreendente: a disciplina de classificar cada elemento como Input, Control,
 Output ou Mechanism revela ambiguidades que ficariam escondidas em descrições
 informais. A decomposição hierárquica nos permite lidar com complexidade arbitrária
@@ -2061,8 +2060,8 @@ Viewpoint garante que o sistema é resiliente. A Technology Viewpoint garante qu
 as ferramentas certas foram escolhidas. Nenhuma vista sozinha é suficiente; juntas,
 elas cobrem toda a superfície de risco.
 
-O Spec Driven Development transforma os modelos conceituais em especificações
-formais e executáveis --- artefatos que não apenas documentam a intenção, mas
+Spec Driven Development transforma os modelos conceituais em especificações
+formais e executáveis, artefatos que não apenas documentam a intenção, mas
 a \emph{validam} automaticamente. E o TDD, especialmente quando combinado com
 IA generativa, cria os guardrails que garantem que o código gerado serve ao
 propósito definido nas especificações. A integração SDD + RM-ODP cria um
@@ -2082,7 +2081,7 @@ produzir resultados úteis.
 
 No próximo capítulo, aprofundaremos a conversa sobre arquitetura de software,
 explorando como tomar decisões arquiteturais informadas \emph{antes} de
-escrever código --- e como documentar essas decisões de forma que sobrevivam
+escrever código, e como documentar essas decisões de forma que sobrevivam
 ao tempo e à rotatividade de equipe. Veremos que os princípios de decomposição
 e rastreabilidade que aprendemos aqui com o IDEF-0 e o RM-ODP se manifestam
 em todas as boas práticas arquiteturais, do C4 Model aos Architecture Decision
@@ -2121,8 +2120,8 @@ Records, da Clean Architecture aos Event Storming.
     \item \textbf{TDD com IA.}
     Escolha uma das invariantes da Information Viewpoint do exercício 2 e
     escreva um teste automatizado (em Python com pytest ou em TypeScript
-    com Jest) que valide essa invariante. Execute o teste (ele deve falhar
-    --- vermelho). Em seguida, peça a um LLM para gerar a implementação
+    com Jest) que valide essa invariante. Execute o teste (ele deve falhar,
+    vermelho). Em seguida, peça a um LLM para gerar a implementação
     que faça o teste passar. Revise o código gerado: ele respeita os
     princípios de design que estudamos? Compare a qualidade do código
     gerado com TDD versus código gerado sem testes prévios.
@@ -2131,7 +2130,7 @@ Records, da Clean Architecture aos Event Storming.
     Crie uma matriz de rastreabilidade completa para um projeto real ou
     fictício, mapeando cada elemento IDEF-0 para as cinco vistas do
     RM-ODP (use a Tabela~\ref{tab:idef-odp-mapping} como referência).
-    Identifique pelo menos 3 lacunas (gaps) na matriz --- elementos que
+    Identifique pelo menos 3 lacunas (gaps) na matriz, elementos que
     existem em uma vista mas não têm correspondência em outra. Para cada
     lacuna, proponha uma ação corretiva.
 

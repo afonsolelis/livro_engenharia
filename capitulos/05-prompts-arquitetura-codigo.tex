@@ -10,23 +10,23 @@ engenharia. Assim como um engenheiro civil não pede ao calculista para
 ``fazer uma fundação boa'', o engenheiro de software não deveria pedir ao LLM
 para ``escrever um código bom''. Especificidade é poder.
 
-Um prompt bem escrito é, na prática, uma especificação formal do que você
+Um prompt bem escrito funciona como uma especificação formal do que você
 precisa. Essa afirmação merece reflexão. Quando um engenheiro de software redige
 um documento de requisitos, ele sabe que cada ambiguidade será interpretada de
-forma diferente por cada desenvolvedor --- e que o custo de corrigir um
+forma diferente por cada desenvolvedor, e que o custo de corrigir um
 mal-entendido cresce exponencialmente à medida que o software avança no pipeline
 de desenvolvimento. Com LLMs, a dinâmica é idêntica: cada ambiguidade no prompt
 é uma bifurcação onde o modelo pode seguir por um caminho que você não pretendia.
 A diferença é que, enquanto um desenvolvedor humano pode pedir esclarecimentos,
-o LLM simplesmente escolhe a interpretação mais provável dado seu treinamento
---- e essa interpretação pode ser radicalmente diferente do que você tinha em
+o LLM simplesmente escolhe a interpretação mais provável dado seu treinamento.
+Essa interpretação pode ser radicalmente diferente do que você tinha em
 mente. Tratar o prompt como especificação significa aplicar ao texto as mesmas
 virtudes que aplicamos a requisitos de software: precisão, completude,
 ausência de contradições e testabilidade.
 
 Assim como escrever testes ou documentar APIs, prompt engineering é uma
 habilidade que melhora com prática deliberada e reflexão sobre resultados. Não se
-trata de talento inato para ``conversar com a máquina'' --- trata-se de um
+trata de talento inato para ``conversar com a máquina''. Trata-se de um
 conjunto de técnicas concretas que podem ser aprendidas, praticadas e refinadas.
 O engenheiro que dedica tempo a estudar como LLMs processam texto, quais
 estruturas de prompt produzem respostas mais consistentes e como iterar sobre
@@ -49,7 +49,7 @@ engenharia. Neste capítulo, aprenderemos a \textbf{comunicar} com essa parceira
 de forma eficaz. A conexão é direta: de nada adianta ter o melhor copiloto do
 mundo se você não sabe articular para onde quer voar. A comunicação com LLMs
 segue os mesmos princípios da comunicação entre humanos em contextos de
-engenharia --- clareza, contexto, especificidade --- com a diferença crucial de
+engenharia (clareza, contexto, especificidade), com a diferença crucial de
 que o LLM não possui intuição para preencher lacunas. Tudo o que ele não recebe
 explicitamente, ele inventa a partir de padrões estatísticos.
 
@@ -70,8 +70,8 @@ direcionam o modelo para o resultado desejado.
 
 A analogia com programação é mais profunda do que parece. Quando escrevemos uma
 função, definimos seus parâmetros de entrada, seu tipo de retorno, suas
-pré-condições e pós-condições. Quando escrevemos um prompt, fazemos exatamente a
-mesma coisa --- definimos o contexto de entrada, o formato de saída esperado, as
+pré-condições e pós-condições. Quando escrevemos um prompt, fazemos a
+mesma coisa: definimos o contexto de entrada, o formato de saída esperado, as
 restrições que devem ser respeitadas e o critério de qualidade. A diferença é que,
 em programação, o compilador nos força a ser explícitos; em prompting, a
 responsabilidade é inteiramente nossa.
@@ -115,14 +115,14 @@ uma solução viável para o seu contexto. O \textbf{formato de saída} elimina 
 necessidade de reformatar a resposta e, mais importante, força o modelo a
 organizar seu raciocínio de uma forma que você pode avaliar. Finalmente, os
 \textbf{exemplos} são o mecanismo mais poderoso de todos, porque mostram ao
-modelo exatamente o que você espera --- e modelos de linguagem são, acima de tudo,
+modelo o que você espera. Modelos de linguagem são, acima de tudo,
 máquinas de reconhecimento e replicação de padrões.
 
 \subsection{O Framework CRISP}
 
 Para facilitar a memorização e a aplicação sistemática dos elementos de um bom
 prompt, propomos o framework \textbf{CRISP}. O acrônimo não é apenas um recurso
-mnemônico --- cada letra representa um pilar cuja ausência compromete
+mnemônico: cada letra representa um pilar cuja ausência compromete
 significativamente a qualidade do resultado. Vejamos cada um em profundidade.
 
 A letra \textbf{C} representa \textbf{Context}, o cenário, o sistema e o domínio
@@ -133,7 +133,7 @@ saúde que precisa atender à LGPD, onde os dados de pacientes são classificado
 como sensíveis e o sistema roda em infraestrutura on-premises por exigência
 regulatória?''. A segunda pergunta, rica em contexto, produz uma resposta que
 considera criptografia em repouso, audit trails, tokens com escopo limitado e
-conformidade regulatória --- elementos que a primeira pergunta jamais evocaria.
+conformidade regulatória. A primeira pergunta jamais evocaria esses elementos.
 O contexto funciona como uma lente que foca a atenção do modelo. Internamente,
 os LLMs funcionam por atenção: cada token gerado é influenciado por todos os
 tokens anteriores, com pesos que variam de acordo com a relevância percebida.
@@ -141,14 +141,14 @@ Quando você fornece contexto rico, está essencialmente aumentando o peso dos
 tokens relevantes e diminuindo o peso dos irrelevantes. O modelo ``presta mais
 atenção'' nas partes do seu treinamento que são relevantes para o seu cenário.
 Um contra-exemplo ilustrativo: pedir ``implemente um cache'' sem contexto pode
-gerar um cache em memória com HashMap --- correto em um exercício acadêmico, mas
+gerar um cache em memória com HashMap. Isso seria correto em um exercício acadêmico, mas
 desastroso em um sistema distribuído com múltiplas instâncias. O contexto
 ``sistema com 8 instâncias atrás de um load balancer'' imediatamente direciona o
 modelo para Redis, Memcached ou outra solução distribuída.
 
 A letra \textbf{R} representa \textbf{Role}, a persona que a IA deve assumir. Esse
 é um dos mecanismos mais subestimados do prompt engineering. Quando você diz ``atue
-como um arquiteto sênior'', não está apenas pedindo formalidade --- está ativando
+como um arquiteto sênior'', não está apenas pedindo formalidade; está ativando
 um conjunto de heurísticas no modelo. Um ``arquiteto sênior'' tende a considerar
 escalabilidade, manutenibilidade e trade-offs; um ``desenvolvedor júnior
 explicando para outro júnior'' tende a simplificar conceitos e usar analogias. A
@@ -160,17 +160,17 @@ CTO que precisa justificar o investimento técnico para o board'' produz uma an�
 com foco em ROI e risco de negócio, enquanto ``atue como o tech lead que precisa
 convencer a equipe'' produz argumentos técnicos e pragmáticos. O contra-exemplo
 aqui é não definir papel nenhum. Sem papel, o modelo assume uma persona ``neutra''
-que tenta ser genericamente útil --- o que frequentemente resulta em respostas
+que tenta ser genericamente útil, o que frequentemente resulta em respostas
 superficiais que não se comprometem com nenhuma perspectiva.
 
 A letra \textbf{I} representa \textbf{Instructions}, o que exatamente você quer
-que a IA faça. Aqui, a precisão do verbo é fundamental. ``Analise'' é diferente de
+que a IA faça. Aqui, a precisão do verbo importa. ``Analise'' é diferente de
 ``compare'', que é diferente de ``implemente'', que é diferente de ``refatore''.
 Cada verbo implica uma operação cognitiva distinta: analisar é decompor em partes;
 comparar é colocar lado a lado e avaliar critérios; implementar é produzir código
 funcional; refatorar é mudar a estrutura preservando o comportamento. Verbos no
 imperativo eliminam ambiguidade sobre a ação esperada. Um erro comum é usar verbos
-vagos como ``trabalhe com'' ou ``lide com'' --- esses verbos não comunicam
+vagos como ``trabalhe com'' ou ``lide com''. Esses verbos não comunicam
 nenhuma ação específica e deixam o modelo livre para interpretar de qualquer
 forma. Outro erro é empilhar múltiplas instruções conflitantes: ``analise e
 implemente e documente e teste'' em uma única sentença. Quando há múltiplas ações,
@@ -259,12 +259,12 @@ a resposta, ela replica o padrão com mais fidelidade do que quando você apenas
 funcionam internamente.
 
 Para entender por que exemplos são tão poderosos, é preciso compreender o
-mecanismo fundamental dos modelos de linguagem. LLMs são, em essência, modelos de
+mecanismo fundamental dos modelos de linguagem. LLMs são modelos de
 predição de sequências: dado um contexto (uma sequência de tokens), eles preveem
 o próximo token mais provável. Quando você fornece um exemplo no prompt, está
 adicionando ao contexto um padrão completo de entrada-e-saída. O modelo, ao gerar
 sua resposta, ``vê'' esse padrão e o utiliza como template implícito. É como
-fornecer um caso de teste ao programador antes de pedir a implementação --- o
+fornecer um caso de teste ao programador antes de pedir a implementação. O
 padrão esperado fica inequívoco.
 
 A técnica \textbf{zero-shot} envolve não fornecer nenhum exemplo, dependendo
@@ -291,7 +291,7 @@ demonstram o resultado esperado de forma inequívoca.
 \section{Prompts para Design Arquitetural}
 % ============================================================
 
-Arquitetura é onde a IA pode ser mais útil --- e mais perigosa. Útil porque
+Arquitetura é onde a IA pode ser mais útil e, ao mesmo tempo, mais perigosa. Útil porque
 explora alternativas rapidamente, considerando combinações que um humano
 levaria horas para analisar. Perigosa porque pode gerar respostas
 superficialmente convincentes mas fundamentalmente inadequadas.
@@ -311,8 +311,8 @@ A estratégia fundamental para usar IA em decisões arquiteturais é tratá-la c
 uma ferramenta de \textbf{exploração}, não de \textbf{decisão}. A IA gera
 alternativas, analisa trade-offs e identifica riscos. O engenheiro humano toma a
 decisão final, usando sua compreensão do contexto organizacional, da dinâmica da
-equipe e das prioridades de negócio --- fatores que nenhum prompt, por mais rico
-que seja, consegue capturar completamente.
+equipe e das prioridades de negócio. Nenhum prompt, por mais rico
+que seja, consegue capturar esses fatores completamente.
 
 \subsection{Template: Explorando Alternativas Arquiteturais}
 
@@ -321,8 +321,8 @@ sistemática. Cada seção tem uma razão de ser. O bloco de contexto fornece as
 informações que o modelo precisa para particularizar suas recomendações. Os
 requisitos funcionais e não funcionais definem o ``o quê'' e o ``quão bem''. As
 restrições eliminam soluções teoricamente elegantes mas praticamente inviáveis.
-E o formato de saída --- solicitando pelo menos três alternativas com prós,
-contras, complexidade, risco e nota de adequação --- força o modelo a fazer
+O formato de saída, ao solicitar pelo menos três alternativas com prós,
+contras, complexidade, risco e nota de adequação, força o modelo a fazer
 análise comparativa em vez de simplesmente recomendar sua ``resposta favorita''.
 
 \begin{lstlisting}[language={}, caption={Prompt para exploração de alternativas arquiteturais}]
@@ -357,7 +357,7 @@ Apresente pelo menos 3 alternativas.
 
 O que torna esse template eficaz é a combinação de abertura exploratória com
 estrutura analítica. Ao pedir ``pelo menos 3 alternativas'', evitamos o viés de
-ancoragem --- a tendência do modelo de se fixar na primeira solução que vem à
+ancoragem, a tendência do modelo de se fixar na primeira solução que vem à
 mente. Ao exigir prós e contras para cada alternativa, forçamos uma análise
 equilibrada. A nota de adequação ``para ESTE cenário específico'' é crucial:
 sem ela, o modelo pode dar nota alta para uma solução que é excelente em
@@ -366,7 +366,7 @@ abstrato mas inadequada para sua equipe e suas restrições.
 \subsection{Template: Análise de Trade-offs}
 
 Decisões arquiteturais são, fundamentalmente, decisões sobre trade-offs. Não
-existe arquitetura perfeita --- existe a arquitetura que faz os trade-offs certos
+existe arquitetura perfeita; existe a arquitetura que faz os trade-offs certos
 para o seu contexto. Este template é desenhado para quando você já identificou as
 alternativas e precisa de uma análise comparativa rigorosa. A definição de eixos
 de avaliação (performance, escalabilidade, complexidade operacional, curva de
@@ -404,7 +404,7 @@ Ao final, faca uma recomendacao fundamentada para ESTE cenario especifico.
 
 A eficácia desse prompt reside na classificação categórica (Excelente, Bom,
 Aceitável, Ruim) e na exigência de recomendação fundamentada para o cenário
-específico. A classificação categórica torna a comparação visual e imediata ---
+específico. A classificação categórica torna a comparação visual e imediata:
 basta olhar para a tabela gerada e identificar onde cada opção brilha e onde
 falha. A fundamentação específica impede que o modelo recorra ao clichê ``depende
 do contexto'' sem se comprometer.
@@ -463,7 +463,7 @@ Formato do ADR:
 Toda arquitetura tem modos de falha. A questão não é \textit{se} algo vai falhar,
 mas \textit{o quê}, \textit{quando} e \textit{como} você vai saber. Este template
 adota a perspectiva de um engenheiro de confiabilidade (SRE) e solicita uma
-análise sistemática de modos de falha --- inspirada em técnicas de FMEA (Failure
+análise sistemática de modos de falha, inspirada em técnicas de FMEA (Failure
 Mode and Effects Analysis) usadas na engenharia industrial.
 
 O diferencial deste prompt é a inclusão explícita do ``mecanismo de detecção''. É
@@ -494,7 +494,7 @@ Ao final, identifique os 3 maiores riscos e proponha um plano de acao.
 
 \subsection{Exemplo Completo: Arquitetura de Microsserviços}
 
-Para ilustrar como todos esses elementos se combinam na prática, vejamos um
+Para ilustrar como todos esses elementos se combinam, vejamos um
 prompt completo para uma decisão arquitetural real. Este exemplo foi construído
 com cuidado para demonstrar vários princípios simultaneamente. Primeiro, observe
 como o contexto é rico e específico: não é ``uma startup'', é ``uma startup
@@ -506,7 +506,7 @@ Cada detalhe elimina ambiguidade e direciona a resposta.
 Segundo, observe como os problemas reais são descritos de forma concreta: ``deploys
 levam 40 minutos'', ``um bug no módulo de rastreamento derrubou o checkout'',
 ``dois times frequentemente geram conflitos de merge no mesmo arquivo''. Esses
-não são problemas genéricos --- são sintomas específicos que ajudam o modelo a
+são sintomas específicos que ajudam o modelo a
 diagnosticar se microsserviços são realmente a solução ou se um monolito modular
 seria suficiente.
 
@@ -544,26 +544,26 @@ Este prompt funciona porque fornece contexto rico (tamanho da equipe, volume,
 problemas reais), pede análise em eixos específicos, e explicitamente rejeita
 respostas genéricas. A IA, diante dessas restrições, é forçada a produzir uma
 análise contextualizada. O resultado típico inclui uma recomendação de monolito
-modular como passo intermediário --- uma resposta que uma análise genérica sobre
-microsserviços jamais produziria, mas que é frequentemente a mais adequada para
+modular como passo intermediário. Uma análise genérica sobre
+microsserviços jamais produziria essa resposta, mas ela é frequentemente a mais adequada para
 equipes nesse estágio de maturidade.
 
 % ============================================================
 \section{Prompts para Geração de Código}
 % ============================================================
 
-A geração de código é o uso mais comum de LLMs entre desenvolvedores --- e
+A geração de código é o uso mais comum de LLMs entre desenvolvedores, e
 também o mais propenso a resultados medíocres quando o prompt é fraco. A razão
 é simples: código é preciso por natureza. Uma palavra errada em um parágrafo de
 texto pode ser compreendida pelo contexto; uma linha errada em código pode
 causar um bug silencioso que só se manifesta em produção semanas depois. Essa
 precisão exige que os prompts para geração de código sejam igualmente precisos.
 
-Há uma conexão profunda entre prompts para geração de código e o conceito de
+Há uma conexão forte entre prompts para geração de código e o conceito de
 Design by Contract, introduzido por Bertrand Meyer. Um contrato define
 pré-condições (o que deve ser verdade antes da execução), pós-condições (o que
 deve ser verdade depois) e invariantes (o que deve ser verdade sempre). Um bom
-prompt para geração de código é, essencialmente, um contrato: define o que a
+prompt para geração de código é, em resumo, um contrato: define o que a
 função recebe (pré-condições), o que ela retorna (pós-condições) e as restrições
 que devem ser respeitadas durante toda a execução (invariantes como ``sem efeitos
 colaterais'', ``thread-safe'', ``idempotente'').
@@ -573,15 +573,15 @@ colaterais'', ``thread-safe'', ``idempotente'').
 O erro mais comum é pedir a implementação diretamente. O padrão correto é:
 primeiro definir interfaces e contratos, depois solicitar a implementação. Esse
 padrão replica a prática de engenharia de software conhecida como ``programming
-to interfaces'' --- e por uma boa razão.
+to interfaces'', e por uma boa razão.
 
 Quando você pede diretamente ``implemente um serviço de notificações'', o modelo
 precisa tomar simultaneamente dezenas de decisões: quais métodos existem, quais
 parâmetros cada um recebe, quais tipos são usados, como os erros são tratados,
 como as dependências são injetadas. Cada decisão tomada simultaneamente pode ser
 inconsistente com as demais. Quando você separa a definição de interfaces da
-implementação, força o modelo a primeiro pensar na \textit{forma} do serviço ---
-seus contratos públicos --- e só depois pensar na \textit{substância} --- como
+implementação, força o modelo a primeiro pensar na \textit{forma} do serviço,
+seus contratos públicos, e só depois pensar na \textit{substância}: como
 esses contratos são implementados internamente. Essa separação produz código mais
 coeso, mais testável e mais consistente.
 
@@ -660,8 +660,8 @@ explicando a decisao de design.
 Código sem testes é código sem garantia. Quando solicitamos à IA que gere código
 e testes simultaneamente, estamos aplicando uma forma de TDD (Test-Driven
 Development) assistida: os testes definem o comportamento esperado, e o código é
-gerado para satisfazê-los. Mais do que isso, os testes servem como
-\textit{documentação executável} do prompt --- eles demonstram, de forma
+gerado para satisfazê-los. Os testes servem também como
+\textit{documentação executável} do prompt, pois demonstram, de forma
 verificável, que o código faz o que foi pedido.
 
 O prompt a seguir é um exemplo de especificação completa. Observe como as regras
@@ -746,13 +746,13 @@ integracao em um middleware HTTP.
 A IA como revisora de código funciona melhor quando recebe critérios explícitos.
 Sem critérios, ela tende a fazer comentários superficiais (``considere adicionar
 tratamento de erro'') em vez de análises profundas. Esse comportamento não é
-um bug do modelo --- é uma consequência do treinamento. O modelo foi treinado
+um bug do modelo; é uma consequência do treinamento. O modelo foi treinado
 em milhões de code reviews, e a maioria dos comentários de code review que
 existem na internet são, infelizmente, superficiais. Para obter revisões
 profundas, é preciso instruir explicitamente o modelo a ir além do óbvio.
 
 Há um paralelo instrutivo com a prática de code review entre humanos. Um reviewer
-sem checklist tende a focar no que salta aos olhos --- nomes de variáveis,
+sem checklist tende a focar no que salta aos olhos: nomes de variáveis,
 formatação, o bug mais óbvio. Um reviewer com checklist percorre sistematicamente
 cada aspecto: segurança, performance, tratamento de erros, aderência a padrões,
 testabilidade. Prompts para revisão de código funcionam da mesma forma: o checklist
@@ -772,8 +772,8 @@ bugs'' é uma restrição poderosa: ela impede que o modelo desvie para sugestõ
 estilo ou refatoração, que são válidas mas fora do escopo da tarefa. A exigência
 de ``cenário que dispara o bug (input específico)'' é inspirada na prática de
 escrever testes de regressão: um bug que não pode ser reproduzido por um input
-específico provavelmente não é um bug real. A instrução final --- ``se não
-encontrar bugs, diga explicitamente'' --- combate a tendência do modelo de
+específico provavelmente não é um bug real. A instrução final, ``se não
+encontrar bugs, diga explicitamente'', combate a tendência do modelo de
 inventar problemas para parecer útil.
 
 \begin{lstlisting}[language={}, caption={Prompt para análise de bugs}]
@@ -840,7 +840,7 @@ A terceira dimensão de revisão é o design. Enquanto revisão de bugs pergunta
 funciona corretamente?'' e revisão de segurança pergunta ``isso é seguro?'',
 revisão de design pergunta ``isso é bem projetado?''. A premissa do prompt abaixo
 é explícita: ``assuma que o código funciona corretamente''. Essa premissa libera o
-modelo para focar inteiramente em questões estruturais --- coesão, acoplamento,
+modelo para focar inteiramente em questões estruturais: coesão, acoplamento,
 testabilidade, extensibilidade e legibilidade.
 
 A referência a princípios nomeados (SOLID, KISS, DRY) é intencional: ao pedir
@@ -885,7 +885,7 @@ que melhora sua compreensibilidade e reduz seu custo de modificação, sem alter
 seu comportamento observável''. A palavra-chave é \textit{sem alterar seu
 comportamento observável}. Quando pedimos à IA que ``melhore'' código sem essa
 restrição explícita, frequentemente obtemos código que parece melhor mas se
-comporta diferente em casos de borda --- uma regressão silenciosa que pode levar
+comporta diferente em casos de borda. Isso gera uma regressão silenciosa que pode levar
 semanas para ser detectada.
 
 A estratégia fundamental para refatoração assistida por IA é a mesma da
@@ -893,8 +893,8 @@ refatoração manual: passos pequenos e verificáveis. Cada passo deve ser uma
 transformação atômica com comportamento preservado. O problema de pedir
 ``refatore tudo de uma vez'' é que o modelo precisa fazer múltiplas
 transformações simultaneamente, aumentando exponencialmente a chance de
-introduzir regressões. Pedir uma transformação por vez --- ``extraia o método
-X'', depois ``mova a classe Y'', depois ``elimine o parâmetro Z'' --- mantém
+introduzir regressões. Pedir uma transformação por vez (``extraia o método
+X'', depois ``mova a classe Y'', depois ``elimine o parâmetro Z'') mantém
 cada passo verificável e reversível.
 
 \subsection{Identificando Code Smells}
@@ -971,7 +971,7 @@ Entregue:
 
 A regra de ouro da refatoração é: mudanças de estrutura não devem mudar
 comportamento. Ao usar IA para refatorar, sempre exija evidência de que o
-comportamento foi preservado. Essa exigência não é paranoia --- é engenharia
+comportamento foi preservado. Essa exigência não é paranoia. É engenharia
 disciplinada.
 
 Testes de equivalência são a forma mais robusta de garantir preservação de
@@ -992,12 +992,12 @@ mais usado''. Cada passo pode ser verificado isoladamente, e se algo der errado,
 Usar o compilador como aliado é outra estratégia valiosa. Peça código que compile
 sem warnings. Se compila e os testes passam, a chance de regressão comportamental
 é significativamente menor. Note que compilação sem warnings não é garantia de
-comportamento preservado --- é uma condição necessária, mas não suficiente. Os
+comportamento preservado; é uma condição necessária, mas não suficiente. Os
 testes de equivalência complementam o que o compilador não pode verificar.
 
-Finalmente, desconfie de refatorações que mudam assinaturas públicas. Se a API
-pública mudou --- novos parâmetros, tipos de retorno diferentes, métodos
-renomeados --- não é refatoração, é redesign. Redesign é legítimo e muitas vezes
+Desconfie de refatorações que mudam assinaturas públicas. Se a API
+pública mudou (novos parâmetros, tipos de retorno diferentes, métodos
+renomeados), não é refatoração, é redesign. Redesign é legítimo e muitas vezes
 necessário, mas deve ser tratado de forma diferente: com migração planejada,
 versionamento de API e comunicação com os consumidores. Quando o modelo muda
 uma assinatura pública durante uma ``refatoração'', isso é um sinal de alerta
@@ -1007,14 +1007,14 @@ que merece investigação.
 \section{Padrões Avançados de Prompting}
 % ============================================================
 
-Além dos prompts diretos, existem técnicas avançadas que melhoram
+Para além dos prompts diretos, existem técnicas avançadas que melhoram
 significativamente a qualidade das respostas para problemas complexos. Essas
 técnicas exploram propriedades fundamentais de como os LLMs processam texto,
-e entendê-las em profundidade permite aplicá-las de forma mais eficaz.
+e entendê-las permite aplicá-las de forma mais eficaz.
 
 \subsection{Chain of Thought (CoT) para Arquitetura}
 
-Chain of Thought força a IA a ``mostrar o trabalho'' --- raciocinar passo a
+Chain of Thought força a IA a ``mostrar o trabalho'', raciocinar passo a
 passo antes de apresentar a conclusão. Para decisões arquiteturais, isso é
 especialmente valioso porque expõe premissas que podem estar erradas.
 
@@ -1023,13 +1023,13 @@ Quando humanos enfrentam problemas complexos, a resolução passo a passo é
 consistentemente superior à intuição imediata. O psicólogo Daniel Kahneman
 distingue dois modos de pensamento: o Sistema 1 (rápido, intuitivo, propenso a
 vieses) e o Sistema 2 (lento, deliberado, analítico). Chain of Thought é,
-essencialmente, uma técnica para forçar o Sistema 2 --- tanto em humanos quanto
+por definição, uma técnica para forçar o Sistema 2 --- tanto em humanos quanto
 em LLMs.
 
 Para LLMs, a mecânica é concreta. Cada token gerado pelo modelo é condicionado
 por todos os tokens anteriores. Quando o modelo escreve um passo intermediário de
-raciocínio --- ``Primeiro, os requisitos indicam que precisamos de baixa
-latência...'' ---, esse texto passa a fazer parte do contexto para os tokens
+raciocínio (``Primeiro, os requisitos indicam que precisamos de baixa
+latência...''), esse texto passa a fazer parte do contexto para os tokens
 seguintes. O modelo literalmente ``lê'' seu próprio raciocínio e o usa para
 informar o próximo passo. Sem Chain of Thought, o modelo tenta ``pular''
 diretamente para a conclusão, perdendo os passos intermediários que fundamentam
@@ -1055,8 +1055,8 @@ O prompt a seguir demonstra Chain of Thought aplicado a uma decisão concreta.
 Observe como cada passo é numerado e tem um escopo claro. O passo 1 lista
 requisitos (explícitos e implícitos), o passo 2 identifica restrições, o passo 3
 enumera alternativas, o passo 4 analisa cada alternativa nos mesmos critérios, e
-o passo 5 sintetiza uma recomendação. A instrução final --- ``mostre seu
-raciocínio completo em cada passo, não pule para a conclusão'' --- é a ancoragem
+o passo 5 sintetiza uma recomendação. A instrução final (``mostre seu
+raciocínio completo em cada passo, não pule para a conclusão'') é a ancoragem
 que garante que o modelo não tentará atalhar o processo.
 
 \begin{lstlisting}[language={}, caption={Prompt usando Chain of Thought}]
@@ -1097,8 +1097,8 @@ por uma trilha passo a passo, Tree of Thoughts é explorar três trilhas diferen
 e, ao final, comparar os destinos e escolher o melhor percurso.
 
 A técnica é inspirada em como especialistas humanos abordam problemas de design
-verdadeiramente difíceis. Um arquiteto experiente não se compromete com a
-primeira solução que imagina --- ele deliberadamente explora alternativas,
+difíceis. Um arquiteto experiente não se compromete com a
+primeira solução que imagina; ele deliberadamente explora alternativas,
 desenvolve cada uma até o ponto em que seus problemas ficam evidentes, e só então
 faz uma escolha informada. Tree of Thoughts replica esse processo no LLM,
 instruindo o modelo a desenvolver cada caminho ``completamente'' antes de compará-
@@ -1146,7 +1146,7 @@ tentar acertar tudo na primeira tentativa, você entrega incrementalmente,
 validando a cada iteração.
 
 A mecânica do refinamento iterativo segue uma progressão natural. O primeiro
-prompt solicita a visão geral em alto nível --- a arquitetura conceitual, os
+prompt solicita a visão geral em alto nível: a arquitetura conceitual, os
 componentes principais, os fluxos de dados. Esse resultado é revisado pelo
 engenheiro, que identifica quais áreas precisam de aprofundamento. O segundo
 prompt solicita detalhamento de um componente específico, referenciando
@@ -1158,8 +1158,8 @@ fundamentação construída nos prompts anteriores.
 O princípio fundamental é que cada prompt deve referenciar e construir sobre a
 resposta anterior, nunca recomeçar do zero. Recomeçar do zero desperdiça o
 contexto acumulado e pode produzir respostas inconsistentes entre si. Referenciar
-explicitamente --- ``com base na arquitetura que definimos, onde o serviço de
-pagamentos se comunica com o serviço de notificações via fila SQS'' --- ancora o
+explicitamente (``com base na arquitetura que definimos, onde o serviço de
+pagamentos se comunica com o serviço de notificações via fila SQS'') ancora o
 modelo no contexto correto e garante continuidade.
 
 O refinamento iterativo é também uma ferramenta de \textbf{aprendizado}. A cada
@@ -1208,7 +1208,7 @@ qual ``etapa mental'' o modelo errou.
 
 \subsection{System Prompts e Personalização}
 
-Muitas ferramentas de IA permitem configurar um \textit{system prompt} --- uma
+Muitas ferramentas de IA permitem configurar um \textit{system prompt}, uma
 instrução persistente que molda todas as interações. Para engenheiros de
 software, um bom system prompt padroniza a qualidade das respostas e elimina a
 necessidade de repetir as mesmas instruções em cada prompt individual.
@@ -1223,7 +1223,7 @@ princípios de design e seus padrões de resposta.
 
 O exemplo a seguir é um system prompt projetado para engenharia de software. Cada
 bloco foi cuidadosamente construído. O bloco de ``princípios'' define os valores
-que devem guiar todas as respostas --- são como os princípios de design de um
+que devem guiar todas as respostas. São como os princípios de design de um
 sistema. O bloco ``quando eu pedir código'' define as convenções técnicas. O bloco
 ``quando eu pedir arquitetura'' define as premissas de contexto que o modelo deve
 assumir quando não são explicitadas. O bloco ``quando eu pedir revisão'' define o
@@ -1272,8 +1272,8 @@ Resumos periódicos são a técnica mais fundamental. A cada cinco ou dez turnos
 solicite que a IA resuma o que foi decidido até o momento. Esse resumo serve como
 um ``checkpoint'' da conversa: ele consolida as decisões, premissas e artefatos
 produzidos em um bloco compacto que pode ser usado como contexto para os próximos
-prompts. É como fazer commits frequentes em vez de acumular mudanças sem salvar
---- se o contexto se degradar, você tem um ponto de recuperação recente.
+prompts. É como fazer commits frequentes em vez de acumular mudanças sem salvar.
+Se o contexto se degradar, você tem um ponto de recuperação recente.
 
 Referência explícita é a técnica complementar. Em vez de depender da memória
 implícita do modelo sobre o que foi discutido três turnos atrás, referencie
@@ -1291,8 +1291,8 @@ custo de refazer um artefato porque o modelo ``esqueceu'' a restrição.
 
 Checkpoints de validação são a técnica mais subestimada. Periodicamente, peça à
 IA para listar todas as premissas que está assumindo. A resposta frequentemente
-revela premissas que o modelo ``inferiu'' e que estão incorretas --- por exemplo,
-assumir que o sistema usa autenticação baseada em sessão quando na verdade usa JWT,
+revela premissas que o modelo ``inferiu'' e que estão incorretas. Por exemplo,
+ele pode assumir que o sistema usa autenticação baseada em sessão quando na verdade usa JWT,
 ou assumir que o banco de dados é relacional quando na verdade é um
 documento store. Corrigir essas premissas antes de prosseguir evita retrabalho
 significativo nos turnos subsequentes.
@@ -1365,7 +1365,7 @@ framework de validação (Pydantic v2) e a exigência de testes com pytest. O
 código gerado já inclui validações, tratamento de erro, soft delete e testes.
 Maria revisa, faz dois ajustes menores, e o código está pronto para code review.
 O tempo total, incluindo a elaboração do prompt, foi menor do que o tempo de
-João --- e o resultado foi incomparavelmente superior.
+João, e o resultado foi incomparavelmente superior.
 
 \begin{lstlisting}[language={}, caption={Anti-padrão: prompt vago vs. prompt específico}]
 --- RUIM ---
@@ -1403,7 +1403,7 @@ você precisa.
 \subsection{Anti-padrão 2: Contexto Implícito}
 
 Assumir que a IA ``sabe'' sobre seu projeto, sua equipe, suas convenções é um
-dos erros mais comuns --- e mais compreensíveis. Quando trabalhamos com colegas
+dos erros mais comuns, e mais compreensíveis. Quando trabalhamos com colegas
 humanos que compartilham nosso contexto há meses ou anos, podemos dizer ``adicione
 autenticação no nosso backend'' e eles sabem exatamente o que isso significa:
 qual framework, qual banco, qual padrão de middleware, qual convenção de nomes. A
@@ -1412,14 +1412,14 @@ IA não tem esse contexto compartilhado.
 Considere a história de Carlos, um tech lead que vem usando o copiloto de IA há
 meses e desenvolveu o hábito de conversar com ele como conversa com sua equipe.
 Carlos digita: ``Adicione autenticação no nosso backend.'' O modelo gera
-autenticação baseada em sessão com Express.js e MongoDB --- razoável como
-resposta genérica, mas completamente inadequada para o backend de Carlos, que usa
+autenticação baseada em sessão com Express.js e MongoDB. É uma
+resposta genérica razoável, mas completamente inadequada para o backend de Carlos, que usa
 FastAPI com PostgreSQL e já tem um padrão de middleware definido. Carlos gasta
 trinta minutos adaptando o código gerado para sua stack, lutando contra decisões
 de design que não se encaixam. Se tivesse dedicado dois minutos a fornecer
-contexto --- ``adicione autenticação JWT ao backend FastAPI existente, usando
+contexto (``adicione autenticação JWT ao backend FastAPI existente, usando
 PostgreSQL, SQLAlchemy ORM, e seguindo o padrão de middleware que temos: [exemplo
-do middleware existente]'' ---, o resultado teria sido utilizável desde o início.
+do middleware existente]''), o resultado teria sido utilizável desde o início.
 
 O antídoto para o contexto implícito é a disciplina de explicitação. Antes de
 cada prompt, pergunte-se: ``se eu entregasse este prompt a um desenvolvedor que
@@ -1450,11 +1450,11 @@ monetários, nunca float'' ---, o problema teria sido evitado.
 
 A disciplina de revisão da primeira resposta envolve várias práticas complementares.
 Leia o código linha por linha, como faria em um code review de código humano. A
-IA pode gerar código que compila mas tem bugs lógicos sutis --- condições de
+IA pode gerar código que compila mas tem bugs lógicos sutis, como condições de
 borda não tratadas, off-by-one errors, race conditions em código concorrente.
 Questione as decisões do modelo: ``por que você usou recursão aqui em vez de
 iteração? Qual o comportamento com input vazio? E se a lista tiver um milhão de
-elementos --- a recursão estoura a stack?''. Peça alternativas: ``mostre outra
+elementos, a recursão estoura a stack?''. Peça alternativas: ``mostre outra
 abordagem para este problema; quais são os trade-offs de cada uma?''. E, acima de
 tudo, execute testes: código gerado por IA deve passar pelo mesmo rigor de
 verificação que código humano. Se você não testaria código de um colega sem
@@ -1468,15 +1468,15 @@ LLMs) aprendem melhor por exemplos do que por descrições abstratas.
 
 Pedro precisa gerar documentação para as funções do módulo de pagamentos. Ele
 digita: ``Gere documentação para esta função''. O modelo gera documentação no
-estilo que considera ``padrão'' --- talvez JSDoc genérico, talvez Google style,
+estilo que considera ``padrão'', talvez JSDoc genérico, talvez Google style,
 talvez uma mistura inconsistente. O resultado não se parece em nada com a
 documentação que já existe no projeto de Pedro, e ele gasta tempo reformatando
 cada bloco de documentação para manter a consistência.
 
 A solução é trivial e poderosa: inclua um exemplo. ``Gere documentação para esta
 função seguindo este formato: [cole um exemplo de documentação existente do
-projeto]''. Com o exemplo, o modelo replica o estilo exato --- cabeçalho,
-estrutura de parâmetros, formato de exemplos, nível de detalhe --- e o resultado
+projeto]''. Com o exemplo, o modelo replica o estilo exato (cabeçalho,
+estrutura de parâmetros, formato de exemplos, nível de detalhe) e o resultado
 é imediatamente consistente com o restante do projeto. O custo de incluir um
 exemplo é dezenas de tokens; a economia é dezenas de minutos de reformatação.
 
@@ -1487,7 +1487,7 @@ prompt. Sub-restrição produz resultados genéricos e inadequados, como já
 discutimos nos anti-padrões anteriores. Mas super-restrição é igualmente
 problemática: quando o prompt é tão detalhado e tão restritivo que não deixa
 espaço para o modelo contribuir com insights, perde-se a principal vantagem de
-usar IA --- a capacidade de explorar soluções que o engenheiro não teria
+usar IA, a capacidade de explorar soluções que o engenheiro não teria
 considerado sozinho.
 
 Imagine um prompt que especifica não apenas os requisitos, mas também a
@@ -1550,14 +1550,14 @@ entrega uma especificação ambígua ao time de construção, não deveria entre
 um prompt ambíguo à IA.
 
 Ao longo deste capítulo, exploramos um argumento central que merece ser
-cristalizado: prompts são especificações. Não é uma metáfora --- é uma
+cristalizado: prompts são especificações. Não é uma metáfora. É uma
 equivalência funcional. Um prompt bem escrito possui as mesmas qualidades de um
 documento de requisitos bem escrito: é preciso, completo, não ambíguo e
 verificável. Trate seus prompts com o mesmo rigor que daria a um documento de
 requisitos. Revise-os. Peça a um colega que leia e diga se entendeu a mesma
 coisa que você quis dizer. Teste-os contra critérios de aceitação definidos.
-Versione-os. Essa mudança de mentalidade --- de ``conversa casual com IA'' para
-``especificação de engenharia'' --- é a transformação mais impactante que um
+Versione-os. Essa mudança de mentalidade, de ``conversa casual com IA'' para
+``especificação de engenharia'', é a transformação mais impactante que um
 engenheiro pode fazer em sua prática de uso de LLMs.
 
 A qualidade do prompt determina a qualidade do resultado. Essa correlação é
@@ -1570,7 +1570,7 @@ que parecem detalhadas mas são fundamentalmente desconectadas do seu contexto.
 
 A iteração é parte integrante do processo. O primeiro prompt raramente é o melhor,
 assim como o primeiro rascunho de um código raramente é o definitivo. Refine,
-teste, melhore --- aplique ao prompt o mesmo ciclo de desenvolvimento que aplica
+teste, melhore. Aplique ao prompt o mesmo ciclo de desenvolvimento que aplica
 ao código. Cada iteração revela algo sobre o problema que não era evidente antes,
 e cada insight é incorporado no próximo prompt. Engenheiros que tratam prompts
 como artefatos descartáveis perdem a oportunidade de construir uma base de
@@ -1597,7 +1597,7 @@ multiplica sua produtividade com ela.
 
 No próximo capítulo, aplicaremos esses padrões de prompting ao contexto
 específico de revisão de código, onde a IA pode ser uma segunda opinião
-valiosa --- desde que seja instruída corretamente.
+valiosa, desde que seja instruída corretamente.
 
 % ============================================================
 \section*{Exercícios}

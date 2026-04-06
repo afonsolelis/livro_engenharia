@@ -8,7 +8,7 @@
 O maior mito da engenharia de software contemporânea é a ideia de que se deve
 ``começar a codar e ir ajustando pelo caminho''. Essa mentalidade, frequentemente
 confundida com agilidade, é na verdade o oposto do que os manifesto ágil propõe.
-Ajustes são necessários, sim --- toda arquitetura evolui com o tempo. Porém,
+Ajustes são necessários, sim, porque toda arquitetura evolui com o tempo. Porém,
 começar sem direção, sem um modelo mental do sistema, sem entender as forças que
 atuam sobre ele, é o que podemos chamar de \textbf{falsa agilidade}: a ilusão
 de velocidade que se paga com retrabalho exponencial.
@@ -17,25 +17,25 @@ Para entender por que esse mito é tão perigoso, considere o que acontece quand
 uma equipe de cinco engenheiros começa a construir um sistema de pagamentos sem
 nenhuma discussão arquitetural prévia. Nas primeiras duas semanas, tudo parece
 fluir: cada pessoa escolhe suas ferramentas favoritas, cria endpoints, conecta
-ao banco de dados, e o sistema ``funciona'' em demonstrações. No entanto, por
+ao banco de dados, e o sistema ``funciona'' em demonstrações. Mas por
 volta da sexta semana, os problemas começam a emergir. Um engenheiro modelou o
 conceito de ``transação'' de uma forma, outro modelou de forma completamente
 diferente. As chamadas entre módulos formaram uma teia de dependências circulares.
 A performance degrada porque três partes do sistema fazem consultas redundantes
 ao banco. E o pior: corrigir qualquer um desses problemas agora exige reescrever
 código que já está em produção, com clientes reais usando. O custo de não pensar
-a arquitetura antes não é pago no início --- é pago depois, com juros compostos.
+a arquitetura antes não é pago no início. É pago depois, com juros compostos.
 
 Ágil não significa sem arquitetura. Significa arquitetura \textbf{evolutiva},
 não ausente. Os métodos ágeis reconhecem que não se pode prever tudo no início,
 mas isso não é licença para ignorar o pensamento arquitetural. Pelo contrário:
 é justamente porque o futuro é incerto que precisamos de estruturas que acomodem
-mudança. Pular a fase de arquitetura é como construir um prédio sem planta ---
+mudança. Pular a fase de arquitetura é como construir um prédio sem planta;
 ele pode até ficar de pé, mas vai custar dez vezes mais para consertar quando
 os problemas inevitavelmente aparecerem. O próprio Kent Beck, um dos signatários
 originais do Manifesto Ágil, nunca advogou pela ausência de design. O que ele
 propôs foi design incremental, onde decisões são tomadas no momento mais
-responsável --- nem cedo demais (quando falta informação), nem tarde demais
+responsável: nem cedo demais (quando falta informação), nem tarde demais
 (quando o custo de mudança já explodiu).
 
 O papel do pensamento arquitetural é tomar decisões \textbf{antes} que elas se
@@ -43,38 +43,38 @@ tornem irreversíveis. Quando você escolhe um banco de dados, um protocolo de
 comunicação entre serviços, ou uma estratégia de deploy, está definindo restrições
 que serão caras para mudar depois. Essas são as decisões que merecem reflexão
 antecipada. Não se trata de criar um documento de 200 páginas que ninguém vai
-ler --- trata-se de pensar, discutir e registrar as escolhas que importam. Martin
-Fowler chama essas de ``decisões que são difíceis de reverter'', e é precisamente
-essa irreversibilidade que justifica o investimento de tempo em reflexão
+ler. Trata-se de pensar, discutir e registrar as escolhas que importam. Martin
+Fowler chama essas de ``decisões que são difíceis de reverter'', e essa
+irreversibilidade justifica o investimento de tempo em reflexão
 arquitetural. Escolher a cor de um botão é facilmente reversível; escolher que
 o sistema inteiro será baseado em microsserviços comunicando via gRPC não é.
 
 Este capítulo conecta-se diretamente com o que discutimos no Capítulo~1: o
 RM-ODP nos dá a estrutura para olhar um sistema sob múltiplos pontos de vista.
-Agora, vamos aplicar essa visão na prática, explorando estilos arquiteturais,
+Agora, vamos aplicar essa visão explorando estilos arquiteturais,
 técnicas de modelagem de domínio, registros de decisão e padrões de migração.
 Vamos sair do abstrato e entrar no concreto, com diagramas, código e estudos
-de caso. Cada conceito que apresentaremos aqui não existe isoladamente --- ele
+de caso. Cada conceito que apresentaremos aqui não existe isoladamente; ele
 se conecta com os demais como peças de um quebra-cabeça, e ao final do capítulo,
-você terá uma visão integrada de como essas peças se encaixam na prática.
+você terá uma visão integrada de como essas peças se encaixam.
 
 Como vimos no Capítulo~0, o pensamento sistêmico é o que diferencia o engenheiro
 do programador. Neste capítulo, esse pensamento se materializa em escolhas
-arquiteturais que definem o destino de um projeto. Um engenheiro que domina
-arquitetura não é aquele que conhece todos os padrões --- é aquele que sabe
-escolher o padrão certo para o contexto certo, e sabe explicar o porquê. E,
-talvez mais importante, é aquele que sabe quando \textit{não} escolher um
-padrão sofisticado, quando a simplicidade é a melhor arquitetura possível.
+arquiteturais que definem o destino de um projeto. Dominar arquitetura não é
+conhecer todos os padrões, e sim saber escolher o padrão certo para o contexto
+certo, e explicar o porquê. E, talvez mais importante, é saber quando
+\textit{não} escolher um padrão sofisticado, quando a simplicidade é a melhor
+arquitetura possível.
 
 
 \section{Princípios de Design Arquitetural}
 
 Antes de mergulhar nos estilos e padrões, precisamos estabelecer os princípios
 fundamentais que guiam qualquer decisão arquitetural. Esses princípios não são
-regras rígidas --- são heurísticas que orientam o julgamento do engenheiro em
+regras rígidas; são heurísticas que orientam o julgamento do engenheiro em
 situações de incerteza. Eles existem há décadas, alguns desde os primórdios da
 ciência da computação, e continuam relevantes porque atacam problemas
-fundamentais da complexidade de software --- problemas que não mudam com a
+fundamentais da complexidade de software, problemas que não mudam com a
 tecnologia da moda.
 
 Pense nesses princípios como as leis da física para o engenheiro de software.
@@ -93,17 +93,17 @@ O componente que renderiza a interface do usuário não deve conter lógica de
 negócio. Quando essas fronteiras são respeitadas, o sistema se torna mais fácil
 de entender, testar e modificar.
 
-A ideia foi articulada pela primeira vez por Edsger Dijkstra em 1974, em um
-artigo seminal onde ele argumentou que a única forma de lidar com a complexidade
+Edsger Dijkstra articulou essa ideia pela primeira vez em 1974, em um
+artigo seminal onde argumentou que a única forma de lidar com a complexidade
 de programas grandes é dividi-los em partes que possam ser compreendidas
-independentemente. Dijkstra não estava falando de uma técnica de programação
---- estava falando de uma limitação cognitiva humana. O cérebro humano consegue
+independentemente. Dijkstra não estava falando de uma técnica de programação,
+mas de uma limitação cognitiva humana. O cérebro humano consegue
 manter entre cinco e nove coisas na memória de trabalho ao mesmo tempo. Se um
 módulo exige que o programador pense simultaneamente em autenticação, formatação
 de dados, regras de negócio e comunicação com banco de dados, esse programador
 está operando além de sua capacidade cognitiva, e erros são inevitáveis.
 
-Na prática, SoC se manifesta em múltiplos níveis. No nível de código, significa
+SoC se manifesta em múltiplos níveis. No nível de código, significa
 funções e classes com responsabilidades claras. Uma função que calcula o imposto
 sobre uma transação não deve também formatar o resultado para exibição na tela.
 No nível de módulos, significa fronteiras bem definidas entre subsistemas. O
@@ -133,14 +133,14 @@ final dos anos 1970, no contexto do design estruturado. Quase cinquenta anos
 depois, eles permanecem como os indicadores mais confiáveis da qualidade de um
 design de software. Não é por acaso: coesão e acoplamento capturam algo
 fundamental sobre como humanos entendem e modificam sistemas complexos. Um módulo
-coeso é compreensível porque tudo dentro dele ``faz sentido junto'' --- não há
-surpresas, não há funcionalidades escondidas. Um módulo com baixo acoplamento é
-modificável porque suas dependências são poucas e bem definidas --- mudar algo
+coeso é compreensível porque tudo dentro dele ``faz sentido junto'', sem
+surpresas, sem funcionalidades escondidas. Um módulo com baixo acoplamento é
+modificável porque suas dependências são poucas e bem definidas. Mudar algo
 dentro dele não causa efeitos cascata imprevisíveis.
 
-O objetivo é maximizar coesão (elementos relacionados juntos) e minimizar
-acoplamento (módulos independentes entre si). Isso não é uma busca por perfeição
---- é uma heurística pragmática. Algum acoplamento é inevitável; o que importa
+Busca-se maximizar coesão (elementos relacionados juntos) e minimizar
+acoplamento (módulos independentes entre si). Isso não é uma busca por perfeição,
+é uma heurística pragmática. Algum acoplamento é inevitável; o que importa
 é torná-lo explícito e controlado, preferencialmente através de interfaces
 estáveis. Um sistema com zero acoplamento seria um conjunto de programas
 independentes que não fazem nada juntos. O ponto ideal é ter acoplamento onde
@@ -167,7 +167,7 @@ interface.
 Esse princípio tem raízes profundas na história da computação. David Parnas, em
 seu artigo de 1972 ``On the Criteria to Be Used in Decomposing Systems into
 Modules'', argumentou que módulos devem esconder suas decisões de implementação
-atrás de interfaces estáveis. Parnas chamou isso de ``information hiding'' ---
+atrás de interfaces estáveis. Parnas chamou isso de ``information hiding'',
 ocultação de informação. A ideia é que cada módulo esconde uma ``decisão de
 design'' que pode mudar no futuro: qual algoritmo de ordenação usar, qual formato
 de armazenamento adotar, qual protocolo de comunicação empregar. Se essa decisão
@@ -177,29 +177,29 @@ do sistema.
 Esse princípio é a base da arquitetura hexagonal, que discutiremos em detalhes
 mais adiante. Ele também está intimamente ligado ao Princípio de Inversão de
 Dependência do SOLID: módulos de alto nível não devem depender de módulos de
-baixo nível; ambos devem depender de abstrações. Na prática, isso significa que
+baixo nível; ambos devem depender de abstrações. Concretamente, isso significa que
 a lógica de negócio de um sistema de pagamentos não deve depender diretamente
-do PostgreSQL --- deve depender de uma abstração de ``repositório de transações''
+do PostgreSQL, e sim de uma abstração de ``repositório de transações''
 que pode ser implementada com PostgreSQL, MongoDB, ou até mesmo um arquivo CSV
 durante os testes.
 
 \subsection{Lei de Demeter}
 
 A Lei de Demeter, também conhecida como ``princípio do menor conhecimento'',
-estabelece que um objeto deve falar apenas com seus ``amigos imediatos''. Na
-prática, isso significa evitar encadeamentos como
+estabelece que um objeto deve falar apenas com seus ``amigos imediatos''. Isso
+significa evitar encadeamentos como
 \texttt{a.getB().getC().getD().doSomething()}. Cada ponto nessa cadeia é um
 acoplamento adicional: se qualquer estrutura intermediária mudar, o código
 quebra. A alternativa é expor apenas as operações necessárias, delegando
 internamente.
 
-A Lei de Demeter foi formulada em 1987 na Northeastern University, durante o
-desenvolvimento do Projeto Demeter --- daí o nome. Apesar de ser chamada de
+Formulada em 1987 na Northeastern University, durante o
+desenvolvimento do Projeto Demeter (daí o nome), apesar de ser chamada de
 ``lei'', é melhor entendida como uma heurística forte. Sua violação é um dos
 ``code smells'' mais confiáveis: código que encadeia múltiplas chamadas está,
 quase invariavelmente, sabendo demais sobre a estrutura interna de objetos que
-não são de sua responsabilidade. Esse conhecimento excessivo cria fragilidade
---- qualquer reestruturação interna desses objetos quebra o código que depende
+não são de sua responsabilidade. Esse conhecimento excessivo cria fragilidade,
+e qualquer reestruturação interna desses objetos quebra o código que depende
 da cadeia.
 
 Um exemplo concreto: imagine um sistema de recursos humanos onde o código para
@@ -207,8 +207,8 @@ calcular o bônus de um funcionário faz
 \texttt{funcionario.getDepartamento().getGerente().getOrcamento().getDisponivel()}.
 Esse código sabe que funcionários pertencem a departamentos, que departamentos
 têm gerentes, que gerentes têm orçamentos, e que orçamentos têm valores
-disponíveis. Se amanhã a estrutura organizacional mudar --- por exemplo, gerentes
-passam a ser responsáveis por múltiplos departamentos --- todo esse código quebra.
+disponíveis. Se amanhã a estrutura organizacional mudar (por exemplo, gerentes
+passam a ser responsáveis por múltiplos departamentos), todo esse código quebra.
 A alternativa seria \texttt{funcionario.getOrcamentoDisponivelParaBonus()},
 delegando a navegação interna para o próprio objeto que conhece sua estrutura.
 
@@ -222,11 +222,11 @@ específicos.
 
 Cada estilo arquitetural é uma resposta a um conjunto de forças: escala, complexidade
 do domínio, tamanho da equipe, requisitos de disponibilidade, restrições de custo.
-Não existe estilo ``melhor'' --- existe o mais adequado para o contexto. A seguir,
+Não existe estilo ``melhor''; existe o mais adequado para o contexto. A seguir,
 exploramos os principais estilos com profundidade, incluindo seus trade-offs reais
 e cenários de aplicação.
 
-Antes de mergulhar nos detalhes, vale uma observação importante: estilos
+Antes de mergulhar nos detalhes, uma observação: estilos
 arquiteturais não são mutuamente exclusivos. Um sistema real frequentemente
 combina elementos de múltiplos estilos. Um monolito modular pode usar comunicação
 por eventos internamente. Um sistema de microsserviços pode ter alguns serviços
@@ -236,14 +236,14 @@ para compor a solução mais adequada ao seu contexto.
 
 \subsection{Monolito Modular}
 
-O monolito modular é um sistema implantado como uma única unidade, mas internamente
+Um sistema implantado como uma única unidade, mas internamente
 organizado em módulos bem separados, com fronteiras claras e interfaces definidas
 entre eles. É o estilo mais subestimado da indústria. Muitos engenheiros pulam
 diretamente para microsserviços por pressão de tendência, quando um monolito
 modular resolveria o problema com uma fração da complexidade.
 
 A história do monolito é, na verdade, a história da própria engenharia de software.
-Nos primeiros décadas da computação, todo software era monolítico --- não por
+Nas primeiras décadas da computação, todo software era monolítico, não por
 escolha consciente, mas porque não havia alternativa prática. Os mainframes dos
 anos 1960 e 1970 executavam programas como unidades únicas. Com o advento da
 computação distribuída nos anos 1980 e 1990, surgiram as primeiras alternativas,
@@ -251,15 +251,15 @@ como CORBA e DCOM, mas a complexidade dessas tecnologias era tão grande que
 muitos projetos fracassaram espetacularmente. O pêndulo voltou para o monolito
 nos anos 2000, com frameworks como Ruby on Rails e Django, que tornaram
 extremamente produtivo construir aplicações monolíticas. Então, por volta de
-2012--2015, a revolução dos microsserviços --- liderada por empresas como Netflix
-e Amazon --- criou a impressão de que monolitos eram ``legados'' e ``antiquados''.
+2012--2015, a revolução dos microsserviços, liderada por empresas como Netflix
+e Amazon, criou a impressão de que monolitos eram ``legados'' e ``antiquados''.
 Essa impressão é incorreta.
 
 O que essas empresas na verdade fizeram foi migrar de monolitos \textit{mal
 estruturados} (conhecidos pejorativamente como ``big ball of mud'') para
 microsserviços. O problema não era o monolito em si, era a falta de
-estrutura interna. Um monolito modular --- com fronteiras claras entre
-módulos, interfaces estáveis e separação de responsabilidades --- oferece
+estrutura interna. Um monolito modular, com fronteiras claras entre
+módulos, interfaces estáveis e separação de responsabilidades, oferece
 a maioria dos benefícios organizacionais que motivaram a migração para
 microsserviços, sem a complexidade operacional distribuída.
 
@@ -274,10 +274,10 @@ All References'' e ``Rename Symbol'' funcionam perfeitamente, coisa que é
 praticamente impossível em um ecossistema de microsserviços.
 
 As desvantagens são reais, mas frequentemente exageradas. A escala é ``tudo
-ou nada'' --- o sistema inteiro escala junto, mesmo que apenas um módulo esteja
-sob pressão. Há risco de erosão das fronteiras internas com o tempo: sem
+ou nada'': o sistema inteiro escala junto, mesmo que apenas um módulo esteja
+sob pressão. Há risco de erosão das fronteiras internas com o tempo; sem
 disciplina, os módulos se acoplam progressivamente, e o que começou como um
-monolito modular degenera em um ``big ball of mud''. E há um limite prático
+monolito modular degenera em um ``big ball of mud''. Há também um limite prático
 de tamanho de equipe: quando dezenas de engenheiros trabalham no mesmo
 repositório, os conflitos de merge e a coordenação de releases se tornam
 custosos.
@@ -306,7 +306,7 @@ tempo sob nomes como SOA (Service-Oriented Architecture). A diferença crucial
 é que SOA tipicamente envolvia grandes serviços monolíticos comunicando via
 ESBs (Enterprise Service Buses) pesados e protocolos como SOAP. Os
 microsserviços propuseram serviços menores, mais leves, comunicando via
-protocolos simples como HTTP/REST, e com governança descentralizada --- cada
+protocolos simples como HTTP/REST, e com governança descentralizada, onde cada
 time é dono de seus serviços e pode tomar decisões tecnológicas independentes.
 
 As vantagens são reais em contextos específicos. A escala seletiva permite
@@ -316,7 +316,7 @@ precisa de mais instâncias. A autonomia de times é poderosa em organizações
 grandes: cada equipe é dona do seu serviço, pode fazer deploy independente,
 pode até escolher linguagens de programação diferentes se isso fizer sentido.
 O isolamento de falhas, quando bem implementado, significa que a queda de um
-serviço não derruba o sistema inteiro --- o catálogo de produtos pode continuar
+serviço não derruba o sistema inteiro. O catálogo de produtos pode continuar
 funcionando mesmo que o sistema de recomendações esteja fora do ar.
 
 Porém, as desvantagens são frequentemente subestimadas, especialmente por
@@ -333,7 +333,7 @@ dezenas ou centenas de serviços simultaneamente.
 A consistência de dados é talvez o desafio mais subestimado. Em um monolito,
 uma transação bancária que debita de uma conta e credita outra é uma
 transação ACID simples. Em microsserviços, onde cada serviço tem seu próprio
-banco, essa mesma operação requer um padrão de saga --- uma sequência de
+banco, essa mesma operação requer um padrão de saga: uma sequência de
 transações locais coordenadas por eventos ou orquestração, com operações de
 compensação para cada passo que pode falhar. A complexidade de implementar
 sagas corretamente é enorme, e bugs nesse nível causam inconsistências de
@@ -345,8 +345,8 @@ de engenheiros para fazer a transição funcionar. Empresas menores que tentaram
 imitar a Amazon sem ter os mesmos recursos frequentemente terminaram com o
 pior dos dois mundos: a complexidade dos microsserviços sem os benefícios,
 porque seus serviços eram tão acoplados que não podiam ser deployados
-independentemente de qualquer forma. O termo ``distributed monolith'' --- um
-monolito distribuído --- foi cunhado precisamente para descrever essa situação
+independentemente de qualquer forma. O termo ``distributed monolith'' (um
+monolito distribuído) foi cunhado para descrever essa situação
 infeliz.
 
 A regra de ouro que propomos neste livro é direta: \textbf{comece monolítico e
@@ -365,8 +365,8 @@ representa algo que aconteceu: ``PedidoFoiCriado'', ``PagamentoFoiConfirmado'',
 ``EstoqueFoiReservado''. Componentes interessados reagem a esses eventos de
 forma assíncrona.
 
-A ideia de sistemas orientados a eventos tem raízes que remontam aos anos 1980,
-com os primeiros sistemas de publish-subscribe. No entanto, o estilo ganhou
+Sistemas orientados a eventos têm raízes que remontam aos anos 1980,
+com os primeiros sistemas de publish-subscribe. O estilo, contudo, ganhou
 enorme tração com o advento do Apache Kafka em 2011, criado pela equipe de
 engenharia do LinkedIn para lidar com o volume massivo de eventos gerados pela
 plataforma. O Kafka transformou a arquitetura orientada a eventos de uma ideia
@@ -376,7 +376,7 @@ replay) e o throughput necessário para escala de internet.
 
 Esse estilo oferece desacoplamento temporal, o que significa que o produtor não
 precisa esperar o consumidor processar o evento. Quando o serviço de pedidos
-publica ``PedidoFoiCriado'', ele não sabe e não se importa se o serviço de
+publica ``PedidoCriado'', ele não sabe e não se importa se o serviço de
 estoque, o serviço de notificações e o serviço de analytics vão processar esse
 evento em milissegundos ou em minutos. Essa independência temporal é libertadora
 para a escalabilidade, porque novos consumidores podem ser adicionados sem
@@ -400,7 +400,7 @@ imediata.
 O debugging é outro desafio considerável. Rastrear o fluxo de um evento
 através de múltiplos consumidores exige ferramentas específicas de
 observabilidade, como distributed tracing. Sem essas ferramentas, quando algo
-dá errado --- um pedido foi criado mas a notificação nunca chegou --- é
+dá errado (um pedido foi criado mas a notificação nunca chegou), é
 extremamente difícil determinar onde o evento se perdeu. A ordenação de
 eventos adiciona outra camada de complexidade: garantir que eventos sejam
 processados na ordem correta é surpreendentemente difícil em sistemas
@@ -420,10 +420,10 @@ Observe como o serviço de pedidos não sabe (e não precisa saber) quem vai rea
 ao evento \texttt{PedidoCriado}. Amanhã, um novo serviço de recomendação pode
 começar a consumir esse evento sem qualquer alteração no produtor. Esse é o poder
 do desacoplamento via eventos. E esse poder tem uma implicação organizacional
-profunda: times podem trabalhar de forma independente, cada um publicando e
+importante: times podem trabalhar de forma independente, cada um publicando e
 consumindo os eventos que lhe interessam, sem precisar coordenar deploys ou
 negociar interfaces síncronas. É uma forma de desacoplamento que vai além do
-técnico --- é desacoplamento organizacional.
+técnico; é desacoplamento organizacional.
 
 \subsection{Serverless}
 
@@ -451,8 +451,8 @@ zero a milhares de instâncias simultâneas em segundos, sem qualquer configura�
 de autoscaling.
 
 As desvantagens, porém, são estruturais e não devem ser minimizadas. Os cold
-starts --- a latência adicional na primeira invocação quando o ambiente de
-execução da função precisa ser inicializado --- são problemáticos para
+starts (a latência adicional na primeira invocação, quando o ambiente de
+execução da função precisa ser inicializado) são problemáticos para
 aplicações que exigem respostas rápidas e consistentes. Dependendo da
 linguagem e do tamanho do pacote, um cold start pode adicionar de 100ms a
 vários segundos de latência. O vendor lock-in é severo: cada provedor de
@@ -518,7 +518,7 @@ Vendor lock-in & Nenhum & Baixo & Baixo--Médio & Alto \\
 \end{tabular}
 \end{table}
 
-É importante notar que esta tabela é uma simplificação deliberada. Cada célula
+Esta tabela é uma simplificação deliberada. Cada célula
 poderia ser expandida em uma discussão de vários parágrafos. Por exemplo,
 ``complexidade operacional baixa'' para monolitos é verdade em comparação com
 microsserviços, mas isso não significa que operar um monolito grande seja
@@ -529,7 +529,7 @@ partida para a reflexão, não como resposta definitiva.
 
 \subsection{Evolução: Do Monolito aos Microsserviços}
 
-A evolução arquitetural não é um salto --- é uma jornada. Nenhum sistema nasce
+A evolução arquitetural não é um salto, mas uma jornada. Nenhum sistema nasce
 como um ecossistema de microsserviços; todos começam como algo mais simples. A
 questão não é ``devo usar microsserviços?'' mas sim ``quando, se algum dia, a
 transição se justifica?'' O diagrama a seguir ilustra os estágios típicos que
@@ -551,7 +551,7 @@ e documentada (veremos como fazer isso com ADRs adiante).
 A história da indústria oferece lições valiosas sobre essa jornada. O Twitter
 começou como um monolito em Ruby on Rails. Quando o tráfego explodiu após
 eventos como a Copa do Mundo e eleições americanas, a equipe precisou migrar
-para uma arquitetura de serviços --- um processo doloroso que levou anos e
+para uma arquitetura de serviços, um processo doloroso que levou anos e
 envolveu reescritas em Scala e Java. O Spotify seguiu um caminho semelhante,
 mas com mais planejamento: começou monolítico, modularizou, e depois extraiu
 serviços gradualmente, cada extração motivada por uma necessidade concreta de
@@ -560,7 +560,7 @@ foi motivada por dor real, não por tendência tecnológica.
 
 A transição entre estilos arquiteturais nos leva naturalmente a uma pergunta
 fundamental: como comunicamos a arquitetura que escolhemos? Como garantimos que
-todos no time --- dos desenvolvedores juniores aos stakeholders executivos ---
+todos no time, dos desenvolvedores juniores aos stakeholders executivos,
 entendam o que estamos construindo e por quê? É exatamente isso que o modelo C4
 se propõe a resolver.
 
@@ -581,7 +581,7 @@ a uma audiência diferente. O nome ``C4'' vem dos quatro níveis: Context,
 Containers, Components e Code. A analogia que Brown usa é a do Google Maps:
 quando você abre o aplicativo, vê primeiro o mundo inteiro. Ao dar zoom, vê
 países, depois cidades, depois ruas, depois prédios individuais. Ninguém
-reclama que o mapa-múndi não mostra as ruas de São Paulo --- cada nível de
+reclama que o mapa-múndi não mostra as ruas de São Paulo, pois cada nível de
 zoom tem seu propósito e sua audiência.
 
 Antes do C4, a documentação arquitetural era dominada pelo UML (Unified Modeling
@@ -610,8 +610,8 @@ as relações: ``o cliente usa o sistema para fazer pedidos'', ``o sistema envia
 e-mails via SendGrid'', ``o sistema consulta taxas de câmbio via API do Banco
 Central''.
 
-A regra de ouro para o diagrama de contexto é que qualquer pessoa na organização
---- do estagiário ao CEO --- deve conseguir entendê-lo em menos de um minuto.
+A regra de ouro para o diagrama de contexto é que qualquer pessoa na organização,
+do estagiário ao CEO, deve conseguir entendê-lo em menos de um minuto.
 Se o diagrama requer explicação, ele está complexo demais para este nível.
 Detalhes técnicos como tecnologias, protocolos e bancos de dados não aparecem
 aqui. O foco é exclusivamente nas relações de negócio.
@@ -624,7 +624,7 @@ aqui. O foco é exclusivamente nas relações de negócio.
 
 Neste exemplo, vemos imediatamente que o sistema de e-commerce tem dois tipos de
 usuários (clientes finais e administradores) e depende de três sistemas externos
-(email, pagamento e ERP). Essa simplicidade é intencional --- qualquer pessoa na
+(email, pagamento e ERP). Essa simplicidade é intencional, e qualquer pessoa na
 organização deve conseguir entender esse diagrama em menos de um minuto. Não há
 detalhes técnicos, não há tecnologias mencionadas. Apenas relações de negócio.
 
@@ -635,7 +635,7 @@ web, APIs, bancos de dados, filas de mensagens. Cada container é uma unidade qu
 roda em seu próprio processo ou ambiente. Este é o diagrama que a equipe de
 infraestrutura precisa para planejar deployment e monitoramento.
 
-É importante notar que ``container'' aqui não se refere a Docker containers,
+Aqui, ``container'' não se refere a Docker containers,
 embora frequentemente coincidam. Um container no modelo C4 é qualquer unidade
 de execução separada: uma aplicação web frontend (rodando no browser do
 usuário), uma API backend (rodando em um servidor ou container Docker), um
@@ -676,7 +676,7 @@ banco de dados? Essas perguntas são respondidas visualmente neste nível.
 \subsection{Nível 4: Código}
 
 O último nível é o diagrama de classes ou entidades, representando o código em
-si. Na prática, esse nível raramente é mantido manualmente --- ele pode ser
+si. Esse nível raramente é mantido manualmente, pois pode ser
 gerado automaticamente a partir do código-fonte. Use-o apenas para partes
 críticas do domínio que precisam de documentação explícita.
 
@@ -692,12 +692,12 @@ funciona o sistema?'', você não mostra um diagrama com 200 caixas. Você come�
 pelo contexto, e aprofunda sob demanda. Cada nível é autocontido e compreensível
 por si só. Essa disciplina de comunicação é uma habilidade arquitetural tão
 importante quanto a decisão técnica em si. Um arquiteto que não consegue
-comunicar suas decisões de forma clara para audiências diferentes não é um
-bom arquiteto --- é apenas alguém que sabe muitas coisas mas não consegue
-transmiti-las. E conhecimento não transmitido é conhecimento perdido.
+comunicar suas decisões de forma clara para audiências diferentes é apenas
+alguém que sabe muitas coisas mas não consegue transmiti-las. E conhecimento
+não transmitido é conhecimento perdido.
 
-O domínio da comunicação arquitetural por meio do C4 nos prepara para o
-próximo passo: entender profundamente o domínio de negócio que a arquitetura
+Dominar a comunicação arquitetural por meio do C4 prepara o engenheiro para o
+próximo passo: entender o domínio de negócio que a arquitetura
 serve. É aqui que entra o Domain-Driven Design, uma abordagem que coloca o
 negócio no centro de todas as decisões técnicas.
 
@@ -707,7 +707,7 @@ negócio no centro de todas as decisões técnicas.
 Domain-Driven Design, popularizado por Eric Evans em seu livro seminal de 2003
 (conhecido carinhosamente como ``The Blue Book'' na comunidade), é uma abordagem
 de design de software que coloca o \textbf{domínio do negócio} no centro de todas
-as decisões técnicas. Não é um framework, não é uma biblioteca --- é uma filosofia
+as decisões técnicas. Não é um framework, não é uma biblioteca. É uma filosofia
 de design que reconhece que a complexidade de um software está na lógica de
 negócio, não na tecnologia.
 
@@ -715,11 +715,11 @@ Evans não inventou todas as ideias do DDD do zero. Ele sintetizou décadas de
 experiência em projetos de software empresarial, reunindo conceitos que
 engenheiros experientes já praticavam intuitivamente, mas que nunca haviam
 sido articulados de forma coerente. O mérito de Evans foi dar nomes a esses
-conceitos, organizá-los em um framework conceitual, e demonstrar --- com
-exemplos detalhados de projetos reais --- como eles se conectam.
+conceitos, organizá-los em um framework conceitual, e demonstrar, com
+exemplos detalhados de projetos reais, como eles se conectam.
 
-A premissa fundamental do DDD é que o maior risco em projetos de software não
-é técnico --- é a falta de entendimento do domínio. Um sistema tecnicamente
+A premissa do DDD é que o maior risco em projetos de software não
+é técnico: é a falta de entendimento do domínio. Um sistema tecnicamente
 brilhante que modela o domínio de forma errada é inútil. Um sistema
 tecnicamente mediano que modela o domínio corretamente pode ser valioso por
 décadas. Quantos projetos fracassaram não por falha de banco de dados ou
@@ -735,7 +735,7 @@ Se o negócio fala ``apólice'', o código diz \texttt{Apolice}, não
 \texttt{PolicyDocument}. Se o negócio diz ``indenizar'', o método se chama
 \texttt{indenizar()}, não \texttt{process()} ou \texttt{handle()}.
 
-Essa prática parece simples, quase trivial, mas sua importância é profunda.
+Essa prática parece simples, quase trivial, mas sua importância é enorme.
 Ela elimina uma das maiores fontes de bugs em software: a tradução mental
 entre terminologias. Quando o analista de negócios diz ``o sinistro deve
 ser indenizado'' e o programador implementa como \texttt{claim.approve()},
@@ -743,7 +743,7 @@ existe uma lacuna semântica que vai gerar mal-entendidos. O analista pode
 dizer ``indenizar'' pensando em um processo que inclui verificação de
 cobertura, cálculo do valor, e emissão do pagamento. O programador pode
 implementar \texttt{approve()} como uma simples mudança de status. A lacuna
-entre as duas interpretações é onde os bugs de negócio se escondem --- bugs
+entre as duas interpretações é onde os bugs de negócio se escondem, bugs
 que passam em todos os testes unitários porque o código faz exatamente o que
 foi programado para fazer, mas não faz o que o negócio espera.
 
@@ -782,8 +782,8 @@ confuso, frágil e impossível de evoluir independentemente.
 
 Tentar criar um modelo único de ``Cliente'' que sirva para todos os contextos é
 um erro clássico que leva a classes gigantes com dezenas de campos opcionais.
-Esse padrão é tão comum que tem um nome informal na comunidade: o ``God Object''
---- um objeto que sabe tudo sobre tudo e que precisa mudar toda vez que qualquer
+Esse padrão é tão comum que tem um nome informal na comunidade: o ``God Object'',
+um objeto que sabe tudo sobre tudo e que precisa mudar toda vez que qualquer
 parte do sistema muda. A abordagem do DDD é aceitar que cada contexto tem seu
 próprio modelo de Cliente, e definir mapeamentos explícitos entre eles. Quando
 o contexto de Vendas precisa informar o contexto Financeiro sobre uma nova venda,
@@ -818,8 +818,8 @@ menos frequentes e mediadas por contratos estáveis (eventos, APIs).
 \subsection{Entidades, Value Objects e Agregados}
 
 No coração de cada bounded context, o DDD oferece padrões táticos para
-modelar os conceitos do domínio de forma precisa. Esses padrões --- Entidades,
-Value Objects e Agregados --- podem parecer abstratos à primeira vista, mas
+modelar os conceitos do domínio de forma precisa. Esses padrões (Entidades,
+Value Objects e Agregados) podem parecer abstratos à primeira vista, mas
 correspondem a distinções fundamentais que existem em qualquer domínio de
 negócio.
 
@@ -828,7 +828,7 @@ Um Pedido é uma entidade: mesmo que todos os seus atributos mudem (itens
 adicionados, status alterado, endereço atualizado), ele continua sendo o mesmo
 Pedido, identificado pelo seu ID. Pense em uma pessoa: ao longo da vida, seu
 nome pode mudar (casamento), seu endereço muda várias vezes, sua aparência
-física se transforma --- mas ela continua sendo a mesma pessoa, com o mesmo
+física se transforma, mas ela continua sendo a mesma pessoa, com o mesmo
 CPF. Essa persistência de identidade é o que define uma entidade. No código,
 duas entidades são iguais se e somente se têm o mesmo identificador, independente
 de seus outros atributos.
@@ -836,14 +836,14 @@ de seus outros atributos.
 \textbf{Value Objects} são objetos definidos exclusivamente por seus atributos,
 sem identidade própria. Um CPF é um Value Object: dois CPFs com o mesmo número
 são iguais, ponto. Não faz sentido perguntar ``qual dos dois CPFs 123.456.789-00
-é este?'' --- eles são o mesmo. Um Endereco é um Value Object: se todos os campos
+é este?''. Eles são o mesmo. Um Endereco é um Value Object: se todos os campos
 são idênticos (rua, número, cidade, CEP), são o mesmo endereço. Não importa
-``quando'' o endereço foi criado ou ``por quem'' --- se os valores são iguais,
+``quando'' o endereço foi criado ou ``por quem''; se os valores são iguais,
 os objetos são iguais. Value Objects devem ser imutáveis: em vez de mudar o CEP
 de um endereço, cria-se um novo endereço com o CEP correto. Essa imutabilidade
 elimina toda uma classe de bugs relacionados a estado compartilhado.
 
-Para entender a diferença na prática, considere uma nota de R\$~50. A nota
+Para entender a diferença concretamente, considere uma nota de R\$~50. A nota
 em si é uma entidade: ela tem um número serial único, e se você perde \textit{aquela}
 nota específica, não pode substituí-la por outra. Porém, o \textit{valor} de
 R\$~50 é um Value Object: qualquer nota de R\$~50 serve igualmente para pagar
@@ -855,14 +855,14 @@ como uma unidade de consistência. O Pedido e seus Itens formam um agregado: nã
 faz sentido adicionar um item ao pedido sem passar pela lógica do Pedido (que
 verifica estoque, calcula total, aplica descontos). Se um código externo pudesse
 adicionar itens diretamente à lista de itens, sem passar pelo Pedido, as regras
-de negócio poderiam ser violadas --- um item poderia ser adicionado a um pedido
+de negócio poderiam ser violadas. Um item poderia ser adicionado a um pedido
 já fechado, ou o total poderia ficar inconsistente com a soma dos itens.
 
-O agregado define a fronteira transacional --- tudo dentro de um agregado é
+O agregado define a fronteira transacional: tudo dentro de um agregado é
 consistente a todo momento; entre agregados, a consistência pode ser eventual.
 O Pedido é a ``raiz do agregado'': toda interação externa com os itens do
 pedido deve passar pelo Pedido. Isso é mais do que uma questão de organização
-de código --- é uma garantia de integridade. O Pedido ``sabe'' suas regras de
+de código. É uma garantia de integridade. O Pedido ``sabe'' suas regras de
 negócio e as impõe, protegendo seus componentes internos de manipulação
 indevida.
 
@@ -878,15 +878,15 @@ técnico como uma unidade coesa.
 Eventos de domínio representam algo que \textbf{aconteceu} no domínio e que
 pode interessar a outras partes do sistema. Eles são escritos no passado:
 \texttt{PedidoFoiPago}, \texttt{EstoqueFoiReservado}, \texttt{ClienteFoiCadastrado}.
-Essa convenção de nomenclatura no passado não é arbitrária --- ela reflete a
+Essa convenção de nomenclatura no passado não é arbitrária. Ela reflete a
 natureza fundamental dos eventos: são fatos imutáveis. Uma vez que um pedido
-foi pago, esse fato não pode ser ``desfeito'' --- pode ser compensado (com um
+foi pago, esse fato não pode ser ``desfeito''; pode ser compensado (com um
 estorno), mas o evento original permanece verdadeiro. O pedido \textit{foi} pago
 naquele momento.
 
 A importância dos eventos de domínio vai além da comunicação técnica: eles tornam
 a lógica de negócio explícita. Quando o código diz ``publique o evento
-PedidoFoiPago'', qualquer pessoa --- técnica ou não --- entende o que está
+PedidoFoiPago'', qualquer pessoa (técnica ou não) entende o que está
 acontecendo. Compare com ``chame o endpoint POST /api/v2/orders/\{id\}/status com
 body \{status: paid\}'': a semântica se perde no mecanismo. No primeiro caso,
 o que aconteceu no domínio é evidente. No segundo, é preciso decodificar URLs e
@@ -912,8 +912,8 @@ transforma a descoberta do domínio em uma atividade colaborativa e visual.
 
 Event Storming é uma técnica de workshop criada por Alberto Brandolini em 2013
 para explorar o domínio de negócio de forma colaborativa. Diferente de técnicas
-tradicionais de levantamento de requisitos --- onde um analista entrevista
-stakeholders e produz documentos que ninguém lê --- o Event Storming coloca
+tradicionais de levantamento de requisitos (onde um analista entrevista
+stakeholders e produz documentos que ninguém lê), o Event Storming coloca
 todos na mesma sala, com sticky notes e uma parede grande, e constrói um
 entendimento compartilhado do domínio em poucas horas.
 
@@ -941,7 +941,7 @@ A instrução é simples: ``Escrevam tudo que acontece no sistema, no passado.''
 As pessoas escrevem freneticamente: ``Pedido foi criado'', ``Pagamento foi
 recusado'', ``Estoque ficou zerado'', ``Cliente cancelou assinatura'',
 ``Relatório mensal foi gerado'', ``Conta foi bloqueada por fraude''. Não há
-julgamento nessa fase --- o objetivo é gerar volume. Se alguém escreve algo
+julgamento nessa fase. O objetivo é gerar volume. Se alguém escreve algo
 que parece ``errado'' ou ``fora de escopo'', ninguém corrige. Duplicatas são
 bem-vindas. O único requisito é que o texto esteja no passado, representando
 algo que já aconteceu. Essa fase tipicamente dura de 15 a 30 minutos e gera
@@ -954,8 +954,8 @@ reservado?'' ``O que acontece se o pagamento for recusado depois do estoque
 já ter sido reservado?'' ``Existe uma verificação de fraude? Quando ela
 acontece?'' Padrões emergem naturalmente: cadeias de causa e efeito,
 bifurcações onde o fluxo pode seguir caminhos diferentes, loops onde
-processos se repetem. Gaps no conhecimento ficam visíveis --- ``o que
-acontece entre o pagamento ser confirmado e o produto ser enviado?'' --- e
+processos se repetem. Gaps no conhecimento ficam visíveis (``o que
+acontece entre o pagamento ser confirmado e o produto ser enviado?'') e
 são marcados com sticky notes vermelhas, chamadas de ``hot spots''. Esses
 hot spots são ouro: representam áreas do domínio onde o conhecimento é
 incompleto, ambíguo ou contraditório, e que precisam de investigação adicional.
@@ -995,10 +995,10 @@ campos. Ele fala em termos de processos: ``o cliente faz um pedido, nós
 verificamos o estoque, processamos o pagamento, e enviamos o produto.'' O Event
 Storming captura exatamente essa linguagem processual e a transforma em um
 modelo que pode ser diretamente implementado em código. Não há tradução
-necessária entre a linguagem do negócio e a linguagem do software --- elas
+necessária entre a linguagem do negócio e a linguagem do software: elas
 são a mesma.
 
-Além disso, o formato de workshop elimina o jogo de telefone entre stakeholders
+O formato de workshop também elimina o jogo de telefone entre stakeholders
 e engenheiros. Quando o especialista de domínio e o arquiteto estão na mesma
 parede, discordâncias e ambiguidades são resolvidas na hora, não três sprints
 depois, quando o código já foi escrito baseado em premissas erradas. O custo
@@ -1011,7 +1011,7 @@ Outro benefício frequentemente subestimado do Event Storming é o alinhamento
 do time. Após uma sessão de duas a quatro horas, todos os participantes
 compartilham o mesmo modelo mental do domínio. Não há mais ``o que o Pedro
 entende sobre o fluxo de pagamento'' versus ``o que a Maria entende sobre o
-fluxo de pagamento'' --- há um modelo compartilhado, visível na parede, que
+fluxo de pagamento''. Há um modelo compartilhado, visível na parede, que
 todos ajudaram a construir. Esse alinhamento reduz dramaticamente os
 mal-entendidos durante o desenvolvimento subsequente.
 
@@ -1040,7 +1040,7 @@ Cockburn percebeu que o problema era de dependência: a lógica de negócio
 infraestrutura deveria depender da lógica de negócio, adaptando-se a ela
 como um encaixe.
 
-O nome ``hexagonal'' não tem significado matemático especial --- Cockburn
+O nome ``hexagonal'' não tem significado matemático especial. Cockburn
 escolheu o hexágono porque precisava de uma forma geométrica com múltiplas
 faces para representar as múltiplas portas do sistema. Poderia ter sido um
 octágono ou um decágono. A forma hexagonal ficou, e o nome pegou. Nos anos
@@ -1071,21 +1071,21 @@ o adaptador HTTP recebe uma requisição REST e chama o caso de uso ``transferir
 dinheiro''. O adaptador de CLI recebe argumentos de linha de comando e chama o
 mesmo caso de uso. O adaptador de evento recebe uma mensagem do Kafka e chama
 o mesmo caso de uso. Do ponto de vista do domínio, não importa \textit{como} a
-solicitação chegou --- importa apenas \textit{o que} foi solicitado.
+solicitação chegou; importa apenas \textit{o que} foi solicitado.
 
 Da mesma forma, um adaptador de saída implementa uma porta de saída usando
 uma tecnologia concreta: o adaptador PostgreSQL implementa a porta
 ``repositório de contas'' usando SQL. O adaptador DynamoDB implementa a
 mesma porta usando a API da Amazon. O adaptador em memória implementa a
-mesma porta usando um dicionário Python --- perfeito para testes. Todos
+mesma porta usando um dicionário Python, o que é perfeito para testes. Todos
 satisfazem o mesmo contrato, permitindo que sejam intercambiáveis.
 
 A beleza dessa arquitetura está na testabilidade e na adaptabilidade. Para testar
 a lógica de negócio, basta criar adaptadores falsos (mocks ou stubs) que
 implementam as portas de saída. Para trocar o banco de dados de PostgreSQL para
-DynamoDB, basta criar um novo adaptador --- o domínio não muda uma linha sequer.
+DynamoDB, basta criar um novo adaptador, e o domínio não muda uma linha sequer.
 Para adicionar uma nova forma de entrada (um chatbot, por exemplo, além da API
-REST), basta criar um novo adaptador de entrada --- novamente, o domínio
+REST), basta criar um novo adaptador de entrada. Novamente, o domínio
 permanece intocado.
 
 \subsection{Implementação em Python}
@@ -1135,7 +1135,7 @@ como se debitar e se creditar, e impõe suas invariantes (saldo não pode ficar
 negativo). Nenhuma dessas classes sabe nada sobre banco de dados, HTTP, ou
 qualquer tecnologia externa.
 
-Agora, as portas --- interfaces que definem \textit{o que} o domínio precisa,
+Agora, as portas, interfaces que definem \textit{o que} o domínio precisa,
 sem definir \textit{como}:
 
 \begin{lstlisting}[language=Python, caption={Portas -- Interfaces do Domínio}]
@@ -1195,7 +1195,7 @@ class TransferirDinheiro:
         })
 \end{lstlisting}
 
-Finalmente, os adaptadores --- implementações concretas que conectam o domínio
+Finalmente, os adaptadores, ou seja, as implementações concretas que conectam o domínio
 ao mundo real:
 
 \begin{lstlisting}[language=Python, caption={Adaptadores -- Implementações Concretas}]
@@ -1246,15 +1246,15 @@ class KafkaPublicadorDeEventos(PublicadorDeEventos):
 O ponto crucial é que o caso de uso \texttt{TransferirDinheiro} funciona
 igualmente com um banco PostgreSQL real, com um repositório em memória para
 testes, ou com um banco DynamoDB na nuvem. A lógica de negócio está isolada
-e protegida. Essa proteção não é apenas uma conveniência de design --- é uma
+e protegida. Essa proteção não é apenas uma conveniência de design; é uma
 garantia de longevidade. Tecnologias de banco de dados e mensageria mudam
 a cada poucos anos. A lógica de negócio de uma transferência bancária não
 mudou em séculos. Ao separar as duas, garantimos que a parte estável do
 sistema (o domínio) não é contaminada pela parte volátil (a infraestrutura).
 
 A arquitetura hexagonal nos dá a estrutura para proteger o domínio. Mas
-quando tomamos uma decisão arquitetural --- como usar arquitetura hexagonal
---- precisamos registrar essa decisão e suas razões. É exatamente para isso
+quando tomamos uma decisão arquitetural (como usar arquitetura hexagonal),
+precisamos registrar essa decisão e suas razões. É exatamente para isso
 que servem os Architecture Decision Records.
 
 
@@ -1264,7 +1264,7 @@ Toda arquitetura é o resultado de um conjunto de decisões. O problema é que,
 sem documentação, essas decisões se perdem. Três meses depois, ninguém lembra
 por que o Kafka foi escolhido em vez do RabbitMQ. Um ano depois, um novo
 engenheiro questiona a decisão e propõe migrar, sem saber que a escolha original
-foi motivada pela necessidade de replay de eventos --- uma necessidade que
+foi motivada pela necessidade de replay de eventos, uma necessidade que
 continua existindo. Dois anos depois, o mesmo debate acontece novamente, consumindo
 horas de reunião para chegar à mesma conclusão que já havia sido alcançada antes.
 
@@ -1272,7 +1272,7 @@ Esse ciclo de amnésia organizacional é extraordinariamente comum e
 extraordinariamente caro. Michael Nygard, um engenheiro e consultor com décadas
 de experiência, observou esse padrão em inúmeras organizações e propôs uma
 solução elegante por volta de 2011: o Architecture Decision Record (ADR). A
-ideia é desarmantemente simples --- tão simples que muitas pessoas a descartam
+ideia é desarmantemente simples, tão simples que muitas pessoas a descartam
 por acharem que ``algo tão simples não pode resolver um problema tão grande''.
 Mas a simplicidade é justamente a razão do seu sucesso.
 
@@ -1300,8 +1300,8 @@ Um ADR tem quatro seções essenciais, cada uma servindo um propósito específi
 na preservação do conhecimento arquitetural.
 
 A seção de \textbf{Contexto} descreve o problema ou a necessidade que motivou a
-decisão. Quais restrições existiam no momento --- técnicas, organizacionais,
-regulatórias, de prazo? Qual era o estado do sistema? Essa seção é crucial porque
+decisão. Quais restrições existiam no momento (técnicas, organizacionais,
+regulatórias, de prazo)? Qual era o estado do sistema? Essa seção é crucial porque
 a adequação de uma decisão depende do contexto. Uma decisão que era perfeita há
 dois anos pode ser inadequada hoje, mas só é possível avaliar isso se o contexto
 original estiver registrado. Sem o contexto, não se pode distinguir uma decisão
@@ -1388,7 +1388,7 @@ ADRs devem ser armazenados no repositório do projeto, em um diretório dedicado
 como \texttt{docs/adr/}. Isso garante que eles versionem junto com o código,
 sejam revisáveis via pull request, e estejam acessíveis a qualquer engenheiro
 que precise entender o histórico de decisões. Quando um novo membro entra no
-time, uma das primeiras coisas que deveria fazer é ler os ADRs do projeto ---
+time, uma das primeiras coisas que deveria fazer é ler os ADRs do projeto:
 eles contam a história das decisões que moldaram o sistema atual, fornecendo
 contexto que nenhuma documentação de API ou diagrama de arquitetura pode
 oferecer.
@@ -1396,7 +1396,7 @@ oferecer.
 Existe uma prática particularmente valiosa que algumas equipes adotam: o
 ``ADR review'' periódico. A cada trimestre, o time revisa os ADRs existentes
 e avalia se o contexto mudou o suficiente para justificar uma revisão de
-alguma decisão. Isso evita a inércia arquitetural --- a tendência de manter
+alguma decisão. Isso evita a inércia arquitetural, a tendência de manter
 decisões antigas não porque são as melhores, mas porque ninguém questionou.
 O ADR review transforma a evolução arquitetural em um processo deliberado e
 contínuo.
@@ -1411,7 +1411,7 @@ mas quando e como.
 
 A ideia de que se pode ``acertar a arquitetura de primeira'' é uma fantasia.
 Todo sistema que sobrevive ao contato com a realidade precisa evoluir. O
-desafio não é prever o futuro --- é criar condições para que a mudança seja
+desafio não é prever o futuro; é criar condições para que a mudança seja
 barata quando inevitavelmente chegar.
 
 Essa verdade é desconfortável para muitos engenheiros, especialmente os mais
@@ -1421,7 +1421,7 @@ consegue fazer essa previsão de forma confiável. Requisitos mudam porque o
 mercado muda, regulamentações mudam, a estratégia da empresa muda, os
 usuários descobrem usos inesperados para o sistema. A única certeza é que
 as premissas de hoje serão parcialmente incorretas amanhã. Uma arquitetura
-boa não é aquela que previu todas as mudanças --- é aquela que acomoda
+boa não é aquela que previu todas as mudanças, e sim aquela que acomoda
 mudanças não previstas a um custo razoável.
 
 \subsection{Fitness Functions: Testes Arquiteturais}
@@ -1437,8 +1437,8 @@ A motivação é simples: regras arquiteturais que existem apenas em
 documentação ou na cabeça das pessoas são invariavelmente violadas com o
 tempo. Um arquiteto pode decretar que ``o módulo de apresentação nunca deve
 importar diretamente o módulo de acesso a dados'', mas se essa regra não é
-verificada automaticamente, eventualmente alguém --- pressionado por um
-prazo, ou simplesmente desconhecendo a regra --- vai criar a importação
+verificada automaticamente, eventualmente alguém (pressionado por um
+prazo, ou simplesmente desconhecendo a regra) vai criar a importação
 proibida. E uma vez que a primeira violação passa, as demais seguem
 rapidamente, num fenômeno conhecido como ``broken windows'' (janelas
 quebradas). Fitness functions transformam regras arquiteturais em
@@ -1488,8 +1488,8 @@ def verificar_dependencias_proibidas():
     )
 \end{lstlisting}
 
-Além de verificações de dependência, fitness functions podem monitorar diversos
-aspectos da saúde arquitetural. O tempo de resposta dos endpoints da API pode
+Verificações de dependência são apenas um tipo de fitness function. O tempo de
+resposta dos endpoints da API também pode
 ser verificado automaticamente para garantir que nenhum endpoint leva mais
 que 200ms para responder sob carga normal. Quando um novo endpoint é adicionado
 ou uma mudança causa degradação de performance, a fitness function detecta o
@@ -1510,9 +1510,9 @@ configurações de UI podem ter cobertura de 60\%.
 
 A chave é que fitness functions rodam automaticamente, idealmente no pipeline
 de CI/CD. Se uma mudança de código viola uma restrição arquitetural, o build
-falha --- assim como falharia se um teste unitário quebrasse. Isso transforma
+falha, assim como falharia se um teste unitário quebrasse. Isso transforma
 regras arquiteturais de ``recomendações que todo mundo ignora'' em
-``restrições que o sistema impõe''. A diferença é profunda: recomendações
+``restrições que o sistema impõe''. A diferença é enorme: recomendações
 dependem de disciplina individual, que varia entre pessoas e ao longo do
 tempo. Restrições automatizadas são consistentes e implacáveis.
 
@@ -1525,7 +1525,7 @@ zero (o famoso ``big bang'' que quase sempre falha), o Strangler Fig permite
 migrar funcionalidade por funcionalidade, mantendo o sistema antigo em operação
 durante todo o processo.
 
-O nome do padrão foi cunhado por Martin Fowler em 2004, inspirado por
+Martin Fowler cunhou o nome do padrão em 2004, inspirado por
 figueiras estrangulantes que ele observou em viagens ao Queensland,
 Austrália. Essas árvores germinam no topo de outra árvore, crescem raízes
 que descem pelo tronco do hospedeiro, e eventualmente envolvem completamente
@@ -1567,13 +1567,13 @@ a gestão de contas. Por último, o processamento de transações. O monolito va
 ``encolhendo'' enquanto o novo ecossistema vai ``crescendo'' ao redor dele.
 
 A ordem de migração não é arbitrária. Geralmente começa-se pelos módulos menos
-críticos e mais independentes, por três razões. Primeiro, o risco é menor ---
+críticos e mais independentes, por três razões. Primeiro, o risco é menor:
 se algo der errado com o módulo de relatórios, nenhuma transação é afetada.
 Segundo, a equipe ganha experiência com o processo de migração antes de
 enfrentar os módulos mais complexos. Terceiro, o sucesso inicial cria
 confiança e momentum para as migrações subsequentes.
 
-O padrão Strangler Fig nos ensina algo profundo sobre a natureza da mudança
+O padrão Strangler Fig ensina algo importante sobre a natureza da mudança
 em software: grandes transformações são melhor executadas como uma série de
 pequenas transformações incrementais. Esse princípio se aplica não apenas a
 migrações de sistemas legados, mas a qualquer mudança arquitetural
@@ -1586,7 +1586,7 @@ Para consolidar os conceitos discutidos neste capítulo, vamos percorrer o proce
 completo de design arquitetural de um sistema fintech fictício, mas realista: o
 \textbf{PayFlow}, uma plataforma de pagamentos para pequenos comerciantes. Este
 estudo de caso demonstra como os conceitos que discutimos separadamente se integram
-na prática, cada um contribuindo para decisões que se reforçam mutuamente.
+quando aplicados juntos, cada um contribuindo para decisões que se reforçam mutuamente.
 
 \subsection{Contexto do Negócio}
 
@@ -1604,7 +1604,7 @@ manejáveis por um monolito bem construído em uma única máquina. A projeção
 10x (500 mil transações por dia) também é manejável, embora comece a
 justificar otimizações de performance e talvez separação de workloads de
 leitura e escrita. Microsserviços, com toda sua complexidade operacional,
-não se justificam para esses volumes --- a menos que haja outras razões
+não se justificam para esses volumes, a menos que haja outras razões
 além de performance.
 
 \subsection{Event Storming do Domínio}
@@ -1616,7 +1616,7 @@ eloquente.
 
 O fluxo começa com o onboarding do comerciante: o evento \textbf{ComercianteFoiCadastrado}
 marca o início da relação, seguido por \textbf{DocumentacaoFoiVerificada} (o processo
-de KYC --- Know Your Customer --- exigido por regulamentação financeira), que leva
+de KYC, ou Know Your Customer, exigido por regulamentação financeira), que leva
 a \textbf{ComercianteFoiAprovado} ou \textbf{ComercianteFoiRecusado}, dependendo da
 conformidade documental.
 
@@ -1673,8 +1673,8 @@ A arquitetura hexagonal é adotada dentro de cada módulo, garantindo que a lóg
 de negócio fique isolada da infraestrutura. Isso significa que a futura migração
 para microsserviços será mais barata: cada módulo já tem suas portas definidas,
 e os adaptadores apenas precisarão trocar de ``em processo'' para ``via rede''.
-Essa preparação para o futuro não adiciona complexidade significativa ao presente
---- a arquitetura hexagonal é igualmente benéfica para testabilidade e
+Essa preparação para o futuro não adiciona complexidade significativa ao presente:
+a arquitetura hexagonal é igualmente benéfica para testabilidade e
 manutenibilidade, independente de qualquer migração futura.
 
 \subsection{Fitness Functions do PayFlow}
@@ -1716,7 +1716,7 @@ acidentalmente removidos durante refatorações.
 Essas fitness functions rodam no pipeline de CI a cada pull request. Se qualquer
 uma falhar, o merge é bloqueado. Isso garante que a arquitetura definida hoje
 será respeitada amanhã, mesmo quando a pressão de prazos tentar corroê-la. A
-arquitetura não é protegida por boa vontade ou disciplina individual --- é
+arquitetura não é protegida por boa vontade ou disciplina individual; é
 protegida por automação.
 
 
@@ -1725,8 +1725,8 @@ protegida por automação.
 A era dos LLMs traz novas possibilidades e novos riscos para o trabalho
 arquitetural. A IA generativa pode ser uma aliada poderosa na exploração de
 alternativas, geração de diagramas e identificação de gaps em uma arquitetura
-proposta. Porém, é essencial entender seus limites para usá-la de forma
-eficaz e segura.
+proposta. Porém, seus limites precisam ser compreendidos para que o uso seja
+eficaz e seguro.
 
 O surgimento de modelos de linguagem capazes de discutir arquitetura de
 software com razoável sofisticação mudou a dinâmica do trabalho arquitetural
@@ -1751,7 +1751,7 @@ A IA também é útil para gerar esqueletos de código arquitetural. Dado um dia
 de portas e adaptadores, um LLM pode gerar as interfaces, as classes de domínio
 e os adaptadores iniciais com precisão razoável. Isso acelera o trabalho
 repetitivo e permite que o engenheiro foque na lógica de negócio. A geração de
-boilerplate --- código estrutural necessário mas previsível --- é uma tarefa
+boilerplate (código estrutural necessário mas previsível) é uma tarefa
 onde a IA agrega valor claro sem os riscos de erros sutis que existem em lógica
 de negócio.
 
@@ -1769,9 +1769,9 @@ decisões anteriores. Ela pode sugerir microsserviços com Kubernetes para uma
 startup de três pessoas, ou um monolito para uma empresa com 200 engenheiros.
 As sugestões são tecnicamente válidas, mas contextualmente erradas.
 
-Além disso, a IA tende a reproduzir padrões populares, não necessariamente os
+A IA também tende a reproduzir padrões populares, não necessariamente os
 mais adequados. Se a maioria dos artigos e tutoriais na internet fala sobre
-microsserviços, a IA vai tender a sugeri-los --- mesmo quando um monolito modular
+microsserviços, a IA vai tender a sugeri-los, mesmo quando um monolito modular
 seria claramente superior para o caso em questão. Esse viés de popularidade é
 particularmente perigoso em arquitetura, onde a escolha ``popular'' frequentemente
 não é a escolha ``certa'' para um contexto específico. Microsserviços são o
@@ -1799,13 +1799,13 @@ experiente mas que não conhece a empresa: as sugestões são valiosas como
 pontos de partida, mas precisam ser filtradas pelo conhecimento contextual
 que só quem vive a realidade do projeto possui. O engenheiro que usa IA de
 forma ingênua trata-a como um oráculo infalível e implementa suas sugestões
-sem questionamento --- com resultados previsívelmente ruins.
+sem questionamento, com resultados previsívelmente ruins.
 
 Como discutimos no Capítulo~0, o diferencial do engenheiro não é escrever
 código, é saber \textit{qual} código escrever e \textit{por quê}. Na arquitetura,
 esse diferencial se manifesta em saber \textit{qual} padrão adotar e
 \textit{por que} esse padrão é o certo para este contexto, neste momento, com
-estas restrições. Nenhuma IA --- por mais avançada que seja --- substitui esse
+estas restrições. Nenhuma IA, por mais avançada que seja, substitui esse
 julgamento, porque esse julgamento depende de informações que a IA não tem:
 o que funcionou e o que falhou nas experiências passadas do time, quais são
 as prioridades políticas da organização, quais são as restrições não escritas
@@ -1816,7 +1816,7 @@ que todo insider conhece mas ninguém documenta.
 
 Arquitetura de software não é sobre diagramas bonitos ou frameworks da moda.
 É sobre \textbf{comunicação} e \textbf{decisões}. Comunicação porque a
-arquitetura precisa ser compreendida por todo o time --- do desenvolvedor
+arquitetura precisa ser compreendida por todo o time, do desenvolvedor
 júnior ao CTO. Decisões porque cada escolha arquitetural define o espaço de
 possibilidades futuras do sistema.
 
@@ -1833,12 +1833,12 @@ organizações grandes. Eventos desacoplam componentes temporalmente; serverless
 elimina a gestão de infraestrutura. DDD garante que o software reflita o
 negócio; C4 garante que a arquitetura seja comunicada. ADRs preservam o
 conhecimento; fitness functions protegem as decisões. Nenhuma dessas
-ferramentas é boa ou ruim em abstrato --- cada uma é adequada ou inadequada
+ferramentas é boa ou ruim em abstrato; cada uma é adequada ou inadequada
 para um contexto específico.
 
 O código é consequência de uma arquitetura bem pensada, não a causa de um bom
 sistema. Quando a arquitetura está certa, o código flui naturalmente. Quando
-está errada, nenhuma quantidade de refatoração resolve --- porque o problema não
+está errada, nenhuma quantidade de refatoração resolve, porque o problema não
 está no código, está nas decisões que o precederam. Um engenheiro que entende
 isso investe tempo em pensar antes de codificar, em discutir antes de
 implementar, em registrar antes de esquecer. Esse investimento se paga com
@@ -1847,7 +1847,7 @@ juros compostos ao longo da vida do sistema.
 No próximo capítulo, desceremos um nível de abstração para explorar os princípios
 de design que guiam o código dentro da arquitetura: SOLID, design patterns e as
 práticas que transformam uma boa arquitetura em código de qualidade. Se a
-arquitetura é o mapa, o design de código é a estrada --- e percorrê-la com
+arquitetura é o mapa, o design de código é a estrada, e percorrê-la com
 habilidade faz toda a diferença entre chegar ao destino e se perder no caminho.
 
 

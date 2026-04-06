@@ -12,17 +12,17 @@ engenheiros que usam IA vão substituir os que não usam. Essa frase, repetida
 mudou permanentemente a forma como software é construído, e ignorar isso é
 tão imprudente quanto ignorar o surgimento dos compiladores nos anos 1950.
 
-No entanto, a mudança não é a que muitos imaginam. A IA não transformou
-programação em uma atividade trivial --- ela transformou o \textbf{tipo de
+A mudança, porém, não é a que muitos imaginam. A IA não transformou
+programação em uma atividade trivial. Ela transformou o \textbf{tipo de
 trabalho} que importa. A digitação de código, que já era uma fração pequena
 do trabalho real do engenheiro, ficou ainda menos relevante. O que cresceu
 em importância foi justamente o que este livro defende desde o Capítulo 0:
 o \textbf{pensamento de engenharia}.
 
-A primeira transformação fundamental diz respeito à mudança de mentalidade que a IA
+A primeira transformação diz respeito à mudança de mentalidade que a IA
 exige de todo profissional de software. O engenheiro deixa de ser um operador de IDE
 e passa a ser um \textbf{supervisor intelectual}. Seu trabalho primário não é mais
-digitar código --- é definir o problema com precisão, validar se a solução proposta
+digitar código; é definir o problema com precisão, validar se a solução proposta
 realmente o resolve, e garantir que o código gerado atende a requisitos não-funcionais
 que a IA sequer conhece. Pense em um arquiteto de obras: ele não carrega tijolos, mas
 sem seu projeto, os tijolos não formam nada que se sustente. Da mesma forma, o
@@ -31,18 +31,18 @@ execução mecânica para ferramentas cada vez mais capazes.
 
 Para entender essa nova dinâmica, é preciso ter clareza sobre o que a IA faz
 bem e o que ela faz mal. No campo das competências, a IA se destaca na geração de
-boilerplate --- aquele código repetitivo que todo projeto precisa mas que ninguém gosta
+boilerplate, aquele código repetitivo que todo projeto precisa mas que ninguém gosta
 de escrever. Ela é excelente para sugerir alternativas de implementação quando você já
 sabe o que quer mas não decidiu como. Brilha ao explicar código desconhecido, como
 quando você herda um módulo legado e precisa entender sua lógica em minutos, não em
 dias. Encontra bugs óbvios com eficiência, escreve testes repetitivos sem reclamar,
 traduz entre linguagens de programação com razoável fidelidade, e resume documentação
 extensa em pontos acionáveis. Todas essas são tarefas que consomem tempo mas exigem
-relativamente pouco julgamento --- são tarefas de execução, não de decisão.
+relativamente pouco julgamento: tarefas de execução, não de decisão.
 
 Por outro lado, há um conjunto igualmente importante de coisas que a IA \textbf{não}
-faz bem, e é crucial que o engenheiro internalize essa lista. A IA não entende
-contexto de negócio --- ela não sabe que ``cliente premium'' na sua empresa significa
+faz bem, e o engenheiro precisa internalizar essa lista. A IA não entende
+contexto de negócio. Ela não sabe que ``cliente premium'' na sua empresa significa
 algo diferente de ``cliente'' em um tutorial genérico. Ela não toma decisões de
 trade-off com propriedade, porque trade-offs dependem de valores organizacionais,
 restrições de orçamento e tolerância a risco que nenhum prompt consegue capturar
@@ -58,14 +58,14 @@ reclamar. Parece perfeito, exceto por um detalhe: esse estagiário, às vezes, i
 informações com absoluta confiança. Ele não sabe que não sabe. Quando não tem a
 resposta certa, fabrica uma que \textit{parece} certa. Você, como engenheiro sênior,
 é quem revisa, questiona e decide. A relação hierárquica é clara: você pensa, ele
-executa. Quando essa hierarquia se inverte --- quando o engenheiro aceita cegamente o
-que a IA produz --- é quando os problemas começam.
+executa. Quando essa hierarquia se inverte, quando o engenheiro aceita cegamente o
+que a IA produz, é quando os problemas começam.
 
 Este capítulo mergulha fundo na relação entre engenheiros e IA. Vamos
 entender como os modelos de linguagem funcionam por dentro, explorar padrões
 de colaboração, analisar ferramentas do ecossistema, discutir segurança e
 custos, e construir um modelo mental para saber \textbf{quando} e
-\textbf{como} usar IA --- e quando \textbf{não} usar.
+\textbf{como} usar IA, e quando \textbf{não} usar.
 
 % ------------------------------------------------------------
 \section{O Que São LLMs e Como Funcionam}
@@ -73,7 +73,7 @@ custos, e construir um modelo mental para saber \textbf{quando} e
 Para usar uma ferramenta com eficácia, é preciso entender suas capacidades
 e limitações fundamentais. Você não precisa ser um pesquisador de machine
 learning, mas precisa ter um modelo mental correto de como LLMs operam.
-Sem isso, você vai tratá-los como oráculos mágicos --- e vai se frustrar
+Sem isso, você vai tratá-los como oráculos mágicos e vai se frustrar
 quando eles falharem de formas aparentemente inexplicáveis.
 
 Há uma analogia útil para começar. Quando você lê uma frase em português, seu cérebro
@@ -82,7 +82,7 @@ gente esperando'', você imediatamente entende que ``banco'' se refere a uma ag�
 bancária ou a um assento, dependendo do contexto mais amplo do texto. Se a frase
 anterior mencionava uma praça, ``banco'' é um assento. Se mencionava dinheiro, é uma
 agência. Seu cérebro faz isso automaticamente, consultando o contexto para resolver
-ambiguidades. Os LLMs fazem algo surpreendentemente parecido --- mas usando matemática
+ambiguidades. Os LLMs fazem algo surpreendentemente parecido, mas usando matemática
 em vez de neurônios biológicos.
 
 \subsection{A Arquitetura Transformer}
@@ -90,17 +90,17 @@ em vez de neurônios biológicos.
 Todo LLM moderno (GPT, Claude, Gemini, LLaMA) é baseado na arquitetura
 \textbf{Transformer}, proposta no artigo ``Attention Is All You Need''
 (Vaswani et al., 2017). Para o engenheiro de software, entender essa
-arquitetura não é um exercício acadêmico --- é a chave para compreender
+arquitetura não é um exercício acadêmico. É a chave para compreender
 por que a IA acerta quando acerta e erra quando erra.
 
-O Transformer é, em essência, um sistema que recebe uma sequência de \textbf{tokens}
---- que podem ser palavras completas, subpalavras ou até caracteres individuais --- e,
+O Transformer é um sistema que recebe uma sequência de \textbf{tokens}
+(que podem ser palavras completas, subpalavras ou até caracteres individuais) e,
 para cada token nessa sequência, calcula \textbf{quanta atenção} deve dedicar a cada
 outro token. Voltando à analogia da leitura: quando seu cérebro encontra a palavra
 ``banco'', ele ``presta atenção'' às palavras vizinhas para decidir o significado. O
 Transformer faz exatamente isso, mas de forma explícita e quantificável.
 
-Essa atenção é computada por meio de operações de álgebra linear --- especificamente,
+Essa atenção é computada por meio de operações de álgebra linear, especificamente
 multiplicações de matrizes. Para cada token, o modelo calcula três vetores:
 \textbf{Query} (``o que estou procurando?''), \textbf{Key} (``o que eu ofereço como
 contexto?'') e \textbf{Value} (``o que eu entrego se for considerado relevante?'').
@@ -111,7 +111,7 @@ relevante (Value). O mecanismo de atenção funciona de forma análoga: para cad
 o modelo compara seu Query com os Keys de todos os outros tokens e extrai os Values
 dos mais relevantes.
 
-O aspecto verdadeiramente revolucionário é o mecanismo de \textbf{self-attention}, que
+O aspecto revolucionário é o mecanismo de \textbf{self-attention}, que
 permite ao modelo capturar dependências de longo alcance dentro do texto. Isso tem
 implicações diretas para código. Quando o modelo gera código e encontra uma instrução
 \texttt{return}, o mecanismo de self-attention permite que esse token ``preste atenção''
@@ -121,14 +121,14 @@ até a declaração da classe, seus atributos e a interface que implementa. Essa
 de relacionar partes distantes do texto é o que torna os Transformers tão eficazes com
 código, que é inerentemente estruturado e cheio de referências cruzadas.
 
-Além disso, o Transformer não usa apenas uma ``cabeça'' de atenção, mas múltiplas
-operando em paralelo --- tipicamente 32, 64 ou até 128 em modelos grandes. Cada
+O Transformer não usa apenas uma ``cabeça'' de atenção, mas múltiplas
+operando em paralelo, tipicamente 32, 64 ou até 128 em modelos grandes. Cada
 cabeça captura um tipo diferente de relação. Uma cabeça pode se especializar em
 relações sintáticas (identificando que um parêntese de abertura precisa de um de
 fechamento), outra em relações semânticas (conectando o nome de uma variável ao seu
 valor), e outra em relações estruturais (ligando uma chamada de função à sua
 definição). Essa multiplicidade de perspectivas é o que permite ao modelo ter uma
-compreensão surpreendentemente rica da estrutura do código --- embora, como veremos,
+compreensão surpreendentemente rica da estrutura do código, embora, como veremos,
 ``compreensão'' seja uma palavra generosa demais para o que realmente acontece.
 
 \subsection{Tokenização e Predição}
@@ -157,7 +157,7 @@ tem \textit{menos} espaço efetivo na janela de contexto ao trabalhar em portugu
 
 Para código, a tokenização tem peculiaridades próprias. Um operador como \texttt{===}
 pode ser um único token ou ser dividido em dois ou três, dependendo do tokenizador.
-Espaços e indentação consomem tokens --- código com indentação de 8 espaços consome
+Espaços e indentação consomem tokens: código com indentação de 8 espaços consome
 mais tokens do que código com 2 espaços, o que significa que decisões triviais de
 formatação afetam diretamente quanto código cabe na janela de contexto. Nomes de
 variáveis em camelCase como \texttt{calculateTotalPrice} tendem a ser tokenizados de
@@ -166,7 +166,7 @@ porque o underscore é geralmente um token separado.
 
 Após a tokenização, entra em cena o mecanismo fundamental dos LLMs: a \textbf{predição
 autorregressiva}. O modelo prevê o \textbf{próximo token} com base em todos os tokens
-anteriores. Ele não ``pensa'' no sentido humano da palavra --- ele calcula uma
+anteriores. Ele não ``pensa'' no sentido humano da palavra. Ele calcula uma
 distribuição de probabilidade sobre todo o seu vocabulário (que pode ter 50 mil, 100
 mil ou mais tokens) e seleciona o token mais provável, ou amostra dessa distribuição
 com um parâmetro chamado \textbf{temperatura}. Temperatura baixa (próxima de 0) faz
@@ -174,21 +174,21 @@ o modelo sempre escolher o token mais provável, produzindo saídas determiníst
 conservadoras. Temperatura alta (próxima de 1 ou acima) introduz mais aleatoriedade,
 produzindo saídas mais criativas mas potencialmente menos coerentes.
 
-A implicação fundamental dessa mecânica é profunda e precisa ser internalizada: o
+A implicação dessa mecânica precisa ser internalizada: o
 modelo não ``entende'' seu código. Ele aprendeu \textbf{padrões estatísticos} de
 trilhões de tokens de código, documentação, fóruns, repositórios open source,
-perguntas do Stack Overflow e respostas da Wikipedia. Quando gera algo correto --- e
-frequentemente gera ---, é porque esse padrão existia nos dados de treinamento e se
-aplica ao seu contexto. Quando alucina --- e inevitavelmente alucinará ---, é porque
+perguntas do Stack Overflow e respostas da Wikipedia. Quando gera algo correto (e
+frequentemente gera), é porque esse padrão existia nos dados de treinamento e se
+aplica ao seu contexto. Quando alucina (e inevitavelmente alucinará), é porque
 o padrão mais provável na distribuição estatística \textbf{não é} o correto para seu
 contexto específico. A IA não distingue entre gerar uma função correta e inventar uma
-API que não existe --- para ela, ambas são simplesmente sequências de tokens com alta
+API que não existe; para ela, ambas são simplesmente sequências de tokens com alta
 probabilidade dado o contexto.
 
 \subsection{Context Window: A Memória de Trabalho}
 
 A \textbf{janela de contexto} é a quantidade máxima de tokens que o modelo consegue
-processar simultaneamente --- é, por assim dizer, sua memória de trabalho. Em 2024,
+processar simultaneamente, ou seja, sua memória de trabalho. Em 2024,
 essa janela variava dramaticamente entre modelos: de 8K tokens em modelos menores e
 mais antigos, passando por 128K tokens no GPT-4, chegando a 200K tokens no Claude 3
 e até 1M--2M tokens em modelos especializados ou com técnicas de compressão de
@@ -201,7 +201,7 @@ corporativo médio tem facilmente 100 mil linhas, e projetos grandes podem ter
 milhões. Isso significa que o modelo está literalmente cego para a maior parte do
 sistema quando opera sem ferramentas complementares. É como pedir a um consultor
 que resolva o problema de performance da sua aplicação, mas só deixá-lo ver um
-arquivo --- ele pode até dar boas sugestões para aquele arquivo específico, mas
+arquivo. Ele pode até dar boas sugestões para aquele arquivo específico, mas
 não tem como avaliar o impacto sistêmico.
 
 Uma armadilha particularmente traiçoeira é o fenômeno que pesquisadores chamam de
@@ -209,18 +209,18 @@ Uma armadilha particularmente traiçoeira é o fenômeno que pesquisadores chama
 informações colocadas no meio de contextos muito longos tendem a ser ``esquecidas''
 ou receber menos peso do que informações no início e no final. Isso tem uma
 implicação prática direta: ao construir prompts longos, coloque as informações mais
-críticas --- a pergunta principal, as restrições mais importantes, o código mais
-relevante --- no início e no final do prompt. O meio é o lugar para contexto
+críticas (a pergunta principal, as restrições mais importantes, o código mais
+relevante) no início e no final do prompt. O meio é o lugar para contexto
 complementar, não para informações essenciais.
 
-A implicação prática mais ampla é que fornecer contexto relevante --- e \textbf{apenas}
-contexto relevante --- é uma habilidade crítica do engenheiro que trabalha com IA.
+A implicação prática mais ampla é que fornecer contexto relevante, e \textbf{apenas}
+contexto relevante, é uma habilidade crítica do engenheiro que trabalha com IA.
 A tentação é jogar todo o repositório no prompt e deixar o modelo se virar. Isso não
 funciona. O modelo fica sobrecarregado, perde informações importantes no mar de
 irrelevância, e produz respostas genéricas. A abordagem correta é curar o contexto:
 selecionar cuidadosamente os arquivos, interfaces, specs e trechos de código que são
-relevantes para a tarefa específica. Essa curadoria é, em si, um ato de engenharia ---
-exige entender o problema bem o suficiente para saber o que é relevante.
+relevantes para a tarefa específica. Essa curadoria é, em si, um ato de engenharia.
+Exige entender o problema bem o suficiente para saber o que é relevante.
 
 \subsection{Alucinação: Feature, Não Bug}
 
@@ -236,13 +236,13 @@ futuras dos modelos vão eliminar. Mas a verdade é mais nuançada: a alucinaç�
 consequência direta e inevitável do mecanismo de predição probabilística. O modelo
 gera o token \textbf{mais provável} dado o contexto, não o token \textbf{mais
 correto}. Quando há sobreposição entre ``mais provável'' e ``mais correto'', o
-modelo acerta. Quando não há --- e isso acontece com frequência em domínios
-especializados, código recente ou combinações inéditas de tecnologias ---, o modelo
+modelo acerta. Quando não há (e isso acontece com frequência em domínios
+especializados, código recente ou combinações inéditas de tecnologias), o modelo
 produz algo que \textit{parece} correto porque segue os padrões estatísticos do
 que ``deveria vir a seguir'', mesmo que o conteúdo concreto seja fabricado.
 
 Há também o problema do \textbf{cutoff de conhecimento}. Todo modelo tem uma data
-de corte no treinamento --- ele simplesmente não sabe nada que aconteceu depois
+de corte no treinamento. Ele simplesmente não sabe nada que aconteceu depois
 dessa data. Uma biblioteca lançada na semana passada é invisível para o modelo.
 Uma versão nova de um framework que mudou completamente sua API vai gerar confusão:
 o modelo vai sugerir a API antiga com total confiança, porque é a que ele conhece.
@@ -272,20 +272,20 @@ vamos construir a intuição desde o início.
 
 Imagine que você é um consultor contratado para resolver um problema técnico em uma
 empresa que você nunca visitou. Você tem vasto conhecimento genérico sobre engenharia
-de software --- frameworks, padrões, boas práticas --- mas não sabe nada sobre o
+de software (frameworks, padrões, boas práticas), mas não sabe nada sobre o
 sistema específico dessa empresa: sua arquitetura, suas convenções, suas peculiaridades.
 Agora imagine duas situações. Na primeira, o time da empresa simplesmente descreve o
 problema verbalmente e espera que você resolva com base no seu conhecimento geral. Na
-segunda, além de descrever o problema, o time entrega para você os documentos relevantes:
+segunda, o time também entrega os documentos relevantes:
 o diagrama de arquitetura, o código dos módulos envolvidos, a spec da API, e o histórico
 de decisões técnicas. Em qual situação você resolveria o problema melhor?
 
-RAG é exatamente essa segunda situação, aplicada a LLMs. Ele combina dois componentes
-fundamentais que trabalham em conjunto para produzir respostas muito melhores do que
+RAG é essa segunda situação, aplicada a LLMs. Ele combina dois componentes
+que trabalham em conjunto para produzir respostas muito melhores do que
 o modelo conseguiria sozinho.
 
 O primeiro componente é o \textbf{Retrieval} (Recuperação). Dado um prompt do usuário,
-o sistema busca documentos relevantes em uma base de conhecimento --- que pode ser o
+o sistema busca documentos relevantes em uma base de conhecimento, que pode ser o
 codebase do projeto, documentação interna, wikis, specs de API, histórico de PRs, ou
 qualquer outra fonte de informação estruturada ou semi-estruturada. Essa busca não é
 uma simples pesquisa por palavras-chave: ela usa \textbf{embeddings} (representações
@@ -322,15 +322,15 @@ transparente para o usuário.
 A aplicação mais imediata de RAG na engenharia de software é a \textbf{indexação do
 codebase}. Ferramentas como Cursor e Continue.dev implementam isso de forma integrada:
 elas processam todo o repositório, criam embeddings para cada arquivo, função e classe,
-e armazenam esses vetores em um índice local. Quando você faz uma pergunta --- ``como
+e armazenam esses vetores em um índice local. Quando você faz uma pergunta (``como
 funciona a autenticação neste projeto?'' ou ``onde está implementada a lógica de
-desconto?'' --- o sistema busca os arquivos mais relevantes semanticamente e os injeta
+desconto?''), o sistema busca os arquivos mais relevantes semanticamente e os injeta
 automaticamente no contexto do LLM. O resultado é que o modelo responde como se
 ``conhecesse'' seu projeto, mesmo que nunca o tenha visto antes do momento da consulta.
 
 Outro uso poderoso é tratar \textbf{documentação como contexto}. Em vez de esperar que
-o LLM ``saiba'' sobre sua API interna --- algo impossível, já que APIs internas não
-estavam nos dados de treinamento ---, você pode indexar toda a documentação da empresa:
+o LLM ``saiba'' sobre sua API interna (algo impossível, já que APIs internas não
+estavam nos dados de treinamento), você pode indexar toda a documentação da empresa:
 Swagger/OpenAPI specs, documentos de design, ADRs (Architecture Decision Records),
 runbooks de operação, e até mensagens relevantes do Slack. Quando um engenheiro
 pergunta ``como implementar a integração com o sistema de faturamento?'', o RAG traz
@@ -338,7 +338,7 @@ automaticamente as specs relevantes, e o LLM gera uma resposta baseada na sua
 documentação real, não em suposições genéricas.
 
 A qualidade do RAG depende criticamente de como o código é dividido em blocos para
-indexação --- um processo chamado \textbf{chunking}. A abordagem ingênua de dividir
+indexação, um processo chamado \textbf{chunking}. A abordagem ingênua de dividir
 o texto em blocos de N tokens funciona para prosa, mas é desastrosa para código.
 Imagine cortar uma função ao meio: a primeira metade vai para um chunk, a segunda
 para outro. O embedding de cada metade vai capturar apenas parte do significado, e
@@ -347,7 +347,7 @@ o AST (Abstract Syntax Tree) para dividir por unidades semânticas: funções, c
 módulos, blocos de configuração. Assim, cada chunk é uma unidade de significado
 completa, e os embeddings capturam adequadamente o que cada unidade faz.
 
-Há uma conexão direta e poderosa entre RAG e a modelagem RM-ODP que discutimos no
+Existe uma conexão direta e poderosa entre RAG e a modelagem RM-ODP que discutimos no
 Capítulo 1. As especificações de viewpoints são documentos ideais para indexação RAG.
 Quando o engenheiro pergunta ``como implementar o serviço de pagamento?'', um sistema
 de RAG bem configurado pode trazer automaticamente as specs de Enterprise viewpoint
@@ -363,7 +363,7 @@ precisa do que produziria sem elas.
 
 Assim como carros autônomos têm níveis de autonomia (SAE 0-5), podemos
 classificar ferramentas de IA para engenharia de software em cinco níveis
-progressivos. Essa classificação não é apenas teórica --- ela é uma
+progressivos. Essa classificação não é apenas teórica. Ela é uma
 ferramenta prática para decidir quanto confiar na IA em cada situação.
 
 \begin{figure}[htbp]
@@ -381,10 +381,10 @@ sugestão inline.
 O risco nesse nível é baixo, porque o engenheiro mantém controle total sobre cada
 aceitação. Cada sugestão é uma linha ou fragmento pequeno, visível na totalidade antes
 de ser incorporado. O valor principal está na economia de digitação e na redução de
-erros de sintaxe --- aqueles erros bobos que todo mundo comete, como esquecer um
+erros de sintaxe, aqueles erros bobos que todo mundo comete, como esquecer um
 parêntese ou errar a ordem dos parâmetros. A exigência cognitiva é mínima: basta ler
 a sugestão, confirmar que faz sentido, e aceitar com um Tab. É o equivalente digital
-de ter alguém terminando suas frases --- útil quando a frase é previsível, mas
+de ter alguém terminando suas frases. Útil quando a frase é previsível, mas
 potencialmente irritante quando a sugestão está errada e interrompe seu fluxo de
 pensamento.
 
@@ -395,7 +395,7 @@ descreve a intenção (via comentário ou docstring) e a IA gera a
 implementação.
 
 Aqui o risco sobe para moderado, porque blocos maiores de código têm mais superfície
-para erros sutis --- aqueles bugs que não são de sintaxe, mas de lógica. Uma função
+para erros sutis, aqueles bugs que não são de sintaxe, mas de lógica. Uma função
 que parece correta na leitura rápida pode ter um off-by-one error escondido, ou pode
 tratar um caso limite de forma incorreta. O valor, porém, é uma aceleração
 significativa para lógica que é bem definida e não ambígua. Implementar um algoritmo
@@ -413,8 +413,8 @@ contexto da conversa e do projeto.
 O risco nesse nível varia de moderado a alto, e por uma razão que nem sempre é
 óbvia: a IA pode influenciar decisões de design de formas sutis. Quando você
 pede sugestões e a IA apresenta três alternativas, a forma como ela as apresenta
---- qual vem primeiro, qual recebe mais detalhes, qual tom usa para descrever cada
-uma --- pode enviesar sua decisão, especialmente se você não tem uma opinião
+(qual vem primeiro, qual recebe mais detalhes, qual tom usa para descrever cada
+uma) pode enviesar sua decisão, especialmente se você não tem uma opinião
 técnica forte sobre o assunto. O valor, por outro lado, é enorme para brainstorm
 técnico e exploração rápida de alternativas. A IA como par programador permite que
 você ``pense em voz alta'' com um interlocutor que nunca se cansa, nunca julga, e
@@ -429,7 +429,7 @@ código, rodar testes, iterar), mas requer aprovação humana em pontos-chave.
 
 O risco é alto porque erros podem se propagar por múltiplos arquivos e múltiplos
 passos antes que o engenheiro tenha a oportunidade de revisar. Imagine que o agente
-comete um erro conceitual no passo 2 de uma tarefa de 10 passos --- todos os passos
+comete um erro conceitual no passo 2 de uma tarefa de 10 passos. Todos os passos
 subsequentes são construídos sobre essa fundação errada, e quando o changeset final
 chega para revisão, o engenheiro precisa não apenas encontrar o erro original, mas
 entender como ele contaminou todo o restante. O valor, entretanto, é a automação
@@ -446,11 +446,11 @@ entrega a solução. Atualmente experimental e inadequado para produção na
 maioria dos cenários.
 
 O risco é muito alto, e não apenas tecnicamente. Sem supervisão humana, erros podem
-ser catastróficos --- e ``catastrófico'' aqui não é hipérbole. Um agente autônomo com
+ser catastróficos, e ``catastrófico'' aqui não é hipérbole. Um agente autônomo com
 acesso ao codebase e ao pipeline de deploy poderia, em teoria, introduzir uma
 vulnerabilidade de segurança e colocá-la em produção sem que nenhum humano tenha
 revisado o código. O valor potencial é transformador para tarefas repetitivas e
-extremamente bem definidas --- como atualizar uma dependência em 200 repositórios
+extremamente bem definidas, como atualizar uma dependência em 200 repositórios
 seguindo exatamente o mesmo padrão. Mas a exigência cognitiva é, paradoxalmente,
 altíssima: definir objetivos com precisão suficiente para que o agente faça
 exatamente o que você quer (e nada mais) é uma tarefa de engenharia em si, e
@@ -460,8 +460,8 @@ redobrada.
 % ------------------------------------------------------------
 \section{Modelos de Colaboração Humano-IA}
 
-A eficácia da IA depende fundamentalmente do \textbf{padrão de interação}
-que o engenheiro adota. Não existe um modo único --- diferentes tarefas
+A eficácia da IA depende do \textbf{padrão de interação}
+que o engenheiro adota. Não existe um modo único; diferentes tarefas
 exigem diferentes modelos de colaboração. A diferença entre um engenheiro que
 usa IA com maestria e um que apenas ``conversa com o chatbot'' está
 justamente na escolha consciente do modelo de colaboração adequado para
@@ -479,7 +479,7 @@ Neste modelo, a dinâmica é de diálogo contínuo: você descreve o problema, a
 implementa, você revisa, ela ajusta. É uma dança iterativa que funciona
 excepcionalmente bem para lógica bem definida e algoritmos conhecidos.
 
-Imagine o cenário: Rafael, engenheiro backend, precisa implementar validação de CPF.
+Considere o cenário: Rafael, engenheiro backend, precisa implementar validação de CPF.
 Ele sabe o algoritmo, mas não quer gastar 20 minutos escrevendo e testando o código
 do zero. Ele abre o chat da IA e diz: ``Implemente uma função que valide CPF
 brasileiro. Deve verificar dígitos verificadores, aceitar formato com e sem pontuação,
@@ -497,6 +497,7 @@ do domínio e os adiciona manualmente.
 # Engenheiro fornece contexto e especificacao:
 # "Implemente uma funcao que valide CPF brasileiro.
 #  Deve verificar digitos verificadores, aceitar
+#  formato com e sem pontuacao, rejeitar sequencias
 #  formato com e sem pontuacao, rejeitar sequencias
 #  repetidas como 111.111.111-11."
 
@@ -535,7 +536,7 @@ def validar_cpf(cpf: str) -> bool:
 # - Testes unitarios (pedir a IA para gerar)
 \end{lstlisting}
 
-A chave desse modelo é a iteração. O engenheiro não aceita a primeira versão --- ele
+A chave desse modelo é a iteração. O engenheiro não aceita a primeira versão. Ele
 dialoga, refina, e aplica seu conhecimento de domínio para moldar o resultado final.
 A IA faz o trabalho braçal; o engenheiro garante que o trabalho faz sentido.
 
@@ -554,7 +555,7 @@ milhares de resultados, e o uso de \texttt{console.log} em vez de um logger
 estruturado. Fernanda corrige os dois primeiros problemas imediatamente, e para o
 terceiro, anota como tech debt para a próxima sprint.
 
-Mas é crucial entender as limitações desse modelo: a revisão de IA \textbf{não
+Mas as limitações desse modelo precisam ser compreendidas: a revisão de IA \textbf{não
 substitui} a revisão humana de design e adequação ao domínio. A IA pode encontrar que
 seu código tem uma vulnerabilidade de SQL injection, mas não pode avaliar se a
 abordagem inteira de busca está alinhada com a arquitetura do sistema, se o
@@ -569,37 +570,37 @@ colaboração, e é frequentemente o ponto de entrada para engenheiros que estã
 a usar IA.
 
 O cenário típico: Lucas, engenheiro fullstack, precisa criar um novo microserviço de
-notificações. Ele sabe exatamente a arquitetura --- Express + TypeScript + Prisma,
-seguindo o mesmo padrão dos outros serviços do time. Ele abre o chat e pede: ``Crie a
+notificações. Ele sabe exatamente a arquitetura (Express + TypeScript + Prisma,
+seguindo o mesmo padrão dos outros serviços do time). Ele abre o chat e pede: ``Crie a
 estrutura base de um microserviço Express com TypeScript e Prisma. Preciso de: setup
 do Express com middleware de CORS e JSON, configuração do Prisma com PostgreSQL,
 estrutura de pastas seguindo Clean Architecture, Dockerfile multi-stage, e
 docker-compose para desenvolvimento local.'' Em dois minutos, a IA gera toda a
 estrutura que Lucas levaria uma hora para montar manualmente, incluindo configurações
 que ele sempre esquece (como o \texttt{tsconfig.json} com as flags corretas). Lucas
-revisa rapidamente --- a estrutura está correta porque segue padrões amplamente
-conhecidos --- e começa a trabalhar na lógica de negócio, que é onde seu tempo
+revisa rapidamente. A estrutura está correta porque segue padrões amplamente
+conhecidos, e ele começa a trabalhar na lógica de negócio, que é onde seu tempo
 realmente agrega valor.
 
 A filosofia aqui é clara: delegue a digitação repetitiva, concentre-se na lógica de
 negócio. A IA não precisa entender seu domínio para gerar um CRUD genérico ou
 configurar um pipeline de build. Essas são tarefas mecânicas que seguem padrões
-bem estabelecidos, e é exatamente o tipo de trabalho em que LLMs se destacam.
+bem estabelecidos, e é o tipo de trabalho em que LLMs se destacam.
 
 \subsection{IA como Tutor}
 
 Este modelo é subutilizado e merece muito mais atenção do que recebe. A IA como
-tutor não gera código --- ela gera compreensão.
+tutor não gera código. Ela gera compreensão.
 
 O cenário: Camila, engenheira júnior, ingressou em um time que usa Kafka extensivamente.
 Ela leu a documentação oficial, mas ainda não tem a intuição de como tudo se encaixa.
 Ela abre o chat e começa um diálogo socrático: ``Explique como funciona o Event Loop do
 JavaScript, mas assuma que eu sei programação síncrona e não sei nada de assíncrono.''
-A IA começa com uma analogia --- um restaurante com um único garçom que anota todos os
+A IA começa com uma analogia: um restaurante com um único garçom que anota todos os
 pedidos e os encaminha para a cozinha, voltando para anotar o próximo enquanto os
 anteriores são preparados. Camila entende a ideia geral, mas quer ir mais fundo:
 ``Como isso se relaciona com Promises?'' A IA expande a analogia: cada pedido
-encaminhado para a cozinha é uma Promise --- a garantia de que o prato vai chegar, sem
+encaminhado para a cozinha é uma Promise, a garantia de que o prato vai chegar, sem
 saber exatamente quando. Camila então conecta com seu trabalho real: ``E como Kafka se
 compara? Também é assíncrono, certo?'' A IA diferencia: Kafka é assíncrono entre
 \textit{sistemas}, não entre operações dentro de um programa; é uma fila de mensagens
@@ -613,8 +614,8 @@ de exagerar.
 \subsection{IA como Explorador de Alternativas}
 
 O último modelo de colaboração é o brainstorm técnico estruturado. Aqui, o engenheiro
-não quer código nem explicação --- quer opções. ``Quais abordagens existem para
-implementar rate limiting distribuído?'' --- e a IA apresenta múltiplas abordagens
+não quer código nem explicação; quer opções. ``Quais abordagens existem para
+implementar rate limiting distribuído?'' A IA apresenta múltiplas abordagens
 com trade-offs detalhados.
 
 O cenário: Pedro, tech lead de uma plataforma de e-commerce, precisa decidir como
@@ -642,25 +643,25 @@ de software.
 \subsection{O Que Define um Agente de Código}
 
 Um agente de código se diferencia de um chatbot por quatro características
-fundamentais que, juntas, permitem uma forma qualitativamente diferente de
+que, juntas, permitem uma forma qualitativamente diferente de
 interação.
 
 A primeira é o \textbf{planejamento}. Enquanto um chatbot responde a cada mensagem
 de forma independente, um agente decompõe uma tarefa complexa em passos menores e
 executa cada um na ordem correta. Se você pede ``adicione paginação ao endpoint de
-listagem de usuários'', o agente não tenta gerar todo o código de uma vez --- ele
+listagem de usuários'', o agente não tenta gerar todo o código de uma vez. Ele
 planeja: primeiro vou ler o código atual, depois entender o schema, depois modificar
 o endpoint, depois atualizar os testes, depois validar.
 
 A segunda característica é o \textbf{uso de ferramentas}. O agente não é limitado a
-gerar texto --- ele pode executar comandos no terminal, ler e escrever arquivos no
+gerar texto. Ele pode executar comandos no terminal, ler e escrever arquivos no
 sistema de arquivos, rodar suítes de testes, fazer chamadas HTTP, navegar na web para
 consultar documentação, e interagir com APIs externas. Essa capacidade de agir no
 mundo, não apenas de falar sobre ele, é o que torna agentes fundamentalmente diferentes
 de chatbots.
 
 A terceira é o \textbf{loop de feedback}. Quando o agente executa uma ação e algo dá
-errado --- um teste falha, o código não compila, um linter reporta um erro ---, ele
+errado (um teste falha, o código não compila, um linter reporta um erro), ele
 observa o resultado, analisa a causa do problema, e itera automaticamente. Esse ciclo
 de ação-observação-correção pode se repetir várias vezes até que o agente chegue a um
 resultado satisfatório ou determine que precisa de ajuda humana.
@@ -695,14 +696,14 @@ receita para frustração e problemas em produção.
 
 A mais insidiosa é a \textbf{propagação de erros}. Quando um agente comete um erro no
 passo 3 de uma tarefa de 10 passos, esse erro pode se propagar silenciosamente até o
-passo 9, contaminando cada decisão subsequente. O resultado final pode ``funcionar'' ---
-os testes passam, o código compila --- mas estar conceitualmente errado. Por exemplo,
+passo 9, contaminando cada decisão subsequente. O resultado final pode ``funcionar''
+(os testes passam, o código compila), mas estar conceitualmente errado. Por exemplo,
 o agente pode ter interpretado ``paginação'' como paginação por offset quando o sistema
 já usa cursor-based pagination em todos os outros endpoints. O código funciona, mas
 quebra a consistência da API e confunde os consumidores.
 
 Outra limitação importante é o \textbf{escopo}. Agentes funcionam bem para tarefas
-contidas --- um endpoint, um módulo, uma correção localizada. Mas tarefas que cruzam
+contidas: um endpoint, um módulo, uma correção localizada. Tarefas que cruzam
 múltiplos serviços, que exigem mudanças coordenadas em repositórios diferentes, ou
 que dependem de decisões de design que afetam a arquitetura global do sistema ainda
 são problemáticas. O agente não tem a visão panorâmica necessária para essas tarefas,
@@ -716,10 +717,10 @@ de milhares, custando dezenas de dólares em chamadas de API. Em escala de time,
 múltiplos engenheiros usando agentes diariamente, o custo pode ser significativo.
 
 Finalmente, há o problema da \textbf{falsa confiança}. O agente pode declarar ``tarefa
-concluída'' quando na verdade cobriu apenas o happy path. Os testes que ele gerou passam,
-mas são testes que testam apenas os cenários óbvios. Os casos de borda --- o que
+concluída'' quando cobriu apenas o happy path. Os testes que ele gerou passam,
+mas são testes que testam apenas os cenários óbvios. Os casos de borda (o que
 acontece quando o banco está fora do ar, quando o request vem com dados malformados,
-quando dois requests chegam simultaneamente --- não foram considerados. E o engenheiro,
+quando dois requests chegam simultaneamente) não foram considerados. E o engenheiro,
 vendo que ``todos os testes passam'', pode ser induzido a uma confiança que não é
 justificada.
 
@@ -732,7 +733,7 @@ A primeira é a integração nativa com pipelines de CI/CD. Em vez de operar no 
 local do desenvolvedor, agentes executarão em branches isoladas dentro do pipeline de
 integração contínua, onde seus erros não podem contaminar o ambiente de ninguém. O
 agente cria uma branch, faz suas modificações, roda a suíte completa de testes e
-análises estáticas, e só então apresenta o resultado para revisão humana --- com toda
+análises estáticas, e só então apresenta o resultado para revisão humana, com toda
 a evidência de que o código funciona no ambiente real.
 
 A segunda direção é o uso de verificação formal como guardrails automáticos. Em vez de
@@ -747,7 +748,7 @@ solução; o agente revisor tenta encontrar falhas. O resultado é uma solução
 sobreviveu a um processo de escrutínio, não apenas de geração.
 
 A quarta direção é a memória persistente de projeto. Agentes que não apenas executam
-tarefas, mas aprendem padrões e convenções ao longo do tempo --- quais abordagens o
+tarefas, mas aprendem padrões e convenções ao longo do tempo: quais abordagens o
 time prefere, quais padrões de código são aceitos nos PRs, quais tipos de erros são
 mais comuns no codebase. Essa memória cumulativa tornaria o agente progressivamente
 mais eficaz conforme trabalha com o mesmo time e o mesmo projeto.
@@ -835,7 +836,7 @@ design, e para qual tipo de engenheiro ela foi pensada.
 O \textbf{GitHub Copilot} é a ferramenta que você quase esquece que está lá. Sua
 filosofia é de mínima fricção: ele vive como uma extensão do seu editor, sugere
 código inline enquanto você digita, e você aceita com Tab ou ignora e continua
-digitando. Não há troca de contexto --- você não precisa abrir uma aba diferente,
+digitando. Não há troca de contexto. Você não precisa abrir uma aba diferente,
 escrever um prompt, ou mudar seu fluxo de trabalho. Isso é tanto sua maior força
 quanto sua maior limitação. A força é que a barreira de adoção é praticamente zero:
 instale, ative, e comece a usar. A limitação é que as sugestões são baseadas
@@ -843,15 +844,15 @@ principalmente no arquivo atual e em alguns arquivos vizinhos, sem visão do pro
 como um todo. Para completar uma linha de código ou gerar uma função pequena que segue
 um padrão local, é excelente. Para entender como seu novo código se encaixa na
 arquitetura maior, é insuficiente. A experiência é como ter alguém olhando por cima
-do seu ombro e terminando suas frases --- útil com frases previsíveis, estranho com
+do seu ombro e terminando suas frases. Útil com frases previsíveis, estranho com
 frases complexas.
 
-O \textbf{Cursor} representa uma filosofia fundamentalmente diferente: a IA não é um
-add-on ao editor, mas sim o editor. Todo o IDE foi construído ao redor da ideia de que
+O \textbf{Cursor} representa uma filosofia diferente: a IA não é um
+add-on ao editor, mas o próprio editor. Todo o IDE foi construído ao redor da ideia de que
 a IA é um cidadão de primeira classe no fluxo de desenvolvimento. Isso se manifesta de
 várias formas: o Cursor indexa todo o seu repositório e usa RAG para trazer contexto
 relevante automaticamente. Quando você abre o chat e pergunta algo sobre o projeto, o
-Cursor busca os arquivos relacionados e os inclui no prompt --- você não precisa
+Cursor busca os arquivos relacionados e os inclui no prompt. Você não precisa
 copiar e colar manualmente. O modo de edição multi-arquivo permite que a IA modifique
 vários arquivos simultaneamente, mostrando um diff unificado que você revisa antes de
 aceitar. A curva de aprendizado é mais íngreme que a do Copilot, e a dependência de
@@ -863,7 +864,7 @@ O \textbf{Claude}, tanto na interface web quanto via Claude Code (CLI), é pensa
 conversas profundas e tarefas complexas. Sua filosofia é de raciocínio longo: a janela
 de contexto de 200K+ tokens permite incluir documentos extensos, codebases inteiros de
 projetos menores, e specs detalhadas em uma única conversa. O Claude Code leva isso
-adiante com capacidade agêntica --- ele pode ler arquivos, escrever código, rodar
+adiante com capacidade agêntica. Ele pode ler arquivos, escrever código, rodar
 comandos no terminal e iterar sobre resultados, tudo dentro de uma sessão
 conversacional. A experiência é menos de ``assistente que completa meu código'' e mais
 de ``colega sênior com quem discuto design e que depois implementa o que decidimos''.
@@ -889,7 +890,7 @@ Os \textbf{agentes autônomos} como Devin, OpenHands e SWE-Agent representam a
 fronteira experimental. A experiência de uso é fascinante e frustrante em igual
 medida: você descreve uma tarefa de alto nível, o agente trabalha autonomamente por
 minutos ou horas, e apresenta um resultado. Quando funciona, é mágico. Quando não
-funciona --- e frequentemente não funciona ---, o resultado pode ser um changeset
+funciona (e frequentemente não funciona), o resultado pode ser um changeset
 enorme que resolve o problema errado ou que resolve o problema certo de forma
 totalmente incompatível com seu projeto. O custo é alto, os resultados são
 inconsistentes, e a maturidade é insuficiente para uso em produção na maioria
@@ -901,10 +902,10 @@ futuro.
 A escolha da ferramenta certa depende do contexto, e frequentemente a resposta não é
 ``uma ferramenta'', mas sim ``várias ferramentas para diferentes situações''.
 
-Para código rápido no editor --- completar linhas, gerar funções pequenas, seguir
-padrões locais ---, o Copilot oferece a menor fricção e a melhor integração com os
+Para código rápido no editor (completar linhas, gerar funções pequenas, seguir
+padrões locais), o Copilot oferece a menor fricção e a melhor integração com os
 editores que a maioria dos engenheiros já usa. Não há troca de contexto, não há prompt
-para escrever, a sugestão simplesmente aparece.
+para escrever; a sugestão simplesmente aparece.
 
 Para refatoração ampla e features que cruzam múltiplos arquivos, o Cursor é a escolha
 mais produtiva. Sua capacidade de indexar o projeto inteiro e editar vários arquivos
@@ -915,8 +916,8 @@ capacidade de ter uma conversa longa e profunda, incluir documentos extensos no
 contexto, e iterar sobre decisões de design faz dessas ferramentas verdadeiros
 sparring partners intelectuais.
 
-Para automação com supervisão --- tarefas multi-passo onde você quer que a IA execute
-mas mantendo controle ---, o Claude Code e agentes similares oferecem a capacidade de
+Para automação com supervisão (tarefas multi-passo onde você quer que a IA execute
+mas mantendo controle), o Claude Code e agentes similares oferecem a capacidade de
 delegar execução enquanto retém aprovação nos pontos-chave.
 
 Para times enterprise, a escolha precisa considerar fatores além da capacidade técnica:
@@ -931,14 +932,14 @@ empresa.
 Conhecer as limitações da IA é tão importante quanto conhecer suas
 capacidades. O engenheiro que ignora as armadilhas vai inevitavelmente
 introduzir bugs, vulnerabilidades e débito técnico no codebase. Esta seção
-não é um exercício de pessimismo --- é um manual de sobrevivência.
+não é um exercício de pessimismo; é um manual de sobrevivência.
 
 \subsection{Código que Compila mas Não Resolve}
 
 A IA otimiza para satisfazer o prompt literalmente, não a intenção por
 trás dele. Se você pedir ``uma função que retorne os usuários ativos'', a
 IA pode gerar uma função sintaticamente correta que retorna todos os
-usuários --- porque ``ativo'' no seu domínio tem uma definição específica
+usuários, porque ``ativo'' no seu domínio tem uma definição específica
 que não foi explicitada.
 
 Essa armadilha é mais perigosa do que parece, porque o código \textit{funciona}. Ele
@@ -950,7 +951,7 @@ deveriam estar excluídos.
 
 A história de André, engenheiro em uma fintech, ilustra bem o problema. André pediu à
 IA para ``implementar o cálculo de rendimento da conta poupança''. A IA gerou um
-código perfeito --- que aplicava rendimento mensal simples. Mas no sistema de André,
+código perfeito, que aplicava rendimento mensal simples. Mas no sistema de André,
 ``rendimento da poupança'' seguia a regra da TR + taxa fixa definida pelo governo, com
 cálculo na data de aniversário da aplicação e regras diferentes para depósitos antes
 e depois de 2012. A IA não tinha como saber dessas nuances. André, num dia corrido,
@@ -963,8 +964,8 @@ os clientes afetados.
 
 A IA não sabe que ``cliente'' no seu sistema tem regras específicas de CPF,
 limite de crédito, e que clientes pessoa jurídica têm tratamento diferente
-de pessoa física. Ela generaliza a partir de padrões do training data ---
-e esses padrões podem não se aplicar ao seu caso.
+de pessoa física. Ela generaliza a partir de padrões do training data, e
+esses padrões podem não se aplicar ao seu caso.
 
 O problema é estrutural: LLMs aprendem padrões de código genérico, e código genérico
 tipicamente não reflete as peculiaridades de domínios específicos. Quando a IA gera
@@ -973,7 +974,7 @@ aparece em milhares de tutoriais e cursos online. Mas o seu \texttt{Customer} po
 dezenas de atributos específicos, regras de validação únicas, relacionamentos complexos
 com outras entidades, e comportamentos que variam por região, tipo de conta e histórico
 de relacionamento. Nenhum prompt, por mais detalhado que seja, captura completamente
-essa complexidade --- ela vive na cabeça dos engenheiros que trabalham com o sistema há
+essa complexidade. Ela vive na cabeça dos engenheiros que trabalham com o sistema há
 meses ou anos.
 
 \subsection{Vieses do Training Data}
@@ -990,20 +991,20 @@ uma biblioteca popular que tem 50 mil stars no GitHub, mas que para seu caso de 
 específico é inferior a uma alternativa menos conhecida. Pode sugerir uma arquitetura
 de microsserviços porque é o padrão dominante nos dados de treinamento, quando um
 monólito bem estruturado seria mais adequado para uma startup com três engenheiros.
-O viés do training data é, em essência, uma forma de pensamento de manada mediado
+O viés do training data é uma forma de pensamento de manada mediado
 por IA: a opinião da maioria amplificada por um modelo estatístico.
 
 \subsection{Dependência Excessiva}
 
 Usar IA para tudo atrofia o pensamento crítico. É como usar GPS para ir à
-padaria --- um dia o GPS vai errar, e você não vai saber voltar a pé.
+padaria. Um dia o GPS vai errar, e você não vai saber voltar a pé.
 
 A história do time de Ricardo é um caso emblemático. Ricardo liderava uma equipe de
 cinco engenheiros em uma empresa de e-commerce. Quando o Copilot foi adotado, a
 produtividade medida em linhas de código e features entregues subiu 40\% nos primeiros
 três meses. A diretoria celebrou. Mas, gradualmente, algo mudou. Os engenheiros
-júniores do time pararam de pesquisar documentação --- por que ler o manual se a IA
-gera o código? Pararam de entender profundamente as tecnologias que usavam --- por que
+júniores do time pararam de pesquisar documentação: por que ler o manual se a IA
+gera o código? Pararam de entender as tecnologias que usavam a fundo. Por que
 estudar o mecanismo de transações do PostgreSQL se a IA cuida disso? Após seis meses,
 houve um incidente em produção: um deadlock complexo no banco de dados. Nenhum dos
 engenheiros júniores conseguia diagnosticar o problema, porque nunca tinham realmente
@@ -1018,12 +1019,12 @@ Há outra história igualmente instrutiva, do caso de Sofia, engenheira sênior 
 healthtech. Sofia estava sob pressão de prazo e usou IA extensivamente para implementar
 um módulo de processamento de dados de pacientes. A IA gerou código que usava uma
 biblioteca de serialização com uma vulnerabilidade conhecida de deserialização
-insegura --- um padrão que existia em milhares de exemplos no training data porque,
+insegura, um padrão que existia em milhares de exemplos no training data porque,
 até ser descoberto, era considerado prática aceitável. Sofia, confiando na IA e sob
 pressão de prazo, não revisou as dependências com atenção. O código passou por code
 review (o revisor também não pegou a vulnerabilidade, confiando que ``a IA não geraria
 algo inseguro'') e foi para produção. Três meses depois, uma auditoria de segurança
-descobriu a vulnerabilidade --- felizmente antes de um ataque real. Mas o custo da
+descobriu a vulnerabilidade, felizmente antes de um ataque real. Mas o custo da
 remediação foi significativo: trocar a biblioteca, refatorar o código, re-testar,
 re-deployar, e documentar o incidente para compliance regulatório.
 
@@ -1104,20 +1105,20 @@ Código de infraestrutura crítica sem revisão \\
 \section{Segurança e Privacidade}
 
 O uso de ferramentas de IA introduz vetores de risco que muitos engenheiros
-e organizações subestimam. Esta seção não é um alarmismo --- é uma análise
+e organizações subestimam. Esta seção não é alarmismo; é uma análise
 técnica de como dados vazam, como vulnerabilidades surgem, e como se
 proteger.
 
 \subsection{Vazamento de Informações}
 
 O primeiro e mais direto vetor de risco é o vazamento de \textbf{código proprietário}.
-Quando você envia código para uma API de IA --- seja colando no ChatGPT, usando o
-Copilot, ou fazendo uma chamada direta à API ---, esse código trafega pela rede,
+Quando você envia código para uma API de IA (seja colando no ChatGPT, usando o
+Copilot, ou fazendo uma chamada direta à API), esse código trafega pela rede,
 chega aos servidores do provedor, e pode ser processado e armazenado de diferentes
 formas dependendo da política da empresa. Alguns provedores retêm prompts e respostas
 para treinamento futuro (a menos que você opt-out explicitamente), outros retêm
 temporariamente para debugging e monitoramento, e versões enterprise tipicamente
-oferecem contratos de não-retenção. Mas o ponto fundamental é: no momento em que o
+oferecem contratos de não-retenção. Mas o ponto é: no momento em que o
 código sai do seu ambiente, ele está exposto a um grau de risco que não existia
 antes da IA.
 
@@ -1132,7 +1133,7 @@ só existe no seu laptop e nos servidores da sua empresa.
 
 O risco se agrava dramaticamente quando se trata de \textbf{segredos no código}.
 Chaves de API, tokens de acesso, connection strings de banco de dados, credenciais
-de serviços --- se esses segredos estão no código que você enviou à IA, eles foram
+de serviços: se esses segredos estão no código que você enviou à IA, eles foram
 potencialmente expostos a terceiros. E ``potencialmente'' aqui é uma palavra muito
 generosa: em muitos casos, eles \textit{foram} expostos, ponto. Mesmo que o provedor
 de IA não os use maliciosamente, eles existem agora em sistemas que você não controla,
@@ -1142,26 +1143,26 @@ O terceiro vetor é o uso inadvertido de \textbf{dados de clientes} como context
 prompts. Um engenheiro que está debugando um problema em produção e cola um stack trace
 que contém nomes de clientes, emails, ou CPFs acaba de enviar dados pessoais para um
 servidor externo. Se a empresa está sujeita à LGPD ou ao GDPR, isso é uma violação
-regulatória que pode resultar em multas significativas. O problema é que, na prática
-do dia a dia, é fácil colar um log sem perceber que ele contém PII (Personally
+regulatória que pode resultar em multas significativas. O problema é que, no dia a dia,
+é fácil colar um log sem perceber que ele contém PII (Personally
 Identifiable Information).
 
 A mitigação requer uma abordagem em múltiplas camadas. Use ferramentas com
-processamento local sempre que possível --- modelos open source rodando em hardware
+processamento local sempre que possível: modelos open source rodando em hardware
 da empresa, extensões que processam localmente antes de enviar para a nuvem. Quando
 APIs cloud são necessárias, use versões enterprise com contratos explícitos de
 não-retenção de dados, como Copilot Business, Claude API com DPA (Data Processing
 Agreement), ou OpenAI API com opt-out de treinamento. Implemente scanning automático
-que detecta e bloqueia o envio de segredos e PII para APIs externas. E, fundamentalmente,
+que detecta e bloqueia o envio de segredos e PII para APIs externas. E, acima de tudo,
 treine o time: a primeira linha de defesa é o engenheiro que pensa antes de colar.
 
 \subsection{Vulnerabilidades no Código Gerado}
 
 A IA pode gerar código com vulnerabilidades que existiam no training data. Isso não
-é teórico --- é empiricamente documentado e acontece com frequência preocupante. SQL
+é teórico. É empiricamente documentado e acontece com frequência preocupante. SQL
 injection, Cross-Site Scripting (XSS), Server-Side Request Forgery (SSRF),
 deserialização insegura, uso de algoritmos criptográficos obsoletos, hardcoding de
-credenciais --- todas essas vulnerabilidades existem abundantemente nos dados de
+credenciais: todas essas vulnerabilidades existem abundantemente nos dados de
 treinamento, porque existem abundantemente nos milhões de repositórios open source
 que alimentaram os modelos.
 
@@ -1169,14 +1170,14 @@ Um estudo relevante de pesquisadores de Stanford, publicado em 2023, produziu
 resultados que deveriam incomodar qualquer engenheiro que usa IA sem cautela.
 Engenheiros que usavam Copilot produziram código \textbf{menos seguro} do que os
 que programavam sem assistência de IA. A razão não é que a IA é inerentemente
-insegura --- é que os engenheiros \textbf{confiaram demais} nas sugestões. A IA
+insegura. É que os engenheiros \textbf{confiaram demais} nas sugestões. A IA
 sugeria código que parecia correto, e o engenheiro aceitava sem o mesmo escrutínio
 que aplicaria ao escrever do zero. O paradoxo é claro: a ferramenta que deveria
 aumentar a produtividade acabou diminuindo a segurança, porque a confiança
 induzida pela IA reduziu o senso crítico humano.
 
 A mitigação é tratar código gerado por IA com o mesmo rigor de segurança que código
-submetido por um contribuidor júnior --- ou, melhor ainda, por um contribuidor
+submetido por um contribuidor júnior, ou melhor ainda, por um contribuidor
 externo desconhecido. Revisão obrigatória focada em segurança, análise estática
 (SAST) automatizada no pipeline de CI/CD, testes de segurança específicos, e
 escaneamento de dependências. A IA pode gerar o código, mas a responsabilidade pela
@@ -1184,8 +1185,8 @@ segurança é do engenheiro e do processo de revisão.
 
 \subsection{Prompt Injection e Ataques à Cadeia}
 
-Se seu sistema usa LLMs em produção --- não apenas como ferramenta de desenvolvimento,
-mas como componente do software que seus clientes usam ---, há uma classe inteiramente
+Se seu sistema usa LLMs em produção (não apenas como ferramenta de desenvolvimento,
+mas como componente do software que seus clientes usam), há uma classe inteiramente
 nova de vulnerabilidades que precisa ser considerada.
 
 A \textbf{prompt injection} é o equivalente de SQL injection para LLMs. Se seu sistema
@@ -1200,8 +1201,8 @@ limite as permissões das ferramentas que o LLM pode usar.
 
 Outro vetor é a introdução de dependências maliciosas via \textbf{typosquatting}.
 Código gerado por IA pode incluir dependências com nomes semelhantes a pacotes
-legítimos --- \texttt{reqeusts} em vez de \texttt{requests}, \texttt{coloer} em
-vez de \texttt{color} --- que na verdade são pacotes maliciosos publicados por
+legítimos (\texttt{reqeusts} em vez de \texttt{requests}, \texttt{coloer} em
+vez de \texttt{color}) que na verdade são pacotes maliciosos publicados por
 atacantes. A IA gera esses nomes porque, nos dados de treinamento, essas variantes
 podem ter aparecido em fóruns de discussão ou em repositórios comprometidos. A
 mitigação é rigorosa: valide todas as dependências sugeridas contra o registry
@@ -1223,13 +1224,13 @@ maioria dos gestores imagina ao considerar apenas o preço da licença.
 O custo mais visível são as \textbf{licenças}. Copilot cobra entre \$19 e \$39 por mês
 por desenvolvedor, dependendo do plano (Individual vs. Business). Cursor tem planos
 similares, entre \$20 e \$40 por mês. APIs de LLM como Claude e GPT-4 cobram por
-token consumido, e o custo varia dramaticamente dependendo do uso --- um engenheiro
+token consumido, e o custo varia dramaticamente dependendo do uso. Um engenheiro
 que usa esporadicamente pode gastar \$10 por mês; um que usa intensivamente com
 tarefas agênticas pode gastar \$200 ou mais. Para um time de 20 engenheiros, o custo
 anual de licenças pode facilmente ultrapassar \$50 mil.
 
 Menos visível mas igualmente significativo é o custo de \textbf{treinamento}. Não basta
-distribuir licenças --- o time precisa aprender a usar as ferramentas efetivamente.
+distribuir licenças. O time precisa aprender a usar as ferramentas efetivamente.
 A diferença de produtividade entre um engenheiro que sabe escrever prompts precisos,
 fornecer contexto adequado e revisar criticamente, e um que simplesmente pede ``faça
 uma API'' e aceita o resultado, é enorme. Estima-se entre 2 e 4 semanas para que um
@@ -1246,8 +1247,8 @@ Se a empresa optar por usar modelos locais ou implementar RAG com o codebase, h�
 de \textbf{infraestrutura}: GPUs para inferência local são caras, e manter um índice
 vetorial atualizado do codebase requer armazenamento e processamento contínuo.
 
-Finalmente, há o \textbf{risco de débito técnico}. Código aceito sem revisão adequada ---
-e a tentação de pular a revisão aumenta com a velocidade de geração --- pode gerar custos
+Finalmente, há o \textbf{risco de débito técnico}. Código aceito sem revisão adequada
+(e a tentação de pular a revisão aumenta com a velocidade de geração) pode gerar custos
 de manutenção futuros que superam os ganhos de produtividade iniciais.
 
 \subsection{Benefícios}
@@ -1343,11 +1344,11 @@ batch.
 
 Essa compreensão não vem de prompts, vem de imersão. Vem de semanas sentado ao lado
 do time de operações, de horas em reuniões com o produto, de incidentes em produção
-que revelaram comportamentos inesperados do sistema. É conhecimento tácito --- difícil
+que revelaram comportamentos inesperados do sistema. É conhecimento tácito, difícil
 de articular, impossível de transferir para um prompt, e absolutamente essencial para
 construir software que funciona no mundo real. A IA pode saber a sintaxe de todas as
 linguagens de programação, mas não sabe que no Brasil PIX é quase instantâneo enquanto
-boleto leva até 3 dias úteis, e que essa diferença temporal afeta fundamentalmente como
+boleto leva até 3 dias úteis, e que essa diferença temporal afeta como
 o fluxo de pagamento deve ser implementado.
 
 \subsection{Decisões de Trade-off}
@@ -1356,47 +1357,47 @@ o fluxo de pagamento deve ser implementado.
 de cada abordagem com clareza e detalhamento admiráveis, mas a \textbf{decisão}
 depende do seu negócio, da sua organização e do seu contexto. Um sistema
 bancário exige consistência forte porque um cliente não pode ver um saldo que
-não reflete uma transferência já confirmada --- isso é regulamentação, não
+não reflete uma transferência já confirmada. Isso é regulamentação, não
 preferência técnica. Um feed de rede social tolera consistência eventual porque
 um post que aparece 3 segundos depois para outro usuário não causa nenhum dano.
 
 A capacidade de tomar essas decisões é o que define um engenheiro sênior, e nenhum
 modelo de linguagem pode substituí-la. A IA pode apresentar as opções e seus
-trade-offs --- e faz isso muito bem, frequentemente melhor do que uma busca no Google
----, mas a escolha final é humana porque depende de valores, prioridades e restrições
+trade-offs (e faz isso muito bem, frequentemente melhor do que uma busca no Google),
+mas a escolha final é humana porque depende de valores, prioridades e restrições
 que são inerentemente organizacionais e contextuais.
 
 \subsection{Avaliação de Impacto Sistêmico}
 
 Mudar um endpoint afeta 3 frontends, 2 jobs batch e o time de data
 science. A IA não tem visibilidade sobre essas dependências organizacionais
---- e frequentemente sugere mudanças que são localmente corretas mas
+e frequentemente sugere mudanças que são localmente corretas mas
 sistemicamente destrutivas.
 
 Esse é um dos pontos mais sutis e importantes sobre os limites da IA. Uma mudança de
-tipo de retorno de uma API pode ser sintaticamente trivial --- uma linha de código ---
-mas organizacionalmente catastrófica se três times diferentes consomem aquela API e
+tipo de retorno de uma API pode ser sintaticamente trivial (uma linha de código), mas
+organizacionalmente catastrófica se três times diferentes consomem aquela API e
 nenhum foi notificado. A IA pode até perceber que há código no mesmo repositório que
 chama aquele endpoint, mas não sabe sobre os consumidores em outros repositórios, sobre
 o job de ETL que roda à meia-noite e espera aquele formato, ou sobre o dashboard
 executivo que quebraria silenciosamente. Impacto sistêmico é, por definição, uma
-questão de relacionamentos entre componentes, times e processos --- e essa é exatamente
+questão de relacionamentos entre componentes, times e processos. Essa é
 a dimensão onde a IA tem menos visibilidade.
 
 \subsection{Responsabilidade Final}
 
 Quando o código falha em produção às 3 da manhã, quem é acionado não é a
-IA. A culpa não é do Copilot que sugeriu o código --- é do engenheiro que
+IA. A culpa não é do Copilot que sugeriu o código; é do engenheiro que
 o aprovou, do revisor que não pegou o bug, e da organização que não tinha
 testes adequados. \textbf{A IA é uma ferramenta. A responsabilidade é
 humana.}
 
-Essa é uma verdade que precisa ser repetida até ser internalizada, porque a tentação
+Essa verdade precisa ser repetida até ser internalizada, porque a tentação
 de transferir culpa é forte. ``A IA gerou esse código'' não é uma defesa, assim como
 ``o compilador compilou'' ou ``o Stack Overflow tinha essa resposta'' não são defesas.
 O engenheiro é o último guardião da qualidade, e nenhuma quantidade de automação muda
-esse fato fundamental. Quando você aceita um código e o coloca em produção, aquele
-código é \textit{seu}. Todas as consequências --- boas e ruins --- são suas.
+esse fato. Quando você aceita um código e o coloca em produção, aquele
+código é \textit{seu}. Todas as consequências, boas e ruins, são suas.
 
 % ------------------------------------------------------------
 \section{Workflow com IA: Integrando ao Dia a Dia}
@@ -1424,17 +1425,17 @@ improvisada. Engenheiros que obtêm os melhores resultados tratam a interação 
 como um processo disciplinado, não como uma conversa casual.
 
 O primeiro passo é \textbf{definir o problema claramente}. Quanto mais preciso o
-prompt, melhor o resultado --- isso não é clichê, é a mecânica fundamental de como
+prompt, melhor o resultado. Essa é a mecânica de como
 LLMs funcionam. ``Implemente autenticação'' é vago: autenticação de quê? Com qual
 mecanismo? Quais requisitos de segurança? ``Implemente login com JWT, refresh token
 com rotação, bcrypt para hash de senha com custo 12, rate limiting de 5 tentativas
 por minuto por IP, e lockout de 15 minutos após exceder o limite'' é preciso. A IA
 não pode adivinhar suas intenções; você precisa explicitá-las. Pense no prompt como
-uma spec --- quanto mais completa, melhor o resultado.
+uma spec: quanto mais completa, melhor o resultado.
 
 O segundo passo é \textbf{fornecer contexto suficiente}. A IA não sabe nada sobre seu
 projeto até que você a informe. Código existente, specs de API, restrições tecnológicas,
-convenções do projeto --- tudo isso precisa ser fornecido explicitamente. Se seu projeto
+convenções do projeto: tudo isso precisa ser fornecido explicitamente. Se seu projeto
 usa snake\_case e a IA gera camelCase, a culpa é do prompt que não mencionou a convenção,
 não da IA. Se todas as respostas da API seguem um envelope padrão com campos
 \texttt{data}, \texttt{error} e \texttt{metadata}, e a IA gera uma resposta sem
@@ -1449,7 +1450,7 @@ antes de gerar os passos 4 a 10 sobre uma base incorreta.
 O quarto passo é \textbf{revisar linha por linha}. Não aceite código que você não
 entende. Se não consegue explicar o que cada linha faz, aquele código não deveria
 estar no codebase. Essa regra é inegociável. Código que você não entende é uma
-bomba-relógio --- quando falhar (e vai falhar), você não saberá por quê, e não
+bomba-relógio. Quando falhar (e vai falhar), você não saberá por quê, e não
 saberá como consertar.
 
 O quinto passo é \textbf{executar testes}. Rode a suíte de testes após cada
@@ -1467,7 +1468,7 @@ alguém do time, não por um modelo de linguagem.
 
 \subsection{Conexão com Capítulos Anteriores}
 
-Este capítulo não existe em isolamento --- ele é a culminação prática de tudo que
+Este capítulo não existe em isolamento. Ele é a culminação prática de tudo que
 discutimos nos capítulos anteriores, e essa conexão merece ser explicitada.
 
 O pensamento sistêmico do Capítulo 0 (Fundamentos) é o guardrail mais importante
@@ -1478,22 +1479,22 @@ colaterais? Quem mais depende deste componente?'' Sem essa perspectiva, a veloci
 da IA se torna uma arma: você gera e deploya problemas mais rápido do que nunca.
 
 As specs de viewpoints do RM-ODP (Capítulo 1) são contexto ideal para prompts, e essa
-conexão é profundamente prática. Enterprise viewpoint define o \textbf{porquê} --- as
+conexão tem impacto prático direto. Enterprise viewpoint define o \textbf{porquê}: as
 regras de negócio, os stakeholders, as motivações. Information viewpoint define
-\textbf{o quê} --- as entidades, os fluxos de dados, as invariantes. Engineering
-viewpoint define \textbf{como} --- as tecnologias, a infraestrutura, as restrições
-técnicas. Juntos, esses três viewpoints formam o prompt perfeito: com eles, a IA tem
+\textbf{o quê}: as entidades, os fluxos de dados, as invariantes. Engineering
+viewpoint define \textbf{como}: as tecnologias, a infraestrutura, as restrições
+técnicas. Juntos, esses três viewpoints formam o prompt perfeito. Com eles, a IA tem
 todo o contexto necessário para gerar código que é não apenas sintaticamente correto,
 mas semanticamente alinhado com o propósito do sistema.
 
 As decisões arquiteturais do Capítulo 2 devem ser tomadas \textbf{antes} de pedir para
-a IA implementar. A IA implementa \textit{dentro} de uma arquitetura --- ela não a
+a IA implementar. A IA implementa \textit{dentro} de uma arquitetura; ela não a
 define. Se você não decidiu se o sistema usa microsserviços ou monólito, se a comunicação
 é síncrona ou assíncrona, se o banco é relacional ou NoSQL, a IA vai escolher por você,
 baseada em padrões estatísticos do training data. E a escolha dela vai ser a mais
 popular, não necessariamente a mais adequada.
 
-Os princípios de design do Capítulo 3 --- SOLID, KISS, YAGNI --- são critérios
+Os princípios de design do Capítulo 3 (SOLID, KISS, YAGNI) são critérios
 objetivos para \textbf{revisar} código gerado por IA. Se a IA gerou uma classe com 5
 responsabilidades, o princípio da Responsabilidade Única diz: refatore. Se gerou uma
 abstração complexa para um problema simples, KISS diz: simplifique. Se gerou suporte
@@ -1506,7 +1507,7 @@ gerado e o que precisa mudar.
 
 Para concretizar os conceitos deste capítulo, vamos acompanhar um dia
 típico de Marina, engenheira sênior em uma fintech brasileira, que usa
-IA como parte integral do seu workflow. Não é um dia idealizado --- é
+IA como parte integral do seu workflow. Não é um dia idealizado. É
 um dia com decisões difíceis, frustrações, e o tipo de julgamento que
 nenhuma IA substitui.
 
@@ -1530,7 +1531,7 @@ publicada com schema antigo que o consumer novo não reconhece. Para o Bug 3, le
 que clientes migrados podem ter campos nullable que o código novo assume como
 not-null.
 
-Marina lê as hipóteses com olho crítico. A primeira parece plausível --- ela sabe que
+Marina lê as hipóteses com olho crítico. A primeira parece plausível. Ela sabe que
 aquele endpoint tem uma query complexa. A segunda está provavelmente errada: ela sabe
 que o time implementou schema registry justamente para evitar esse tipo de problema,
 mas faz uma nota mental para verificar. A terceira acerta em cheio: ela lembra que a
@@ -1545,7 +1546,7 @@ hipótese antes de aceitar.
 
 \subsection{9:00 --- Correção de Bug Crítico}
 
-O Bug 1 --- timeout no endpoint de transferências --- foi escalado como P1 pelo time
+O Bug 1, timeout no endpoint de transferências, foi escalado como P1 pelo time
 de SRE durante a noite. Marina precisa resolvê-lo antes do horário de pico.
 
 Ela abre o código do endpoint e confirma a hipótese da IA: há uma query que carrega
@@ -1558,7 +1559,7 @@ diretamente. Race conditions, problemas de concorrência e otimizações de perf
 sob carga são exatamente o tipo de problema onde a IA tende a gerar soluções que
 parecem corretas mas introduzem bugs sutis. A IA poderia sugerir um cache, mas sem
 entender o padrão de invalidação, o cache poderia servir dados stale em transferências
-financeiras --- algo inaceitável.
+financeiras, algo inaceitável.
 
 Marina analisa o código manualmente e identifica a solução: batch a chamada ao serviço
 de câmbio (buscar todas as taxas de uma vez, não uma por uma) e adicionar um índice
@@ -1584,7 +1585,7 @@ suporte a PIX como método de pagamento. Essa é uma tarefa que ela vem planejan
 semanas, e a spec do RM-ODP (Capítulo 1) já está definida.
 
 Marina abre o Cursor, que já tem o repositório indexado via RAG. Ela pensa em como
-estruturar o prompt. Não vai pedir ``implemente PIX'' --- isso é vago demais. Em vez
+estruturar o prompt. Não vai pedir ``implemente PIX''. Isso é vago demais. Em vez
 disso, ela monta um contexto cuidadoso: a interface \texttt{PaymentMethod} existente,
 a implementação de \texttt{CartaoCreditoPayment} como exemplo do padrão esperado, os
 pontos relevantes da spec do Banco Central para PIX, e as regras de negócio específicas
@@ -1656,13 +1657,13 @@ export class PixPayment implements PaymentMethod {
 // do PSP separadamente, adicionar metricas de latencia.
 \end{lstlisting}
 
-Marina revisa linha por linha. A estrutura está correta --- segue o padrão de
+Marina revisa linha por linha. A estrutura está correta: segue o padrão de
 \texttt{CartaoCreditoPayment}, usa a interface \texttt{PspClient}, implementa
 validação. Mas ela identifica três lacunas que a IA não cobriu.
 
 Primeiro, falta uma \textbf{idempotency key}. Em pagamentos, se a chamada ao PSP
 falha com timeout, você não sabe se a cobrança foi criada ou não. Sem idempotência,
-uma retry pode criar uma cobrança duplicada --- e cobrar o cliente duas vezes. A IA
+uma retry pode criar uma cobrança duplicada e cobrar o cliente duas vezes. A IA
 não pensou nisso porque idempotência é uma preocupação de domínio que não estava
 explícita no prompt.
 
@@ -1672,10 +1673,10 @@ tratamento diferente: timeout pode ser retried, erro de validação não, e erro
 pode precisar de fallback para outro PSP.
 
 Terceiro, não há métricas. Em um sistema financeiro, cada operação precisa de métricas
-de latência, taxa de sucesso/falha, e distribuição por tipo de chave PIX --- sem isso,
+de latência, taxa de sucesso/falha, e distribuição por tipo de chave PIX. Sem isso,
 a equipe de operações fica cega.
 
-Marina faz os três ajustes manualmente --- são ajustes que exigem conhecimento profundo
+Marina faz os três ajustes manualmente. São ajustes que exigem conhecimento profundo
 do domínio e da infraestrutura, e que a IA não teria como inferir.
 
 \textbf{Nível de autonomia}: 3 (par programador). A IA gerou 80\% do
@@ -1705,14 +1706,14 @@ mensagem exata (frágil, vai quebrar quando alguém ajustar o texto do log). Mar
 remove ambos.
 
 O teste 15 tem uma assertion errada: verifica que o \texttt{PaymentResult} tem status
-``failed'' quando deveria verificar ``error'' --- uma confusão entre dois estados que
+``failed'' quando deveria verificar ``error'', uma confusão entre dois estados que
 existem no enum do projeto. Marina corrige.
 
 Então Marina pensa nos cenários que a IA não considerou. São três, todos vindos de
-conhecimento de domínio que a IA não tem. Primeiro: expiração do QR Code --- o que
+conhecimento de domínio que a IA não tem. Primeiro: expiração do QR Code. O que
 acontece quando o usuário tenta pagar um QR Code que já expirou? O sistema precisa
 retornar um erro específico e permitir gerar um novo. Segundo: valor abaixo do mínimo
-permitido pelo Banco Central (atualmente R\$0,01) --- a validação deve rejeitar antes
+permitido pelo Banco Central (atualmente R\$0,01). A validação deve rejeitar antes
 de chamar o PSP. Terceiro: chave PIX de pessoa jurídica, que no sistema tem regras
 diferentes de limites diários. Marina escreve esses três testes manualmente.
 
@@ -1731,13 +1732,13 @@ jitter, circuit breaker), e potenciais problemas de performance.''
 
 A IA identifica uma possível vulnerabilidade: o endpoint aceita um parâmetro
 \texttt{email} que é interpolado diretamente em um template de email sem sanitização,
-criando um vetor para injection. Marina verifica e confirma --- o Thiago usou
+criando um vetor para injection. Marina verifica e confirma. Thiago usou
 template literals do JavaScript em vez do engine de template seguro do projeto. Ela
 comenta no PR com explicação detalhada e referência à documentação interna sobre
 sanitização de inputs.
 
 A IA também nota que o retry não tem jitter, o que pode causar thundering herd
-problem sob carga. Bom ponto --- Marina adiciona esse comentário ao PR também.
+problem sob carga. Bom ponto. Marina adiciona esse comentário ao PR também.
 
 Mas a revisão humana é onde o verdadeiro valor está. Marina analisa o design da
 solução: Thiago implementou retry como um wrapper genérico, o que é elegante, mas
@@ -1747,8 +1748,8 @@ pedindo uma distinção entre erros transientes e permanentes.
 
 Ela também percebe que o módulo de retry está duplicando funcionalidade que já existe
 na biblioteca interna \texttt{@fintech/resilience}. Em vez de reescrever, Thiago
-deveria usar o módulo existente. Esse tipo de observação --- ``já existe algo para
-isso'' --- é algo que a IA não consegue fazer sem ter visibilidade completa do
+deveria usar o módulo existente. Esse tipo de observação (``já existe algo para
+isso'') é algo que a IA não consegue fazer sem ter visibilidade completa do
 ecossistema interno da empresa.
 
 \textbf{Nível de autonomia}: 2 (sugestão). A IA é um filtro inicial; a
@@ -1769,7 +1770,7 @@ PSP para geração de cobranças instantâneas, seguindo o padrão PaymentMethod
 de pagamentos''. A primeira descrição é genérica; a segunda posiciona o módulo dentro
 da arquitetura existente.
 
-No diagrama de sequência, a IA esqueceu o passo de verificação de idempotência --- o
+No diagrama de sequência, a IA esqueceu o passo de verificação de idempotência, o
 check no Redis antes de chamar o PSP. Marina adiciona. Também adiciona uma nota sobre
 o timeout do QR Code e o fluxo de re-geração, que é específico do domínio.
 
@@ -1789,7 +1790,7 @@ usar IA para o bug de performance. A identificação das lacunas na implementaç
 IA não pensou. A percepção de que o PR do Thiago duplicava funcionalidade existente. A
 contextualização da documentação dentro da arquitetura do projeto.
 
-O valor real da IA no dia de Marina não foi ``a IA programou para mim'' --- foi ``a
+O valor real da IA no dia de Marina não foi ``a IA programou para mim''. Foi ``a
 IA me liberou para focar no que importa''. E ``o que importa'' é justamente o
 pensamento de engenharia: entender o domínio, tomar decisões de design, avaliar
 impacto sistêmico, garantir qualidade.
@@ -1800,8 +1801,8 @@ impacto sistêmico, garantir qualidade.
 \subsection{Boas Práticas}
 
 A primeira e mais importante boa prática é \textbf{sempre fornecer contexto}. A
-qualidade do output é diretamente proporcional à qualidade do input --- isso não é
-sabedoria popular, é consequência direta de como LLMs funcionam. Inclua interfaces
+qualidade do output é diretamente proporcional à qualidade do input. Essa é uma
+consequência direta de como LLMs funcionam. Inclua interfaces
 existentes, convenções do projeto, restrições de negócio, e exemplos do padrão
 esperado. Um prompt que diz ``implemente autenticação'' vai gerar uma autenticação
 genérica. Um prompt que inclui a interface de autenticação existente, o middleware
@@ -1812,7 +1813,7 @@ A segunda boa prática é \textbf{pedir explicação antes de implementação}. 
 ``Implemente X'', peça ``Como você abordaria X? Quais alternativas existem? Quais são
 os trade-offs?'' Isso permite validar a abordagem antes de investir em código. Se a IA
 vai pela direção errada, é muito mais barato descobrir na fase de discussão do que na
-fase de implementação --- e infinitamente mais barato do que descobrir em produção.
+fase de implementação, e infinitamente mais barato do que descobrir em produção.
 
 A terceira prática é \textbf{usar TDD assistido}. Escreva (ou peça à IA) os testes
 primeiro, depois peça a implementação. Os testes funcionam como especificação executável:
@@ -1834,19 +1835,19 @@ prompt. Se a geração de testes funciona melhor com um pré-contexto específic
 esse pré-contexto. Trate prompts como assets do projeto, não como mensagens descartáveis.
 
 A sexta prática, para times que usam IA em pipelines automatizados, é o
-\textbf{versionamento de prompts}. Se prompts são usados em CI/CD --- por exemplo, para
-geração automática de changelogs ou análise de PRs ---, trate-os como código:
+\textbf{versionamento de prompts}. Se prompts são usados em CI/CD (por exemplo, para
+geração automática de changelogs ou análise de PRs), trate-os como código:
 versionados no Git, revisados em PRs, e testados para garantir que produzem resultados
 consistentes.
 
 \subsection{Anti-Padrões}
 
 O anti-padrão mais perigoso e mais comum é o \textbf{copy-paste cego}: aceitar código
-gerado pela IA sem ler ou entender. É perigoso porque cria uma ilusão de produtividade
---- o código ``funciona'' (compila, talvez até passe nos testes gerados junto), mas
+gerado pela IA sem ler ou entender. É perigoso porque cria uma ilusão de produtividade.
+O código ``funciona'' (compila, talvez até passe nos testes gerados junto), mas
 pode conter bugs sutis, vulnerabilidades de segurança, ou violações de padrões do
 projeto que só aparecerão semanas ou meses depois. O copy-paste cego é o equivalente
-moderno de copiar código do Stack Overflow sem entender --- com o agravante de que a
+moderno de copiar código do Stack Overflow sem entender, com o agravante de que a
 IA gera código que parece mais polido e confiável do que uma resposta de fórum.
 
 O segundo anti-padrão é o \textbf{prompt vago}. ``Faça uma API'' sem especificar
@@ -1856,7 +1857,7 @@ resultado será uma API genérica que pode servir como ponto de partida, mas que
 exigir tanto refatoração que teria sido mais rápido começar com um prompt preciso.
 
 O terceiro anti-padrão é a \textbf{ausência de testes}. Se não há testes, não há
-como validar o código gerado pela IA --- e a combinação de IA com ausência de testes
+como validar o código gerado pela IA, e a combinação de IA com ausência de testes
 é uma receita para desastre. A IA pode gerar código que parece correto mas tem
 comportamento incorreto em casos de borda, e sem testes, esses bugs vão direto para
 produção.
@@ -1864,19 +1865,19 @@ produção.
 O quarto anti-padrão é o \textbf{over-reliance para decisões}. Usar a IA para decidir
 arquitetura, stack tecnológica, priorização de backlog, ou estratégia de produto são
 usos inadequados que geram resultados genéricos baseados em popularidade, não em
-adequação ao contexto. Essas decisões exigem contexto organizacional --- orçamento,
-composição do time, estratégia de negócio, dívida técnica existente --- que a IA
+adequação ao contexto. Essas decisões exigem contexto organizacional (orçamento,
+composição do time, estratégia de negócio, dívida técnica existente) que a IA
 simplesmente não tem.
 
 O quinto anti-padrão é \textbf{ignorar segurança}. Não revisar código gerado pela IA
 para vulnerabilidades é especialmente perigoso porque, como vimos, estudos mostram que
 engenheiros usando IA tendem a produzir código menos seguro. A IA não é security-aware
-por padrão --- ela gera o padrão mais comum, que frequentemente não é o mais seguro.
+por padrão. Ela gera o padrão mais comum, que frequentemente não é o mais seguro.
 
 O sexto anti-padrão, mais sutil, é a \textbf{vergonha de perguntar}. Engenheiros
-seniores às vezes evitam usar IA por orgulho --- como se usar uma ferramenta diminuísse
+seniores às vezes evitam usar IA por orgulho, como se usar uma ferramenta diminuísse
 sua competência. Mas a IA é uma ferramenta, não uma muleta. Um cirurgião que usa robô
-da Vinci não é um cirurgião pior --- é um cirurgião com uma ferramenta melhor. O mesmo
+da Vinci não é um cirurgião pior. É um cirurgião com uma ferramenta melhor. O mesmo
 vale para engenheiros. Usá-la é inteligência, não fraqueza.
 
 % ------------------------------------------------------------
@@ -1887,10 +1888,10 @@ previsões específicas é um exercício de humildade. Dito isso, algumas
 tendências já visíveis permitem extrapolar direções prováveis.
 
 A tendência mais clara é que \textbf{agentes se tornarão cada vez mais capazes}. A
-fronteira do que agentes conseguem fazer sozinhos --- sem supervisão humana constante
---- se expande a cada trimestre. O que hoje exige supervisão a cada passo (``confirme
+fronteira do que agentes conseguem fazer sozinhos, sem supervisão humana constante,
+se expande a cada trimestre. O que hoje exige supervisão a cada passo (``confirme
 antes de modificar este arquivo'') provavelmente será automatizável em 2 a 3 anos para
-tarefas rotineiras. Isso não significa que agentes vão substituir engenheiros --- significa
+tarefas rotineiras. Isso não significa que agentes vão substituir engenheiros. Significa
 que o escopo do que pode ser delegado vai crescer, liberando os engenheiros para tarefas
 de maior valor.
 
@@ -1913,12 +1914,12 @@ para revisão humana.
 A quarta tendência é o que podemos chamar de \textbf{Collaborative AI}: múltiplos
 agentes trabalhando juntos em papéis complementares. Um agente escreve código, outro
 revisa, outro escreve testes, e outro verifica segurança. Essa dinâmica replica a
-estrutura de um time humano --- com seus checks and balances --- mas em velocidade de
+estrutura de um time humano, com seus checks and balances, mas em velocidade de
 máquina. O engenheiro humano, nesse cenário, torna-se um gerente de time de agentes:
 define objetivos, resolve conflitos entre agentes, e toma as decisões que exigem
 julgamento humano.
 
-A quinta tendência, e talvez a mais profunda, é a redefinição do \textbf{papel do
+A quinta tendência, e talvez a mais relevante, é a redefinição do \textbf{papel do
 engenheiro como arquiteto e curador}. À medida que mais código é gerado por IA, o
 valor humano se desloca cada vez mais para cima na cadeia de abstração: arquitetura
 de sistemas, curadoria de qualidade, definição de padrões, tomada de decisão
@@ -1931,7 +1932,7 @@ fundamentos (Capítulo 0), modelagem sólida (Capítulo 1), arquitetura clara
 (Capítulo 2) e princípios de design (Capítulo 3) vai extrair enormemente
 mais valor da IA do que alguém que pula direto para ``me dê o código''.
 
-A IA não elimina a necessidade de pensar --- ela aumenta a recompensa por pensar bem
+A IA não elimina a necessidade de pensar. Ela aumenta a recompensa por pensar bem
 e o custo de pensar mal. Num mundo onde código pode ser gerado instantaneamente, a
 diferença entre engenheiros não será quem digita mais rápido, mas quem pensa mais
 claro.
@@ -1940,12 +1941,12 @@ claro.
 \section{Conclusão}
 
 IA é uma ferramenta poderosa, não uma solução mágica. O pensamento de
-engenharia é mais importante do que nunca --- porque agora há mais código
+engenharia é mais importante do que nunca, porque agora há mais código
 sendo gerado, mais rápido, e alguém precisa decidir se é código bom. Esse
 alguém é você.
 
-A adoção eficaz de IA na engenharia de software não começa com ferramentas
---- começa com \textbf{mentalidade}. O engenheiro que entende os
+A adoção eficaz de IA na engenharia de software não começa com ferramentas.
+Começa com \textbf{mentalidade}. O engenheiro que entende os
 fundamentos, modela o domínio, define a arquitetura e aplica princípios de
 design está preparado para usar qualquer ferramenta de IA que surgir. O
 que muda é a velocidade de execução, não a natureza do trabalho.
@@ -1957,10 +1958,10 @@ responsabilidade, e construir sistemas que servem pessoas.
 
 O engenheiro do futuro não é aquele que sabe mais sintaxes ou que digita mais rápido.
 É aquele que pensa com mais clareza, que entende problemas com mais profundidade, e
-que usa todas as ferramentas disponíveis --- incluindo IA --- para transformar esse
+que usa todas as ferramentas disponíveis (incluindo IA) para transformar esse
 pensamento em software que funciona, que escala, que é seguro, e que serve seu
-propósito. Tudo o que discutimos nos capítulos anteriores --- pensamento sistêmico,
-modelagem de domínio, decisões arquiteturais, princípios de design --- não foi
+propósito. Tudo o que discutimos nos capítulos anteriores (pensamento sistêmico,
+modelagem de domínio, decisões arquiteturais, princípios de design) não foi
 tornado obsoleto pela IA. Foi tornado mais importante. A IA amplifica. Cabe a você
 decidir o que amplificar.
 

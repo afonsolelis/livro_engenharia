@@ -7,7 +7,7 @@
 
 Existe um paradoxo cruel na engenharia de software: ninguém gosta de escrever
 documentação, mas todos adoram ler uma boa documentação. Essa contradição não
-é acidental --- ela revela algo profundo sobre a natureza do trabalho de
+é acidental. Ela revela algo sobre a natureza do trabalho de
 desenvolvimento. Escrever documentação exige parar, refletir e articular
 o que se sabe, num momento em que o impulso natural é seguir em frente,
 escrever mais código, resolver o próximo problema. Mas quando você é a
@@ -15,7 +15,7 @@ pessoa que precisa entender um sistema desconhecido, quando são duas da
 manhã e há um incidente em produção e você não faz ideia de como aquele
 serviço funciona, a ausência de documentação deixa de ser um incômodo
 menor e se transforma em uma crise real. O paradoxo, portanto, não é apenas
-intelectual --- ele tem consequências concretas, mensuráveis em horas
+intelectual: ele tem consequências concretas, mensuráveis em horas
 perdidas, decisões erradas e frustração acumulada.
 
 Documentação desatualizada é, em muitos aspectos, pior do que nenhuma
@@ -24,7 +24,7 @@ que precisa investigar por conta própria. Mas quando há um README
 que diz ``rode \texttt{npm start}'' quando o projeto migrou para
 \texttt{pnpm} há seis meses, você segue as instruções com confiança,
 encontra um erro incompreensível, e perde trinta minutos tentando
-entender o que fez de errado --- quando na verdade não fez nada errado,
+entender o que fez de errado. Na verdade não fez nada errado;
 a documentação é que mentiu para você. Essa confiança falsa é
 particularmente traiçoeira porque corrói a credibilidade de toda a
 documentação do projeto. Depois de ser enganado uma vez, o desenvolvedor
@@ -38,7 +38,7 @@ de revisão por pares e de feedback dos seus usuários. A metáfora do
 ``produto'' é intencional: um produto tem usuários, tem métricas de
 qualidade, tem ciclo de vida. Quando pensamos em documentação dessa
 forma, ela deixa de ser uma obrigação burocrática e passa a ser uma
-ferramenta que gera valor real --- que economiza horas de onboarding,
+ferramenta que gera valor real, que economiza horas de onboarding,
 que evita decisões repetidas, que preserva conhecimento institucional
 que de outra forma se perderia quando alguém sai da equipe.
 
@@ -46,7 +46,7 @@ No fundo, a motivação para escrever boa documentação é empatia. Você
 escreve para o colega que vai herdar seu código daqui a seis meses.
 Escreve para o novo membro da equipe que vai chegar na segunda-feira
 e precisará entender o sistema em uma semana. E escreve, talvez mais
-do que tudo, para o seu eu do futuro --- aquele que daqui a um ano
+do que tudo, para o seu eu do futuro, aquele que daqui a um ano
 não vai lembrar por que tomou aquela decisão aparentemente estranha,
 por que escolheu aquele timeout de 30 segundos, por que usou aquele
 workaround em vez da solução óbvia. Documentação é uma carta que você
@@ -73,7 +73,7 @@ Não há um \texttt{.env.example}. Ela busca no Slack, encontra mensagens
 fragmentadas de seis meses atrás. Uma diz ``usa o Redis local'', outra diz
 ``agora é o Valkey''. Qual é a versão atual? Ninguém documentou. Às onze
 da manhã, depois de três horas de tentativas, Luísa finalmente consegue
-rodar o projeto --- mas apenas porque encontrou um colega que lembrava dos
+rodar o projeto, mas apenas porque encontrou um colega que lembrava dos
 passos de cor. Aquelas três horas de Luísa custaram dinheiro real à empresa.
 Mas o custo invisível é pior: Luísa formou uma primeira impressão sobre a
 maturidade da equipe, e essa impressão não é boa.
@@ -83,7 +83,7 @@ contratado por uma empresa de médio porte. Na segunda-feira de manhã, ele
 recebe um link para o repositório e abre o README. O documento começa com
 uma descrição clara do que o sistema faz e por que existe. Logo abaixo, há
 uma seção de pré-requisitos com versões exatas. Depois, um bloco de comandos
-numerados para rodar o projeto localmente --- e funciona de primeira. Há um
+numerados para rodar o projeto localmente, e funciona de primeira. Há um
 \texttt{.env.example} com comentários explicando cada variável. Um
 \texttt{docker-compose.yml} sobe todas as dependências. Em doze minutos,
 Rafael vê a aplicação rodando no navegador. Ele clica no link para a
@@ -92,14 +92,14 @@ o sistema no ecossistema da empresa. Há ADRs explicando por que PostgreSQL
 foi escolhido, por que a comunicação entre serviços é assíncrona, por que
 o frontend usa aquele framework específico. Rafael sente que já conhece o
 sistema antes de ler uma única linha de código. Às onze da manhã, ele já
-está fazendo seu primeiro commit --- uma correção pequena, mas real.
+está fazendo seu primeiro commit, uma correção pequena, mas real.
 
 A diferença entre essas duas histórias não é talento individual. Não é
 orçamento. Não é tamanho da equipe. É cultura de documentação. Uma equipe
 decidiu que documentação é prioridade; a outra, não. E essa decisão se
 multiplica por cada pessoa que entra, por cada incidente que acontece, por
 cada decisão que precisa ser revisitada. Ao longo de um ano, a diferença
-acumulada é de centenas de horas --- e, frequentemente, da diferença entre
+acumulada é de centenas de horas e, frequentemente, da diferença entre
 reter e perder bons profissionais.
 
 
@@ -108,13 +108,13 @@ reter e perder bons profissionais.
 % ============================================================
 
 Cada tipo de documentação serve um público diferente, responde a perguntas
-diferentes e tem um ciclo de vida diferente. Entender essas distinções é
-fundamental, porque a tentação mais comum é tratar ``documentação'' como
-uma coisa só --- e, ao fazer isso, acabar com um blob amorfo que não serve
+diferentes e tem um ciclo de vida diferente. Entender essas distinções
+importa, porque a tentação mais comum é tratar ``documentação'' como
+uma coisa só e, ao fazer isso, acabar com um blob amorfo que não serve
 bem a ninguém.
 
-A documentação de arquitetura --- que inclui ADRs (Architecture Decision
-Records), diagramas C4, mapas de contexto e visões de deploy --- é
+A documentação de arquitetura (que inclui ADRs, diagramas C4, mapas de
+contexto e visões de deploy) é
 direcionada a engenheiros que precisam entender a estrutura macro do
 sistema. Ela responde perguntas como ``por que usamos mensageria em vez
 de chamadas síncronas?'' e ``quais são os componentes principais e como
@@ -127,7 +127,7 @@ meses atrás, e ninguém percebe até que alguém tome uma decisão baseada
 em informação obsoleta.
 
 O README e a documentação de getting started são a porta de entrada do
-projeto. Seu público é amplo --- qualquer pessoa que chegue ao
+projeto. Seu público é amplo: qualquer pessoa que chegue ao
 repositório, de um desenvolvedor novo na equipe a um gerente de produto
 curioso. A atualização é necessária sempre que o setup do projeto muda:
 nova dependência, nova variável de ambiente, novo comando de build. A
@@ -136,8 +136,8 @@ tamanho. Um documento de cinquenta linhas bem escritas pode economizar
 horas para dezenas de pessoas. É o investimento com maior retorno em
 toda a documentação de um projeto.
 
-A documentação de API --- especificações OpenAPI, schemas GraphQL,
-exemplos de uso, guias de integração --- é direcionada a consumidores,
+A documentação de API (especificações OpenAPI, schemas GraphQL,
+exemplos de uso, guias de integração) é direcionada a consumidores,
 sejam eles equipes internas ou desenvolvedores externos. Ela é atualizada
 sempre que o contrato da API muda: novo endpoint, campo renomeado,
 comportamento alterado. A peculiaridade da documentação de API é que ela
@@ -147,7 +147,7 @@ suporte; uma API com documentação excelente gera adoção orgânica.
 
 Os comentários no código são uma forma de documentação frequentemente
 subestimada ou mal utilizada. Seu propósito não é descrever o que o
-código faz --- para isso, o código deve ser autoexplicativo --- mas sim
+código faz (para isso, o código deve ser autoexplicativo), mas sim
 explicar o \textit{porquê} de decisões não-óbvias. Por que esse timeout
 é de 30 segundos e não de 10? Por que estamos ordenando por data em vez
 de por ID? Essas explicações são atualizadas a cada refatoração que
@@ -157,7 +157,7 @@ falsa sensação de proximidade e confiabilidade.
 
 Os runbooks são documentos operacionais que descrevem passo a passo como
 diagnosticar e resolver incidentes específicos. Seu público é a equipe
-de operações e os engenheiros de plantão --- pessoas que, às três da
+de operações e os engenheiros de plantão, pessoas que, às três da
 manhã, precisam de instruções claras e acionáveis, não de prosa
 filosófica. Os runbooks são atualizados após cada incidente, incorporando
 o que foi aprendido. Um runbook bom é a diferença entre resolver um
@@ -168,7 +168,7 @@ e registros de decisões. Servem à equipe técnica como memória
 institucional, explicando não apenas o que foi decidido, mas quais
 alternativas foram consideradas e por que foram descartadas. Sem esse
 registro, decisões passadas se tornam mistérios que consomem tempo toda
-vez que alguém pergunta ``por que não usamos X em vez de Y?'' --- e
+vez que alguém pergunta ``por que não usamos X em vez de Y?'', e
 ninguém lembra a resposta. São atualizados antes de mudanças
 significativas, e uma vez escritos, devem ser imutáveis: uma nova
 decisão gera um novo documento, não uma edição do antigo.
@@ -209,7 +209,7 @@ Onboarding & Novos membros & Primeira contratação & Mudanças no processo \\
 Arquitetura sem documentação é folclore. Ela vive na cabeça de quem estava
 na reunião, é transmitida oralmente em conversas de corredor, e morre
 quando essa pessoa sai da empresa, troca de equipe ou simplesmente
-esquece. E pessoas esquecem --- não porque sejam negligentes, mas porque
+esquece. E pessoas esquecem, não porque sejam negligentes, mas porque
 o cérebro humano não foi projetado para reter detalhes técnicos de
 decisões tomadas há dezoito meses. O engenheiro que escolheu DynamoDB
 em vez de PostgreSQL tinha ótimas razões na época, mas se essas razões
@@ -234,8 +234,8 @@ quadros brancos, sem notação consistente, onde cada pessoa interpreta
 os retângulos e setas de forma diferente; do outro, UML completa, com
 dezenas de tipos de diagrama, notação rigorosa e uma barreira de entrada
 tão alta que poucos profissionais a dominavam. Nenhum dos extremos
-funcionava bem na prática. Os diagramas informais eram ambíguos; a UML
-era pesada demais para o dia a dia.
+funcionava bem no dia a dia. Os diagramas informais eram ambíguos; a UML
+era pesada demais para uso cotidiano.
 
 A solução de Brown foi elegante na sua simplicidade: em vez de propor
 uma nova notação, ele propôs uma \textbf{hierarquia de abstrações}.
@@ -255,7 +255,7 @@ exatamente essa lógica à documentação de arquitetura de software.
 O \textbf{Nível 1 --- Contexto} mostra o sistema como uma caixa preta,
 posicionada no seu ecossistema. Quem são os usuários? Com quais sistemas
 externos ele se comunica? Este diagrama responde à pergunta mais
-fundamental: ``o que é este sistema e como ele se encaixa no mundo?''.
+básica: ``o que é este sistema e como ele se encaixa no mundo?''.
 Considere um sistema de e-commerce. No nível de contexto, você veria o
 sistema de e-commerce no centro, com setas conectando-o ao cliente final
 (que acessa via navegador ou app), ao sistema de pagamentos (gateway
@@ -268,7 +268,7 @@ trinta segundos o escopo do sistema e suas fronteiras.
 
 O \textbf{Nível 2 --- Contêineres} abre a caixa preta e mostra os
 artefatos deployáveis: aplicações, bancos de dados, filas de mensagens,
-caches, APIs. Aqui, ``contêiner'' não significa Docker --- é qualquer
+caches, APIs. Aqui, ``contêiner'' não significa Docker. É qualquer
 unidade que pode ser executada ou implantada independentemente. Voltando
 ao exemplo do e-commerce, dentro daquela caixa preta do nível 1 você
 agora veria: uma aplicação web em React (o frontend), uma API REST em
@@ -287,7 +287,7 @@ uma ``API REST em FastAPI'', o nível 3 mostra que dentro dessa API há um
 módulo de autenticação, um módulo de catálogo, um módulo de pedidos, um
 módulo de notificações e um módulo de integração com o gateway de
 pagamento. Cada módulo tem suas responsabilidades e suas dependências
-internas. Este nível é útil para contêineres complexos --- aqueles que
+internas. Este nível é útil para contêineres complexos, aqueles que
 têm múltiplas responsabilidades ou cuja estrutura interna não é óbvia
 pela simples leitura do código. Para um microsserviço simples com três
 endpoints, o nível 3 provavelmente não adiciona valor suficiente para
@@ -295,16 +295,16 @@ justificar o custo de mantê-lo atualizado.
 
 O \textbf{Nível 4 --- Código} desce ao nível de classes, interfaces e
 funções. Este é o nível mais granular e, paradoxalmente, o menos
-utilizado na prática. A razão é simples: código muda com frequência
+utilizado na rotina de trabalho. A razão é simples: código muda com frequência
 altíssima, e manter diagramas de classes sincronizados manualmente com o
 código é um exercício de futilidade. O nível 4 só faz sentido quando é
-gerado automaticamente a partir do código --- e mesmo assim, raramente
+gerado automaticamente a partir do código, e mesmo assim, raramente
 é consultado, porque o próprio código, com a ajuda de um bom IDE, já
 fornece essa visão.
 
 A pergunta natural é: por que exatamente quatro níveis e não dois ou
 dez? A resposta está no equilíbrio entre utilidade e custo de
-manutenção. Dois níveis --- contexto e código, por exemplo --- deixariam
+manutenção. Dois níveis (contexto e código, por exemplo) deixariam
 uma lacuna enorme no meio. Você saberia o que o sistema faz no mundo e
 como cada classe funciona, mas não teria ideia de como as partes se
 conectam, quais são os artefatos deployáveis, como os dados fluem entre
@@ -312,8 +312,8 @@ eles. Dez níveis, por outro lado, criariam uma granularidade tão fina
 que o custo de manutenção seria proibitivo e a navegação seria confusa.
 Quatro níveis acertam o ponto ideal: contexto para o panorama geral,
 contêineres para a arquitetura técnica, componentes para os módulos
-complexos, e código para geração automática quando necessário. Na
-prática, a regra é pragmática: os níveis 1 e 2 são obrigatórios para
+complexos, e código para geração automática quando necessário. A
+regra é pragmática: os níveis 1 e 2 são obrigatórios para
 qualquer sistema em produção. O nível 3 é produzido apenas para módulos
 que justifiquem esse nível de detalhe. O nível 4 quase nunca vale o
 esforço manual.
@@ -321,7 +321,7 @@ esforço manual.
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=0.85\textwidth]{imagens/09-documentacao-viva-02-diagrama-c4-de-conteineres-e-commerce-plantuml.png}
-    \caption{Diagrama C4 de Contêineres --- E-commerce (PlantUML)}
+    \caption{Diagrama C4 de Contêineres: E-commerce (PlantUML)}
 \end{figure}
 
 
@@ -338,16 +338,16 @@ que desinformam em vez de informar.
 
 Os diagramas que genuinamente importam são aqueles que respondem perguntas
 recorrentes. A visão geral do sistema nos níveis 1 e 2 do C4 é
-indispensável porque é consultada frequentemente --- por novos membros
+indispensável porque é consultada frequentemente: por novos membros
 da equipe, em reuniões de planejamento, em revisões de arquitetura, em
-análises de incidentes. Os fluxos críticos de negócio --- como o fluxo
+análises de incidentes. Os fluxos críticos de negócio (como o fluxo
 de um pedido desde a criação até a entrega, ou o fluxo de autenticação
-de um usuário --- são diagramados porque envolvem múltiplos componentes
+de um usuário) são diagramados porque envolvem múltiplos componentes
 e são difíceis de rastrear apenas pela leitura do código. A topologia
 de deploy, mostrando quais serviços rodam onde, como estão configurados
 os load balancers, onde ficam os bancos de dados, é essencial para a
-equipe de operações. E os fluxos de dados sensíveis --- onde dados
-pessoais são coletados, processados e armazenados --- são cada vez mais
+equipe de operações. E os fluxos de dados sensíveis, onde dados
+pessoais são coletados, processados e armazenados, são cada vez mais
 necessários por razões de compliance com legislações como a LGPD.
 
 Por outro lado, alguns diagramas consistentemente desperdiçam tempo sem
@@ -355,14 +355,14 @@ gerar valor proporcional. UML detalhado de cada classe do sistema, com
 todos os atributos e métodos, é o exemplo clássico: o custo de
 atualização é altíssimo e a informação que fornece já está disponível no
 próprio código. Diagramas de sequência para operações CRUD simples são
-outro exemplo --- se o fluxo é ``frontend chama API, API salva no banco,
+outro exemplo. Se o fluxo é ``frontend chama API, API salva no banco,
 API retorna resposta'', desenhar isso não adiciona compreensão. E
 qualquer diagrama que leve mais de trinta minutos para ser atualizado
 após uma mudança no sistema deve ser questionado: o esforço de
 manutenção está justificando o valor entregue?
 
 A regra prática é direta: se o custo de manter o diagrama atualizado
-supera o benefício de tê-lo, você tem duas opções --- elimine-o ou
+supera o benefício de tê-lo, você tem duas opções. Elimine-o ou
 automatize sua geração. Ferramentas como Structurizr, que gera diagramas
 C4 a partir de uma DSL versionável, e \texttt{madge}, que gera grafos
 de dependência a partir do código, permitem que certos diagramas se
@@ -378,7 +378,7 @@ lembra de atualizá-la.
 Conforme vimos no Capítulo 2, ADRs (Architecture Decision Records)
 capturam decisões arquiteturais e, mais importante, capturam os
 \textit{porquês} dessas decisões. Um ADR bem escrito é um documento
-curto --- tipicamente uma página --- que registra o contexto em que uma
+curto, tipicamente de uma página, que registra o contexto em que uma
 decisão foi tomada, as alternativas consideradas, a decisão final e suas
 consequências esperadas. ADRs são imutáveis: quando uma decisão é
 revisada, cria-se um novo ADR que referencia o anterior, em vez de
@@ -444,9 +444,9 @@ Excalidraw & Diagramas informais & Estética de rascunho, colaborativo \\
 A escolha da ferramenta importa menos do que o hábito de documentar. Mas
 algumas características fazem diferença prática. Ferramentas baseadas em
 texto puro, como Structurizr, PlantUML e Mermaid, têm uma vantagem
-fundamental: seus arquivos podem ser versionados com Git, revisados em
+central: seus arquivos podem ser versionados com Git, revisados em
 pull requests e gerados em pipelines de CI/CD. Isso significa que a
-documentação de arquitetura recebe o mesmo tratamento que o código ---
+documentação de arquitetura recebe o mesmo tratamento que o código,
 é revisada, tem histórico, e mudanças podem ser rastreadas. Ferramentas
 visuais como draw.io e Excalidraw são excelentes para brainstorming e
 comunicação informal, mas seus arquivos (XML ou JSON) são difíceis de
@@ -455,11 +455,11 @@ diagramas formais em texto puro para documentação permanente, e
 ferramentas visuais para exploração e comunicação ad hoc.
 
 Independentemente da ferramenta, a melhor documentação de arquitetura
-conta uma história. Não é uma lista de componentes --- é uma narrativa
+conta uma história. Não é uma lista de componentes; é uma narrativa
 de como o sistema chegou onde está. Comece pelo problema que o sistema
 resolve. Explique as restrições do contexto: orçamento, prazo, expertise
 da equipe, requisitos regulatórios. Narre as decisões e os trade-offs
-que moldaram a solução. Reconheça as imperfeições --- todo sistema tem
+que moldaram a solução. Reconheça as imperfeições, porque todo sistema tem
 dívida técnica, e documentar essa dívida é mais honesto e mais útil do
 que fingir que ela não existe. E aponte o futuro: quais são os próximos
 passos planejados? Quais são os riscos conhecidos? Esta narrativa
@@ -476,20 +476,20 @@ Se a documentação vive fora do repositório, ela morre. Essa é a
 premissa central da filosofia \textit{Docs as Code}, e embora possa
 parecer um slogan simplista, ela é sustentada por décadas de
 evidência empírica. Wikis corporativas, documentos no Google Drive,
-páginas no Confluence --- todas essas ferramentas têm seu valor, mas
+páginas no Confluence: todas essas ferramentas têm seu valor, mas
 quando a documentação técnica de um projeto vive separada do código
 que ela descreve, a desatualização não é uma possibilidade: é uma
 certeza. A razão é estrutural. Quando um desenvolvedor modifica uma
 API, ele está no repositório, trabalhando com arquivos de código. Se
-a documentação está em outro lugar --- outro sistema, outra URL, outro
-fluxo de trabalho --- a atualização da documentação requer uma troca
+a documentação está em outro lugar (outro sistema, outra URL, outro
+fluxo de trabalho), a atualização da documentação requer uma troca
 de contexto. E trocas de contexto são a morte das boas intenções.
 
 A filosofia Docs as Code trata documentação com exatamente as mesmas
 práticas que aplicamos ao código: versionamento com Git, revisão por
 pares em pull requests, testes automatizados no CI, e deploy
 automatizado. Essa convergência de práticas não é um capricho
-metodológico --- é uma decisão arquitetural que resolve o problema
+metodológico. É uma decisão arquitetural que resolve o problema
 da desatualização pela raiz. Quando documentação e código vivem no
 mesmo repositório, evoluem no mesmo pull request e são revisados pela
 mesma equipe, a sincronização deixa de depender de disciplina individual
@@ -507,7 +507,7 @@ diretórios clara e consistente dentro do repositório. Na raiz, o
 subdiretório \texttt{docs/architecture/} abriga ADRs e diagramas de
 arquitetura; \texttt{docs/api/} contém documentação de API;
 \texttt{docs/runbooks/} reúne os procedimentos operacionais. Essa
-estrutura não é arbitrária --- ela permite que cada tipo de documento
+estrutura não é arbitrária. Ela permite que cada tipo de documento
 tenha seu próprio ciclo de vida e seus próprios responsáveis, enquanto
 vive dentro do mesmo repositório que o código.
 
@@ -528,8 +528,8 @@ tempo é o que torna a documentação navegável em vez de caótica.
 
 O benefício mais transformador de manter documentação no mesmo
 repositório que o código é que ambos evoluem juntos. Quando um pull
-request modifica uma API --- adicionando um campo, alterando um
-comportamento, depreciando um endpoint --- a documentação correspondente
+request modifica uma API, adicionando um campo, alterando um
+comportamento ou depreciando um endpoint, a documentação correspondente
 é atualizada no mesmo PR. Isso elimina a categoria inteira de bugs de
 documentação causados por ``esquecemos de atualizar a docs''. O
 revisor do PR, ao examinar as mudanças, verifica tanto o código quanto
@@ -545,12 +545,12 @@ Para institucionalizar essa prática, equipes maduras incluem um
 checkbox no template de pull request: ``Documentação atualizada?
 [ ] Sim [ ] Não aplicável''. Esse mecanismo simples cria um lembrete
 no fluxo natural de trabalho, sem adicionar burocracia. Não é uma
-barreira que bloqueia o merge --- é um convite à reflexão. E quando
+barreira que bloqueia o merge, e sim um convite à reflexão. Quando
 a resposta é ``Sim'', o revisor sabe que deve olhar as mudanças em
 \texttt{docs/} com a mesma atenção que olha as mudanças em
 \texttt{src/}.
 
-Além da revisão manual, parte da documentação pode ser gerada
+A revisão manual não é o único recurso. Parte da documentação pode ser gerada
 automaticamente. Frameworks como FastAPI e NestJS geram especificações
 OpenAPI a partir de decorators no código, garantindo que a documentação
 da API esteja sempre sincronizada com a implementação. Ferramentas como
@@ -558,7 +558,7 @@ da API esteja sempre sincronizada com a implementação. Ferramentas como
 que seguem convenções. E ferramentas como \texttt{madge} geram grafos
 de dependência entre módulos, criando diagramas que se atualizam
 sozinhos. A documentação gerada automaticamente não substitui a
-documentação escrita por humanos --- ela complementa, cobrindo os
+documentação escrita por humanos; ela complementa, cobrindo os
 aspectos mecânicos e liberando os humanos para documentar o que só
 humanos podem: o contexto, a intenção e as decisões.
 
@@ -579,7 +579,7 @@ que está sempre disponível na versão mais recente.
 Se documentação é código, ela também pode ter testes. E deveria. A
 forma mais básica de teste é a verificação de links: ferramenta como
 \texttt{lychee} percorre todos os links na documentação e reporta quais
-estão quebrados --- URLs externas que mudaram, referências internas a
+estão quebrados, sejam URLs externas que mudaram ou referências internas a
 documentos que foram renomeados ou deletados. Executar essa verificação
 no CI semanalmente custa minutos de computação e evita a experiência
 frustrante de seguir um link e encontrar uma página 404.
@@ -588,8 +588,8 @@ A verificação ortográfica com ferramentas como \texttt{cspell} é outro
 teste simples e valioso. Erros de ortografia na documentação minam a
 credibilidade do conteúdo, mesmo que o conteúdo técnico esteja correto.
 Uma configuração de \texttt{cspell} com um dicionário técnico
-customizado --- que inclua termos como ``PostgreSQL'', ``Kubernetes'',
-``microsserviço'' --- evita falsos positivos e mantém a documentação
+customizado, que inclua termos como ``PostgreSQL'', ``Kubernetes'' e
+``microsserviço'', evita falsos positivos e mantém a documentação
 profissional.
 
 Mais sofisticado, mas extremamente poderoso, é a extração e execução
@@ -599,13 +599,12 @@ e executá-los em um ambiente limpo para verificar que ainda funcionam.
 Se a documentação de API contém exemplos de requisição, um teste pode
 enviar essas requisições a um servidor de teste e verificar que as
 respostas correspondem ao documentado. Quando os exemplos na
-documentação são testados automaticamente, a documentação se torna, de
-fato, viva --- não no sentido metafórico, mas no sentido literal de
-que é verificada continuamente.
+documentação são testados automaticamente, a documentação se torna
+viva no sentido literal, não apenas metafórico: é verificada continuamente.
 
 Por fim, scripts de freshness monitoram a idade da documentação.
 Um documento que não é atualizado há seis meses pode estar
-perfeitamente correto --- ou pode estar silenciosamente desatualizado.
+perfeitamente correto, ou pode estar silenciosamente desatualizado.
 Um alerta automático que diz ``este runbook não é atualizado desde
 janeiro'' não afirma que há um problema, mas convida alguém a verificar.
 É a versão documental do alerta de expiração no leite: pode estar bom,
@@ -618,7 +617,7 @@ mas vale checar.
 
 A IA generativa é talvez mais útil para documentação do que para
 qualquer outra atividade na engenharia de software. A razão é que
-documentação é uma tarefa que muitos engenheiros evitam --- não por
+documentação é uma tarefa que muitos engenheiros evitam, não por
 falta de competência, mas por falta de motivação. A IA reduz
 drasticamente a barreira de entrada. Gerar um primeiro rascunho de
 README, de especificação de API ou de explicação de código passa de
@@ -668,7 +667,7 @@ IA.
 \subsection{Explicação de Código e API}
 % ------------------------------------------------------------
 
-Onde a IA realmente brilha é na geração de explicações técnicas a
+Onde a IA brilha de verdade é na geração de explicações técnicas a
 partir de código existente. Dada uma função complexa com dezenas de
 linhas, a IA pode produzir uma explicação em linguagem natural que
 descreve o que a função faz, quais são seus parâmetros, quais são os
@@ -700,7 +699,7 @@ humano garante a verdade.
 % ------------------------------------------------------------
 
 Os limites da IA na documentação merecem uma discussão honesta, porque
-a tentação de ``deixar a IA documentar tudo'' é forte --- e os
+a tentação de ``deixar a IA documentar tudo'' é forte, e os
 resultados dessa abordagem são consistentemente decepcionantes.
 
 O primeiro limite é o contexto de negócio. A IA não sabe que ``cliente
@@ -708,8 +707,8 @@ premium'' na sua empresa tem regras especiais de SLA, que pedidos acima
 de R\$10.000 passam por aprovação manual, ou que o módulo de frete tem
 uma exceção para a região Norte que existe por razões logísticas
 específicas. Essas informações vivem na cultura da empresa e nas
-conversas da equipe, não no código. E sem elas, a documentação gerada
-pela IA é tecnicamente correta mas contextualmente vazia --- descreve
+conversas da equipe, não no código. Sem elas, a documentação gerada
+pela IA é tecnicamente correta mas contextualmente vazia: descreve
 a mecânica sem explicar o significado.
 
 O segundo limite é a intenção. A IA descreve com competência o que o
@@ -718,14 +717,14 @@ Por que o timeout é de 30 segundos? Por que a ordenação é por data e
 não por ID? Por que usamos retry com backoff exponencial nessa chamada
 específica? Essas decisões foram tomadas por humanos com base em
 experiências, incidentes passados e trade-offs que a IA não tem como
-inferir a partir do código. O ``porquê'' é fundamentalmente humano, e
+inferir a partir do código. O ``porquê'' é uma questão humana, e
 é, paradoxalmente, a parte mais valiosa da documentação.
 
 O terceiro limite é o público. A IA não sabe se o leitor da
 documentação é um desenvolvedor júnior que precisa de explicações
 detalhadas ou um arquiteto sênior que quer apenas uma visão geral
 rápida. Documentação eficaz é calibrada para seu público, e essa
-calibração requer conhecimento sobre quem vai ler --- algo que a IA
+calibração requer conhecimento sobre quem vai ler, algo que a IA
 simplesmente não tem.
 
 O quarto limite, e talvez o mais perigoso, é a alucinação. A IA pode
@@ -756,9 +755,9 @@ desenvolvedor precisa integrar com sua API e não encontra documentação
 clara, ele tem duas opções: abrir um ticket de suporte perguntando como
 usar a API, ou tentar por tentativa e erro, gerando chamadas malformadas
 que sobrecarregam seus logs e, eventualmente, sua equipe de suporte.
-Ambas as opções custam tempo --- seu tempo e o tempo dele.
+Ambas as opções custam tempo, o seu e o dele.
 
-A documentação de API não é apenas um complemento técnico --- é uma
+A documentação de API não é apenas um complemento técnico; é uma
 vantagem competitiva. O exemplo mais citado é o da Stripe. A Stripe
 construiu um império de pagamentos online, e pergunte a qualquer
 desenvolvedor que já integrou com ela qual é a primeira coisa que
@@ -851,14 +850,14 @@ o que o endpoint faz, mas como ele se encaixa no fluxo de uso. No
 exemplo acima, a descrição do endpoint POST /pedidos diz que o pedido
 é criado no estado ``pendente'' e que o pagamento é processado em outro
 endpoint. Essa informação contextual é tão importante quanto o schema
-do request body --- ela diz ao consumidor o que esperar e qual é o
+do request body, pois diz ao consumidor o que esperar e qual é o
 próximo passo.
 
 Os exemplos são, sem dúvida, o elemento mais importante da
 documentação de API. Se você pudesse ter apenas uma coisa na
 documentação, deveria ser um exemplo completo: requisição com headers,
 body e query parameters, seguida da resposta com status code e body.
-Exemplos de erro são igualmente valiosos --- mostram ao desenvolvedor
+Exemplos de erro são igualmente valiosos, pois mostram ao desenvolvedor
 o que acontece quando algo dá errado e como interpretar as respostas
 de erro. E fluxos multi-step, que mostram uma sequência de chamadas
 para realizar uma operação de negócio completa, são o nível mais alto
@@ -880,7 +879,7 @@ diz quais são os valores possíveis e o que cada um significa no contexto
 do negócio.
 
 Para que a documentação de uma API GraphQL seja genuinamente útil, cada
-tipo e cada campo precisa de uma descrição no schema --- não apenas o
+tipo e cada campo precisa de uma descrição no schema, cobrindo não apenas o
 tipo de dado, mas o significado semântico. Queries e mutations de
 exemplo devem cobrir os casos de uso mais comuns, com variáveis
 realistas e respostas completas. E campos deprecados devem usar a
@@ -908,7 +907,7 @@ documentação das versões individuais. Um bom guia de migração lista
 todas as breaking changes, fornece exemplos de como adaptar código
 da versão antiga para a nova, e estima o esforço necessário. O
 changelog da API complementa o guia de migração com um registro
-cronológico de todas as mudanças --- novas features, correções,
+cronológico de todas as mudanças: novas features, correções,
 depreciações e remoções. E a política de depreciação define
 expectativas claras: quanto tempo antes de uma remoção os
 consumidores são notificados? Há um período de convivência entre
@@ -927,12 +926,12 @@ surpresas desagradáveis e constroem confiança com os consumidores.
 % ============================================================
 
 Escrever documentação é a parte fácil. Mantê-la atualizada é o
-verdadeiro desafio --- e é onde a maioria das equipes falha. A razão
+desafio real, e é onde a maioria das equipes falha. A razão
 é que a escrita inicial tem um momento claro de motivação: um projeto
 novo, uma decisão importante, um incidente resolvido. Mas a manutenção
 é contínua, difusa e sem glamour. Ninguém recebe elogios por atualizar
-uma linha no README. E é exatamente por isso que a manutenção precisa
-ser sistematizada --- não pode depender de boa vontade individual.
+uma linha no README. E é por isso que a manutenção precisa
+ser sistematizada; não pode depender de boa vontade individual.
 
 
 % ------------------------------------------------------------
@@ -947,7 +946,7 @@ README precisa de atualização? A especificação da API mudou? Esta
 decisão merece um ADR? O diagrama C4 ainda reflete a realidade? O
 runbook do serviço afetado precisa de revisão?
 
-Esse checklist não precisa ser bloqueante --- não deve impedir o merge
+Esse checklist não precisa ser bloqueante; não deve impedir o merge
 se algum item não está marcado. Mas sua presença constante cria uma
 cultura de consciência. E quando combinado com um script de CI que
 detecta mudanças em diretórios de código sem mudanças correspondentes
@@ -963,19 +962,19 @@ criar atrito no processo de desenvolvimento.
 % ------------------------------------------------------------
 
 Links quebrados são a doença silenciosa da documentação. Eles se
-acumulam gradualmente --- uma URL externa que muda, um documento
-interno que é renomeado, uma seção que é removida --- e cada link
+acumulam gradualmente: uma URL externa que muda, um documento
+interno que é renomeado, uma seção que é removida. Cada link
 quebrado é uma pequena erosão na confiança do leitor. A solução é
 executar \texttt{lychee} ou ferramenta equivalente no CI semanalmente.
 O custo é mínimo; o benefício é desproporcional.
 
-Documentos órfãos --- que existem mas não são referenciados nem
-acessados --- são outro problema que merece atenção periódica. Uma
+Documentos órfãos (que existem mas não são referenciados nem
+acessados) são outro problema que merece atenção periódica. Uma
 auditoria trimestral que identifica documentos não acessados nos
 últimos seis meses é um exercício saudável. Esses documentos devem
 ser questionados: ainda são relevantes? Estão desatualizados? Podem
 ser consolidados com outro documento? A resposta pode ser ``sim, ainda
-é relevante'' --- mas a pergunta precisa ser feita, porque a
+é relevante'', mas a pergunta precisa ser feita, porque a
 alternativa é um acúmulo gradual de documentação morta que polui a
 busca e confunde os leitores.
 
@@ -984,7 +983,7 @@ como site estático, adicionar um botão ``Esta página foi útil?'' com
 opções de sim/não e campo de comentário fornece feedback direto dos
 usuários. Monitorar as páginas mais acessadas indica quais documentos
 são mais valiosos e merecem atenção prioritária. E monitorar buscas
-sem resultado revela o que os usuários procuram e não encontram ---
+sem resultado revela o que os usuários procuram e não encontram:
 lacunas na documentação que estão custando tempo real.
 
 \begin{figure}[htbp]
@@ -999,8 +998,8 @@ lacunas na documentação que estão custando tempo real.
 % ------------------------------------------------------------
 
 Ferramentas não resolvem cultura. Você pode ter o melhor stack de Docs
-as Code do mundo --- Markdown no repositório, CI verificando links,
-MkDocs publicando automaticamente --- e ainda assim ter documentação
+as Code do mundo (Markdown no repositório, CI verificando links,
+MkDocs publicando automaticamente) e ainda assim ter documentação
 péssima, se a equipe não valoriza o ato de documentar. Cultura de
 documentação é construída com intenção e persistência, não com
 ferramentas.
@@ -1009,7 +1008,7 @@ O ponto de partida é a liderança pelo exemplo. Quando o tech lead
 documenta suas decisões em ADRs, quando o gerente de engenharia escreve
 o guia de onboarding, quando o desenvolvedor sênior adiciona comentários
 explicando o ``porquê'' em código complexo, a mensagem é clara:
-documentação não é tarefa de estagiário --- é responsabilidade de todos,
+documentação não é tarefa de estagiário. É responsabilidade de todos,
 especialmente dos mais experientes. Equipes imitam o comportamento dos
 seus líderes, e se os líderes não documentam, a equipe também não vai.
 
@@ -1023,8 +1022,8 @@ tudo o que era confuso. Depois, use essas anotações para melhorar a
 documentação. Esse ciclo de feedback converte a frustração inevitável
 do onboarding em melhoria contínua.
 
-A prática de ``Doc Fridays'' --- reservar tempo recorrente,
-semanalmente ou quinzenalmente, para melhorar documentação --- sinaliza
+A prática de ``Doc Fridays'' (reservar tempo recorrente,
+semanal ou quinzenal, para melhorar documentação) sinaliza
 que a empresa valoriza documentação o suficiente para alocar tempo
 dedicado. Não precisa ser um dia inteiro; uma ou duas horas já fazem
 diferença. O importante é a regularidade: documentação que recebe
@@ -1034,8 +1033,8 @@ de atualização intensa e longos períodos de abandono.
 Por fim, cada documento precisa de um dono. Um responsável nomeado,
 que sabe que aquele documento é sua responsabilidade e que será
 consultado quando ele precisar de atualização. Sem ownership claro,
-a documentação cai no vácuo de ``responsabilidade de todos'' --- que,
-na prática, significa responsabilidade de ninguém. O dono não precisa
+a documentação cai no vácuo de ``responsabilidade de todos'', que
+na realidade significa responsabilidade de ninguém. O dono não precisa
 ser a pessoa que escreveu o documento originalmente; precisa ser alguém
 que conhece o assunto e que aceita a responsabilidade de mantê-lo vivo.
 
@@ -1044,7 +1043,7 @@ que conhece o assunto e que aceita a responsabilidade de mantê-lo vivo.
 \section{O Mínimo Viável de Documentação}
 % ============================================================
 
-Se você não pode fazer documentação completa --- e poucos podem --- faça
+Se você não pode fazer documentação completa (e poucos podem), faça
 o mínimo que evita o caos. O conceito de ``mínimo viável'' aplicado à
 documentação é libertador porque remove a pressão de documentar tudo e
 permite focar no que gera mais impacto. Um README excelente e um
@@ -1062,8 +1061,8 @@ de cinco minutos. Essas perguntas são: ``O que é isto?'', ``O que
 preciso ter instalado?'', ``Como vejo funcionando?'', ``Como sei que
 não quebrei nada?'' e ``Como coloco em produção?''. Se o README
 responde essas cinco perguntas de forma clara e precisa, ele cumpre
-sua função essencial. Tudo além disso --- estrutura do projeto, guia
-de contribuição, licença --- é desejável, mas secundário.
+sua função essencial. O que vier além (estrutura do projeto, guia
+de contribuição, licença) é desejável, mas secundário.
 
 \begin{lstlisting}[language={}, caption={Template de README Mínimo Viável (Markdown)}]
 # Nome do Projeto
@@ -1148,7 +1147,7 @@ Se um novo desenvolvedor não consegue clonar, configurar e rodar o projeto
 em 15 minutos seguindo a documentação, a documentação está incompleta.
 \end{quote}
 
-Essa regra funciona como uma estrela-guia --- um norte que orienta
+Essa regra funciona como uma estrela-guia, um norte que orienta
 decisões sobre o que documentar e como documentar. Os 15 minutos não
 são um número arbitrário. São uma estimativa do limiar de paciência:
 além de 15 minutos de frustração, a maioria dos desenvolvedores começa
@@ -1168,7 +1167,7 @@ containerizou a dependência problemática com Docker, e substituiu o
 script SQL por uma migration automática. O resultado: o setup passou de
 quatro horas para nove minutos. Ao longo de um ano, com seis novos
 desenvolvedores entrando na equipe, a economia acumulada foi de mais de
-vinte horas --- sem contar o ganho intangível de motivação e primeira
+vinte horas, sem contar o ganho intangível de motivação e primeira
 impressão positiva.
 
 A forma mais eficaz de testar a regra dos 15 minutos é simples:
@@ -1188,7 +1187,7 @@ Runbooks merecem destaque porque são a documentação que mais
 diretamente afeta a resiliência operacional. Quando há um incidente
 em produção, a pessoa de plantão precisa de instruções claras,
 específicas e acionáveis. Não é momento para parágrafos longos ou
-explicações teóricas --- é momento para passos numerados, comandos
+explicações teóricas. É momento para passos numerados, comandos
 copiáveis e critérios de escalonamento.
 
 Um bom runbook começa com os sintomas que disparam sua consulta:
@@ -1196,7 +1195,7 @@ qual alerta foi acionado, o que os logs mostram, qual é o impacto
 percebido pelo usuário. Em seguida, lista passos de diagnóstico:
 quais dashboards consultar, quais métricas verificar, quais comandos
 executar para entender o estado atual. Depois, apresenta a resolução
-imediata --- os passos para restaurar o serviço, mesmo que de forma
+imediata, os passos para restaurar o serviço, mesmo que de forma
 temporária. E, por fim, aponta para a resolução definitiva: qual
 investigação deve ser feita depois do incidente para evitar recorrência.
 
@@ -1241,14 +1240,14 @@ cenários reais e prováveis, não hipotéticos.
 \section{Boas Práticas de Comentários no Código}
 % ============================================================
 
-A regra fundamental sobre comentários no código é deceptivamente
+A regra principal sobre comentários no código é deceptivamente
 simples: \textbf{comente o porquê, não o o quê}. Mas aplicar essa
-regra na prática requer discernimento, porque a fronteira entre o
+regra requer discernimento, porque a fronteira entre o
 ``quê'' e o ``porquê'' nem sempre é óbvia.
 
 O ``quê'' é o que o código faz. Se uma linha incrementa um contador,
 um comentário que diz ``incrementa o contador'' não adiciona nenhuma
-informação --- repete o que já está visível. Se uma função retorna
+informação; repete o que já está visível. Se uma função retorna
 um usuário, um comentário que diz ``retorna o usuário'' é redundante.
 Esses comentários não apenas são inúteis; são ativamente prejudiciais,
 porque criam ruído visual que dificulta a leitura e, quando o código
@@ -1295,13 +1294,13 @@ def consultar_estoque(produto_id):
 Observe os comentários bons no exemplo acima. Cada um deles contém
 informação que seria impossível inferir apenas pela leitura do código.
 O comentário sobre a taxa de 0,12 referencia uma resolução fiscal
-específica e indica quando deve ser revisada --- sem esse comentário,
+específica e indica quando deve ser revisada. Sem esse comentário,
 um desenvolvedor futuro veria o número 0,12 e se perguntaria de onde
 veio e se ainda está correto. O comentário sobre o timeout de 30
 segundos explica que o valor não é arbitrário, mas baseado em
 observação empírica do comportamento do gateway de pagamento durante
 picos de carga. O comentário sobre a ordenação por data explica que
-os IDs não são sequenciais por causa de uma migração --- sem essa
+os IDs não são sequenciais por causa de uma migração. Sem essa
 informação, alguém poderia ``otimizar'' a query ordenando por ID e
 introduzir um bug sutil.
 
@@ -1313,8 +1312,8 @@ merecem comentário com data de revisão: ``Workaround para bug X na
 lib Y. Verificar se corrigido na versão Z (previsão: 2026-Q2).''
 Regras de negócio que estão codificadas mas cuja origem não é óbvia
 pelo código devem ser comentadas, idealmente com referência ao ticket
-ou à especificação. E referências a tickets ou incidentes --- ``Fix
-para JIRA-1234'' ou ``Resolvido após incidente INC-567'' --- criam
+ou à especificação. Referências a tickets ou incidentes (``Fix
+para JIRA-1234'' ou ``Resolvido após incidente INC-567'') criam
 links de rastreabilidade entre o código e o contexto mais amplo do
 projeto.
 
@@ -1333,15 +1332,15 @@ linhas.
 Há uma categoria especial de comentários que merece atenção: os
 comentários que envelhecem mal. O clássico \texttt{// TODO: remover
 depois} é inócuo quando escrito, mas tóxico quando ``depois'' nunca
-chega --- e raramente chega. Sem uma data ou ticket associado, TODOs
+chega, e raramente chega. Sem uma data ou ticket associado, TODOs
 se acumulam no código como dívida técnica invisível. A prática
 recomendada é que todo TODO tenha um ticket associado:
 \texttt{// TODO(JIRA-1234): remover após migração em 2026-Q1}.
 Similarmente, o comentário \texttt{// hack} sem explicação é um
 desserviço: reconhece que há algo errado, mas não explica o quê,
-por quê ou quando será corrigido. Um hack documentado --- com o
+por quê ou quando será corrigido. Um hack documentado (com o
 contexto do problema, a razão pela qual a solução correta não foi
-implementada e o plano para corrigi-lo --- é aceitável. Um hack
+implementada e o plano para corrigi-lo) é aceitável. Um hack
 sem documentação é uma bomba-relógio.
 
 
@@ -1362,11 +1361,11 @@ A sabedoria mais contraintuitiva sobre documentação é que menos é
 mais, desde que o menos seja bom e atualizado. Um README impecável
 de cinquenta linhas supera uma wiki de duzentas páginas que ninguém
 consulta. Documentação pouca, boa e atualizada vence documentação
-vasta, medíocre e esquecida --- sempre. O foco deve estar na
+vasta, medíocre e esquecida. Sempre. O foco deve estar na
 qualidade e na manutenção, não na quantidade.
 
 A filosofia Docs as Code resolve o problema mais persistente da
-documentação --- a desatualização --- ao integrar documentação no
+documentação, a desatualização, ao integrar documentação no
 mesmo fluxo de trabalho do código. Quando documentação vive no
 repositório, é revisada em pull requests, é testada no CI e é
 publicada automaticamente, a barreira entre ``escrever código'' e
@@ -1403,7 +1402,7 @@ decisões. Trate cada novo membro da equipe como um testador da sua
 documentação. Reserve tempo regular para manutenção. Dê ownership a
 cada documento. E quando estiver prestes a ir embora de um projeto sem
 documentar aquela decisão complexa, pense na pessoa que vai herdar seu
-código --- e escreva para ela.
+código, e escreva para ela.
 
 
 % ============================================================

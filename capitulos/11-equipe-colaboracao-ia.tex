@@ -6,8 +6,8 @@
 \section{Introdução}
 
 Software é um esporte coletivo. Nenhum grande sistema foi construído por uma
-pessoa sozinha --- nem o Linux, nem o Google, nem o sistema legado de 15 anos
-que sustenta sua empresa. A ilusão do gênio solitário é perigosa: ela desvaloriza
+pessoa sozinha (nem o Linux, nem o Google, nem o sistema legado de 15 anos
+que sustenta sua empresa). A ilusão do gênio solitário é perigosa: ela desvaloriza
 comunicação, ignora coordenação e subestima o fator humano que determina se um
 projeto vive ou morre.
 
@@ -16,36 +16,36 @@ Em 1967, um pesquisador chamado Melvin Conway apresentou um artigo intitulado
 trivial à primeira vista, mas que se revelou uma das leis mais fundamentais da
 engenharia de software. Conway argumentou que ``organizações que projetam
 sistemas estão fadadas a produzir designs que são cópias das estruturas de
-comunicação dessas organizações''. Em outras palavras, se seus três times de
+comunicação dessas organizações''. Ou seja, se seus três times de
 desenvolvimento não se falam regularmente, os três módulos que eles produzem
 também não vão se integrar bem. Se o time de front-end e o time de back-end
 estão em prédios diferentes e se comunicam apenas por tickets no Jira, a API
-entre as camadas será rígida, pouco intuitiva e cheia de mal-entendidos --- porque
+entre as camadas será rígida, pouco intuitiva e cheia de mal-entendidos, porque
 reflete exatamente a qualidade da comunicação entre os dois grupos. A Lei de
 Conway não é uma sugestão ou um princípio filosófico; é uma observação empírica
 que se confirma repetidamente em qualquer organização que produz software.
 
-A consequência prática dessa lei é profunda e frequentemente ignorada: antes
+A consequência prática dessa lei é enorme e frequentemente ignorada: antes
 de redesenhar a arquitetura, redesenhe a organização. Ou pelo menos entenda
 que uma coisa espelha a outra. Quantas vezes você já viu uma empresa tentar
 migrar de um monolito para microserviços sem mudar absolutamente nada na
 estrutura dos times? O resultado é previsível: microserviços que dependem uns
 dos outros exatamente como os módulos do monolito, porque os mesmos times que
 se coordenavam por reuniões semanais continuam se coordenando por reuniões
-semanais --- só que agora com chamadas de rede no meio.
+semanais, só que agora com chamadas de rede no meio.
 
 É preciso reconhecer também que software é, acima de tudo, um artefato social.
 Código é a cristalização de decisões humanas. Cada \texttt{if} reflete uma
-conversa que aconteceu --- ou que deveria ter acontecido e não aconteceu. Cada
+conversa que aconteceu, ou que deveria ter acontecido e não aconteceu. Cada
 abstração representa um consenso (ou a falta dele) entre as pessoas que a
 construíram. Quando olhamos para um sistema legado confuso, estamos olhando
 para as cicatrizes de reorganizações, demissões, prazos impossíveis e
 comunicação falha que ocorreram ao longo dos anos. O código não mente sobre
 a história organizacional que o produziu.
 
-Neste contexto, ferramentas de IA surgem como um novo membro do time, alterando
-profundamente a dinâmica das equipes. Um engenheiro com IA produz o equivalente
-a dois ou três sem ela em muitas tarefas --- mas essa produtividade ampliada
+Ferramentas de IA surgem como um novo membro do time, alterando
+a dinâmica das equipes de forma marcante. Um engenheiro com IA produz o equivalente
+a dois ou três sem ela em muitas tarefas, mas essa produtividade ampliada
 muda o tamanho ideal dos times, os rituais de trabalho e a divisão de
 responsabilidades. Se antes um time de oito pessoas era necessário para
 manter um serviço complexo, hoje quatro pessoas equipadas com ferramentas de
@@ -57,7 +57,7 @@ individual exige \textbf{mais} coordenação, não menos. Se cada pessoa produz
 mais código por dia, a superfície de integração cresce proporcionalmente. Mais
 pull requests abertos simultaneamente, mais merges potencialmente conflitantes,
 mais decisões de design tomadas em paralelo que podem se contradizer. A IA
-não resolve o problema humano da coordenação --- ela o intensifica. Times que
+não resolve o problema humano da coordenação; ela o intensifica. Times que
 adotam IA sem investir proporcionalmente em comunicação e alinhamento acabam
 com mais código produzido e mais confusão gerada.
 
@@ -74,11 +74,11 @@ rotatividade de pessoas e à evolução das tecnologias.
 \section{Estruturas de Equipe}
 
 A forma como você organiza seus times determina a forma do software que eles
-constroem. Não é metáfora --- é a Lei de Conway em ação. Um dos exemplos mais
+constroem. Não é metáfora: é a Lei de Conway em ação. Um dos exemplos mais
 ilustrativos dessa dinâmica é a transformação da Amazon no início dos anos 2000.
 Quando Jeff Bezos decretou que todos os times deveriam se comunicar por meio
-de interfaces de serviço --- e que qualquer outro mecanismo de comunicação entre
-times era proibido ---, ele não estava apenas fazendo uma escolha arquitetural.
+de interfaces de serviço, e que qualquer outro mecanismo de comunicação entre
+times era proibido, ele não estava apenas fazendo uma escolha arquitetural.
 Estava reorganizando a empresa inteira ao redor de uma ideia: que a autonomia
 dos times e a clareza de interfaces produziriam sistemas melhores. O resultado
 foi a arquitetura de microserviços que eventualmente deu origem à Amazon Web
@@ -133,7 +133,7 @@ investimento pesado em plataforma interna e em interfaces claras entre times.
 
 Os \textbf{Platform Teams} existem justamente para que os times de stream não
 precisem reinventar infraestrutura a cada novo serviço. Imagine uma equipe de
-plataforma que construiu um portal interno para desenvolvedores --- um lugar onde
+plataforma que construiu um portal interno para desenvolvedores, um lugar onde
 qualquer engenheiro pode, com três cliques, provisionar um banco de dados,
 configurar um pipeline de CI/CD, criar um ambiente de staging e obter
 dashboards de observabilidade pré-configurados. Essa equipe de plataforma não
@@ -145,11 +145,11 @@ entenderam que cada hora que um engenheiro de produto gasta lutando com
 infraestrutura é uma hora que não gasta resolvendo problemas de negócio.
 
 Os \textbf{Complicated Subsystem Teams} existem quando um componente exige
-conhecimento tão profundo e especializado que não faz sentido distribuí-lo
-entre os times de stream. Pense em uma equipe de machine learning que mantém o
-motor de recomendação de uma plataforma de conteúdo. Os algoritmos de
+conhecimento tão especializado que não faz sentido distribuí-lo
+entre os times de stream. Uma equipe de machine learning que mantém o
+motor de recomendação de uma plataforma de conteúdo ilustra bem isso. Os algoritmos de
 recomendação envolvem álgebra linear, teoria de grafos, processamento de
-linguagem natural e otimização estocástica --- domínios que exigem anos de
+linguagem natural e otimização estocástica, domínios que exigem anos de
 estudo especializado. Se cada time de stream tivesse que entender esses
 fundamentos para usar o motor de recomendação, a carga cognitiva seria
 insustentável. Ao isolar esse conhecimento em um time especialista, o resto
@@ -166,8 +166,8 @@ meses trabalhando lado a lado com as equipes de stream para adotar
 observabilidade distribuída. Eles fazem workshops, ajudam a instrumentar os
 primeiros serviços, revisam as configurações, criam documentação e templates
 reutilizáveis. No final do trimestre, os times de stream estão autossuficientes
-em observabilidade, e a equipe de DevEx se move para o próximo desafio --- talvez
-ajudar com adoção de testes de contrato ou integração com ferramentas de IA.
+em observabilidade, e a equipe de DevEx se move para o próximo desafio (talvez
+ajudar com adoção de testes de contrato ou integração com ferramentas de IA).
 Se um enabling team se torna permanente e indispensável, algo deu errado.
 
 \subsection{Modos de Interação}
@@ -198,16 +198,16 @@ entre os times estão estáveis e bem definidas: um time consome a API ou o
 serviço do outro sem precisar de coordenação constante. É o modo mais
 eficiente no estado estacionário, mas exige que as fronteiras de
 responsabilidade estejam cristalinas. Por fim, o modo de \textbf{Facilitação}
-é usado quando um time --- tipicamente um enabling team --- ajuda outro a
+é usado quando um time (tipicamente um enabling team) ajuda outro a
 desenvolver capacidades novas, removendo obstáculos e transferindo conhecimento
 sem assumir a responsabilidade pelo resultado final.
 
 \subsection{Equipes Cross-Funcionais e Two-Pizza Teams}
 
 O conceito de equipe cross-funcional parece simples, mas sua implementação
-exige disciplina organizacional significativa. Uma equipe verdadeiramente
-cross-funcional tem todas as competências necessárias para entregar valor sem
-depender de outro time. Back-end, front-end, QA, design, dados --- todos na
+exige disciplina organizacional significativa. Uma equipe cross-funcional de
+verdade tem todas as competências necessárias para entregar valor sem
+depender de outro time. Back-end, front-end, QA, design, dados: todos na
 mesma equipe. Quando um bug crítico aparece às 22h de uma sexta-feira, essa
 equipe consegue diagnosticar o problema no front, verificar os logs no back,
 analisar os dados afetados e fazer deploy de uma correção sem abrir um ticket
@@ -257,8 +257,8 @@ o que o organograma diz e o que o software revela.
 
 A chegada de ferramentas de IA generativa ao dia a dia da engenharia de software
 está provocando uma revisão silenciosa dos modelos tradicionais de dimensionamento
-de equipe. Com IA auxiliando cada membro do time --- gerando código boilerplate,
-escrevendo testes, traduzindo requisitos em protótipos, acelerando debugging ---,
+de equipe. Com IA auxiliando cada membro do time (gerando código boilerplate,
+escrevendo testes, traduzindo requisitos em protótipos, acelerando debugging),
 um time de 4 pessoas pode alcançar a produtividade que antes exigia 7. Isso é
 genuinamente positivo, porque times menores significam menos overhead de
 comunicação, decisões mais rápidas e alinhamento mais natural. A matemática de
@@ -273,13 +273,13 @@ de propriedade, analisar logs e criar documentação) multiplica sua capacidade
 de forma permanente.
 
 Novos papéis também estão emergindo nas equipes de engenharia: prompt engineer,
-AI reviewer, curador de contexto para LLMs --- funções que simplesmente não
+AI reviewer, curador de contexto para LLMs. Funções que simplesmente não
 existiam há dois anos e que hoje são essenciais para organizações que levam a
 sério a integração de IA em seus fluxos de trabalho.
 
-No entanto, existe um risco real em times tão enxutos que perdem toda a
+Existe, porém, um risco real em times tão enxutos que perdem toda a
 redundância. Se uma equipe de quatro pessoas que equivale a sete perde um
-membro, ela não perde 25\% da capacidade --- perde potencialmente 40\% ou
+membro, ela não perde 25\% da capacidade; perde potencialmente 40\% ou
 50\%, porque o conhecimento tácito daquela pessoa amplificado pela IA gerava
 uma produtividade desproporcional. O bus factor continua sendo uma métrica
 crítica, talvez até mais relevante quando times menores carregam mais
@@ -292,7 +292,7 @@ Código é comunicação. Mas não é a única forma. Engenheiros que sabem escr
 apresentar e documentar decisões multiplicam seu impacto de maneiras que
 transcendem qualquer habilidade puramente técnica. A diferença entre um
 engenheiro bom e um engenheiro excelente raramente está na capacidade de
-programar --- está na capacidade de articular ideias, convencer pessoas e
+programar. Está na capacidade de articular ideias, convencer pessoas e
 deixar um rastro de contexto que permite que outros continuem de onde ele parou.
 
 \subsection{RFCs e Design Docs}
@@ -302,7 +302,7 @@ um engenheiro pode escrever ao longo de sua carreira. Ele força clareza de
 pensamento antes que uma única linha de código seja escrita, e cria um
 registro permanente de como e por que determinadas decisões foram tomadas.
 
-A cultura de RFCs não nasceu no software --- nasceu na Internet Engineering
+A cultura de RFCs não nasceu no software. Nasceu na Internet Engineering
 Task Force (IETF) nos anos 1960, quando os protocolos que formam a base da
 Internet moderna foram projetados através de documentos colaborativos que
 qualquer membro da comunidade podia comentar. Essa tradição migrou para
@@ -314,7 +314,7 @@ e menos surpresas durante a implementação.
 
 Na Amazon, Jeff Bezos levou essa ideia ao extremo ao proibir apresentações de
 PowerPoint em reuniões executivas, substituindo-as por narrativas estruturadas
-de 6 páginas --- os famosos ``six-page memos''. A lógica de Bezos é que o ato
+de 6 páginas, os famosos ``six-page memos''. A lógica de Bezos é que o ato
 de escrever prosa completa, com frases conectadas e argumentos encadeados,
 exige um nível de rigor de pensamento que bullet points e slides simplesmente
 não conseguem produzir. Um slide pode esconder raciocínio fraco por trás de
@@ -394,19 +394,19 @@ Diagramas, exemplos de API, modelos de dados.
 A pergunta que todo engenheiro deveria se fazer é: quando escrever uma RFC?
 A resposta é surpreendentemente simples. Qualquer mudança que afete mais de
 um time merece uma RFC. Qualquer mudança que leve mais de uma semana para
-implementar merece uma RFC. Qualquer mudança que seja irreversível ---
-migração de banco de dados, troca de protocolo de comunicação, decisão de
-linguagem para um novo serviço --- definitivamente merece uma RFC. Na dúvida,
+implementar merece uma RFC. Qualquer mudança irreversível (migração de banco
+de dados, troca de protocolo de comunicação, decisão de linguagem para um
+novo serviço) definitivamente merece uma RFC. Na dúvida,
 escreva. O custo de escrever uma RFC desnecessária é de algumas horas de
 trabalho. O custo de não escrever uma RFC necessária é semanas de retrabalho
 e meses de dívida técnica.
 
-É fundamental entender que o valor de uma RFC está no \textit{processo}, não
+O valor de uma RFC está no \textit{processo}, não
 no documento final. O documento é um artefato útil, claro, mas é secundário.
 O verdadeiro valor reside nas conversas que ele provoca, nas alternativas que
 ele força a considerar, nas perguntas incômodas que surgem durante a revisão.
 Muitas vezes, o ato de escrever a seção de ``alternativas consideradas'' revela
-que a proposta original não era a melhor opção --- e o engenheiro muda de
+que a proposta original não era a melhor opção, e o engenheiro muda de
 direção antes de escrever uma linha de código. Esse é o melhor cenário
 possível: o bug mais barato é aquele que nunca é introduzido.
 
@@ -421,7 +421,7 @@ meses ou anos depois, por que aquele caminho foi escolhido.
 
 \subsection{Documentação de Decisões}
 
-Architecture Decision Records --- ADRs --- são documentos curtos e focados que
+Architecture Decision Records (ADRs) são documentos curtos e focados que
 registram decisões técnicas importantes. O formato foi formalizado por Michael
 Nygard e é de uma simplicidade elegante: título, contexto, decisão e
 consequências. Nada mais. Um ADR não é uma especificação técnica detalhada;
@@ -429,7 +429,7 @@ consequências. Nada mais. Um ADR não é uma especificação técnica detalhada
 ela e as consequências esperadas.
 
 A razão para documentar decisões é ao mesmo tempo óbvia e frequentemente
-ignorada: daqui a seis meses, alguém --- talvez você mesmo --- vai olhar para
+ignorada: daqui a seis meses, alguém (talvez você mesmo) vai olhar para
 o código e perguntar ``por que fizemos assim?''. Sem um ADR, a resposta
 exige arqueologia em commits do Git, conversas antigas do Slack e, na pior
 das hipóteses, esperar que a pessoa que tomou a decisão ainda esteja na
@@ -441,7 +441,7 @@ Uma boa decisão em 2023 pode ser uma decisão ruim em 2025, não porque alguém
 errou, mas porque o contexto mudou: a escala cresceu, novas tecnologias
 surgiram, requisitos de negócio evoluíram. O ADR registra o contexto da
 época, evitando julgamentos retroativos injustos. ``Eles escolheram
-PostgreSQL quando MongoDB parecia mais adequado'' pode parecer um erro ---
+PostgreSQL quando MongoDB parecia mais adequado'' pode parecer um erro,
 até você ler o ADR e descobrir que, na época, a equipe tinha três engenheiros
 experientes em PostgreSQL e nenhum em MongoDB, e que a prioridade era entregar
 em duas semanas, não otimizar para o longo prazo.
@@ -460,14 +460,14 @@ assíncrona para \textbf{decidir} e documentação para \textbf{preservar}.
 Uma reunião é perfeita para brainstorming, para explorar um espaço de
 soluções desconhecido, para ler a linguagem corporal e construir entendimento
 compartilhado. Mas a decisão que sai dessa reunião deve ser registrada em um
-documento que todos possam consultar --- porque memórias divergem, e o que
+documento que todos possam consultar, porque memórias divergem, e o que
 você lembra que ``ficou decidido'' pode ser diferente do que seu colega
 lembra.
 
 Um dos anti-padrões mais destrutivos em organizações de engenharia é a reunião
 que deveria ter sido um documento. Se o único propósito de uma reunião é
-transmitir informação --- um novo processo, uma atualização de status, uma
-mudança de roadmap --- escreva um documento. Envie por email ou Slack. As
+transmitir informação (um novo processo, uma atualização de status, uma
+mudança de roadmap), escreva um documento. Envie por email ou Slack. As
 pessoas leem no seu ritmo, fazem perguntas assincronamente, e ninguém
 desperdiça uma hora de trabalho focado para absorver informação que poderia
 ter sido consumida em dez minutos de leitura. Reuniões são para
@@ -488,7 +488,7 @@ Engenheiros que escrevem bem lideram, mesmo sem título de liderança. A
 capacidade de articular uma ideia técnica complexa em prosa clara e
 convincente é talvez a habilidade mais subvalorizada na carreira de
 engenharia de software. Não é acidente que as empresas de tecnologia mais
-admiradas --- Amazon, Stripe, Google, GitLab --- têm culturas profundamente
+admiradas (Amazon, Stripe, Google, GitLab) têm culturas fortemente
 orientadas à escrita.
 
 Na Amazon, a proibição de PowerPoints por Bezos criou uma cultura onde a
@@ -507,15 +507,14 @@ praticados. Use frases curtas. Prefira voz ativa a voz passiva. Forneça
 exemplos concretos sempre que possível. Organize as ideias em uma estrutura
 lógica que guie o leitor de um ponto a outro sem saltos. Se o leitor precisa
 reler uma frase para entendê-la, o autor falhou. Clareza não é simplificação
-excessiva --- é a habilidade de tornar o complexo acessível sem perder nuance.
+excessiva; é a habilidade de tornar o complexo acessível sem perder nuance.
 
 Ferramentas de IA podem servir como assistentes poderosos no processo de
 escrita técnica. Use LLMs para revisar a clareza de um documento, sugerir
 uma estrutura melhor, identificar ambiguidades e apontar argumentos que
-precisam de mais sustentação. Mas é fundamental manter a autoria e a
-originalidade do pensamento. A IA pode polir a expressão; o insight, a
+precisam de mais sustentação. O pensamento e a autoria, porém, continuam sendo seus. A IA pode polir a expressão; o insight, a
 experiência e o julgamento são seus. Um documento escrito inteiramente por IA
-tende a ser correto no geral e anêmico nos detalhes --- falta a vivência de
+tende a ser correto no geral e anêmico nos detalhes, porque falta a vivência de
 quem construiu o sistema, debugou o incidente de madrugada e sabe qual
 requisito de negócio muda todo trimestre.
 
@@ -532,7 +531,7 @@ param de contribuir para evitar ataques.
 \section{Mentoria e Crescimento}
 
 Times fortes são feitos de pessoas que crescem. Se ninguém evolui, o time
-estagna --- e estagnar em tecnologia é retroceder, porque o campo avança
+estagna, e estagnar em tecnologia é retroceder, porque o campo avança
 independentemente da sua velocidade.
 
 \subsection{Pair Programming}
@@ -560,10 +559,10 @@ Mob Programming & Todo o time em um problema, um teclado. Rotação a cada pouco
 \end{tabular}
 \end{table}
 
-No estilo \textbf{Driver/Navigator}, a experiência é profundamente diferente
+No estilo \textbf{Driver/Navigator}, a experiência é radicalmente diferente
 dependendo do papel que você ocupa. Como driver, você está imerso nos detalhes:
 a sintaxe, os nomes de variáveis, a sequência lógica de cada instrução. Seu
-foco é estreito e intenso --- você está implementando. Como navigator, a
+foco é estreito e intenso, e você está implementando. Como navigator, a
 experiência é quase oposta: você está vendo o mapa inteiro, pensando três
 passos à frente, questionando se a direção geral está correta. ``Espera, se
 fizermos assim aqui, como vamos lidar com o caso de erro dois métodos
@@ -575,13 +574,13 @@ momentos de debate intenso, quando o navigator interrompe com uma observação
 que muda o rumo da implementação.
 
 O estilo \textbf{Ping-Pong} transforma pair programming em um jogo. Uma pessoa
-escreve um teste que falha --- um teste que define o comportamento desejado.
+escreve um teste que falha, um teste que define o comportamento desejado.
 A outra faz o teste passar com a implementação mais simples possível. Então
 os papéis se invertem. A energia é diferente: há um ritmo, quase uma cadência
 musical, de vermelho-verde-vermelho-verde no ciclo de TDD. Cada teste escrito
 é um desafio, e cada implementação é uma resposta. A competição saudável
 mantém ambos engajados, e o resultado é uma suíte de testes completa e um
-código que faz exatamente o que precisa fazer --- nem mais, nem menos.
+código que faz exatamente o que precisa fazer, nem mais, nem menos.
 
 O \textbf{Strong Style} é particularmente poderoso em contextos de mentoria.
 A regra é categórica: para uma ideia ir da sua cabeça para o computador, ela
@@ -590,7 +589,7 @@ júnior o que digitar e o júnior digita, fazendo perguntas a cada passo.
 ``Crie uma interface chamada PaymentProcessor com dois métodos: authorize e
 capture.'' ``Por que uma interface e não uma classe abstrata?'' ``Excelente
 pergunta. Porque...'' A transferência de conhecimento acontece no nível mais
-profundo possível --- não pela leitura de documentação, mas pela construção
+profundo possível: não pela leitura de documentação, mas pela construção
 guiada, onde cada decisão de design é verbalizada e justificada em tempo real.
 
 O \textbf{Mob Programming} parece caótico à primeira vista --- um time inteiro
@@ -610,15 +609,15 @@ quando você precisa de um ``interlocutor'' disponível imediatamente e sem
 constrangimento de parecer confuso.
 
 Existem, naturalmente, situações onde pair programming não faz sentido.
-Tarefas mecânicas que não exigem julgamento --- renomear variáveis em 30
-arquivos, atualizar versões de dependência, escrever migrações triviais ---
+Tarefas mecânicas que não exigem julgamento (renomear variáveis em 30
+arquivos, atualizar versões de dependência, escrever migrações triviais)
 não se beneficiam de pair. Trabalho que requer foco profundo individual,
 como debugging de um problema sutil de concorrência ou escrita de um
 algoritmo complexo, pode ser prejudicado pela interrupção constante de outro
 par de olhos. A sabedoria está em saber quando fazer pair e quando voar solo.
 
-Quanto ao custo percebido do pair programming --- duas pessoas, uma tarefa,
-aparente desperdício de 50\% da capacidade ---, as evidências empíricas
+Quanto ao custo percebido do pair programming (duas pessoas, uma tarefa,
+aparente desperdício de 50\% da capacidade), as evidências empíricas
 contam uma história diferente. Pesquisas consistentes mostram que pair
 programming reduz defeitos em 15\% a 60\%, dependendo da complexidade da
 tarefa e da experiência dos pares. A redução de bugs em produção, a
@@ -658,7 +657,7 @@ do conhecimento.
 \subsection{Code Reviews como Aprendizado}
 
 Code reviews são amplamente praticados, mas frequentemente mal compreendidos.
-O objetivo primário de uma code review não é pegar bugs --- testes automatizados
+O objetivo primário de uma code review não é pegar bugs; testes automatizados
 fazem isso com muito mais eficiência e consistência. O objetivo primário é
 \textbf{aprendizado e disseminação de conhecimento}. Cada review é uma
 oportunidade para o autor aprender algo sobre design, clareza ou idiomas da
@@ -673,7 +672,7 @@ em cinco minutos? Bons revisores avaliam nomes: essa variável chamada
 \texttt{data} realmente comunica o que ela contém? Bons revisores avaliam
 testabilidade: esse código pode ser testado isoladamente sem montar metade do
 sistema? Formatação, estilo e convenções mecânicas devem ser delegados a
-linters e formatadores automáticos --- gastar capital humano revisando
+linters e formatadores automáticos. Gastar capital humano revisando
 espaçamento é desperdício.
 
 A forma como feedback é dado em code reviews pode construir ou destruir a
@@ -705,8 +704,8 @@ Exercícios personalizados são outra aplicação poderosa. Em vez de resolver
 katas genéricos desconectados da realidade do seu projeto, peça à IA para
 criar exercícios baseados no código real da sua base. ``Crie um exercício de
 refatoração usando esta classe do nosso projeto que demonstre o princípio da
-responsabilidade única.'' Aprendizado contextualizado --- usando exemplos do
-seu domínio, da sua stack, das suas convenções --- é substancialmente mais
+responsabilidade única.'' Aprendizado contextualizado, usando exemplos do
+seu domínio, da sua stack, das suas convenções, é substancialmente mais
 efetivo do que aprendizado abstrato.
 
 A IA também serve como simulador de entrevistas técnicas, fazendo perguntas,
@@ -715,11 +714,11 @@ errar na frente de outra pessoa. Para engenheiros que estão se preparando para
 uma promoção ou para entrevistas externas, essa prática segura e repetível é
 um acelerador de crescimento significativo.
 
-Existe, no entanto, uma limitação importante que deve ser reconhecida com
+Existe, porém, uma limitação importante que deve ser reconhecida com
 honestidade: a IA não substitui o feedback humano sobre habilidades
 interpessoais, comunicação e colaboração. Aprender a navegar uma reunião
 difícil, a dar feedback delicado a um colega, a negociar prioridades com um
-product manager --- essas são habilidades que exigem a complexidade e a
+product manager: essas são habilidades que exigem a complexidade e a
 imprevisibilidade de interações humanas reais. Para soft skills, mentores
 humanos continuam insubstituíveis.
 
@@ -745,7 +744,7 @@ tecnologia e negócio.
 Na trilha de management, a progressão vai de tech lead a engineering manager,
 director e VP of Engineering. Cada nível afasta mais do código e aproxima mais
 de pessoas, processos e estratégia. Um engineering manager que sente falta de
-programar todos os dias pode estar no caminho errado --- não porque programar
+programar todos os dias pode estar no caminho errado, não porque programar
 seja ruim, mas porque as horas gastas programando são horas não gastas
 fazendo 1:1s, removendo obstáculos, planejando a evolução do time e navegando
 a política organizacional que protege o time de distrações.
@@ -758,8 +757,8 @@ priorizar o crescimento dos outros acima do seu próprio. Ofereça ambos os
 caminhos com remuneração equivalente e deixe as pessoas gravitarem para onde
 suas habilidades e motivações as levam naturalmente.
 
-Na era da IA, o perfil do engenheiro T-shaped --- aquele com profundidade em
-uma área e amplitude em várias --- está evoluindo para o engenheiro Pi-shaped,
+Na era da IA, o perfil do engenheiro T-shaped (aquele com profundidade em
+uma área e amplitude em várias) está evoluindo para o engenheiro Pi-shaped,
 com profundidade em \textbf{duas} áreas complementares. Um engenheiro com
 profundidade em back-end e em machine learning, ou em infraestrutura e em
 segurança, ou em front-end e em acessibilidade, tem uma combinação de
@@ -771,7 +770,7 @@ resolver problemas no espaço entre eles é uma vantagem genuinamente humana.
 \section{Gestão de Conhecimento}
 
 Conhecimento que existe apenas na cabeça de uma pessoa não é conhecimento
-organizacional --- é risco. Essa distinção parece acadêmica até o dia em que
+organizacional; é risco. Essa distinção parece acadêmica até o dia em que
 a pessoa pede demissão e leva embora a única compreensão de como o sistema
 de billing funciona. Nesse dia, a distinção se torna dolorosamente prática.
 
@@ -784,7 +783,7 @@ sério. E na maioria das organizações, a resposta é 1 para mais componentes
 do que qualquer gerente gostaria de admitir.
 
 Deixe-me contar uma história que se repete com variações em empresas do
-mundo inteiro. Havia um engenheiro --- vamos chamá-lo de Ricardo --- que era o
+mundo inteiro. Havia um engenheiro (vamos chamá-lo de Ricardo) que era o
 único que entendia o sistema de conciliação financeira. Ricardo havia
 construído o sistema sozinho ao longo de três anos, em uma combinação de
 Python, SQL procedures complexas e shell scripts que rodavam em cron jobs na
@@ -845,7 +844,7 @@ deve estar contribuindo ativamente: assumindo tarefas do backlog de forma
 independente, fazendo code reviews, e participando de um shadow de on-call
 para entender como o time opera sob pressão. No terceiro mês, a autonomia
 deve ser substancial: liderar a implementação de uma feature, escrever uma
-RFC ou ADR, e --- este é o ponto mais valioso --- identificar uma melhoria no
+RFC ou ADR, e (este é o ponto mais valioso) identificar uma melhoria no
 próprio processo de onboarding, porque ninguém tem uma visão mais fresca dos
 problemas do que quem acabou de passar por eles.
 
@@ -905,8 +904,8 @@ não porque a empresa usa Haskell, mas porque os participantes acreditam que
 pensar funcionalmente melhora seu código em qualquer linguagem. A informalidade
 é parte do valor: sem agenda rígida, sem cobrança de presença, sem entregáveis.
 
-Tech talks internas --- frequentemente chamadas de brown bags por serem
-realizadas no horário de almoço --- são outro mecanismo poderoso de
+Tech talks internas, frequentemente chamadas de brown bags por serem
+realizadas no horário de almoço, são outro mecanismo poderoso de
 disseminação horizontal de conhecimento. Apresentações curtas de 30 a 45
 minutos onde qualquer pessoa pode apresentar qualquer tema: algo que aprendeu,
 um post-mortem de um incidente interessante, uma ferramenta nova que testou,
@@ -924,7 +923,7 @@ na fila.
 A aplicação de RAG (Retrieval-Augmented Generation) à gestão de conhecimento
 interna é uma das fronteiras mais promissoras da integração de IA em equipes
 de engenharia. A ideia é conectar um LLM à base de conhecimento interna da
-empresa --- documentação, ADRs, RFCs, conversas do Slack, wikis, READMEs ---
+empresa (documentação, ADRs, RFCs, conversas do Slack, wikis, READMEs)
 e permitir que qualquer membro do time faça perguntas em linguagem natural e
 receba respostas contextualizadas.
 
@@ -934,8 +933,8 @@ threads de Slack arquivadas e incomodar três colegas, ele simplesmente
 pergunta ao sistema de RAG: ``como funciona a autenticação no serviço de
 pagamentos?'' A IA busca nos ADRs, no código, na wiki e nos registros de
 decisões, e monta uma resposta que sintetiza informação de múltiplas fontes em
-uma narrativa coerente. Não é perfeito --- a IA pode errar, omitir contexto
-ou misturar informação desatualizada --- mas é um ponto de partida ordens de
+uma narrativa coerente. O resultado não é perfeito: a IA pode errar, omitir contexto
+ou misturar informação desatualizada. Mas é um ponto de partida ordens de
 magnitude melhor do que começar do zero.
 
 Os cuidados com RAG interno são proporcionais ao seu poder. Dados sensíveis
@@ -959,7 +958,7 @@ RAG reflita a realidade atual dos sistemas.
 \section{Conflitos Técnicos}
 
 Conflito técnico saudável é sinal de time que pensa. Ausência de conflito
-é sinal de time que desistiu --- ou que tem medo de discordar. A diferença
+é sinal de time que desistiu, ou que tem medo de discordar. A diferença
 entre times medíocres e times excepcionais não é a ausência de desacordo; é
 a capacidade de transformar desacordo em decisões melhores.
 
@@ -968,14 +967,14 @@ a capacidade de transformar desacordo em decisões melhores.
 O princípio de ``disagree and commit'' é um dos conceitos mais importantes
 e mal compreendidos na cultura de engenharia. A ideia é direta: debata
 vigorosamente enquanto a decisão estiver aberta, mas quando ela for tomada,
-todos --- inclusive quem discordou --- se comprometem a executar como se fosse
+todos, inclusive quem discordou, se comprometem a executar como se fosse
 sua própria decisão. Sabotagem passiva, aquele ``eu avisei que não ia
 funcionar'' dito com satisfação quando algo dá errado, é talvez o
 comportamento mais tóxico que um membro de time pode exibir.
 
 Para que ``disagree and commit'' funcione, três requisitos precisam estar
 presentes. Primeiro, todos os envolvidos tiveram oportunidade genuína de ser
-ouvidos --- não apenas presente numa sala, mas ativamente solicitados a dar
+ouvidos, não apenas presente numa sala, mas ativamente solicitados a dar
 sua opinião. Segundo, o processo de decisão foi transparente: todos sabem
 quem decide, com base em quais critérios, e qual é o threshold para
 revisitar a decisão se novas informações surgirem. Terceiro, os critérios de
@@ -983,16 +982,16 @@ avaliação foram explícitos antes da discussão começar, não definidos
 retroativamente para justificar uma conclusão pré-determinada.
 
 Um conceito complementar valioso é a distinção de Jeff Bezos entre decisões
-de ``porta de uma mão'' e ``porta de duas mãos''. Decisões reversíveis ---
-portas de duas mãos --- devem ser tomadas rápido, com informação incompleta
+de ``porta de uma mão'' e ``porta de duas mãos''. Decisões reversíveis
+(portas de duas mãos) devem ser tomadas rápido, com informação incompleta
 se necessário, porque o custo de reverter é baixo. Escolher entre duas
 bibliotecas de logging, definir o formato de uma API interna que pode ser
-versionada, decidir a convenção de nomes para um novo módulo --- tudo isso são
-portas de duas mãos que não merecem semanas de debate. Decisões irreversíveis
---- portas de uma mão --- merecem toda a deliberação, dados e debate que o time
+versionada, decidir a convenção de nomes para um novo módulo: tudo isso são
+portas de duas mãos que não merecem semanas de debate. Decisões irreversíveis,
+as portas de uma mão, merecem toda a deliberação, dados e debate que o time
 puder investir. Migrar de banco de dados, escolher a linguagem principal para
 uma plataforma nova, definir a arquitetura de dados para os próximos cinco
-anos --- essas são portas de uma mão que justificam RFCs, PoCs e debates
+anos: essas são portas de uma mão que justificam RFCs, PoCs e debates
 extensos.
 
 \subsection{Consenso vs. Decisão do Tech Lead}
@@ -1014,7 +1013,7 @@ de que sua perspectiva foi ouvida e considerada, mesmo que a decisão final
 vá contra sua preferência. Esse modelo funciona bem para a maioria das
 decisões técnicas cotidianas, combinando velocidade com inclusão.
 
-A decisão autoritária --- o tech lead decide sozinho, sem consulta --- é
+A decisão autoritária (o tech lead decide sozinho, sem consulta) é
 rápida, mas perigosa se usada com frequência. Deve ser reservada para
 emergências (produção está caindo, precisamos de uma decisão em cinco
 minutos) e para impasses genuínos onde o debate se tornou circular e
@@ -1050,13 +1049,13 @@ Quando o debate empaca e os argumentos começam a se repetir em círculos, a
 melhor intervenção é construir. Uma Proof of Concept de dois dias vale mais
 que duas semanas de discussão teórica. A PoC transforma especulação em
 evidência empírica: não é mais ``eu acho que X vai escalar'' versus ``eu
-acho que Y é mais manutenível'' --- é ``testamos X e Y sob carga simulada e
+acho que Y é mais manutenível''. Passa a ser ``testamos X e Y sob carga simulada e
 aqui estão os números''. Nem toda PoC resolve o debate, mas toda PoC
 enriquece a base de informação sobre a qual a decisão será tomada.
 
 Dados de produção são o árbitro final. Métricas reais de sistemas em
-produção --- latência, error rate, throughput, utilização de recursos,
-satisfação do usuário --- encerram debates teóricos com uma autoridade que
+produção (latência, error rate, throughput, utilização de recursos,
+satisfação do usuário) encerram debates teóricos com uma autoridade que
 nenhum argumento baseado em experiência pessoal consegue igualar. Números
 não mentem, embora possam ser mal interpretados, e por isso a combinação de
 dados quantitativos com análise qualitativa do contexto produz as decisões
@@ -1070,7 +1069,7 @@ propostas diferentes para a migração de um serviço monolítico. Ambos são
 respeitados, ambos têm argumentos válidos, e a discussão chegou a um ponto
 onde egos estão investidos e concessões são difíceis. Apresentar ambas as
 propostas a uma IA com a instrução ``aqui estão os requisitos, as
-restrições e os trade-offs de cada abordagem --- analise objetivamente os
+restrições e os trade-offs de cada abordagem; analise objetivamente os
 méritos e riscos de cada uma'' pode destravar o debate. A IA não tem ego
 investido em nenhuma proposta, não tem histórico político na organização, e
 não se importa com quem ``ganha''.
@@ -1082,7 +1081,7 @@ conferências?'' Esse tipo de pesquisa, que manualmente consumiria horas,
 pode ser realizado em minutos e trazer perspectivas que nenhum dos debatedores
 tinha considerado.
 
-A limitação importante deve ser honestamente reconhecida: a IA não conhece o
+A limitação importante aqui é que a IA não conhece o
 contexto político, cultural e emocional da sua organização. Ela pode analisar
 o aspecto puramente técnico com competência, mas não sabe que o Engenheiro A
 está frustrado porque sua última proposta foi rejeitada sem discussão
@@ -1146,7 +1145,7 @@ do time, os mesmos dois engenheiros discordam de \textit{tudo} como padrão.
 
 ADRs servem como mecanismo de despersonalização do conflito. Quando a decisão
 é documentada formalmente, não é mais ``a ideia do João'' versus ``a ideia
-da Maria'' --- é ``a Opção A'' versus ``a Opção B'', avaliadas por critérios
+da Maria''. Passa a ser ``a Opção A'' versus ``a Opção B'', avaliadas por critérios
 explícitos que foram acordados previamente. Essa despersonalização permite que
 as pessoas mudem de opinião sem perder face, o que é essencial para resolução
 saudável de conflitos.
@@ -1164,7 +1163,7 @@ acontece quando alguém comete um erro.
 
 O princípio fundamental de uma blameless culture é elegantemente simples:
 quando algo dá errado, pergunte ``o que falhou no \textit{sistema}?'', não
-``quem falhou?''. Pessoas erram --- isso é um fato biológico incontornável.
+``quem falhou?''. Pessoas erram: isso é um fato biológico incontornável.
 Engenheiros escrevem bugs, operadores executam comandos errados, gerentes
 tomam decisões subótimas. Sistemas bem desenhados devem tolerar erros humanos,
 minimizar suas consequências e facilitar sua correção.
@@ -1177,17 +1176,17 @@ corretivas que tornem o sistema mais resiliente. O foco é aprender e
 melhorar, não identificar culpados e punir.
 
 O efeito de uma blameless culture na detecção e resolução de problemas é
-dramático. Quando as pessoas não têm medo de reportar erros --- ``eu rodei
+dramático. Quando as pessoas não têm medo de reportar erros (``eu rodei
 aquele script de migração sem o flag \texttt{--dry-run} e os dados de staging
-foram sobrescritos'' --- os erros são detectados e corrigidos rapidamente.
+foram sobrescritos''), os erros são detectados e corrigidos rapidamente.
 Quando existe cultura de culpa, a reação natural é esconder o problema,
 minimizar a gravidade e torcer para que ninguém perceba. O resultado é que
 problemas pequenos crescem silenciosamente até se tornarem catástrofes.
 
-É importante estabelecer um limite honesto: blameless não significa sem
+Convém estabelecer um limite honesto: blameless não significa sem
 accountability. Se um engenheiro \textit{consistentemente} ignora práticas
-estabelecidas --- pula testes, não faz review, faz deploy em sexta-feira
-ignorando o freeze combinado ---, isso não é um erro do sistema. É um
+estabelecidas (pula testes, não faz review, faz deploy em sexta-feira
+ignorando o freeze combinado), isso não é um erro do sistema. É um
 problema de performance individual que deve ser tratado diretamente, com
 feedback claro e consequências proporcionais. A blameless culture protege
 contra erros genuínos; ela não deve servir como escudo para negligência
@@ -1216,8 +1215,8 @@ Quase duas décadas depois, o Google confirmou e ampliou esses achados com o
 Projeto Aristóteles, um estudo interno de larga escala que buscava identificar
 os fatores que distinguem times de alta performance de times medianos. Os
 pesquisadores do Google analisaram centenas de times usando dezenas de
-variáveis --- composição do time, habilidades individuais, experiência, carga
-de trabalho, localização geográfica --- e a descoberta surpreendeu muitos: o
+variáveis (composição do time, habilidades individuais, experiência, carga
+de trabalho, localização geográfica), e a descoberta surpreendeu muitos: o
 fator número 1, com distância significativa para o segundo, era segurança
 psicológica. Não era quem estava no time que importava mais, mas como os
 membros do time interagiam entre si. Times onde as pessoas se sentiam seguras
@@ -1229,7 +1228,7 @@ As práticas que constroem segurança psicológica são surpreendentemente
 acessíveis, mas exigem consistência inabalável. O líder do time é quem
 define o tom: se o tech lead admite publicamente ``eu cometi um erro nessa
 decisão e aqui está o que aprendi'', a mensagem reverbera por todo o time.
-Perguntas genuínas --- mesmo as que parecem básicas --- devem ser respondidas
+Perguntas genuínas, mesmo as que parecem básicas, devem ser respondidas
 com respeito e curiosidade, nunca com impaciência ou condescendência.
 Feedback negativo deve ser dado em particular, em conversa individual, com
 foco no comportamento e não na pessoa. Reconhecimento deve ser dado em
@@ -1240,24 +1239,24 @@ A IA, curiosamente, pode desempenhar um papel complementar na construção de
 segurança psicológica. Perguntar para uma IA ``como funciona o padrão Observer?''
 ou ``o que é um B-tree?'' não envolve julgamento social. Para engenheiros que
 sentem vergonha de perguntar algo ``básico'' na frente dos colegas, a IA
-oferece um canal de aprendizado livre de ansiedade social. No entanto, isso não
+oferece um canal de aprendizado livre de ansiedade social. Isso, porém, não
 deve substituir a vulnerabilidade humana: perguntar ``não entendi'' numa reunião,
-pedir ajuda a um colega, admitir confusão --- essas são as interações que
+pedir ajuda a um colega, admitir confusão, essas são as interações que
 constroem confiança interpessoal genuína, e nenhuma IA pode replicar esse efeito.
 
 \subsection{Experimentação Segura}
 
 Uma cultura de engenharia saudável cria espaço explícito para experimentação
---- e aceita que nem toda experimentação produzirá resultados positivos. De fato,
-se toda experimentação dá certo, os experimentos não estão sendo ousados o
+e aceita que nem toda experimentação produzirá resultados positivos. Se
+toda experimentação dá certo, os experimentos não estão sendo ousados o
 suficiente.
 
 O modelo mais famoso de tempo dedicado à experimentação é o ``20\% time'' do
 Google, onde engenheiros podem dedicar um dia por semana a projetos pessoais
 de interesse técnico. Gmail, Google News e AdSense são frequentemente citados
 como produtos que nasceram do 20\% time. Nem toda empresa pode replicar esse
-modelo, mas mesmo 10\% --- meio dia por sprint dedicado a exploração técnica
---- já gera resultados surpreendentes em inovação e motivação.
+modelo, mas mesmo 10\% (meio dia por sprint dedicado a exploração técnica)
+já gera resultados surpreendentes em inovação e motivação.
 
 Hackathons oferecem outra forma de experimentação estruturada: 24 a 48 horas
 de construção livre, com times formados aleatoriamente para forçar
@@ -1269,7 +1268,7 @@ se torne um produto real (embora isso às vezes aconteça de forma orgânica).
 
 Spikes técnicos são a forma mais cotidiana de experimentação: tempo alocado
 dentro do sprint para explorar uma tecnologia ou abordagem sem compromisso
-de entregar artefato produtivo. O resultado de um spike não é código --- é
+de entregar artefato produtivo. O resultado de um spike não é código; é
 conhecimento. ``Testamos o framework X por três dias e concluímos que ele não
 atende nosso caso de uso por causa de Y e Z'' é um resultado perfeitamente
 válido e valioso de um spike.
@@ -1288,7 +1287,7 @@ Homogeneidade mata inovação com a eficiência silenciosa de um gás inodoro.
 Quando todos no time têm a mesma formação, a mesma experiência, o mesmo
 perfil cognitivo e as mesmas referências, ninguém questiona as premissas
 fundamentais. Groupthink se instala, e o time converge rapidamente para
-soluções que parecem ``óbvias'' --- porque são óbvias para aquele grupo
+soluções que parecem ``óbvias'', porque são óbvias para aquele grupo
 específico, não necessariamente para o problema. Times genuinamente diversos,
 em background, experiência e formação, produzem soluções mais robustas
 porque consideram mais perspectivas, antecipam mais cenários de falha e
@@ -1305,11 +1304,11 @@ profundidade onde profundidade é necessária. Cada um desses perfis contribui
 de forma única, e a ausência de qualquer um deles empobrece as decisões do
 time.
 
-Diversidade sem inclusão, no entanto, é tokenismo. Não basta ter pessoas
+Diversidade sem inclusão, porém, é tokenismo. Não basta ter pessoas
 diversas no time; é preciso garantir que vozes diversas sejam genuinamente
 \textbf{ouvidas}, não apenas presentes. Uma engenheira brilhante que é
 sistematicamente ignorada ou interrompida em reuniões não traz diversidade
-efetiva ao time --- traz frustração pessoal e desperdício organizacional.
+efetiva ao time; traz frustração pessoal e desperdício organizacional.
 Inclusão ativa significa criar mecanismos que amplificam vozes
 sub-representadas: rotação de facilitadores em reuniões, solicitar opinião
 explicitamente de quem não se manifestou, usar RFCs escritas (onde a
@@ -1335,7 +1334,7 @@ objetivas, os valores de engenharia desempatam. ``Ambas as abordagens têm
 performance similar, mas a Abordagem A é mais simples e nós valorizamos
 simplicidade'' é uma justificativa legítima e poderosa.
 
-Valores que ninguém segue são decoração --- piores que inúteis, porque
+Valores que ninguém segue são decoração, piores que inúteis, porque
 criam cinismo. Revise os valores de engenharia anualmente. Remova aqueles
 que não refletem a prática real (se o valor diz ``qualidade acima de
 velocidade'' mas todo sprint prioriza entregas sobre testes, o valor é
@@ -1350,7 +1349,7 @@ comportamentos positivos existentes.
 \section{Rituais e Processos}
 
 Rituais são a estrutura que transforma intenções em hábitos. Sem eles, boas
-práticas viram boas intenções --- aquelas que todo mundo concorda que são
+práticas viram boas intenções, aquelas que todo mundo concorda que são
 importantes mas que ninguém pratica consistentemente quando a pressão do
 sprint aperta.
 
@@ -1362,8 +1361,8 @@ tratar estimativas como medidas relativas, não absolutas. Story points, usados
 como unidade de complexidade relativa (``essa história é duas vezes mais
 complexa que aquela, independentemente de quantas horas cada uma levará''),
 evitam a falsa precisão de estimar em horas e focam o que realmente importa:
-o tamanho relativo do trabalho. O poker de planning --- onde cada membro
-revela sua estimativa simultaneamente para evitar viés de ancoragem --- é
+o tamanho relativo do trabalho. O poker de planning, onde cada membro
+revela sua estimativa simultaneamente para evitar viés de ancoragem, é
 valioso não pelo número final, mas pela discussão que surge quando as
 estimativas divergem drasticamente. Se um engenheiro estima 3 pontos e
 outro estima 13, a conversa que se segue quase sempre revela
@@ -1372,8 +1371,8 @@ dependências ocultas. O valor está na conversa, não no número.
 
 Story mapping oferece uma alternativa ao backlog linear que frequentemente
 perde o contexto de uso. Ao organizar funcionalidades em uma narrativa de
-uso do usuário --- eixo horizontal representando o fluxo, eixo vertical
-representando a prioridade ---, o time consegue visualizar o produto inteiro
+uso do usuário (eixo horizontal representando o fluxo, eixo vertical
+representando a prioridade), o time consegue visualizar o produto inteiro
 e cortar horizontalmente para definir releases incrementais que entregam
 valor real a cada iteração, em vez de funcionalidades isoladas que não
 formam um todo coerente.
@@ -1383,14 +1382,14 @@ expectativas calibradas. ``Dado o histórico de velocidade do time nas
 últimas 5 sprints e a complexidade aparente dessas histórias, qual é uma
 estimativa razoável para este sprint?'' é uma pergunta legítima para fazer
 a uma IA que tem acesso aos dados históricos do time. A resposta deve ser
-tratada como uma referência --- um ponto de comparação que enriquece a
-discussão ---, nunca como verdade definitiva. A IA não sabe que dois membros
+tratada como uma referência, um ponto de comparação que enriquece a
+discussão, nunca como verdade definitiva. A IA não sabe que dois membros
 do time estarão de férias na próxima semana, ou que o serviço de pagamentos
 está instável e vai gerar interrupções.
 
 \subsection{Retrospectivas que Geram Ação}
 
-A maioria das retrospectivas falha. Não falha no formato --- existem dezenas
+A maioria das retrospectivas falha. Não falha no formato: existem dezenas
 de formatos criativos e bem desenhados. Falha em dois pontos muito mais
 fundamentais: segurança e acompanhamento.
 
@@ -1462,7 +1461,7 @@ momento de fechar o ciclo entre o que foi pedido e o que foi construído.
 Uma demo eficaz começa com o problema do usuário, demonstra a solução em
 funcionamento e termina com os próximos passos. Engenheiros têm uma
 tendência natural de querer explicar como a solução funciona por dentro;
-a demo não é o lugar para isso --- o show-and-tell é.
+a demo não é o lugar para isso. O show-and-tell é.
 
 Show-and-tells mostram algo \textbf{interessante}. Uma técnica nova que
 alguém aprendeu, uma ferramenta que otimizou um fluxo de trabalho, uma
@@ -1473,7 +1472,7 @@ entre times.
 
 A cadência ideal é demos a cada sprint (ou a cada incremento de entrega) e
 show-and-tells quinzenais ou mensais. Ambos devem ser opcionais para
-apresentar --- ninguém é forçado a ter algo para mostrar a cada ciclo ---
+apresentar (ninguém é forçado a ter algo para mostrar a cada ciclo),
 mas encorajados para assistir, porque a exposição ao que outros times estão
 fazendo é uma das formas mais orgânicas de aprendizado organizacional.
 
@@ -1496,7 +1495,7 @@ proponente apresenta o problema, a proposta, as alternativas consideradas e
 os trade-offs. O board questiona, sugere melhorias, aponta riscos que o
 proponente pode não ter visto e valida o alinhamento com a direção
 arquitetural da organização. A decisão final pode ser do proponente, do
-board ou por consenso --- mas esse mecanismo deve ser definido antes da
+board ou por consenso, mas esse mecanismo deve ser definido antes da
 discussão começar, não depois.
 
 O anti-padrão mais comum de ARBs é transformá-los em gargalo. Se toda
@@ -1527,7 +1526,7 @@ significativamente o processo inicial de classificação.
 Dashboards de saúde do time gerados por IA analisam métricas como cycle
 time, tempo de review de pull requests, frequência de deploy e taxa de
 incidentes, e sugerem proativamente áreas que merecem atenção. ``O tempo
-médio de review subiu 40\% nas últimas duas sprints --- considere discutir
+médio de review subiu 40\% nas últimas duas sprints; considere discutir
 na próxima retro'' é o tipo de insight que um dashboard inteligente pode
 gerar automaticamente.
 
@@ -1543,7 +1542,7 @@ da cerimônia seja dedicado integralmente à discussão e decisão.
 A higiene de reuniões é uma daquelas práticas que todo mundo sabe que é
 importante e quase ninguém pratica com disciplina. Cada reunião improdutiva
 consome não apenas o tempo da reunião em si, mas o contexto mental de todos
-os participantes --- a interrupção do fluxo de trabalho, a troca de
+os participantes: a interrupção do fluxo de trabalho, a troca de
 contexto e o tempo de recuperação que se segue.
 
 Toda reunião precisa de quatro elementos: pauta clara distribuída
@@ -1554,8 +1553,8 @@ sem propósito definido deveria ser cancelada. Sério. O custo de cancelar
 uma reunião desnecessária é zero. O custo de realizá-la é o tempo de todos
 os participantes multiplicado pelo valor-hora de cada um.
 
-Quando uma discussão dentro de uma reunião começa a girar em círculos ---
-os mesmos argumentos sendo repetidos com palavras ligeiramente diferentes ---,
+Quando uma discussão dentro de uma reunião começa a girar em círculos,
+os mesmos argumentos sendo repetidos com palavras ligeiramente diferentes,
 a regra dos 5 minutos deve ser ativada. Se depois de 5 minutos a discussão
 não avançou, três intervenções são possíveis: peça dados (``precisamos de
 números para resolver isso, vamos coletar e retomar''), marque uma conversa
@@ -1600,7 +1599,7 @@ Justificativa: [Por que essa opcao, alem dos numeros]
 
 Equipes fortes constroem sistemas fortes. Nenhuma ferramenta, linguagem ou
 arquitetura compensa uma equipe disfuncional. E nenhuma disfunção sobrevive
-a uma equipe verdadeiramente saudável.
+a uma equipe saudável de verdade.
 
 A estrutura dos times importa de uma forma que muitos líderes técnicos
 subestimam. Como você organiza as equipes define, com a precisão de uma
@@ -1615,17 +1614,17 @@ processos e cultura.
 
 Comunicação é engenharia de primeira classe. Escrever RFCs com clareza e
 rigor, dar feedback construtivo em code reviews, documentar decisões em
-ADRs, escolher o canal certo para cada tipo de interação --- tudo isso é
+ADRs, escolher o canal certo para cada tipo de interação: tudo isso é
 trabalho técnico tão importante quanto escrever código. Engenheiros que
 tratam comunicação como uma atividade secundária ou administrativa estão
 limitando seu próprio impacto e o impacto de seus times. A cultura de
 escrita da Amazon, a disciplina de RFCs do Stripe, os design docs do
-Google --- não são burocracias; são mecanismos de pensamento rigoroso que
+Google: não são burocracias, são mecanismos de pensamento rigoroso que
 produzem decisões melhores.
 
 Investir no crescimento das pessoas não é custo; é o investimento com maior
 retorno em engenharia. Pair programming transfere conhecimento, melhora
-design e reduz defeitos simultaneamente. Mentoria --- inclusive a reversa ---
+design e reduz defeitos simultaneamente. Mentoria, inclusive a reversa,
 acelera o crescimento de juniores e mantém seniores atualizados. Code
 reviews, quando feitas com intenção de ensinar, transformam cada pull
 request em uma aula particular. E a IA como tutor personalizado democratiza
@@ -1644,8 +1643,8 @@ artificial. Evitar conflito técnico é evitar melhoria. A chave está em
 despersonalizar o debate, usar dados como árbitro, documentar decisões em
 ADRs para que o contexto sobreviva ao calor do momento, e praticar
 ``disagree and commit'' com disciplina. A IA pode ajudar como analista
-imparcial, mas o aspecto humano do conflito --- egos, política, história
---- continua sendo responsabilidade das pessoas.
+imparcial, mas o aspecto humano do conflito (egos, política, história)
+continua sendo responsabilidade das pessoas.
 
 Cultura se constrói com ações diárias, não com declarações anuais. Segurança
 psicológica, como Edmondson demonstrou e o Projeto Aristóteles do Google
@@ -1659,7 +1658,7 @@ torna cada membro do time mais produtivo, ajuda na comunicação e na
 documentação, automatiza processos administrativos e democratiza o acesso
 ao conhecimento. Mas a confiança entre colegas, o respeito mútuo em
 momentos de desacordo, a vulnerabilidade de admitir um erro, a generosidade
-de ensinar sem condescendência, e a coragem de dizer ``não sei'' --- essas
+de ensinar sem condescendência, e a coragem de dizer ``não sei'': essas
 são capacidades exclusivamente humanas que nenhum modelo de linguagem pode
 replicar. São elas que transformam um grupo de pessoas que trabalham juntas
 em um time de verdade.

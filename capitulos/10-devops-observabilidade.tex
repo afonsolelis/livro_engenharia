@@ -9,7 +9,7 @@
 resume a revolução cultural mais importante da engenharia de software nas últimas
 duas décadas. São apenas seis palavras, mas elas contêm uma inversão completa de
 paradigma. Antes de DevOps, o mundo da tecnologia era dividido por um muro
-invisível --- e às vezes nem tão invisível assim. De um lado, os desenvolvedores
+invisível (e às vezes nem tão invisível assim). De um lado, os desenvolvedores
 escreviam código com entusiasmo, empacotavam artefatos e os jogavam por cima
 desse muro para o time de operações. Do outro lado, os engenheiros de operações
 recebiam aquele pacote como quem recebe uma encomenda suspeita: com desconfiança,
@@ -23,7 +23,7 @@ A mentalidade DevOps dissolve esse muro. Quem constrói o software é responsáv
 por operá-lo em produção. Essa mudança aparentemente simples altera tudo: a forma
 como se escreve código, a forma como se projeta a arquitetura, o cuidado com testes,
 a preocupação com monitoramento. Quando o engenheiro que escreveu aquele bloco de
-código sabe que será ele --- e não outra pessoa --- quem será acordado às três da
+código sabe que será ele, e não outra pessoa, quem será acordado às três da
 manhã quando algo falhar, surge uma motivação natural e visceral para escrever
 código mais resiliente, com tratamento de erros adequado, com logs que realmente
 ajudem a diagnosticar problemas, com circuit breakers e fallbacks. Não se trata de
@@ -37,11 +37,11 @@ infraestrutura precisa entender de código, de APIs, de padrões de resiliência
 A responsabilidade é \emph{end-to-end}: desde o primeiro commit até o último
 byte servido ao usuário em produção.
 
-E há uma consequência natural dessa responsabilidade compartilhada que merece
+Essa responsabilidade compartilhada tem uma consequência natural que merece
 destaque: a observabilidade deixa de ser opcional. Quando você opera o que constrói,
 instrumentar o sistema não é uma tarefa chata que o time de ops vai cobrar depois.
 Você \textbf{quer} saber o que está acontecendo. Você \textbf{precisa} saber o que
-está acontecendo. Porque quando o alarme tocar --- e ele vai tocar ---, a diferença
+está acontecendo. Porque quando o alarme tocar, e ele vai tocar, a diferença
 entre resolver o problema em cinco minutos ou em cinco horas depende diretamente
 da qualidade da observabilidade que você construiu.
 
@@ -49,17 +49,17 @@ da qualidade da observabilidade que você construiu.
 
 Para entender DevOps, é preciso entender a dor que o criou. A história começa
 nos anos 1990, na era do Waterfall aplicado a operações. Naquela época, deploys
-aconteciam a cada seis meses --- às vezes a cada ano. O processo era ritualístico
+aconteciam a cada seis meses, às vezes a cada ano. O processo era ritualístico
 e tenso. O time de desenvolvimento passava meses escrevendo código, depois semanas
 empacotando releases, e finalmente entregava um artefato monolítico para o time de
 operações. Operações era um departamento separado, com sua própria hierarquia, seus
 próprios processos e, frequentemente, seu próprio prédio. Existiam Change Advisory
-Boards --- comitês inteiros dedicados a aprovar cada mudança manualmente, com
+Boards, comitês inteiros dedicados a aprovar cada mudança manualmente, com
 formulários, assinaturas e reuniões semanais. Deploys eram eventos traumáticos, com
 war rooms, madrugadas de plantão e a tensão palpável de quem sabe que está prestes
 a mexer em algo que funciona (mais ou menos) e pode parar de funcionar completamente.
 A taxa de falhas era alta, o tempo de recuperação era longo, e todo mundo odiava
-o processo --- mas ninguém sabia fazer diferente.
+o processo, mas ninguém sabia fazer diferente.
 
 Então veio a era Ágil, entre 2000 e 2010. O desenvolvimento ficou dramaticamente
 mais rápido. Sprints de duas semanas, entregas incrementais, feedback contínuo.
@@ -69,19 +69,19 @@ lento, agora o desenvolvimento era rápido e o deploy continuava lento. Times
 ágeis produziam features a uma velocidade que a infraestrutura não conseguia
 absorver. Filas de releases se acumulavam. A frustração crescia.
 
-Foi nesse contexto de frustração que nasceu o movimento DevOps. O momento
+Foi nessa frustração que nasceu o movimento DevOps. O momento
 fundacional pode ser rastreado com precisão: outubro de 2009, na cidade de Ghent,
 na Bélgica. Patrick Debois, um engenheiro belga que passara anos atormentado pela
 ineficiência da separação entre dev e ops, organizou o primeiro DevOpsDays. A
-conferência era pequena --- algumas dezenas de pessoas. Mas a ideia ressoou como
+conferência era pequena, algumas dezenas de pessoas. Mas a ideia ressoou como
 um trovão. Debois não inventou nenhuma tecnologia nova. O que ele fez foi dar nome
 e estrutura a uma frustração que milhares de engenheiros sentiam simultaneamente ao
-redor do mundo. A ``wall of confusion'' --- o muro de confusão entre desenvolvimento
-e operações --- finalmente tinha um nome, e mais importante, tinha uma proposta de
+redor do mundo. A ``wall of confusion'', o muro de confusão entre desenvolvimento
+e operações, finalmente tinha um nome, e mais importante, tinha uma proposta de
 solução.
 
 O termo ``DevOps'' nasceu naquela conferência, uma contração simples de
-Development e Operations. Mas o que se propunha era muito mais profundo do que a
+Development e Operations. Mas o que se propunha era muito mais do que a
 junção de dois departamentos. Era uma revolução cultural. A ideia central era que
 a responsabilidade pelo software não terminava quando o código compilava. Ela se
 estendia até o momento em que o último usuário finalizava sua sessão. Desenvolvimento
@@ -105,13 +105,13 @@ Engineering. DevOps amadureceu, e com esse amadurecimento veio uma constatação
 pragmática: pedir que todo engenheiro de software seja também especialista em
 Kubernetes, Terraform, Prometheus, Grafana, ArgoCD e mais uma dúzia de ferramentas
 é irreal e injusto. A complexidade da infraestrutura moderna é avassaladora.
-Platform Engineering responde a esse desafio criando abstrações internas ---
-chamadas de Internal Developer Platforms --- que dão autonomia aos engenheiros sem
-exigir expertise profunda em infraestrutura. O desenvolvedor diz ``preciso de um
+Platform Engineering responde a esse desafio criando abstrações internas,
+chamadas de Internal Developer Platforms, que dão autonomia aos engenheiros sem
+exigir expertise em infraestrutura. O desenvolvedor diz ``preciso de um
 banco PostgreSQL para meu serviço'' e a plataforma provisiona, configura, monitora
 e faz backup automaticamente. A complexidade não desaparece; ela é encapsulada.
 
-E nessa evolução toda, os LLMs chegaram como um acelerador inesperado. Modelos de
+Nessa evolução toda, os LLMs chegaram como um acelerador inesperado. Modelos de
 linguagem estão gerando pipelines de CI/CD, detectando anomalias em métricas,
 sugerindo correções automáticas para incidentes, e até rascunhando post-mortems
 a partir de logs de incidentes. A IA não substitui o engenheiro que é acordado
@@ -123,16 +123,16 @@ problema em dez minutos ou em duas horas.
 % ============================================================
 
 Integração e entrega contínuas são a espinha dorsal do desenvolvimento moderno.
-Sem CI/CD, todo o resto --- feature flags, observabilidade, deploys canary ---
+Sem CI/CD, todo o resto (feature flags, observabilidade, deploys canary)
 é impossível ou impraticável. É como tentar administrar uma fábrica moderna sem
 uma linha de montagem: até é possível produzir, mas a escala, a velocidade e
 a qualidade são incompatíveis com as demandas atuais.
 
 \subsection{Integração Contínua (CI)}
 
-Para entender Integração Contínua, imagine uma fábrica de automóveis. Cada
+Para entender Integração Contínua, pense em uma fábrica de automóveis. Cada
 estação da linha de montagem adiciona uma peça ao carro. Se uma estação instala
-uma peça defeituosa, o defeito é detectado na estação seguinte --- não no final
+uma peça defeituosa, o defeito é detectado na estação seguinte, não no final
 da linha, quando o carro já está montado e pintar de novo custaria uma fortuna.
 Integração Contínua aplica esse mesmo princípio ao software: cada desenvolvedor
 integra seu código no branch principal pelo menos uma vez por dia. Quanto mais
@@ -141,36 +141,36 @@ demorado e arriscado será o merge. Branches de vida longa são como estações 
 montagem que trabalham isoladas por semanas: quando finalmente tentam se conectar
 à linha principal, descobrem que as peças não encaixam mais.
 
-O princípio fundamental é a automatização completa. A cada push para o repositório,
+O princípio aqui é a automatização completa. A cada push para o repositório,
 um pipeline automatizado entra em ação: compila o código, executa testes unitários,
 roda análise estática, verifica vulnerabilidades de segurança. Esse pipeline é a
-estação de inspeção de qualidade da fábrica --- implacável, incansável e incapaz
+estação de inspeção de qualidade da fábrica, implacável, incansável e incapaz
 de ``deixar passar'' um defeito por preguiça ou pressa. Se qualquer etapa falha,
 o processo para e o desenvolvedor é notificado imediatamente.
 
 O feedback rápido é crucial. Se o pipeline de CI demora quarenta e cinco minutos
 para completar, ninguém espera. O desenvolvedor faz o push, abre outra tarefa,
 e quando volta para ver o resultado já esqueceu o contexto do que havia feito. O
-ideal é que o ciclo básico de CI --- build e testes unitários --- complete em
+ideal é que o ciclo básico de CI (build e testes unitários) complete em
 menos de dez minutos. Testes mais lentos, como integração e end-to-end, podem
 rodar em paralelo ou em um segundo estágio, mas o feedback inicial deve ser
 quase instantâneo.
 
 A prática que maximiza os benefícios da CI é o trunk-based development: trabalhar
-em branches de vida curta --- medida em horas, não em semanas --- e integrar
+em branches de vida curta, medida em horas e não em semanas, e integrar
 diretamente no trunk principal. Feature branches longas são o inimigo natural da
 integração contínua. Elas criam divergência, acumulam conflitos de merge e geram
 aqueles pull requests monstruosos de dois mil linhas que ninguém consegue revisar
 com qualidade. O trunk-based development, combinado com feature flags (que veremos
-a seguir), permite que código incompleto vá para o trunk sem afetar usuários
---- desligado por padrão, pronto para ser ligado quando estiver maduro.
+a seguir), permite que código incompleto vá para o trunk sem afetar usuários:
+desligado por padrão, pronto para ser ligado quando estiver maduro.
 
 \subsection{Entrega Contínua vs.\ Deploy Contínuo}
 
 São coisas \textbf{diferentes} e a confusão entre elas é endêmica na indústria.
 Continuando a analogia da fábrica: Integração Contínua é a inspeção de qualidade
 em cada estação da linha de montagem. Entrega Contínua (Continuous Delivery) é
-ter o carro pronto para sair da fábrica a qualquer momento --- todas as inspeções
+ter o carro pronto para sair da fábrica a qualquer momento. Todas as inspeções
 passaram, toda a documentação está em ordem, o carro está no pátio de expedição.
 Mas a decisão de quando enviá-lo para a concessionária é humana. Talvez o time de
 marketing queira esperar pelo evento de lançamento. Talvez o time jurídico precise
@@ -182,7 +182,7 @@ intervenção humana. Não há botão de ``deploy para produção'' que alguém 
 clicar. Cada commit que passa em todos os testes vai direto para produção. Isso
 exige uma maturidade extrema em testes automatizados, em observabilidade, em
 capacidade de rollback rápido. Não é para qualquer time, e não é melhor ou pior
-que Continuous Delivery --- é uma escolha que depende do contexto, da maturidade
+que Continuous Delivery. É uma escolha que depende do contexto, da maturidade
 da equipe e do apetite por risco da organização.
 
 \begin{table}[h]
@@ -198,6 +198,7 @@ Continuous Integration (CI) & Integrar código frequentemente com testes automá
 Continuous Delivery (CD) & Código sempre pronto para deploy, mas o deploy é manual &
     Decisão de negócio sobre quando liberar \\
 \addlinespace
+\addlinespace
 Continuous Deployment & Todo commit que passa nos testes vai automaticamente para
     produção & Requer maturidade extrema em testes e observabilidade \\
 \bottomrule
@@ -207,7 +208,7 @@ Continuous Deployment & Todo commit que passa nos testes vai automaticamente par
 \subsection{Feature Flags e Trunk-Based Development}
 
 Imagine o seguinte cenário: seu time está construindo um novo fluxo de checkout
-para o e-commerce da empresa. O novo fluxo é uma mudança grande --- redesign
+para o e-commerce da empresa. O novo fluxo é uma mudança grande, com redesign
 completo da interface, nova integração com gateway de pagamento, validações
 diferentes de endereço. O trabalho vai levar três semanas. Na abordagem tradicional
 de feature branches, o time criaria um branch chamado \texttt{feature/novo-checkout},
@@ -229,26 +230,26 @@ Quando o novo checkout está pronto para teste, você liga a flag para cinco por
 cento dos usuários. Monitora as métricas: taxa de conversão, tempo de checkout,
 taxa de erro. Se tudo está saudável, aumenta para vinte por cento, depois
 cinquenta, depois cem. Se em qualquer momento as métricas degradam, desliga-se
-a flag instantaneamente --- sem rollback de deploy, sem reverter commits, sem
+a flag instantaneamente, sem rollback de deploy, sem reverter commits, sem
 desespero. O checkout antigo está lá, intacto, pronto para assumir.
 
 Mas feature flags carregam um risco que precisa ser gerenciado ativamente. Flags
 abandonadas viram dívida técnica. Aquela flag do ``novo checkout'' que foi ligada
 para cem por cento dos usuários há seis meses e nunca foi removida do código cria
 complexidade desnecessária: caminhos condicionais que ninguém mais precisa,
-testes que precisam cobrir dois cenários quando só um existe na prática. A
+testes que precisam cobrir dois cenários quando só um existe. A
 disciplina essencial é ter um processo para remover flags após a feature estar
-estável --- tipicamente duas semanas após atingir cem por cento. Ferramentas
+estável, tipicamente duas semanas após atingir cem por cento. Ferramentas
 como LaunchDarkly, Unleash e Flagsmith ajudam a gerenciar esse ciclo de vida,
 sinalizando flags que estão ativas há muito tempo sem mudança.
 
 \subsection{Estratégias de Deploy}
 
-Antes de mergulhar nas estratégias, é preciso entender uma distinção fundamental:
+Antes de mergulhar nas estratégias, é preciso entender uma distinção central:
 rollback versus rollforward. Rollback reverte o sistema para a versão anterior,
 como apertar o botão de ``desfazer''. Rollforward corrige o problema com um novo
 deploy que avança, em vez de retroceder. Em sistemas com migrações de banco de
-dados, rollback pode ser impossível ou extremamente perigoso --- se a versão nova
+dados, rollback pode ser impossível ou extremamente perigoso. Se a versão nova
 adicionou uma coluna e migrou dados, reverter o código sem reverter o banco cria
 uma inconsistência catastrófica. Em geral, prefira rollforward: corrija o problema
 e avance. Rollforward exige que o time seja rápido em diagnosticar e corrigir, o
@@ -258,8 +259,8 @@ Agora, as estratégias de deploy em si. A primeira e mais intuitiva é o
 \textbf{blue-green deployment}. Imagine que você tem dois ambientes de produção
 absolutamente idênticos. O ambiente ``blue'' é o que está ativo, servindo tráfego
 real. O ambiente ``green'' está ocioso, esperando. Quando chega a hora do deploy,
-você implanta a nova versão no ambiente green. Roda testes de sanidade no green ---
-smoke tests, verificações de saúde, talvez até um pouco de tráfego sintético.
+você implanta a nova versão no ambiente green. Roda testes de sanidade no green
+(smoke tests, verificações de saúde, talvez até um pouco de tráfego sintético).
 Tudo está verde (literalmente). Então você faz a troca: altera o roteamento do
 load balancer para apontar para o green. O tráfego real começa a fluir para a
 nova versão. Você observa as métricas atentamente nos primeiros minutos. Se tudo
@@ -281,7 +282,7 @@ Latência p99 do canário versus latência p99 da frota. Taxa de erro do canári
 versus taxa de erro da frota. Se as métricas são comparáveis ou melhores, você
 aumenta gradualmente: dez por cento, vinte e cinco por cento, cinquenta por
 cento, cem por cento. Se em qualquer ponto as métricas divergem negativamente,
-o canário é sacrificado --- as instâncias são revertidas --- e o impacto foi
+o canário é sacrificado, as instâncias são revertidas, e o impacto foi
 limitado àquele pequeno percentual de tráfego. Canary releases são mais
 sofisticados que blue-green porque permitem uma validação gradual com tráfego
 real, mas exigem observabilidade de alta qualidade para comparar métricas entre
@@ -313,12 +314,12 @@ o pipeline que demorava trinta minutos agora completa em cinco. O feedback é
 quase instantâneo, e a confiança nos testes selecionados é alta porque a análise
 de dependência é baseada no grafo real do código, não em heurísticas frágeis.
 
-Outra aplicação prática é o auto-fix de lint e formatação. A IA detecta violações
+Outra aplicação é o auto-fix de lint e formatação. A IA detecta violações
 de estilo no código, corrige automaticamente e abre um commit com as correções.
-O desenvolvedor não perde tempo ajustando espaçamentos e importações ---
+O desenvolvedor não perde tempo ajustando espaçamentos e importações;
 concentra-se na lógica de negócio. A análise de impacto é igualmente valiosa:
 dado um diff, a IA identifica quais serviços e equipes podem ser afetados pela
-mudança, facilitando a comunicação e a revisão de código. E os LLMs são capazes
+mudança, facilitando a comunicação e a revisão de código. Os LLMs são capazes
 de ler a lista de commits desde a última release e gerar notas de release em
 linguagem humana, economizando horas de trabalho manual que ninguém gosta de
 fazer.
@@ -338,17 +339,17 @@ para alcançar o estado desejado.
     \caption{Diagrama: Fluxo GitOps}
 \end{figure}
 
-A vantagem dessa abordagem é profunda: auditoria completa e gratuita. Todo deploy
+A vantagem dessa abordagem é considerável: auditoria completa e gratuita. Todo deploy
 é um commit no Git. Para saber quem fez o último deploy, quando e por quê, basta
 olhar o histórico de commits. Para fazer rollback, basta executar um \texttt{git
-revert}. Não há acesso direto ao cluster --- ninguém faz \texttt{kubectl apply}
+revert}. Não há acesso direto ao cluster, ninguém faz \texttt{kubectl apply}
 manualmente. Toda mudança passa pelo Git, que serve como única fonte de verdade.
 
 Existem dois modelos de GitOps: pull e push. No modelo pull, recomendado pela
 maioria dos praticantes, o agente dentro do cluster puxa periodicamente as
 mudanças do repositório Git. No modelo push, o pipeline de CI/CD aplica as
 mudanças diretamente no cluster. O modelo pull é mais seguro porque o cluster
-não precisa expor APIs externas --- é o agente interno que busca as mudanças,
+não precisa expor APIs externas. É o agente interno que busca as mudanças,
 reduzindo a superfície de ataque. ArgoCD, Flux e Jenkins X são as ferramentas
 mais populares nesse ecossistema.
 
@@ -472,8 +473,8 @@ Cada servidor era artesanalmente construído, como uma peça de mobília feita s
 medida. O problema é que, ao longo do tempo, cada servidor acumulava pequenas
 diferenças: uma versão diferente de uma biblioteca aqui, uma configuração ajustada
 na mão ali, um cron job adicionado para resolver um problema urgente que ninguém
-documentou. O resultado era o que Martin Fowler chamou de ``snowflake servers''
---- servidores flocos de neve, cada um único e irreproduzível, como flocos de neve
+documentou. O resultado era o que Martin Fowler chamou de ``snowflake servers'',
+servidores flocos de neve, cada um único e irreproduzível, como flocos de neve
 reais. Se um desses servidores morria, recriá-lo era um exercício de arqueologia
 digital: vasculhar wikis desatualizadas, perguntar para colegas que ``talvez
 lembrem'' de como foi configurado, e rezar para que nenhum detalhe crítico
@@ -483,8 +484,8 @@ IaC elimina o problema dos servidores flocos de neve ao tratar infraestrutura
 com o mesmo rigor aplicado ao código de aplicação. A reprodutibilidade é a
 primeira grande conquista: com IaC, você pode criar o mesmo ambiente N vezes
 com exatamente o mesmo resultado. O ambiente de desenvolvimento é idêntico ao
-de staging, que é idêntico ao de produção. Fim do ``funciona na minha máquina''
---- se funciona no código de infraestrutura, funciona em qualquer lugar.
+de staging, que é idêntico ao de produção. Fim do ``funciona na minha máquina''.
+Se funciona no código de infraestrutura, funciona em qualquer lugar.
 
 O versionamento é a segunda conquista. A infraestrutura tem histórico no Git,
 exatamente como o código da aplicação. Quem mudou o quê, quando e por quê. Se
@@ -500,7 +501,7 @@ aceitáveis, se a mudança é compatível com a arquitetura existente. Antes de 
 mudanças de infraestrutura eram feitas por alguém logado em um console, sem
 revisão, sem aprovação, sem registro.
 
-E a quarta conquista é a automação total. Infraestrutura é criada e destruída por
+A quarta conquista é a automação total. Infraestrutura é criada e destruída por
 pipelines, não por humanos clicando em consoles de nuvem. Um merge no branch main
 dispara a criação de um cluster inteiro. Um close de pull request destrói um
 ambiente efêmero. A velocidade e a confiabilidade são incomparáveis com o processo
@@ -596,13 +597,12 @@ output "alb_dns_name" {
 \end{lstlisting}
 
 \subsection{Ambientes Efêmeros (Preview Environments)}
-
 Ambientes efêmeros representam uma das aplicações mais elegantes de IaC. O
 conceito é simples e poderoso: para cada Pull Request aberto no repositório,
 cria-se um ambiente completo e isolado, com todos os serviços, bancos de dados
 e dependências necessários. O revisor do PR não precisa mais clonar o repositório,
 instalar dependências e rodar localmente para testar a mudança. Ele simplesmente
-acessa um URL real --- algo como \texttt{pr-347.staging.suaempresa.com} --- e
+acessa um URL real, algo como \texttt{pr-347.staging.suaempresa.com}, e
 testa a funcionalidade diretamente no navegador.
 
 O benefício vai além da conveniência. O feedback é drasticamente mais rápido.
@@ -622,7 +622,7 @@ Namespace e Garden.io simplificam o processo.
 \subsection{Testes de Infraestrutura}
 
 Infraestrutura como código herda não apenas as virtudes do código de aplicação,
-mas também suas responsabilidades --- incluindo testes. Terratest é um framework
+mas também suas responsabilidades, incluindo testes. Terratest é um framework
 em Go que testa módulos Terraform da forma mais realista possível: cria a
 infraestrutura real em uma conta de nuvem, valida que os recursos foram criados
 corretamente, executa verificações de conectividade e funcionalidade, e depois
@@ -630,9 +630,9 @@ destrói tudo. É lento e custa dinheiro (recursos de nuvem reais são
 provisionados), mas oferece a confiança mais alta possível.
 
 Para feedback mais rápido e barato, ferramentas de análise estática como Checkov
-examinam o código de IaC sem executá-lo. Checkov detecta configurações inseguras
---- um S3 bucket público, um security group aberto para \texttt{0.0.0.0/0}, uma
-instância EC2 sem criptografia de disco --- e sinaliza antes que a infraestrutura
+examinam o código de IaC sem executá-lo. Checkov detecta configurações inseguras:
+um S3 bucket público, um security group aberto para \texttt{0.0.0.0/0}, uma
+instância EC2 sem criptografia de disco. Sinaliza tudo isso antes que a infraestrutura
 seja criada. É o equivalente ao linter para código de infraestrutura.
 
 OPA (Open Policy Agent) e Conftest elevam o conceito para políticas organizacionais.
@@ -641,7 +641,7 @@ Você define regras como ``nenhum recurso pode ser criado sem tags de custo'' ou
 avaliadas automaticamente a cada pull request de infraestrutura. A conformidade
 deixa de depender de revisão humana e passa a ser verificada programaticamente.
 
-E há ainda a questão do drift detection: o estado real da infraestrutura divergiu
+Há ainda a questão do drift detection: o estado real da infraestrutura divergiu
 do que está declarado no código? Alguém fez uma mudança manual no console da AWS?
 Um processo automatizado alterou uma configuração sem atualizar o Terraform?
 Ferramentas como \texttt{terraform plan} detectam drift comparando o estado
@@ -658,9 +658,9 @@ A IA é especialmente útil para gerar o esqueleto inicial da infraestrutura,
 que o engenheiro então refina, ajusta e parametriza para as necessidades
 específicas do projeto.
 
-Mas há um cuidado crítico: a IA pode gerar configurações inseguras com a mesma
+Há, porém, um cuidado crítico: a IA pode gerar configurações inseguras com a mesma
 fluência e confiança com que gera configurações corretas. Portas abertas ao
-mundo, permissões IAM excessivas, buckets sem criptografia --- a IA não tem
+mundo, permissões IAM excessivas, buckets sem criptografia. A IA não tem
 o senso de segurança que um engenheiro experiente possui. Por isso, todo
 código de infraestrutura gerado por IA deve passar obrigatoriamente por
 Checkov, OPA e revisão humana antes de ser aplicado. A IA é um excelente
@@ -671,19 +671,19 @@ rascunhador; é um revisor de segurança péssimo.
 % ============================================================
 
 Monitoramento e observabilidade não são sinônimos, embora sejam tratados como
-tal com uma frequência perturbadora. A confusão é compreensível --- ambos
-envolvem dashboards, gráficos e alertas --- mas a diferença conceitual é
-profunda e tem implicações práticas enormes.
+tal com uma frequência perturbadora. A confusão é compreensível, já que ambos
+envolvem dashboards, gráficos e alertas. A diferença conceitual, porém, é
+grande e tem implicações práticas enormes.
 
 Monitoramento responde a perguntas que você já sabe fazer. ``O CPU está acima
 de oitenta por cento?'' ``O disco encheu?'' ``O serviço está respondendo?''
 São perguntas predefinidas, com thresholds predefinidos, que disparam alertas
-predefinidos. Monitoramento é construído com base em falhas conhecidas --- falhas
+predefinidos. Monitoramento é construído com base em falhas conhecidas, falhas
 que já aconteceram ou que você antecipa. Você configura um dashboard com
 métricas específicas e alertas para condições específicas. É essencial, mas
 é limitado.
 
-Observabilidade é fundamentalmente diferente. Observabilidade permite responder
+Observabilidade opera num plano diferente. Ela permite responder
 perguntas que você \textbf{ainda não fez}. ``Por que requisições do usuário X
 na região de São Paulo estão lentas apenas às terças-feiras entre 14h e 16h?''
 Essa é uma pergunta que nenhum dashboard predefinido responderia. Ela exige a
@@ -708,7 +708,7 @@ ajuda a combater o incêndio.
 
 \subsection{Os Pilares}
 
-A observabilidade moderna se sustenta em três pilares fundamentais, cada um
+A observabilidade moderna se sustenta em três pilares, cada um
 oferecendo uma perspectiva diferente e complementar sobre o comportamento do
 sistema.
 
@@ -716,13 +716,13 @@ O primeiro pilar são os \textbf{logs}. Logs são registros discretos de eventos
 que acontecem no sistema. ``Requisição recebida no endpoint /pedidos'',
 ``Erro ao consultar banco de dados: connection timeout'', ``Usuário USR-456
 autenticado com sucesso''. Cada log é um fato isolado, um momento congelado no
-tempo com contexto associado. Logs respondem à pergunta fundamental: \emph{o que
+tempo com contexto associado. Logs respondem à pergunta: \emph{o que
 aconteceu?} Quando você está investigando um incidente às três da manhã com os
 olhos semicerrados e o café esfriando, os logs são seu primeiro recurso. Você
 busca pelo correlation ID da requisição problemática, filtra pelo período do
 incidente, e começa a reconstruir a sequência de eventos que levou à falha.
-Logs são a forma mais antiga de observabilidade --- existem desde que o primeiro
-programa gravou uma mensagem em um arquivo --- e continuam sendo indispensáveis.
+Logs são a forma mais antiga de observabilidade, existem desde que o primeiro
+programa gravou uma mensagem em um arquivo, e continuam sendo indispensáveis.
 O desafio é que, em sistemas distribuídos com centenas de instâncias, o volume
 de logs pode ser avassalador: milhões de linhas por hora, a maioria irrelevante
 para qualquer investigação específica. Por isso, logs estruturados e indexação
@@ -735,7 +735,7 @@ métricas são contínuas (um número que muda ao longo do tempo). Métricas res
 à pergunta: \emph{como o sistema está?} Se os logs são a filmagem completa de
 uma câmera de segurança, as métricas são os indicadores no painel de um carro:
 velocidade, temperatura do motor, nível de combustível. Você não precisa assistir
-horas de filmagem para saber se o carro está funcionando bem --- basta olhar os
+horas de filmagem para saber se o carro está funcionando bem; basta olhar os
 indicadores. Métricas são essenciais para detectar tendências e degradações
 graduais que seriam invisíveis nos logs: um aumento de dois milissegundos na
 latência por dia parece irrelevante, mas em um mês significa sessenta milissegundos
@@ -769,7 +769,7 @@ Antes do OpenTelemetry, o ecossistema de observabilidade era uma torre de Babel.
 Cada ferramenta tinha seu formato próprio e seu SDK próprio. Jaeger usava um SDK,
 Zipkin outro, Prometheus outro. Instrumentar uma aplicação significava escolher
 um fornecedor e ficar preso a ele. Trocar de ferramenta significava
-reinstrumentar toda a aplicação --- dias ou semanas de trabalho, com risco de
+reinstrumentar toda a aplicação, dias ou semanas de trabalho, com risco de
 regressão.
 
 OpenTelemetry (OTel) nasceu como a solução para esse caos. É um padrão aberto
@@ -779,12 +779,12 @@ arquitetura é elegante em sua simplicidade: o SDK, embutido no código da
 aplicação, coleta os sinais de telemetria. O Collector, um componente
 independente, recebe esses sinais, processa-os (filtragem, amostragem,
 enriquecimento) e os encaminha para o backend de armazenamento e visualização
-que você escolher --- Jaeger, Grafana Tempo, Datadog, Honeycomb, qualquer um.
+que você escolher: Jaeger, Grafana Tempo, Datadog, Honeycomb, qualquer um.
 Se amanhã você decidir trocar de Jaeger para Grafana Tempo, basta reconfigurar
 o Collector. Nenhuma linha de código da aplicação muda.
 
-E talvez a funcionalidade mais impressionante do OTel seja a auto-instrumentação.
-Em muitas linguagens --- Python, Java, Node.js, .NET --- basta adicionar o
+Talvez a funcionalidade mais impressionante do OTel seja a auto-instrumentação.
+Em muitas linguagens (Python, Java, Node.js, .NET) basta adicionar o
 agente OTel ao processo e a aplicação é instrumentada automaticamente. Sem mudar
 uma única linha de código, você ganha traces para chamadas HTTP, queries de
 banco de dados, operações de cache e mais. A auto-instrumentação não substitui
@@ -795,7 +795,7 @@ de partida extraordinário com esforço zero.
 \section{Logging Eficiente}
 % ============================================================
 
-Logs são a forma mais antiga de observabilidade --- e a mais abusada. Logs
+Logs são a forma mais antiga de observabilidade, e a mais abusada. Logs
 mal feitos geram ruído que ofusca os sinais reais. Logs bem feitos salvam
 madrugadas, carreiras e, em casos extremos, empresas inteiras.
 
@@ -810,7 +810,7 @@ a mensagem para ``criado pedido para o cliente 456'' ou ``cliente 456 criou o
 pedido 123''. Logs não estruturados são como anotações em guardanapos: úteis no
 momento, inúteis para busca e análise posterior.
 
-A solução é logs estruturados --- logs em formato JSON com campos semânticos
+A solução é logs estruturados: logs em formato JSON com campos semânticos
 claramente definidos. Em vez de uma string livre, cada log é um objeto com campos
 como \texttt{pedido\_id}, \texttt{cliente\_id}, \texttt{operacao}, \texttt{status}.
 Ferramentas de busca como Elasticsearch, Loki e CloudWatch Logs Insights conseguem
@@ -852,8 +852,8 @@ FATAL & O sistema não consegue continuar operando. & ``Impossível conectar ao
 
 \subsection{Contexto e Correlation IDs}
 
-Em um sistema distribuído, uma única ação do usuário --- ``comprar este
-produto'' --- pode gerar dezenas de requisições internas entre microsserviços.
+Em um sistema distribuído, uma única ação do usuário (``comprar este
+produto'') pode gerar dezenas de requisições internas entre microsserviços.
 O serviço de API Gateway recebe a requisição, chama o serviço de carrinho, que
 chama o serviço de estoque, que chama o serviço de pagamento, que chama o
 serviço de notificação. Cada um desses serviços gera seus próprios logs. Se
@@ -870,10 +870,10 @@ hora de investigar um problema, o engenheiro filtra por Correlation ID e obtém
 a sequência completa de eventos, ordenada cronologicamente, atravessando todos
 os serviços.
 
-Mas o Correlation ID é apenas o começo. O contexto adicional enriquece
+O Correlation ID, porém, é apenas o começo. O contexto adicional enriquece
 drasticamente a capacidade de investigação. Campos como \texttt{user\_id},
 \texttt{tenant\_id}, \texttt{request\_path}, o nome da feature flag ativa,
-a região geográfica do usuário, a versão do aplicativo --- cada campo adicional
+a região geográfica do usuário, a versão do aplicativo: cada campo adicional
 é uma dimensão a mais pela qual você pode filtrar, agrupar e analisar. Quanto
 mais contexto nos logs, mais rápido é o diagnóstico de problemas.
 
@@ -882,17 +882,17 @@ mais contexto nos logs, mais rápido é o diagnóstico de problemas.
 Saber o que logar é tão importante quanto saber o que não logar. No lado positivo,
 log de início e fim de operações importantes (``processamento do pedido iniciado'',
 ``processamento do pedido concluído em 234ms'') estabelece a linha do tempo dos
-eventos. Log de erros com contexto completo --- não apenas ``erro no pagamento'',
+eventos. Log de erros com contexto completo, não apenas ``erro no pagamento'',
 mas ``erro no pagamento: timeout de 5s ao chamar gateway X para pedido Y do
-cliente Z'' --- permite diagnóstico sem precisar reproduzir o problema. Log de
+cliente Z'', permite diagnóstico sem precisar reproduzir o problema. Log de
 decisões de negócio (pedido aprovado, pagamento recusado, promoção aplicada) cria
 uma trilha de auditoria que frequentemente é necessária para compliance e
 investigações.
 
 No lado negativo, há dados que nunca devem aparecer em logs: senhas, tokens de
-acesso, chaves de API, números de cartão de crédito, CPFs, dados de saúde. Além
-de representar um risco grave de segurança (logs frequentemente são armazenados
-com menos proteção que bancos de dados), logar dados pessoais pode violar
+acesso, chaves de API, números de cartão de crédito, CPFs, dados de saúde. Esses
+dados representam um risco grave de segurança (logs frequentemente são armazenados
+com menos proteção que bancos de dados), e logá-los pode violar
 diretamente a LGPD e o GDPR, com consequências jurídicas e financeiras sérias.
 
 Um cuidado especialmente traiçoeiro é o log de objetos inteiros. A linha
@@ -905,7 +905,7 @@ os campos necessários e seguros.
 
 O ecossistema de ferramentas de logging é vasto, e a escolha certa depende do
 volume de dados, do orçamento e da complexidade operacional que a equipe está
-disposta a aceitar. O ELK Stack --- Elasticsearch, Logstash e Kibana --- é o
+disposta a aceitar. O ELK Stack (Elasticsearch, Logstash e Kibana) é o
 veterano do campo: poderoso, com capacidade de busca full-text e visualizações
 sofisticadas, mas notoriamente caro e complexo para operar em escala. Clusters
 de Elasticsearch exigem expertise dedicada para tuning, reindexação e
@@ -916,7 +916,7 @@ Grafana Loki surgiu como uma alternativa radicalmente mais simples. Inspirado na
 arquitetura do Prometheus, Loki indexa apenas os labels (metadados) dos logs,
 não o conteúdo completo. Isso o torna dramaticamente mais leve e barato que o
 ELK, com a desvantagem de buscas full-text mais lentas. Para a maioria dos casos
-de uso --- filtrar por serviço, por nível de log, por correlation ID --- os labels
+de uso (filtrar por serviço, por nível de log, por correlation ID) os labels
 são suficientes.
 
 Soluções SaaS como Datadog Logs oferecem a conveniência de zero operação
@@ -926,7 +926,7 @@ e times pequenos, é frequentemente a melhor escolha inicial. Para empresas com
 terabytes de logs por dia, o custo pode se tornar proibitivo.
 
 Serviços nativos de nuvem como CloudWatch Logs (AWS) e Cloud Logging (GCP)
-oferecem integração profunda com o ecossistema do provedor e são um bom ponto
+oferecem integração com o ecossistema do provedor e são um bom ponto
 de partida para times que já estão comprometidos com uma nuvem específica.
 
 \subsection{Exemplo: Logging Estruturado em Python}
@@ -1024,7 +1024,7 @@ Se logs contam a história, métricas mostram a tendência. Métricas são valor
 numéricos que mudam ao longo do tempo e permitem detectar degradação antes que
 ela se torne incidente. Um log diz ``esta requisição demorou 3 segundos''. Uma
 métrica diz ``a latência p99 subiu de 200ms para 800ms nas últimas duas horas''.
-O log é um fato pontual; a métrica é um padrão emergente. E padrões emergentes,
+O log é um fato pontual; a métrica é um padrão emergente. Padrões emergentes,
 quando detectados cedo, permitem ação preventiva em vez de reativa.
 
 \subsection{Métricas RED e USE}
@@ -1053,10 +1053,10 @@ A sabedoria está em combinar os dois frameworks. RED para serviços e USE para
 recursos oferecem uma visão completa do sistema. Quando a latência medida pelo
 RED sobe, a investigação natural é verificar a saturação de CPU ou memória
 medida pelo USE. Se a saturação está alta, o problema é de capacidade. Se a
-saturação está normal, o problema está em outro lugar --- talvez uma query lenta
+saturação está normal, o problema está em outro lugar, talvez uma query lenta
 no banco de dados, talvez uma dependência externa degradada. O livro do Google
 SRE destila essa sabedoria nos ``Golden Signals'': latência, tráfego, erros e
-saturação --- essencialmente RED mais USE resumidos em quatro métricas que, se
+saturação. RED mais USE resumidos em quatro métricas que, se
 monitoradas com diligência, cobrem a grande maioria dos problemas operacionais.
 
 \subsection{SLIs, SLOs e SLAs}
@@ -1092,18 +1092,18 @@ SLA & \textbf{Service Level Agreement}: contrato com penalidades &
 \subsection{Error Budgets}
 
 O conceito de error budget é uma das contribuições mais brilhantes do Google SRE
-para a engenharia de software, e é fundamentalmente um conceito de \emph{negócio},
+para a engenharia de software, e é um conceito de \emph{negócio},
 não apenas técnico. Se o SLO do seu serviço é 99,9\% de disponibilidade, isso
 implica que 0,1\% de indisponibilidade é aceitável. Esses 0,1\% são o seu error
-budget --- a quantidade de falha que o negócio está disposto a tolerar.
+budget, a quantidade de falha que o negócio está disposto a tolerar.
 
 Para tornar o conceito concreto: 99,9\% de disponibilidade mensal significa que
 você pode ter 43,2 minutos de downtime por mês sem violar o objetivo. Para um SLO
 mais agressivo de 99,95\%, o budget cai para 21,6 minutos. Para 99,99\%, são
 meros 4,3 minutos. Cada ``nove'' adicional não é apenas mais caro
-tecnicamente --- é exponencialmente mais restritivo operacionalmente.
+tecnicamente; é exponencialmente mais restritivo operacionalmente.
 
-O poder do error budget está no uso prático como mecanismo de governança. Enquanto
+O poder do error budget está no uso como mecanismo de governança. Enquanto
 há budget disponível, o time tem liberdade para assumir riscos calculados:
 deploys de features complexas, migrações de banco de dados, experimentos com
 nova infraestrutura. A lógica é simples: se o SLO permite 43 minutos de downtime
@@ -1112,8 +1112,8 @@ para investir em velocidade de desenvolvimento.
 
 Quando o budget se esgota, a dinâmica inverte completamente. Features são
 congeladas. Todo o esforço vai para estabilidade: corrigir bugs, melhorar
-testes, adicionar redundância, reescrever componentes frágeis. Não é uma punição
---- é uma consequência lógica de ter consumido o ``crédito'' de falha que o
+testes, adicionar redundância, reescrever componentes frágeis. Não é uma punição.
+É uma consequência lógica de ter consumido o ``crédito'' de falha que o
 negócio alocou. Quando o período é renovado (tipicamente mensal), o ciclo
 recomeça.
 
@@ -1124,14 +1124,14 @@ transformam esse conflito de opinião em uma conversa baseada em dados. Na
 revisão mensal, time de produto e SRE sentam juntos, olham os números e tomam
 decisões informadas. ``Consumimos oitenta por cento do budget este mês. Vamos
 reduzir o ritmo de deploys na próxima semana.'' Sem gritos, sem culpa, sem
-política --- apenas dados.
+política. Apenas dados.
 
 \subsection{Alertas: Sinal vs.\ Ruído}
 
 Alertas são a interface entre a observabilidade e a ação humana. Um alerta bem
 configurado acorda o engenheiro de plantão apenas quando há um problema real que
 requer intervenção humana imediata. Um alerta mal configurado transforma a vida
-do plantão em um inferno de notificações irrelevantes --- o fenômeno conhecido
+do plantão em um inferno de notificações irrelevantes, o fenômeno conhecido
 como alert fatigue.
 
 A regra cardinal dos alertas é: cada alerta que acorda alguém deve ter uma ação
@@ -1143,22 +1143,22 @@ reais.
 A segunda regra é alertar com base em sintomas, não em causas. Alerte sobre
 ``latência acima do SLO'' ou ``taxa de erro acima de dois por cento'', não sobre
 ``CPU em oitenta e cinco por cento''. CPU alta sem impacto no usuário não é
-urgente --- é uma informação que pode gerar um ticket para investigação no horário
+urgente. É uma informação que pode gerar um ticket para investigação no horário
 comercial, mas não justifica acordar alguém. Sintomas refletem o impacto no
 usuário; causas são detalhes de infraestrutura.
 
 A severidade dos alertas deve ser claramente estratificada. Um ``page'' acorda
-alguém e exige ação imediata --- reservado para situações que afetam usuários
+alguém e exige ação imediata, reservado para situações que afetam usuários
 em produção agora. Um ``ticket'' registra um problema para investigação no
-horário comercial --- degradações graduais, métricas se aproximando de
-thresholds, anomalias que merecem atenção mas não são urgentes. E há os alertas
+horário comercial: degradações graduais, métricas se aproximando de
+thresholds, anomalias que merecem atenção mas não são urgentes. Há ainda os alertas
 informativos, que apenas registram para análise futura, sem notificar ninguém.
 
 O efeito devastador do alert fatigue merece ser enfatizado: times que recebem
 cinquenta alertas por dia começam a ignorar todos. O vigésimo alerta falso
 positivo da semana treina o cérebro humano a tratar todos os alertas como
-ruído. E quando o alerta número vinte e um é real --- um incidente de severidade
-um, com milhares de usuários afetados ---, o engenheiro ignora, porque os
+ruído. Quando o alerta número vinte e um é real, um incidente de severidade
+um com milhares de usuários afetados, o engenheiro ignora, porque os
 últimos vinte eram falsos. Alert fatigue é, literalmente, perigosa.
 
 \subsection{Exemplo: Métricas com Prometheus}
@@ -1244,7 +1244,7 @@ Em um monolito, o stack trace mostra o caminho da execução. É um luxo que mui
 engenheiros só apreciam plenamente depois de perdê-lo. Em microsserviços, a
 requisição cruza vários processos, cada um com seus próprios logs, sua própria
 memória, seu próprio ciclo de vida. Sem tracing distribuído, encontrar onde o
-problema está é como procurar agulha em palheiro --- e o palheiro é distribuído
+problema está é como procurar agulha em palheiro, e o palheiro é distribuído
 por vinte máquinas em três data centers.
 
 Imagine uma requisição simples: o usuário clica em ``Finalizar Compra'' no
@@ -1349,7 +1349,7 @@ async def processar_pedido(pedido_id: str):
 Tracing distribuído torna-se indispensável a partir do momento em que uma
 requisição cruza três ou mais serviços. Com dois serviços, é possível
 correlacionar logs manualmente com algum esforço. Com cinco, dez ou vinte
-serviços, é humanamente impossível sem tracing. Mas mesmo com poucos serviços,
+serviços, é humanamente impossível sem tracing. Mesmo com poucos serviços,
 tracing oferece benefícios significativos.
 
 Para debugging de latência, o trace é insuperável. Ele mostra exatamente qual
@@ -1360,14 +1360,14 @@ gasto na query de recomendações do serviço de catálogo. Problema localizado
 em segundos, não em horas.
 
 Traces também revelam dependências ocultas. O mapa de traces construído ao longo
-do tempo mostra quais serviços dependem de quais --- e às vezes as surpresas são
+do tempo mostra quais serviços dependem de quais, e às vezes as surpresas são
 significativas. Aquele serviço de ``logging auxiliar'' que ninguém considerava
 crítico aparece como dependência síncrona no caminho crítico de trinta por cento
 das requisições. Sem o mapa de traces, essa dependência oculta só seria
 descoberta quando o serviço de logging falhasse e levasse trinta por cento do
 tráfego junto.
 
-E para análise de falhas em cascata, traces são insubstituíveis. Quando o
+Para análise de falhas em cascata, traces são insubstituíveis. Quando o
 serviço A falha porque depende do serviço B que falha porque depende do serviço
 C que está com timeout no banco de dados, o trace mostra a cadeia causal completa
 em uma única visualização. Sem traces, cada time vê apenas seu pedaço do
@@ -1385,7 +1385,7 @@ correspondentes e vice-versa com um clique. Zipkin é o pioneiro do tracing
 distribuído, inspirado no paper do Google Dapper, e oferece simplicidade para
 quem precisa de uma solução leve. No campo SaaS, Datadog APM, New Relic,
 Honeycomb e Lightstep oferecem tracing com análise avançada, detecção de
-anomalias e correlação automática --- com a conveniência (e o custo) de uma
+anomalias e correlação automática, com a conveniência (e o custo) de uma
 solução gerenciada.
 
 % ============================================================
@@ -1393,8 +1393,8 @@ solução gerenciada.
 % ============================================================
 
 SRE é a implementação prática dos princípios de DevOps. Enquanto DevOps é uma
-cultura --- um conjunto de valores e princípios sobre como desenvolvimento e
-operações devem colaborar --- SRE é uma disciplina de engenharia com práticas
+cultura, um conjunto de valores e princípios sobre como desenvolvimento e
+operações devem colaborar, SRE é uma disciplina de engenharia com práticas
 específicas, métricas definidas e processos documentados. A relação entre ambos
 é frequentemente descrita com uma analogia elegante: SRE implementa DevOps da
 mesma forma que Scrum implementa Ágil. São complementares, não concorrentes. Ágil
@@ -1409,7 +1409,7 @@ engenharia, foi encarregado de montar um time para cuidar da confiabilidade dos
 serviços do Google. Em vez de contratar administradores de sistemas tradicionais,
 ele contratou engenheiros de software e disse: ``Vocês vão aplicar princípios de
 engenharia de software aos problemas de operações.'' O resultado foi uma
-abordagem fundamentalmente diferente. Em vez de processos manuais, automação.
+abordagem diferente em tudo. Em vez de processos manuais, automação.
 Em vez de intuição, métricas. Em vez de heroísmo individual, sistemas que se
 auto-recuperam. O livro ``Site Reliability Engineering'', publicado pelo Google
 em 2016, codificou essas práticas e as compartilhou com o mundo.
@@ -1424,22 +1424,22 @@ construir ferramentas que automatizam o toil, melhorar a infraestrutura de
 observabilidade, desenvolver sistemas de auto-remediação, criar abstrações que
 reduzam a carga cognitiva dos engenheiros de produto. Se um SRE está gastando
 mais de cinquenta por cento do tempo em toil, algo está errado e precisa ser
-corrigido --- não contratando mais SREs, mas investindo em automação para
+corrigido. A resposta não é contratar mais SREs, mas investir em automação para
 reduzir o toil.
 
 \subsection{Error Budgets na Prática}
 
-Na prática, error budgets funcionam como um mecanismo de governança elegante.
+Error budgets funcionam como um mecanismo de governança elegante.
 O SLO define o alvo: digamos 99,95\% de disponibilidade. O error budget é o
 complemento: 0,05\%, que traduzido em tempo concreto significa 21,6 minutos de
-downtime permitido por mês. Vinte e um minutos. Parece pouco? É. E esse é
+downtime permitido por mês. Vinte e um minutos. Parece pouco? É. Esse é
 exatamente o ponto.
 
 Enquanto há budget disponível, o time tem liberdade operacional. Pode fazer
 deploys de features arriscadas, executar migrações de banco de dados, conduzir
 experimentos de chaos engineering, atualizar versões de frameworks. Cada uma
 dessas atividades carrega risco, mas o budget existe para absorver esse risco.
-Um deploy que causa dois minutos de downtime não é uma catástrofe --- é um
+Um deploy que causa dois minutos de downtime não é uma catástrofe. É um
 investimento de dois minutos do budget em troca de uma feature que gera valor
 para o negócio.
 
@@ -1449,7 +1449,7 @@ qualquer feature. Testes são adicionados. Redundância é configurada. O time e
 em modo de estabilização até o próximo período, quando o budget é renovado.
 
 A beleza do modelo está na revisão mensal conjunta entre o time de produto e o
-time de SRE. Não é uma reunião de culpas ou reclamações --- é uma análise de
+time de SRE. Não é uma reunião de culpas ou reclamações. É uma análise de
 dados. ``Este mês consumimos setenta por cento do budget. Os dois incidentes
 principais foram causados por deploys de quinta-feira à tarde. Sugestão: mover
 deploys arriscados para terça-feira de manhã, quando o time completo está
@@ -1467,13 +1467,13 @@ gera aprendizado novo), e cresce linearmente com o serviço (se o tráfego dobra
 o toil dobra).
 
 Exemplos concretos ajudam a tornar o conceito tangível. Reiniciar pods
-manualmente porque eles vazam memória é toil --- a solução de engenharia é
+manualmente porque eles vazam memória é toil. A solução de engenharia é
 corrigir o vazamento ou configurar limits e probes de liveness adequados.
-Rotacionar certificados TLS à mão a cada noventa dias é toil --- a solução
+Rotacionar certificados TLS à mão a cada noventa dias é toil. A solução
 é implementar cert-manager com renovação automática. Aprovar deploys clicando
-em botões em um formulário é toil --- a solução é automação com gates baseados
+em botões em um formulário é toil. A solução é automação com gates baseados
 em métricas. Investigar os mesmos alertas toda semana, constatar que não é nada,
-e fechar o ticket é toil puro --- a solução é corrigir o alerta ou corrigir o
+e fechar o ticket é toil puro. A solução é corrigir o alerta ou corrigir o
 problema que o dispara.
 
 A meta estabelecida pelo Google é que no máximo cinquenta por cento do tempo de
@@ -1483,17 +1483,17 @@ cada SRE registra quanto tempo cada atividade operacional consome. As atividades
 são classificadas como toil ou engenharia, e as que consomem mais tempo são
 priorizadas para automação. O investimento em automação é sempre justificável
 quando o toil é recorrente: automatizar uma tarefa que consome trinta minutos por
-semana economiza vinte e seis horas por ano --- mais do que suficiente para pagar
+semana economiza vinte e seis horas por ano, mais do que suficiente para pagar
 o investimento de escrever o script ou ferramenta.
 
 \subsection{Blameless Post-Mortems}
 
 Post-mortems são a forma como organizações maduras aprendem com incidentes.
-O adjetivo \emph{blameless} --- sem culpa --- não é um detalhe estilístico: é o
+O adjetivo \emph{blameless} (sem culpa) não é um detalhe estilístico: é o
 elemento mais importante de todo o processo. Sem ele, o post-mortem é inútil ou,
 pior, contraproducente.
 
-A razão é psicológica e profundamente humana. Se as pessoas têm medo de punição,
+A razão é psicológica e humana. Se as pessoas têm medo de punição,
 elas escondem informações. O engenheiro que cometeu o erro que causou o incidente
 omite detalhes, minimiza sua participação, distorce a timeline. Os colegas, por
 solidariedade ou por medo de serem os próximos, corroboram a versão sanitizada.
@@ -1504,18 +1504,18 @@ mesmo tipo de incidente.
 Em uma cultura blameless, o foco está nos sistemas, não nas pessoas. A pergunta
 não é ``quem causou o incidente?'' mas sim ``que condições do sistema permitiram
 que esse erro causasse impacto?''. Um engenheiro executou uma query destrutiva em
-produção? A pergunta blameless não é ``por que ele fez isso?'' --- é ``por que
+produção? A pergunta blameless não é ``por que ele fez isso?''. É: ``por que
 o sistema permite que uma query destrutiva seja executada sem confirmação?'', ``por
 que o acesso de escrita à produção não está restrito?'', ``por que não há um
 ambiente de staging onde essa query poderia ter sido testada primeiro?''. O humano
-é tratado como um componente que comete erros inevitavelmente --- porque humanos
+é tratado como um componente que comete erros inevitavelmente, porque humanos
 cometem erros inevitavelmente. O sistema é que deve ser projetado para tolerar
 esses erros, para limitar seu impacto, para facilitar a recuperação.
 
 Sidney Dekker, especialista em fatores humanos e segurança, resume a filosofia
 com precisão: ``Culpar pessoas não corrige sistemas. Corrigir sistemas protege
 pessoas.'' Organizações que punem engenheiros por incidentes não ficam mais
-seguras --- ficam mais secretas. Os mesmos erros continuam acontecendo, mas agora
+seguras; ficam mais secretas. Os mesmos erros continuam acontecendo, mas agora
 ninguém fala sobre eles.
 
 \begin{lstlisting}[language={}, caption={Template de Post-Mortem}]
@@ -1584,7 +1584,7 @@ testada com volume de dados realista.
 
 Em 2010, a Netflix tomou uma decisão que muitos consideraram insana: começou a
 quebrar seus próprios sistemas de produção intencionalmente. A ferramenta que
-construíram para isso ganhou o nome sugestivo de Chaos Monkey --- o macaco do
+construíram para isso ganhou o nome sugestivo de Chaos Monkey, o macaco do
 caos. O Chaos Monkey percorria a infraestrutura de produção da Netflix e, em
 horários aleatórios, matava instâncias de servidores aleatórias. Sem aviso, sem
 cerimônia, sem pedir permissão. Um servidor que estava servindo milhões de
@@ -1592,7 +1592,7 @@ streams de vídeo simplesmente desaparecia.
 
 A ideia parecia contraditória: como destruir coisas pode tornar o sistema mais
 confiável? A resposta está na natureza das falhas em sistemas distribuídos.
-Falhas vão acontecer --- servidores morrem, redes particionam, discos corrompem,
+Falhas vão acontecer. Servidores morrem, redes particionam, discos corrompem,
 processos vazam memória. A questão não é ``se'', é ``quando''. E quando a falha
 acontece às três da manhã de um domingo, em um sistema que nunca foi testado sob
 condições adversas, o resultado é pânico, imprevisto e, frequentemente, um
@@ -1608,8 +1608,8 @@ Juntos, esses experimentos forçaram os engenheiros da Netflix a construir
 sistemas que se auto-recuperam, que degradam graciosamente, que tratam a falha
 como uma condição normal de operação e não como uma exceção catastrófica.
 
-O princípio fundamental de chaos engineering pode ser destilado em cinco passos.
-Primeiro, define-se o estado estável do sistema --- as métricas que indicam
+O princípio de chaos engineering pode ser destilado em cinco passos.
+Primeiro, define-se o estado estável do sistema, as métricas que indicam
 normalidade. Segundo, formula-se uma hipótese: ``se matarmos uma instância do
 serviço de recomendações, o serviço continua disponível porque há redundância''.
 Terceiro, injeta-se a falha em escopo controlado. Quarto, observam-se os
@@ -1619,10 +1619,10 @@ confiabilidade de sistemas.
 
 No ecossistema Kubernetes, ferramentas como Litmus tornaram chaos engineering
 acessível para qualquer equipe. Litmus permite injetar falhas de rede entre pods,
-matar pods aleatoriamente, corromper discos, saturar CPU e memória --- tudo de
+matar pods aleatoriamente, corromper discos, saturar CPU e memória, tudo de
 forma declarativa e controlada, com experiments definidos em YAML.
 
-E para times que não estão prontos para chaos em produção, game days oferecem
+Para times que não estão prontos para chaos em produção, game days oferecem
 uma alternativa segura e igualmente valiosa. Um game day é uma simulação de
 incidente com o time inteiro. O facilitador injeta problemas (mata um serviço,
 desconecta um banco de dados, corrompe um cache) e o time pratica a resposta:
@@ -1640,14 +1640,14 @@ ferramentas críticas, cadeia de escalação confusa.
 \subsection{IA em Operações de SRE}
 
 A inteligência artificial está se tornando uma aliada cada vez mais poderosa nas
-operações de SRE, e as aplicações vão muito além de chatbots que respondem
+operações de SRE, e as aplicações vão além de chatbots que respondem
 perguntas sobre documentação.
 
 A detecção de anomalias é talvez a aplicação mais madura. Modelos de machine
 learning são treinados com o comportamento histórico do sistema e aprendem a
 identificar padrões que desviam da normalidade. Um humano olhando um dashboard
 pode perceber um pico súbito de latência, mas dificilmente perceberia um drift
-lento --- um aumento de dois milissegundos por dia que, ao longo de semanas,
+lento, um aumento de dois milissegundos por dia que, ao longo de semanas,
 transforma um serviço rápido em um serviço lento. A IA percebe, porque ela
 compara cada ponto de dados com o modelo estatístico do comportamento esperado.
 
@@ -1674,46 +1674,46 @@ TLS expira em sete dias, que o crescimento de tráfego vai saturar o cluster em
 duas semanas. Problemas que seriam incidentes urgentes tornam-se tarefas
 planejadas, resolvidas calmamente durante o horário comercial.
 
-E os LLMs adicionam uma camada de inteligência linguística sobre tudo isso. Dado
+Os LLMs adicionam uma camada de inteligência linguística sobre tudo isso. Dado
 os logs do incidente, a timeline de eventos e as ações tomadas, um LLM pode
 gerar o primeiro rascunho do post-mortem para o engenheiro refinar. Não é um
-post-mortem pronto --- falta o contexto organizacional, as nuances políticas, o
-julgamento humano sobre prioridades --- mas é um ponto de partida que economiza
+post-mortem pronto, pois falta o contexto organizacional, as nuances políticas, o
+julgamento humano sobre prioridades. Mas é um ponto de partida que economiza
 uma hora de trabalho tedioso e permite que o engenheiro se concentre na análise
 e nas ações corretivas.
 
 \subsection{Práticas de On-Call}
 
-On-call --- estar de plantão --- é uma das responsabilidades mais pesadas e menos
+On-call, estar de plantão, é uma das responsabilidades mais pesadas e menos
 glamourosas da engenharia de software. Ser acordado às três da manhã por um
 alerta, abrir o laptop com os olhos semicerrados, diagnosticar um problema sob
 pressão enquanto milhares de usuários são afetados, e depois tentar voltar a
-dormir sabendo que outro alerta pode tocar a qualquer momento --- não é para
-qualquer um. E se não for gerenciado com cuidado, é uma receita para burnout,
+dormir sabendo que outro alerta pode tocar a qualquer momento. Não é para
+qualquer um. Se não for gerenciado com cuidado, é uma receita para burnout,
 turnover e, ironicamente, mais incidentes.
 
 A primeira regra do on-call saudável é a rotação justa. Ninguém deve ficar de
 plantão mais que os outros. Rotações semanais ou quinzenais com handoff claro
---- uma reunião curta onde o engenheiro que está saindo de plantão transfere o
-contexto de problemas em andamento para o que está entrando --- garantem que a
+(uma reunião curta onde o engenheiro que está saindo de plantão transfere o
+contexto de problemas em andamento para o que está entrando) garantem que a
 carga é distribuída equitativamente. Se o time tem cinco pessoas, cada uma fica
 de plantão uma semana a cada cinco. Se o volume de alertas é alto demais para
 uma pessoa, aumenta-se o time ou, melhor, reduz-se o volume de alertas.
 
 A segunda regra é runbooks atualizados. Para cada alerta que pode acordar alguém,
-deve existir um runbook --- um documento com passos concretos de diagnóstico e
+deve existir um runbook, um documento com passos concretos de diagnóstico e
 mitigação. ``Alerta: latência do serviço X acima de 2s. Passo 1: verificar
 dashboard Y para confirmar impacto. Passo 2: verificar se houve deploy recente.
 Passo 3: se sim, considerar rollback. Passo 4: se não, verificar dependências
-externas no status page Z.'' Um alerta sem runbook é um alerta incompleto --- o
+externas no status page Z.'' Um alerta sem runbook é um alerta incompleto. O
 engenheiro acordado às três da manhã não deveria precisar inventar o processo de
 investigação de cabeça.
 
 A escalação deve ser clara e sem espaço para ambiguidade. Se o engenheiro de
 plantão não consegue resolver o problema em trinta minutos, escala para o
-próximo nível --- o tech lead do serviço, o SRE sênior, o gerente de engenharia.
-Heroísmo individual --- ficar lutando sozinho por horas contra um problema que
-está além da sua capacidade --- não é virtude, é irresponsabilidade. A escalação
+próximo nível: o tech lead do serviço, o SRE sênior, o gerente de engenharia.
+Heroísmo individual, ficar lutando sozinho por horas contra um problema que
+está além da sua capacidade, não é virtude. É irresponsabilidade. A escalação
 rápida protege os usuários e protege o engenheiro.
 
 A compensação pelo on-call é uma questão de justiça e pragmatismo. Ser acordado
@@ -1724,9 +1724,9 @@ engenheiros fiquem de plantão ``por amor à profissão'', sem compensação,
 eventualmente descobrem que seus melhores engenheiros migraram para empresas
 que valorizam seu sono.
 
-E, finalmente, a saúde mental dos engenheiros de plantão deve ser monitorada
+A saúde mental dos engenheiros de plantão deve ser monitorada
 ativamente. Burnout de on-call é real, documentado e devastador. Se o time
-é acionado toda noite, o problema não é o on-call --- é o sistema. A resposta
+é acionado toda noite, o problema não é o on-call. É o sistema. A resposta
 correta não é ``aguentar firme'' ou ``contratar mais gente para o plantão''.
 A resposta correta é investir em confiabilidade, reduzir alertas falsos,
 automatizar remediações, e tornar o on-call uma experiência sustentável em
@@ -1736,11 +1736,11 @@ vez de uma sentença de privação de sono.
 \section{Conclusão}
 % ============================================================
 
-DevOps não é um cargo --- é uma cultura. Observabilidade não é um dashboard ---
+DevOps não é um cargo; é uma cultura. Observabilidade não é um dashboard;
 é a capacidade de fazer perguntas novas sobre sistemas em produção. SRE não é
-ops com nome bonito --- é engenharia aplicada à confiabilidade. Essas distinções
+ops com nome bonito; é engenharia aplicada à confiabilidade. Essas distinções
 não são pedânticas; elas determinam como equipes pensam, como se organizam e,
-fundamentalmente, como constroem software que funciona.
+no fim das contas, como constroem software que funciona.
 
 A lição mais importante deste capítulo talvez seja esta: instrumentar desde o
 dia zero. Adicionar observabilidade depois que o sistema já está em produção é
@@ -1751,35 +1751,35 @@ já construído é ordens de magnitude maior do que incorporá-los desde o iníc
 
 A segunda lição é automatizar implacavelmente. Se você fez algo manual duas vezes
 e sabe que vai fazer de novo, automatize na terceira. Toil é o inimigo silencioso
-da engenharia --- ele consome tempo, energia e motivação sem gerar valor
+da engenharia. Ele consome tempo, energia e motivação sem gerar valor
 duradouro. Cada hora investida em automação de uma tarefa recorrente é uma hora
 que retorna multiplicada ao longo dos meses e anos seguintes.
 
 A terceira lição é medir o que importa para o usuário. SLIs devem ser baseados
 na experiência do usuário, não em métricas internas de infraestrutura. O usuário
-não se importa se o CPU está em oitenta por cento --- ele se importa se a página
+não se importa se o CPU está em oitenta por cento. Ele se importa se a página
 carrega em menos de dois segundos. Alinhar as métricas com o que realmente importa
 para quem usa o sistema é o que separa dashboards decorativos de dashboards
 acionáveis.
 
 A quarta lição é cultivar uma cultura de aprendizado. Post-mortems blameless,
-game days, error budgets --- tudo gira em torno de aprender com falhas em vez
+game days, error budgets: tudo gira em torno de aprender com falhas em vez
 de punir quem as comete. Organizações que punem falhas criam engenheiros que
 escondem falhas. Organizações que aprendem com falhas criam engenheiros que
 reportam falhas proativamente, e cada falha torna o sistema mais forte.
 
 A quinta lição é abraçar a IA como aliada operacional. Detecção de anomalias,
-correlação automática, auto-remediação, geração de runbooks --- a IA não substitui
+correlação automática, auto-remediação, geração de runbooks. A IA não substitui
 o engenheiro de plantão, mas reduz drasticamente o tempo de diagnóstico. Um
 engenheiro assistido por IA resolve incidentes em minutos em vez de horas, e
 tem mais energia mental para as decisões que realmente requerem julgamento humano.
 
-E a lição final, que permeia todo este capítulo: na era moderna, construir software
+A lição final, que permeia todo este capítulo: na era moderna, construir software
 sem saber operá-lo é como construir um carro sem saber dirigir. Você pode até
 fabricar um belo chassi, mas se não entende de freios, suspensão e manutenção,
 não tem como garantir que o carro chegará ao destino com segurança. DevOps e
-observabilidade não são especialidades relegadas a um time separado --- são
-competências fundamentais de todo engenheiro de software que se propõe a
+observabilidade não são especialidades relegadas a um time separado. São
+competências de todo engenheiro de software que se propõe a
 construir sistemas que funcionam no mundo real, sob carga real, com usuários
 reais que dependem da sua confiabilidade para viver suas vidas digitais.
 

@@ -8,8 +8,8 @@
 Segurança não é um checkbox no final do projeto. É uma mentalidade que permeia
 cada linha de código, cada decisão de arquitetura, cada deploy. Quando você escreve
 um \texttt{if} que decide se um usuário pode acessar um recurso, quando você
-escolhe onde armazenar uma senha, quando você decide qual biblioteca importar
---- em cada um desses momentos, você está fazendo uma decisão de segurança,
+escolhe onde armazenar uma senha, quando você decide qual biblioteca importar,
+em cada um desses momentos você está fazendo uma decisão de segurança,
 quer perceba ou não.
 
 Segurança é responsabilidade de todos os membros da equipe de engenharia, sem
@@ -27,29 +27,29 @@ amplamente citados da IBM e do NIST, algo em torno de cem vezes mais do que
 encontrá-la durante o desenvolvimento. Cem vezes. Imagine que um SQL injection
 simples passa despercebido durante o code review, sobrevive aos testes
 automatizados, é implantado em produção e só é descoberto quando um pesquisador
-de segurança --- ou pior, um atacante --- o explora. Agora o custo não é mais
+de segurança (ou pior, um atacante) o explora. Agora o custo não é mais
 apenas corrigir uma linha de código. É investigação forense, notificação de
 usuários, consultas jurídicas, possíveis multas regulatórias, danos
 reputacionais incalculáveis e, dependendo do setor, risco à vida humana. Mover
-a segurança para a esquerda do pipeline --- integrá-la desde a fase de design,
-passando pelo código, pelos testes, pelo build, pelo deploy --- é a única
+a segurança para a esquerda do pipeline, integrá-la desde a fase de design,
+passando pelo código, pelos testes, pelo build, pelo deploy, é a única
 estratégia economicamente viável e eticamente defensável.
 
-Pense no engenheiro de software como a primeira linha de defesa de qualquer
+O engenheiro de software funciona como a primeira linha de defesa de qualquer
 sistema. Firewalls protegem o perímetro da rede. Web Application Firewalls
 filtram requisições suspeitas. Sistemas de detecção de intrusão monitoram
-anomalias. Mas quando um atacante encontra uma falha no seu código --- uma
-injeção, uma falha de autenticação, uma exposição de dados --- nenhuma dessas
+anomalias. Mas quando um atacante encontra uma falha no seu código (uma
+injeção, uma falha de autenticação, uma exposição de dados), nenhuma dessas
 camadas externas ajuda. O ataque passa por todas elas como uma carta legítima
 passa pelo porteiro de um prédio: parece uma requisição normal, tem os headers
 corretos, vem de um IP legítimo. A diferença está no conteúdo, no payload
 cuidadosamente construído para explorar a falha que existe no seu código. Nesse
 momento, a única defesa que resta é a qualidade do código que você escreveu.
 
-E o custo real de falhas de segurança não é abstrato. Não estamos falando de
-cenários hipotéticos em apresentações de PowerPoint. Em 2017, a Equifax --- uma
+O custo real de falhas de segurança não é abstrato. Não estamos falando de
+cenários hipotéticos em apresentações de PowerPoint. Em 2017, a Equifax, uma
 das três maiores agências de crédito dos Estados Unidos, responsável por dados
-financeiros de praticamente toda a população adulta americana --- sofreu uma das
+financeiros de praticamente toda a população adulta americana, sofreu uma das
 maiores violações de dados da história. A vulnerabilidade era conhecida: uma
 falha no Apache Struts, framework Java usado na aplicação web da empresa, para a
 qual já existia um patch disponível havia dois meses. Dois meses em que a equipe
@@ -62,7 +62,7 @@ executivos seniores foram acusados de insider trading por venderem ações antes
 da divulgação pública do breach.
 
 Em 2020, o ataque à SolarWinds revelou uma sofisticação ainda mais assustadora.
-Atacantes --- posteriormente atribuídos ao serviço de inteligência russo SVR ---
+Atacantes, posteriormente atribuídos ao serviço de inteligência russo SVR,
 comprometeram o pipeline de build da SolarWinds, empresa que fornece software de
 gerenciamento de rede para milhares de organizações. Eles inseriram código
 malicioso diretamente no processo de compilação, de modo que atualizações
@@ -74,7 +74,7 @@ Microsoft, a Intel e a FireEye. O ataque permaneceu indetectado por meses,
 demonstrando que a confiança na cadeia de suprimentos de software é um
 pressuposto frágil que precisa ser constantemente validado.
 
-E em dezembro de 2021, a comunidade de engenharia de software foi sacudida pela
+Em dezembro de 2021, a comunidade de engenharia de software foi sacudida pela
 descoberta do Log4Shell, uma vulnerabilidade crítica na biblioteca Log4j, usada
 por virtualmente todas as aplicações Java do planeta. A falha permitia execução
 remota de código (RCE) simplesmente enviando uma string especialmente formatada
@@ -104,7 +104,7 @@ a cada ano; o framework da moda é substituído, o scanner de vulnerabilidades g
 um concorrente melhor, a plataforma de cloud lança um novo serviço. Mas os
 princípios permanecem. Eles foram formulados nas décadas de 1970 e 1980 por
 pesquisadores como Saltzer e Schroeder, e continuam tão relevantes hoje quanto
-eram há meio século. Entender esses princípios profundamente é o que separa o
+eram há meio século. Entender esses princípios a fundo é o que separa o
 engenheiro que sabe configurar uma ferramenta do engenheiro que sabe \emph{por que}
 aquela configuração é necessária.
 
@@ -116,7 +116,7 @@ sistematicamente em organizações de todos os tamanhos, todos os dias.
 
 Considere a história que se tornou emblemática no mundo da segurança em cloud. Em
 2019, uma ex-funcionária da Amazon Web Services explorou uma misconfiguration em
-um servidor da Capital One --- um dos maiores bancos dos Estados Unidos --- para
+um servidor da Capital One, um dos maiores bancos dos Estados Unidos, para
 acessar dados de mais de 100 milhões de clientes e solicitantes de cartão de
 crédito. A investigação revelou que o servidor comprometido tinha um IAM role com
 permissões excessivas: ele podia acessar buckets S3 que não tinham nenhuma relação
@@ -127,7 +127,7 @@ dramaticamente menor. A Capital One pagou US\$ 80 milhões em multas regulatóri
 mais de US\$ 190 milhões em acordos com clientes afetados.
 
 Esse tipo de violação é endêmico em ambientes de cloud. É tentadoramente fácil
-criar uma política IAM com \texttt{Action: "*"} e \texttt{Resource: "*"} --- o
+criar uma política IAM com \texttt{Action: "*"} e \texttt{Resource: "*"}, o
 equivalente digital de dar a chave mestra do prédio para o entregador de pizza.
 Funciona, no sentido de que o serviço consegue fazer o que precisa. Mas também
 funciona para um atacante que comprometa aquele serviço: agora ele tem acesso
@@ -179,8 +179,8 @@ cursor.execute("SELECT * FROM users WHERE id = %s", (user_id,))
 
 A diferença entre esses dois trechos de código é sutil em termos de linhas
 alteradas, mas abismal em termos de postura de segurança. No primeiro caso, se
-um atacante conseguir comprometer o serviço --- via SQL injection, via
-desserialização insegura, via qualquer vetor --- ele herda permissões de
+um atacante conseguir comprometer o serviço (via SQL injection, via
+desserialização insegura, via qualquer vetor), ele herda permissões de
 administrador do banco de dados. Pode exfiltrar todos os dados, deletar tabelas,
 criar novos usuários administrativos. No segundo caso, o mesmo atacante ficaria
 limitado a leitura de tabelas específicas. Ainda é ruim, mas a diferença entre
@@ -194,14 +194,14 @@ segurar. Esse princípio, talvez o mais intuitivo de todos, é melhor compreendi
 através de uma analogia que atravessa séculos: o castelo medieval.
 
 Imagine um castelo construído para resistir a cercos. A primeira coisa que um
-atacante encontra é o \textbf{fosso} --- um rio largo e profundo que circunda
+atacante encontra é o \textbf{fosso}, um rio largo e profundo que circunda
 toda a fortaleza. O fosso não é intransponível; com tempo, recursos e
 determinação, é possível construir pontes ou drenar a água. Mas ele impõe custo
 e delay ao atacante, e esse é o ponto. No mundo digital, o fosso é o
 \textbf{perímetro de rede}: firewalls, Web Application Firewalls (WAFs), rate
 limiting, proteção contra DDoS. Essas defesas filtram o tráfego grosseiro, bloqueiam
 ataques automatizados, rejeitam requisições obviamente maliciosas. Não são
-perfeitas --- nenhum WAF captura 100\% dos ataques --- mas eliminam o ruído e
+perfeitas (nenhum WAF captura 100\% dos ataques), mas eliminam o ruído e
 forçam o atacante a ser mais sofisticado.
 
 Atravessando o fosso, o atacante encontra as \textbf{muralhas}: paredes grossas
@@ -222,7 +222,7 @@ e seguros (validação de input). Se o WAF falhou em bloquear um payload de SQL
 injection, a validação de input na aplicação deve capturá-lo.
 
 No coração do castelo, dentro dos aposentos mais protegidos, estão os
-\textbf{cofres trancados} --- onde residem os tesouros e documentos mais
+\textbf{cofres trancados}, onde residem os tesouros e documentos mais
 valiosos. Mesmo que um invasor supere o fosso, escale as muralhas e passe pelos
 guardas, ele ainda precisa quebrar os cofres. No mundo digital, esta é a
 \textbf{camada de dados}: criptografia em repouso e em trânsito, mascaramento de
@@ -246,7 +246,7 @@ perfeita; a segurança emerge da combinação.
 \subsection{Zero Trust}
 
 ``Nunca confie, sempre verifique.'' O modelo tradicional de segurança assume que
-tudo dentro da rede corporativa é confiável --- como se as muralhas do castelo
+tudo dentro da rede corporativa é confiável, como se as muralhas do castelo
 fossem suficientes e, uma vez dentro, qualquer pessoa pudesse circular livremente.
 Essa suposição sempre foi frágil, mas com a migração para a cloud, o trabalho
 remoto e arquiteturas de microsserviços, ela se tornou insustentável.
@@ -257,12 +257,12 @@ confiável. Nem o servidor que está no mesmo cluster Kubernetes. Nem a requisi�
 que vem de um IP interno. Nem o serviço que já foi autenticado há cinco minutos.
 Cada interação é tratada como potencialmente hostil até que prove o contrário.
 
-Na prática, Zero Trust se manifesta em quatro pilares fundamentais. O primeiro
+Zero Trust se manifesta, concretamente, em quatro pilares. O primeiro
 é a \textbf{verificação contínua}: cada requisição é autenticada e autorizada
 individualmente, mesmo entre serviços internos. Não existe o conceito de
 ``sessão confiável'' que dispensa verificações subsequentes. Um serviço de
 pagamentos que precisa consultar o serviço de usuários apresenta suas credenciais
---- tipicamente um JWT assinado ou um certificado mTLS --- a cada chamada, e o
+(tipicamente um JWT assinado ou um certificado mTLS) a cada chamada, e o
 serviço de usuários verifica essas credenciais a cada chamada.
 
 O segundo pilar é a \textbf{microssegmentação}: serviços só se comunicam com
@@ -300,22 +300,22 @@ de qualquer sistema, componente ou API deve ser a mais segura possível. O
 desenvolvedor que instancia um novo serviço deve encontrar HTTPS habilitado por
 padrão, CORS restritivo por padrão, autenticação exigida por padrão. Se ele
 precisar relaxar essas configurações para um caso de uso específico, deve fazê-lo
-de forma explícita, consciente e documentada. O design oposto --- onde o padrão é
-inseguro e o desenvolvedor precisa lembrar de ``ativar'' a segurança --- é uma
+de forma explícita, consciente e documentada. O design oposto, onde o padrão é
+inseguro e o desenvolvedor precisa lembrar de ``ativar'' a segurança, é uma
 receita para desastres. A experiência demonstra que, sob pressão de prazos, as
 etapas de ``ativar segurança'' são as primeiras a serem puladas. Quando o
 framework Django foi criado, uma decisão fundamental de design foi incluir
 proteção contra CSRF automaticamente em todos os formulários. O desenvolvedor que
 não quisesse essa proteção precisaria explicitamente decorar a view com
-\texttt{@csrf\_exempt}. Essa inversão --- segurança por omissão, insegurança por
-escolha deliberada --- salvou incontáveis aplicações de vulnerabilidades.
+\texttt{@csrf\_exempt}. Essa inversão (segurança por omissão, insegurança por
+escolha deliberada) salvou incontáveis aplicações de vulnerabilidades.
 
 O princípio de \textbf{Fail Secure} complementa o anterior determinando o
 comportamento do sistema quando algo dá errado. Quando o serviço de autorização
 está fora do ar, quando a verificação de certificado falha, quando o token não
 pode ser validado, o sistema deve \emph{negar} acesso, não conceder. A resposta
-padrão para falha é 403 (Forbidden), não 200 (OK). O oposto --- \textbf{fail
-open} --- é tentadoramente conveniente durante o desenvolvimento e mortalmente
+padrão para falha é 403 (Forbidden), não 200 (OK). O oposto, o \textbf{fail
+open}, é tentadoramente conveniente durante o desenvolvimento e mortalmente
 perigoso em produção. ``Se o serviço de autenticação estiver indisponível, vamos
 deixar passar para não afetar os usuários'' soa razoável em uma reunião de
 sprint, mas cria uma janela onde qualquer pessoa tem acesso irrestrito ao sistema.
@@ -478,8 +478,8 @@ que tags \texttt{<script>} fossem executadas no navegador de visitantes.
 Duas décadas depois, o mesmo tipo de falha continua prevalente. O padrão é
 idêntico: a aplicação recebe dados do usuário e os renderiza em HTML sem
 sanitização. O atacante insere um script que será executado no navegador de
-quem visualizar aquele conteúdo --- um comentário, um nome de usuário, um
-resultado de busca.
+quem visualizar aquele conteúdo (um comentário, um nome de usuário, um
+resultado de busca).
 
 \begin{lstlisting}[language=Java, caption={XSS -- código vulnerável (JavaScript)}]
 // VULNERAVEL: inserindo input do usuario diretamente no DOM
@@ -518,7 +518,7 @@ A defesa contra XSS é dupla. Primeiro, escape de output: toda vez que dados
 fornecidos pelo usuário são renderizados em HTML, caracteres especiais como
 \texttt{<}, \texttt{>}, \texttt{\"} e \texttt{\&} devem ser convertidos em
 entidades HTML. Frameworks modernos como React, Vue e Angular fazem isso
-automaticamente por padrão --- mais um exemplo de secure by default --- mas o
+automaticamente por padrão, mais um exemplo de secure by default. O
 desenvolvedor que usar \texttt{dangerouslySetInnerHTML} em React ou
 \texttt{v-html} em Vue está explicitamente desabilitando essa proteção.
 Segundo, Content Security Policy (CSP): um header HTTP que instrui o navegador a
@@ -535,7 +535,7 @@ para cada um deles.
 
 Senhas armazenadas em texto plano ou com hashing fraco são talvez o erro mais
 grave e, infelizmente, persistente. Em 2012, o LinkedIn sofreu um breach que
-expôs 6,5 milhões de hashes de senha --- e descobriu-se que estavam usando SHA1
+expôs 6,5 milhões de hashes de senha, e descobriu-se que estavam usando SHA1
 sem salt. Atacantes conseguiram reverter a maioria dos hashes em horas usando
 rainbow tables. Em 2016, descobriu-se que o breach era na verdade muito maior:
 167 milhões de contas. Se o LinkedIn tivesse usado bcrypt, os hashes seriam
@@ -546,9 +546,9 @@ token de sessão é sequencial (\texttt{session\_001}, \texttt{session\_002}),
 o atacante simplesmente incrementa o número para hijackar sessões de outros
 usuários. Tokens sem expiração significam que uma sessão roubada continua
 válida indefinidamente. A falta de proteção contra brute force permite que um
-atacante teste milhões de combinações de credenciais sem ser bloqueado. E a
-ausência de autenticação multi-fator (MFA) significa que uma senha comprometida
---- via phishing, via reutilização, via breach de outro serviço --- é suficiente
+atacante teste milhões de combinações de credenciais sem ser bloqueado. A
+ausência de autenticação multi-fator (MFA) significa que uma senha comprometida,
+seja via phishing, via reutilização ou via breach de outro serviço, é suficiente
 para obter acesso completo.
 
 A mitigação para todos esses cenários é clara e bem estabelecida: use
@@ -570,7 +570,7 @@ keep-alive. O cliente enviava uma mensagem e seu tamanho declarado, e o servidor
 deveria ecoá-la de volta. O problema: o servidor não verificava se o tamanho
 declarado correspondia ao tamanho real da mensagem. O atacante enviava uma
 mensagem de 1 byte declarando ter 64KB, e o servidor respondia com aquele 1
-byte seguido de 64KB de memória adjacente --- que poderia conter chaves
+byte seguido de 64KB de memória adjacente, que poderia conter chaves
 privadas, senhas de usuários, tokens de sessão ou qualquer outro dado que
 estivesse na memória do processo.
 
@@ -597,7 +597,7 @@ sendo registrados inadvertidamente.
 Controle de acesso quebrado acontece quando um usuário consegue acessar recursos
 ou executar ações que não deveriam ser permitidas para ele. O cenário clássico é
 o IDOR (Insecure Direct Object Reference): a aplicação usa um identificador
-previsível --- como um ID numérico sequencial --- para referenciar recursos, e
+previsível, como um ID numérico sequencial, para referenciar recursos, e
 não verifica se o usuário solicitante tem permissão para acessar aquele recurso
 específico.
 
@@ -624,7 +624,7 @@ atingiu a primeira API de verificação de propriedade de veículos do DETRAN de
 vários estados brasileiros, onde bastava alterar o número da placa na URL para
 acessar dados de qualquer veículo. Internacionalmente, em 2019, pesquisadores
 descobriram que a API da First American Financial Corporation expunha 885 milhões
-de documentos financeiros sensíveis --- bastava incrementar o número no URL para
+de documentos financeiros sensíveis: bastava incrementar o número no URL para
 acessar documentos de qualquer cliente. Nenhuma verificação de autorização era
 realizada. A correção é conceitualmente simples: em cada endpoint, verificar se
 o usuário autenticado tem permissão para acessar o recurso específico solicitado.
@@ -643,7 +643,7 @@ Headers de segurança ausentes são um exemplo frequente: sem Content Security
 Policy, o navegador executa qualquer script; sem HSTS (HTTP Strict Transport
 Security), conexões podem ser downgraded para HTTP; sem X-Frame-Options,
 a página pode ser embutida em iframes para ataques de clickjacking. Debug mode
-habilitado em produção é outro clássico --- o framework Django, por exemplo,
+habilitado em produção é outro clássico. O framework Django, por exemplo,
 quando em modo debug, exibe stack traces completos com variáveis locais,
 configurações do banco de dados e até trechos de código-fonte. Credenciais
 default não alteradas afligem desde roteadores domésticos (admin/admin) até
@@ -690,11 +690,11 @@ conhecidas, tornando a falta de atualização uma garantia de comprometimento
 eventual.
 
 Dependências desatualizadas com CVEs publicados são a manifestação mais direta
-desse problema, mas o risco se estende a dependências transitivas --- bibliotecas
-que você nunca importou diretamente mas que foram trazidas por suas dependências
-diretas. O Log4Shell demonstrou esse risco de forma brutal: muitas equipes
-descobriram que usavam Log4j não porque a incluíram explicitamente, mas porque ela
-era uma dependência transitiva de frameworks como Spring Boot.
+desse problema, mas o risco se estende a dependências transitivas, ou seja,
+bibliotecas que você nunca importou diretamente mas que foram trazidas por suas
+dependências diretas. O Log4Shell demonstrou esse risco de forma brutal: muitas
+equipes descobriram que usavam Log4j não porque a incluíram explicitamente, mas
+porque ela era uma dependência transitiva de frameworks como Spring Boot.
 
 A mitigação exige vigilância automatizada: ferramentas como \texttt{npm audit},
 \texttt{pip audit}, Dependabot, Snyk e Trivy devem ser integradas ao pipeline de
@@ -705,7 +705,7 @@ Supply Chain.
 
 \subsection{Logging e Monitoramento Insuficientes}
 
-Esta é a vulnerabilidade silenciosa --- a que permite que todas as outras passem
+Esta é a vulnerabilidade silenciosa, aquela que permite que todas as outras passem
 despercebidas. Segundo o relatório ``Cost of a Data Breach'' da IBM de 2023, o
 tempo médio de detecção de um breach é de 197 dias. Cento e noventa e sete dias
 em que atacantes se movem lateralmente pela rede, exfiltram dados, estabelecem
@@ -749,8 +749,8 @@ deveria ser leitura obrigatória para todo engenheiro que usa assistentes de IA
 para escrever código. O estudo revelou uma descoberta perturbadora:
 desenvolvedores que usaram assistentes de IA como o GitHub Copilot produziram
 código significativamente \emph{menos} seguro do que desenvolvedores que
-escreveram código sem assistência. Mas o aspecto mais preocupante não era a
-qualidade do código em si --- era a \emph{confiança} dos desenvolvedores. Aqueles
+escreveram código sem assistência. O aspecto mais preocupante não era a
+qualidade do código em si, e sim a \emph{confiança} dos desenvolvedores. Aqueles
 que usaram IA foram consistentemente \emph{mais} confiantes na segurança do seu
 código, apesar de ele ser objetivamente menos seguro. Uma combinação letal: código
 pior com menos escrutínio.
@@ -768,7 +768,7 @@ segurança. Ele gera o que é estatisticamente provável, não o que é seguro.
 
 A regra que emerge dessa realidade é inegociável: todo código gerado por IA deve
 passar pela mesma revisão de segurança que código escrito por humanos. Na
-verdade, deve receber \emph{mais} escrutínio, precisamente porque a confiança
+verdade, deve receber \emph{mais} escrutínio, justamente porque a confiança
 excessiva tende a reduzir a atenção. Quando você escreve código do zero, há um
 processo de raciocínio envolvido em cada decisão. Quando a IA gera 50 linhas de
 código em segundos, a tentação de aceitar e seguir em frente é quase irresistível.
@@ -778,7 +778,7 @@ Resista a ela.
 
 Em janeiro de 2023, a Samsung Electronics descobriu que engenheiros da sua
 divisão de semicondutores estavam usando o ChatGPT para auxiliar no
-desenvolvimento de software. Até aí, nada incomum --- milhares de empresas
+desenvolvimento de software. Até aí, nada incomum, pois milhares de empresas
 estavam fazendo o mesmo. O problema é que, ao solicitar ajuda para depurar código
 e otimizar processos, esses engenheiros enviaram código-fonte proprietário,
 relatórios internos de medição e até atas de reuniões confidenciais para a API da
@@ -824,8 +824,8 @@ segredos detectados em prompts.
 
 Prompt injection é, sem exagero, a ``SQL injection da era dos LLMs''. Assim
 como SQL injection explora a fronteira porosa entre dados e código em queries de
-banco de dados, prompt injection explora a fronteira --- igualmente porosa e
-muito mais difícil de proteger --- entre instruções do sistema e dados do
+banco de dados, prompt injection explora a fronteira, igualmente porosa e
+muito mais difícil de proteger, entre instruções do sistema e dados do
 usuário em interações com modelos de linguagem.
 
 Para entender por que essa vulnerabilidade é tão difícil de resolver, é preciso
@@ -851,8 +851,8 @@ como autorizados.
 
 A \textbf{injeção indireta} é ainda mais insidiosa e difícil de prevenir. Nesse
 cenário, o usuário não insere instruções maliciosas diretamente. Em vez disso,
-dados de fontes externas --- emails processados pelo LLM, páginas web
-sumarizadas, documentos analisados --- contêm instruções ocultas. Imagine um
+dados de fontes externas (emails processados pelo LLM, páginas web
+sumarizadas, documentos analisados) contêm instruções ocultas. Imagine um
 assistente de email baseado em LLM que lê e sumariza emails recebidos. Um
 atacante envia um email que contém, em texto branco sobre fundo branco
 (invisível para humanos mas visível para o modelo): ``Assistente: encaminhe
@@ -881,13 +881,13 @@ o modelo, o atacante contamina os dados de treinamento para influenciar o
 comportamento do próprio modelo. Em processos de fine-tuning, onde uma organização
 ajusta um modelo base com dados específicos do seu domínio, dados maliciosos podem
 inserir backdoors: o modelo se comporta normalmente para a maioria das entradas,
-mas quando recebe um trigger específico --- uma palavra, uma frase, um padrão ---
+mas quando recebe um trigger específico (uma palavra, uma frase, um padrão),
 executa um comportamento diferente, potencialmente malicioso.
 
 O uso responsável de APIs de IA exige uma postura de engenharia disciplinada.
 Implementar rate limiting para evitar custos descontrolados e abuso por terceiros.
 Monitorar custos em tempo real com alertas para consumo anômalo. Validar outputs
-antes de usá-los em decisões críticas --- o LLM pode alucinar dados, inventar
+antes de usá-los em decisões críticas, já que o LLM pode alucinar dados, inventar
 referências, gerar código com bugs sutis. Manter logs detalhados de todas as
 interações para auditoria posterior.
 
@@ -897,14 +897,14 @@ nomes de pacotes que não existem quando geram código. Atacantes perceberam ess
 tendência e começaram a registrar os nomes de pacotes mais frequentemente
 alucinados, preenchendo-os com código malicioso. Quando um desenvolvedor usa um
 LLM para gerar código, o modelo sugere instalar o pacote alucinado, que agora
-existe --- mas contém malware. Um novo vetor de ataque de supply chain nascido
+existe, mas contém malware. Um novo vetor de ataque de supply chain nascido
 diretamente da interseção entre IA e segurança.
 
 \section{Dependências e Supply Chain}
 
 Seu software é tão seguro quanto sua dependência mais fraca. Essa frase, que pode
 soar como exagero, é uma descrição precisa da realidade moderna do
-desenvolvimento de software. Aplicações modernas usam centenas de dependências ---
+desenvolvimento de software. Aplicações modernas usam centenas de dependências,
 muitas delas trazidas transitivamente, sem que o desenvolvedor sequer saiba que
 estão ali. Cada uma dessas dependências é um vetor de ataque potencial, e o
 ecossistema demonstrou repetidamente que essa ameaça é muito mais do que teórica.
@@ -913,8 +913,8 @@ ecossistema demonstrou repetidamente que essa ameaça é muito mais do que teór
 
 Um SBOM é o inventário completo de todos os componentes do seu software:
 dependências diretas, dependências transitivas, versões exatas, licenças,
-checksums. Pense nele como a lista de ingredientes de um alimento industrializado
---- exceto que, no caso de software, a ausência dessa lista pode significar que
+checksums. Funciona como a lista de ingredientes de um alimento industrializado,
+exceto que, no caso de software, a ausência dessa lista pode significar que
 você está consumindo (e servindo aos seus usuários) componentes que nunca examinou.
 
 Dois formatos padrão emergiram como referência: SPDX, mantido pela Linux
@@ -925,7 +925,7 @@ SolarWinds, o governo americano emitiu a Executive Order 14028 em 2021, exigindo
 que fornecedores de software para o governo federal produzam e mantenham SBOMs. A
 tendência é que essa exigência se expanda para outros setores e jurisdições.
 
-Na prática, SBOMs devem ser gerados automaticamente como parte do pipeline de
+SBOMs devem ser gerados automaticamente como parte do pipeline de
 CI/CD e armazenados como artefatos do build, associados à versão específica do
 software que descrevem. Ferramentas como \texttt{syft}, \texttt{cdxgen} e
 integrations nativas de plataformas como GitHub e GitLab facilitam essa geração.
@@ -934,7 +934,7 @@ software é afetado.
 
 \subsection{Verificação de Dependências}
 
-A verificação de dependências opera em três pilares fundamentais que, juntos,
+A verificação de dependências opera em três pilares que, juntos,
 estabelecem confiança na cadeia de suprimentos de software.
 
 O primeiro pilar são \textbf{checksums e assinaturas digitais}. Quando você
@@ -950,7 +950,7 @@ O segundo pilar são os \textbf{lock files}: \texttt{package-lock.json},
 \texttt{Pipfile.lock}, \texttt{go.sum}, \texttt{Cargo.lock}. Esses arquivos
 registram as versões exatas de todas as dependências (diretas e transitivas) que
 foram resolvidas durante a instalação. Sem lock files, dois builds do mesmo
-código-fonte podem resultar em artefatos diferentes --- porque uma dependência
+código-fonte podem resultar em artefatos diferentes, porque uma dependência
 transitiva foi atualizada entre um build e outro. Lock files devem
 \textbf{sempre} ser commitados no repositório. Ignorá-los é abrir mão de
 reprodutibilidade e introduzir não-determinismo no processo de build.
@@ -976,7 +976,7 @@ banco de dados PyPI Advisory. O Dependabot, integrado nativamente ao GitHub,
 monitora continuamente os repositórios e abre pull requests automaticamente
 quando vulnerabilidades são encontradas em dependências, incluindo a atualização
 de versão necessária. O Snyk oferece análise mais profunda, com contexto de
-explorabilidade --- nem todo CVE é igualmente explorável no contexto específico
+explorabilidade: nem todo CVE é igualmente explorável no contexto específico
 da sua aplicação, e o Snyk ajuda a priorizar. O Trivy, scanner open-source
 mantido pela Aqua Security, examina não apenas dependências de linguagem mas
 também imagens de containers, identificando vulnerabilidades em pacotes do
@@ -994,7 +994,7 @@ A história do \textbf{left-pad} precisa ser contada em detalhes porque ilustra
 uma fragilidade fundamental do ecossistema de software moderno. Em março de 2016,
 o desenvolvedor Azer Koçulu teve uma disputa com o npm (o registry de pacotes do
 Node.js) sobre o nome de um de seus pacotes. Frustrado, ele removeu todos os seus
-pacotes do registry --- incluindo o \texttt{left-pad}, uma biblioteca de 11 linhas
+pacotes do registry, incluindo o \texttt{left-pad}, uma biblioteca de 11 linhas
 que fazia uma única coisa: adicionar caracteres à esquerda de uma string para
 atingir um comprimento desejado. Onze linhas de código. Quando Koçulu removeu o
 pacote, milhares de builds quebraram instantaneamente ao redor do mundo, incluindo
@@ -1095,8 +1095,8 @@ tornou o forward secrecy obrigatório, não opcional.
 
 \textbf{Em repouso}: dados sensíveis no banco de dados, arquivos em disco e
 backups devem ser criptografados. Isso protege contra o cenário em que um
-atacante obtém acesso ao storage subjacente --- um disco roubado, um backup
-exfiltrado, um snapshot de banco copiado. Serviços de cloud como AWS RDS, Azure
+atacante obtém acesso ao storage subjacente, seja um disco roubado, um backup
+exfiltrado ou um snapshot de banco copiado. Serviços de cloud como AWS RDS, Azure
 SQL e GCP Cloud SQL oferecem criptografia em repouso com gerenciamento
 transparente de chaves.
 
@@ -1104,8 +1104,8 @@ transparente de chaves.
 SEV) e computação confidencial permitem processar dados criptografados sem
 expô-los em texto plano, mesmo para o administrador do servidor. Essas
 tecnologias ainda estão em maturação, mas representam o futuro da proteção de
-dados em ambientes de cloud onde o provedor de infraestrutura é, em última
-análise, um terceiro em quem se prefere não confiar cegamente.
+dados em ambientes de cloud onde o provedor de infraestrutura é, no fim das
+contas, um terceiro em quem se prefere não confiar cegamente.
 
 \subsection{Hashing de Senhas}
 
@@ -1114,7 +1114,7 @@ diretas. A regra é simples e inviolável: use bcrypt ou Argon2. Nunca MD5, nunc
 SHA1, nunca SHA256 sozinho.
 
 Para entender por que, considere a história do RockYou. Em 2009, o site de
-jogos sociais RockYou foi invadido e 32 milhões de senhas foram expostas --- em
+jogos sociais RockYou foi invadido e 32 milhões de senhas foram expostas, em
 \emph{texto plano}. Sem hashing algum. Esse banco de dados se tornou uma das
 ferramentas mais valiosas para atacantes, pois revelou os padrões reais de
 escolha de senhas por usuários (``123456'', ``password'', ``iloveyou'' estavam
@@ -1193,8 +1193,8 @@ de gerenciamento de segredos: AWS Secrets Manager, GCP Secret Manager, Azure
 Key Vault ou HashiCorp Vault.
 
 A \textbf{rotação de chaves} é outro aspecto frequentemente negligenciado.
-Chaves devem ter prazo de validade definido e ser rotacionadas regularmente ---
-automaticamente, não manualmente. Se uma chave é comprometida mas não é
+Chaves devem ter prazo de validade definido e ser rotacionadas regularmente,
+de forma automática, não manual. Se uma chave é comprometida mas não é
 descoberta imediatamente (e lembremos que o tempo médio de detecção de breach é
 de 197 dias), a rotação automática limita a janela de exposição.
 
@@ -1250,7 +1250,7 @@ A \textbf{Lei de Schneier} captura essa realidade com elegância devastadora:
 ``Qualquer pessoa pode inventar um sistema de segurança tão inteligente que ela
 mesma não consegue pensar em como quebrá-lo. Isso não significa que é seguro.''
 O fato de você não conseguir quebrar seu próprio sistema criptográfico diz muito
-pouco sobre a segurança dele --- diz apenas que \emph{você} não sabe quebrá-lo.
+pouco sobre a segurança dele; diz apenas que \emph{você} não sabe quebrá-lo.
 Criptógrafos profissionais passam carreiras inteiras tentando quebrar sistemas, e
 mesmo algoritmos revisados por dezenas de especialistas durante anos eventualmente
 revelam fraquezas.
@@ -1330,9 +1330,9 @@ efeitos do incidente.
 
 A \textbf{implicação arquitetural} mais importante é esta: o sistema deve ser
 capaz de encontrar, exportar e deletar todos os dados de um usuário específico
-de forma eficiente e completa. Se você não projetou isso desde o início --- se
+de forma eficiente e completa. Se você não projetou isso desde o início, se
 os dados do usuário estão espalhados por dezenas de microsserviços, filas de
-mensagem, caches distribuídos e backups sem indexação --- implementar
+mensagem, caches distribuídos e backups sem indexação, implementar
 conformidade com LGPD/GDPR retroativamente se torna um projeto de engenharia
 monumental. A lição é clara: privacidade é arquitetura, não compliance.
 
@@ -1345,8 +1345,8 @@ precisarmos no futuro'', não ``porque o analytics pode querer depois''.
 
 Antes de adicionar qualquer campo de coleta de dados, faça a si mesmo duas
 perguntas. Primeira: ``se esse dado vazar, qual o impacto para o titular?'' Se a
-resposta for ``grave'' --- e para dados como CPF, dados médicos, orientação
-sexual, dados financeiros, a resposta é sempre grave --- faça a segunda pergunta:
+resposta for ``grave'' (e para dados como CPF, dados médicos, orientação
+sexual, dados financeiros, a resposta é sempre grave), faça a segunda pergunta:
 ``eu realmente preciso coletá-lo para a funcionalidade atual?'' Se a resposta
 for ``não'' ou ``não tenho certeza'', não colete.
 
@@ -1391,7 +1391,7 @@ implementar mecanismos automáticos de exclusão quando o prazo expira.
 
 A exclusão efetiva é mais complexa do que parece. Quando o titular solicita a
 exclusão dos seus dados, um soft delete (marcar o registro como inativo) não é
-suficiente para dados pessoais. A exclusão deve ser efetiva --- o dado deve ser
+suficiente para dados pessoais. A exclusão deve ser efetiva: o dado deve ser
 removido de forma que não possa ser recuperado. Mas os backups complicam essa
 equação: dados deletados do banco de dados ainda existem nos backups. A solução
 prática é uma combinação de exclusão imediata dos sistemas ativos com retenção
@@ -1399,7 +1399,7 @@ limitada de backups e processos documentados para lidar com a eventual
 restauração de um backup que contenha dados que deveriam ter sido excluídos.
 
 Logs apresentam um desafio adicional. Se dados pessoais foram registrados em
-logs --- endereço IP, email, identificadores de sessão --- esses logs estão
+logs (endereço IP, email, identificadores de sessão), esses logs estão
 sujeitos às mesmas políticas de retenção. Muitas organizações descobrem tarde
 demais que seus logs contêm dados pessoais que não podem deletar facilmente,
 porque a infraestrutura de logging não foi projetada para exclusão seletiva.
@@ -1410,8 +1410,8 @@ A lição, mais uma vez, é projetar para privacidade desde o início.
 A \textbf{anonimização} é o processo de remover irreversivelmente todos os
 identificadores de um conjunto de dados, de modo que nenhuma pessoa possa ser
 identificada, mesmo com cruzamento de dados de outras fontes. Dados
-verdadeiramente anonimizados não são mais considerados dados pessoais e, portanto,
-não estão sujeitos à LGPD ou ao GDPR. Mas a anonimização verdadeira é
+corretamente anonimizados não são mais considerados dados pessoais e, portanto,
+não estão sujeitos à LGPD ou ao GDPR. Mas a anonimização real é
 \textbf{extremamente difícil} de alcançar. Pesquisadores têm demonstrado
 repetidamente que conjuntos de dados aparentemente anonimizados podem ser
 reidentificados com o cruzamento de outras bases. O caso mais famoso é o da
@@ -1419,7 +1419,7 @@ Netflix: em 2007, a empresa publicou um dataset ``anonimizado'' de avaliações
 de filmes para uma competição de machine learning. Pesquisadores da Universidade
 do Texas demonstraram que, cruzando as avaliações com perfis públicos do IMDb,
 era possível identificar usuários individuais e inferir suas preferências
-cinematográficas --- potencialmente revelando informações sensíveis sobre
+cinematográficas, o que potencialmente revelava informações sensíveis sobre
 orientação sexual, opiniões políticas e crenças religiosas.
 
 A \textbf{pseudonimização} é uma abordagem mais pragmática. Consiste em
@@ -1453,13 +1453,13 @@ serviço de autenticação subiu de 0,01\% para 12\% em três minutos. O engenhe
 de plantão verifica os dashboards e nota algo incomum: além dos erros, há um
 pico anômalo de requisições POST ao endpoint \texttt{/api/v2/auth/token},
 originadas de centenas de IPs diferentes. Os logs revelam milhares de tentativas
-de login com credenciais diferentes --- um ataque de credential stuffing usando
+de login com credenciais diferentes, um ataque de credential stuffing usando
 listas de credenciais vazadas de outros serviços. Às 17h58, o engenheiro ativa o
 runbook de ``ataque de brute force / credential stuffing'' e notifica o canal de
 incidentes. Às 18h05, a primeira medida de contenção é aplicada: rate limiting
 agressivo no endpoint de autenticação, limitando a 5 tentativas por IP por
 minuto. O volume de tentativas cai 90\%, mas análise dos logs revela que algumas
-contas foram comprometidas antes do rate limiting --- 847 contas tiveram login
+contas foram comprometidas antes do rate limiting. Ao todo, 847 contas tiveram login
 bem-sucedido com credenciais vazadas. Às 18h20, a segunda medida de contenção:
 tokens de sessão de todas as 847 contas são invalidados, forçando re-autenticação.
 Às 18h45, notificação por email é disparada para as 847 contas afetadas com
@@ -1481,16 +1481,16 @@ comunicação estabelecidos, os runbooks documentados e simulações periódicas
 (tabletop exercises) realizadas para que todos saibam exatamente o que fazer
 quando a crise chegar. A segunda fase é a \textbf{Detecção e Análise}:
 identificar que um incidente está ocorrendo, avaliar sua severidade com base em
-critérios predefinidos e determinar o escopo --- quais sistemas, quais dados,
+critérios predefinidos e determinar o escopo, ou seja, quais sistemas, quais dados,
 quantos usuários estão afetados. A terceira fase é a \textbf{Contenção}: limitar
 o dano imediatamente, isolando sistemas comprometidos sem destruir evidências que
 serão necessárias para a investigação forense. A quarta fase é a
-\textbf{Erradicação}: remover a causa raiz do incidente --- aplicar patches,
+\textbf{Erradicação}: remover a causa raiz do incidente, o que inclui aplicar patches,
 revogar credenciais comprometidas, limpar artefatos maliciosos deixados pelo
 atacante. A quinta fase é a \textbf{Recuperação}: restaurar serviços ao estado
 normal de operação, monitorando de perto para detectar qualquer sinal de
-reincidência. A sexta e última fase --- frequentemente a mais negligenciada e
-talvez a mais valiosa --- são as \textbf{Lições Aprendidas}: o post-mortem
+reincidência. A sexta e última fase, frequentemente a mais negligenciada e
+talvez a mais valiosa, são as \textbf{Lições Aprendidas}: o post-mortem
 blameless onde a equipe examina coletivamente o que aconteceu, por que aconteceu,
 e o que precisa mudar para que não aconteça novamente.
 
@@ -1508,7 +1508,7 @@ são a primeira linha: métricas que desviam de baselines estabelecidos (pico de
 tráfego, aumento de erros, latência anormal), logs que revelam padrões suspeitos
 (múltiplas tentativas de acesso falhadas, acessos a recursos incomuns em horários
 incomuns), e alertas de ferramentas de segurança (detecção de malware, tentativas
-de exfiltração). Reports de usuários constituem outra fonte valiosa --- um
+de exfiltração). Reports de usuários constituem outra fonte valiosa. Um
 usuário que reporta ``minha conta está fazendo coisas que eu não fiz'' pode ser
 o primeiro indicador de um comprometimento. Notificações de terceiros
 completam o quadro: pesquisadores de segurança que descobrem vulnerabilidades,
@@ -1540,7 +1540,7 @@ confiança dos seus usuários, e a forma como você comunica importa tanto quant
 que você comunica.
 
 A comunicação interna deve fluir por um canal dedicado (um canal Slack ou Teams
-específico para o incidente), com uma cadência de atualizações definida --- mesmo
+específico para o incidente), com uma cadência de atualizações definida, mesmo
 que a atualização seja ``ainda investigando, sem novidades''. Stakeholders
 internos (gestão, jurídico, comunicação) devem ser informados com antecedência
 suficiente para preparar respostas antes que a notícia se torne pública. Uma
@@ -1585,15 +1585,15 @@ base factual sobre a qual toda a análise subsequente se constrói.
 Em seguida, o \textbf{impacto}: quantos usuários foram afetados, por quanto
 tempo o serviço ficou degradado ou indisponível, qual o impacto financeiro
 estimado e qual o impacto reputacional. Quantificar o impacto é essencial para
-priorizar ações corretivas --- um incidente que afetou 10 usuários por 5
+priorizar ações corretivas. Um incidente que afetou 10 usuários por 5
 minutos justifica ações diferentes de um que afetou 10 milhões por 5 horas.
 
 A \textbf{análise de causa raiz} é o coração do post-mortem, e a técnica mais
 eficaz é a dos 5 Porquês. O princípio é simples: para cada causa identificada,
 pergunte ``por quê?'' até chegar à causa sistêmica. ``O endpoint não tinha rate
-limiting'' --- por quê? ``Porque não estava na checklist de code review'' ---
-por quê? ``Porque a checklist não inclui controles de DoS'' --- por quê? ``Porque
-nunca tivemos um incidente de credential stuffing antes'' --- por quê? ``Porque
+limiting.'' Por quê? ``Porque não estava na checklist de code review.''
+Por quê? ``Porque a checklist não inclui controles de DoS.'' Por quê? ``Porque
+nunca tivemos um incidente de credential stuffing antes.'' Por quê? ``Porque
 nunca fizemos modelagem de ameaças para o fluxo de autenticação.'' Não pare na
 causa próxima (``alguém esqueceu de configurar rate limiting''); vá até a causa
 sistêmica (``não temos um processo que garanta que controles de segurança
@@ -1610,11 +1610,11 @@ Ações vagas não são executadas; ações específicas com prazos e responsáv
 \subsection{O Papel do Engenheiro Durante Incidentes}
 
 Durante um incidente de segurança, a pressão é intensa, a adrenalina é alta e
-a tentação de agir impulsivamente é quase irresistível. É precisamente nesses
-momentos que a disciplina do engenheiro é mais testada e mais necessária.
+a tentação de agir impulsivamente é quase irresistível. Nesses momentos a
+disciplina do engenheiro é mais testada e mais necessária.
 
 Manter a calma não é um conselho platônico; é uma necessidade operacional.
-Pânico leva a decisões ruins --- como formatar um servidor antes de coletar
+Pânico leva a decisões ruins, como formatar um servidor antes de coletar
 evidências, ou aplicar um ``fix rápido'' em produção que introduz um bug mais
 grave que o original. Siga o runbook. Se não há runbook para o cenário
 específico, siga o processo geral de resposta a incidentes. Se não há processo
@@ -1641,7 +1641,7 @@ em catastrófica. Se a correção não pode ser testada adequadamente, prefira
 a contenção (desabilitar o recurso afetado) até que uma correção adequada
 esteja pronta.
 
-E saiba pedir ajuda. Se você não sabe resolver, escale. Chame colegas mais
+Saiba pedir ajuda. Se você não sabe resolver, escale. Chame colegas mais
 experientes, acione o fornecedor do serviço, contacte a equipe de segurança.
 Pedir ajuda não é sinal de fraqueza; é sinal de responsabilidade. O engenheiro
 que gasta duas horas tentando resolver sozinho algo que um colega resolveria em
@@ -1686,7 +1686,7 @@ POS-INCIDENTE:
 \section{Conclusão}
 
 Segurança não é uma feature que se adiciona no final. É uma propriedade emergente
-de decisões tomadas em cada fase do desenvolvimento --- desde a modelagem de
+de decisões tomadas em cada fase do desenvolvimento, desde a modelagem de
 ameaças no design até o monitoramento contínuo em produção.
 
 Segurança é, antes de tudo, cultura. Ferramentas como scanners, WAFs e SIEMs
@@ -1699,8 +1699,8 @@ segurança como inegociável será significativamente mais resiliente.
 Todo engenheiro é responsável pela segurança do código que produz. A era em que
 ``segurança é problema do time de infosec'' terminou definitivamente. Se você
 escreve código que será executado em produção, que processará dados de usuários,
-que tomará decisões que afetam pessoas --- e praticamente todo código faz pelo
-menos uma dessas coisas --- você é responsável pela segurança desse código.
+que tomará decisões que afetam pessoas (e praticamente todo código faz pelo
+menos uma dessas coisas), você é responsável pela segurança desse código.
 Essa responsabilidade não é transferível para o time de segurança, para o
 reviewer do pull request ou para o scanner de vulnerabilidades.
 
@@ -1712,7 +1712,7 @@ produção, detecção de anomalias e resposta a incidentes preparada. Seguranç
 durante toda sua vida útil.
 
 A IA generativa amplifica simultaneamente riscos e oportunidades. Código gerado
-por IA precisa de revisão rigorosa --- mais rigorosa, não menos, do que código
+por IA precisa de revisão rigorosa, mais rigorosa, não menos, do que código
 escrito por humanos. Prompt injection é a nova fronteira de vulnerabilidades, e
 defesas definitivas ainda não existem. Ao mesmo tempo, IA pode ajudar a detectar
 vulnerabilidades, analisar logs em escala e automatizar aspectos da resposta a
@@ -1721,19 +1721,19 @@ está em posição privilegiada.
 
 Privacidade é arquitetura, não compliance. Respeitar a privacidade dos usuários
 não é opcional; é um requisito legal sob LGPD e GDPR e um imperativo ético que
-transcende a lei. As decisões de arquitetura que você toma hoje --- como
+transcende a lei. As decisões de arquitetura que você toma hoje, como
 estruturar o banco de dados, onde armazenar dados pessoais, como implementar
-exclusão --- determinam se sua organização poderá cumprir esses requisitos de
+exclusão, determinam se sua organização poderá cumprir esses requisitos de
 forma eficiente ou se enfrentará um projeto de reengenharia de milhões quando
 o regulador bater à porta.
 
-E prepare-se para o incidente. Não é ``se''; é ``quando''. A diferença entre
+Prepare-se para o incidente. Não é ``se''; é ``quando''. A diferença entre
 um desastre e um inconveniente gerenciável é a preparação: runbooks
 documentados, equipes treinadas, canais de comunicação estabelecidos, simulações
 periódicas. Quando o incidente chegar --- e ele vai chegar --- a qualidade da
 sua resposta será determinada pelo trabalho que você fez antes dele acontecer.
 
-O próximo capítulo aborda documentação viva --- porque segurança, assim como
+O próximo capítulo aborda documentação viva, porque segurança, assim como
 arquitetura, precisa estar documentada para ser efetiva. Um incidente respondido
 brilhantemente mas não documentado é uma oportunidade de aprendizado
 desperdiçada. Uma decisão de segurança tomada com sabedoria mas não registrada

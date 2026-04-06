@@ -5,26 +5,26 @@
 
 \section{Introdução}
 
-Revisão de código é uma das práticas mais poderosas da engenharia de software ---
+Revisão de código é uma das práticas mais poderosas da engenharia de software,
 e uma das mais subestimadas. Muitos times tratam code review como burocracia,
-um obstáculo entre o ``git push'' e o deploy. Essa visão está profundamente errada,
-e quem a sustenta está confundindo o ritual com a essência. O ritual é o Pull Request,
-os comentários, os botões de aprovação. A essência é algo muito maior.
+um obstáculo entre o ``git push'' e o deploy. Essa visão está completamente errada,
+e quem a sustenta está confundindo o ritual com o propósito. O ritual é o Pull Request,
+os comentários, os botões de aprovação. O propósito é algo muito maior.
 
 A primeira dimensão essencial da revisão é a \textbf{qualidade}. A revisão de código
 é a última linha de defesa antes que um bug, uma vulnerabilidade de segurança ou uma
 decisão de design desastrosa entre em produção. Quando um desenvolvedor escreve código,
-ele está imerso no problema --- conhece cada decisão, cada atalho, cada compromisso que
+ele está imerso no problema: conhece cada decisão, cada atalho, cada compromisso que
 fez. Essa imersão é ao mesmo tempo sua maior força e sua maior fraqueza. Ele vê o que
 construiu; o revisor vê o que pode quebrar. É a diferença entre o arquiteto que
 projetou o edifício e o engenheiro estrutural que verifica se ele aguenta o terremoto.
-Não é redundância --- é complementaridade fundamental.
+Não se trata de redundância, mas de complementaridade fundamental.
 
 A segunda dimensão é o \textbf{aprendizado}. Cada revisão de código é uma aula
 disfarçada. O autor aprende quando o revisor aponta um padrão melhor, uma
 vulnerabilidade que ele não conhecia, uma abstração mais elegante. Mas o aprendizado
-não é unidirecional. O revisor também aprende --- aprende sobre partes do sistema que
-não conhecia, sobre abordagens diferentes para o mesmo problema, sobre bibliotecas e
+não é unidirecional. O revisor também aprende: descobre partes do sistema que
+não conhecia, abordagens diferentes para o mesmo problema, bibliotecas e
 técnicas que o autor trouxe de sua experiência anterior. Em times saudáveis, a revisão
 de código é o mecanismo mais eficaz de transferência de conhecimento tácito, aquele
 tipo de conhecimento que não cabe em documentação mas que faz a diferença entre um
@@ -40,17 +40,17 @@ mesma direção arquitetural. Não por imposição, mas por diálogo contínuo.
 
 A quarta dimensão, frequentemente ignorada, é a \textbf{propriedade coletiva}. Quando
 todos revisam o código de todos, ninguém é dono exclusivo de nenhum módulo. Isso tem
-consequências práticas enormes. Reduz o \textit{bus factor} --- aquele número temido
+consequências práticas enormes. Reduz o \textit{bus factor} (aquele número temido
 que responde à pergunta ``quantas pessoas precisam ser atropeladas por um ônibus para
-que esse módulo fique órfão?''. Distribui conhecimento de forma orgânica. E cria um
+que esse módulo fique órfão?''). Distribui conhecimento de forma orgânica. E cria um
 senso de responsabilidade compartilhada que é o antídoto mais eficaz contra o
 síndrome do ``isso não é problema meu''.
 
 \subsection{Uma Breve História da Revisão de Código}
 
 A prática de revisar código não nasceu com os Pull Requests do GitHub. Sua história
-é rica, e entendê-la nos ajuda a perceber que os desafios que enfrentamos hoje ---
-como integrar IA no processo de revisão --- são apenas o capítulo mais recente de uma
+é rica, e entendê-la nos ajuda a perceber que os desafios que enfrentamos hoje,
+como integrar IA no processo de revisão, são apenas o capítulo mais recente de uma
 longa evolução.
 
 Tudo começou formalmente em 1976, quando Michael Fagan, um engenheiro da IBM, publicou
@@ -58,7 +58,7 @@ um artigo seminal intitulado ``Design and Code Inspections to Reduce Errors in P
 Development''. Fagan não estava tentando inventar uma prática nova por capricho
 acadêmico. Ele estava tentando resolver um problema real e doloroso: os projetos de
 software da IBM estavam plagados de defeitos que custavam fortunas para corrigir em
-fases tardias. A ideia de Fagan era simples na essência mas revolucionária na execução:
+fases tardias. A ideia de Fagan era simples no conceito mas revolucionária na execução:
 e se, em vez de esperar os defeitos aparecerem em testes ou em produção, os
 procurássemos sistematicamente \textit{antes} de o código sequer ser compilado?
 
@@ -67,17 +67,17 @@ envolvia quatro papéis bem definidos: o \textbf{moderador}, responsável por co
 sessão e manter o foco; o \textbf{autor}, que apresentava o código mas não o defendia;
 os \textbf{inspetores}, que tinham estudado o código previamente e traziam suas
 observações; e o \textbf{escriba}, que registrava cada defeito encontrado com
-classificação e localização precisa. A reunião tinha regras rígidas --- duração máxima
+classificação e localização precisa. A reunião tinha regras rígidas: duração máxima
 de duas horas, ritmo de revisão controlado (não mais que 150 linhas por hora para
 código, 500 linhas por hora para documentos de design), e foco exclusivo em encontrar
 defeitos, nunca em corrigi-los. A correção era responsabilidade do autor, depois da
 reunião.
 
-O que tornou as inspeções de Fagan verdadeiramente revolucionárias foram os resultados.
+Os resultados das inspeções de Fagan foram revolucionários.
 Estudos conduzidos na própria IBM e posteriormente replicados em outras organizações
 mostraram que as inspeções formais encontravam entre 60\% e 90\% dos defeitos do
-software --- números que nenhuma outra técnica de verificação, incluindo testes, jamais
-alcançou isoladamente. Fagan demonstrou que o custo de encontrar um defeito por inspeção
+software. Nenhuma outra técnica de verificação, incluindo testes, jamais
+alcançou esses números isoladamente. Fagan demonstrou que o custo de encontrar um defeito por inspeção
 era entre 10 e 100 vezes menor do que encontrá-lo em produção. Esses dados transformaram
 a revisão de código de uma ``boa prática'' em uma necessidade econômica.
 
@@ -92,13 +92,13 @@ modelo mais leve: a \textbf{revisão por e-mail}. O caso mais emblemático é o 
 Linux. Linus Torvalds, notoriamente cético em relação a ferramentas gráficas e
 interfaces ``amigáveis'', estabeleceu um fluxo onde os contribuidores enviavam patches
 como arquivos de texto em e-mails para listas de discussão. Os mantenedores e outros
-desenvolvedores respondiam com comentários, correções e aprovações --- tudo por e-mail.
+desenvolvedores respondiam com comentários, correções e aprovações, tudo por e-mail.
 Esse modelo tinha uma elegância brutal: era completamente assíncrono, funcionava com
 qualquer fuso horário, e produzia um registro permanente e pesquisável de todas as
 discussões. O kernel Linux, um dos projetos de software mais complexos e
 bem-sucedidos da história, foi construído inteiramente sobre esse modelo de revisão.
-Até hoje, em 2026, o kernel Linux ainda aceita contribuições por e-mail --- uma prova
-de que a essência da revisão não depende da ferramenta.
+Até hoje, em 2026, o kernel Linux ainda aceita contribuições por e-mail, uma prova
+de que o valor da revisão não depende da ferramenta.
 
 Nos anos 2000, ferramentas dedicadas começaram a aparecer. O \textbf{Gerrit}, criado
 pelo Google para o desenvolvimento do Android, trouxe a revisão de código para uma
@@ -110,7 +110,7 @@ gráfica para visualizar diffs, sistema de comentários inline, rastreabilidade 
 aprovou o quê e quando.
 
 Em 2008, o GitHub mudou tudo ao popularizar o conceito de \textbf{Pull Request}. A
-genialidade do PR não foi técnica --- era social. O PR democratizou a revisão de
+genialidade do PR não foi técnica; foi social. O PR democratizou a revisão de
 código. Antes, revisão era coisa de grandes corporações com processos formais ou de
 projetos open source com mantenedores dedicados. Com o GitHub, qualquer projeto com
 dois desenvolvedores podia ter revisão de código com um clique. O PR se tornou a
@@ -120,7 +120,7 @@ o padrão da indústria, não mais uma prática opcional de equipes ``maduras''.
 E então chegamos a 2023 e além, à era da \textbf{revisão assistida por IA}.
 Ferramentas como CodeRabbit, Amazon CodeGuru, GitHub Copilot para revisão de código
 e Sourcery começaram a oferecer análise automatizada que vai muito além do que linters
-tradicionais faziam. Essas ferramentas não apenas verificam sintaxe e estilo --- elas
+tradicionais faziam. Essas ferramentas não apenas verificam sintaxe e estilo: elas
 entendem semântica, detectam padrões de vulnerabilidade, sugerem refatorações e até
 escrevem resumos do que o PR faz. A IA entrou no fluxo de revisão como um participante
 ativo, mas, como veremos ao longo deste capítulo, ela não substitui o julgamento
@@ -130,9 +130,9 @@ humano. Ela o complementa e o amplifica.
 
 A IA é extraordinariamente boa em tarefas repetitivas e padronizáveis. Ela
 consegue varrer milhares de linhas em segundos procurando padrões conhecidos
-de problemas. Mas revisão de código não é apenas encontrar bugs --- é entender
-intenção, avaliar design e comunicar conhecimento. Essa distinção é fundamental
-e merece ser explorada com cuidado.
+de problemas. Mas revisão de código não é apenas encontrar bugs. É entender
+intenção, avaliar design e comunicar conhecimento. Essa distinção merece
+ser explorada com cuidado.
 
 A IA encontra o \textit{o quê}; o humano avalia o \textit{por quê}. Essa frase
 simples encapsula toda a dinâmica da revisão híbrida. Uma ferramenta de IA pode
@@ -146,7 +146,7 @@ talvez 200 linhas seja não apenas aceitável mas preferível a uma decomposiç�
 artificial que fragmentaria a lógica e dificultaria a auditoria. Se, por outro lado,
 a função é um handler HTTP que cresceu organicamente ao longo de dois anos sem nunca
 ser refatorado, a complexidade é um sintoma de negligência que precisa ser tratado.
-A mesma métrica, o mesmo número, significados completamente diferentes --- e apenas um
+A mesma métrica, o mesmo número, significados completamente diferentes, e apenas um
 humano com contexto pode fazer essa distinção.
 
 A IA detecta que não há tratamento de erro em uma chamada de rede. Ela pode até
@@ -159,7 +159,7 @@ do sistema que dependem de contexto que nenhuma IA possui.
 
 E há um aspecto frequentemente esquecido: a IA pode gerar mais código do que nunca.
 Ferramentas de geração assistida por IA aumentaram dramaticamente a velocidade com
-que código é produzido. Isso não significa que precisamos de menos revisão --- significa
+que código é produzido. Isso não significa que precisamos de menos revisão; significa
 que precisamos de \textit{mais}. Se um desenvolvedor que antes escrevia 100 linhas
 por dia agora produz 500 com ajuda de IA, a demanda por revisão quintuplicou. E como
 veremos na seção sobre revisão de código gerado por IA, esse código produzido em
@@ -177,15 +177,15 @@ disfuncionais.
 
 Antes de falar de ferramentas e workflows, precisamos alinhar princípios.
 Um processo de revisão sem princípios claros degenera em dois extremos: ou
-ninguém revisa de verdade --- clicando ``Approve'' sem ler uma linha, transformando
-a revisão em teatro para satisfazer uma regra de branch protection --- ou a revisão
+ninguém revisa de verdade, clicando ``Approve'' sem ler uma linha, transformando
+a revisão em teatro para satisfazer uma regra de branch protection; ou a revisão
 vira uma arena de egos, onde seniores bloqueiam juniores por discordâncias estilísticas
 e o PR se torna campo de batalha em vez de espaço de colaboração.
 
 \subsection{Objetivo: Qualidade e Aprendizado, Não Gatekeeping}
 
 A revisão de código existe para melhorar o código \textbf{e} o time. Essas duas
-palavras --- ``e o time'' --- são tão importantes quanto ``melhorar o código'', e
+palavras (``e o time'') são tão importantes quanto ``melhorar o código'', e
 são frequentemente esquecidas. Um processo de revisão que produz código impecável
 mas destrói a moral da equipe não é um bom processo. É um processo destrutivo com
 resultados técnicos acidentalmente bons.
@@ -194,7 +194,7 @@ A revisão não é um tribunal onde o revisor julga o autor. Essa metáfora judi
 é mais comum do que gostaríamos de admitir. Quantas vezes um desenvolvedor abriu
 um Pull Request com um frio na barriga, antecipando a ``sentença'' do revisor
 sênior? Quantas vezes um revisor tratou seus comentários como veredictos
-irrecorríveis? Quando a revisão se torna julgamento, o autor não aprende --- ele se
+irrecorríveis? Quando a revisão se torna julgamento, o autor não aprende. Ele se
 defende. E quando alguém está na defensiva, toda energia cognitiva é direcionada
 para proteger o ego, não para absorver feedback.
 
@@ -206,12 +206,12 @@ PR. O revisor sênior, em cinco minutos, deixa dez comentários, todos começand
 comentários estão corretos. Mas o efeito é devastador. A desenvolvedora sai da
 experiência sentindo-se incompetente, não iluminada. Na próxima vez, ela vai evitar
 tarefas complexas. Ou vai demorar ainda mais, paralisada pelo medo da revisão. O
-``custo'' da revisão foi zero em termos de horas do revisor --- cinco minutos. Mas o
+``custo'' da revisão foi zero em termos de horas do revisor, cinco minutos. Mas o
 custo real, em termos de confiança destruída e potencial desperdiçado, é imenso.
 
-Agora imagine a mesma situação com um revisor que entende que a revisão é sobre
+Agora considere a mesma situação com um revisor que entende que a revisão é sobre
 aprendizado. Ele começa reconhecendo o esforço: ``Boa abordagem para o problema de
-concorrência aqui. Vi que você considerou usar mutex --- faz sentido.'' Então
+concorrência aqui. Vi que você considerou usar mutex, faz sentido.'' Então
 oferece uma perspectiva: ``Para esse caso específico, talvez um canal fosse mais
 idiomático em Go. O motivo é que canais permitem comunicar a intenção de forma mais
 clara quando temos produtor-consumidor. O que acha?'' A diferença é abismal. O
@@ -219,19 +219,19 @@ feedback é igualmente técnico, igualmente correto, mas a desenvolvedora sai da
 experiência pensando ``aprendi algo novo'' em vez de ``sou incompetente''.
 
 Um bom review produz código melhor \textbf{e} pessoas melhores. Se o autor não
-aprendeu nada com a revisão, ela foi ineficaz --- mesmo que o código tenha sido
+aprendeu nada com a revisão, ela foi ineficaz, mesmo que o código tenha sido
 melhorado. Se o revisor não aprendeu nada, ele não prestou atenção de verdade. Em
 toda revisão, há algo para aprender: uma biblioteca que o autor descobriu, uma
 abordagem diferente para um problema conhecido, um requisito de negócio que o
 revisor não conhecia. A revisão é uma via de mão dupla, e tratá-la como via de mão
-única --- do sênior que ``ensina'' para o júnior que ``aprende'' --- desperdiça
+única (do sênior que ``ensina'' para o júnior que ``aprende'') desperdiça
 metade de seu potencial.
 
 \subsection{Foco em Design, Não em Estilo}
 
 Linters e formatadores existem para resolver questões de estilo, e eles fazem isso
 infinitamente melhor do que humanos. ESLint, Prettier, Black, Rubocop, gofmt,
-clang-format --- essas ferramentas não têm dias ruins, não esquecem regras, não se
+clang-format. Essas ferramentas não têm dias ruins, não esquecem regras, não se
 distraem, e não entram em debates filosóficos sobre tabulação versus espaços. Se uma
 questão de estilo pode ser automatizada, automatize-a. Essa é uma das poucas regras
 absolutas em engenharia de software.
@@ -239,7 +239,7 @@ absolutas em engenharia de software.
 A energia humana é um recurso precioso e escasso. Quando um time gasta capital
 intelectual discutindo em code reviews se usa 2 ou 4 espaços de indentação, se
 colchetes abrem na mesma linha ou na linha de baixo, se imports devem ser agrupados
-por tipo ou por ordem alfabética --- esse time está desperdiçando seu recurso mais
+por tipo ou por ordem alfabética, esse time está desperdiçando seu recurso mais
 valioso em decisões que uma máquina resolve em milissegundos. É como contratar um
 cirurgião cardíaco para medir a temperatura dos pacientes: tecnicamente ele sabe
 fazer, mas é um desperdício criminoso de especialização.
@@ -248,7 +248,7 @@ O foco da revisão humana deve estar no que realmente importa: o design está co
 A abstração faz sentido? Os nomes comunicam intenção? A complexidade é justificada?
 Essas perguntas não têm respostas binárias que um linter possa verificar. Elas exigem
 julgamento, experiência e conhecimento do contexto. Uma classe chamada
-\texttt{DataProcessor} é um code smell de naming --- é tão genérica que poderia ser
+\texttt{DataProcessor} é um code smell de naming, tão genérica que poderia ser
 qualquer coisa. Mas nenhum linter vai pegar isso, porque sintaticamente o nome é
 válido. O humano é quem percebe que \texttt{InvoiceValidator} comunicaria muito
 melhor a intenção.
@@ -256,7 +256,7 @@ melhor a intenção.
 A regra prática é elegante na sua simplicidade: se um linter pode pegar, não é assunto
 de code review. Se você se encontrar escrevendo um comentário sobre estilo em um PR,
 pergunte-se: ``por que nosso linter não pegou isso?'' Se a resposta é ``porque não
-temos linter'', a ação correta não é comentar no PR --- é configurar o linter. Se a
+temos linter'', a ação correta não é comentar no PR, e sim configurar o linter. Se a
 resposta é ``porque não temos uma regra para isso'', a ação correta é adicionar a
 regra. O code review humano deve ser reservado para o que máquinas não conseguem
 avaliar.
@@ -265,15 +265,15 @@ avaliar.
 
 O tom do feedback em code review é tão importante quanto seu conteúdo técnico. Um
 feedback tecnicamente brilhante entregue de forma desrespeitosa não apenas falha em
-seu propósito --- ele causa dano ativo. A pessoa que recebe o feedback se fecha, se
+seu propósito; ele causa dano ativo. A pessoa que recebe o feedback se fecha, se
 defende, e a próxima vez que abrir um PR, estará pensando em como evitar críticas
 em vez de como escrever o melhor código possível.
 
 O primeiro princípio do feedback construtivo é \textbf{criticar o código, não a
 pessoa}. A diferença entre ``essa função está fazendo coisas demais'' e ``você não
 sabe dividir responsabilidades'' é a diferença entre feedback profissional e ataque
-pessoal. A primeira frase identifica um problema no código --- algo que pode ser
-corrigido, discutido, melhorado. A segunda frase ataca a competência do autor ---
+pessoal. A primeira frase identifica um problema no código, algo que pode ser
+corrigido, discutido, melhorado. A segunda frase ataca a competência do autor,
 algo que provoca defensividade, ressentimento e medo. A linguagem importa. As
 palavras que escolhemos em um comentário de code review revelam se estamos tentando
 melhorar o código ou provar nossa superioridade.
@@ -281,7 +281,7 @@ melhorar o código ou provar nossa superioridade.
 O segundo princípio é \textbf{sugerir, não ordenar}. ``Que tal extrair essa lógica
 para um serviço?'' é fundamentalmente diferente de ``Refatore isso.'' A sugestão
 abre espaço para diálogo. Talvez o autor tenha uma razão excelente para ter mantido
-a lógica ali --- uma razão que o revisor desconhece. A ordem fecha esse espaço. Ela
+a lógica ali, uma razão que o revisor desconhece. A ordem fecha esse espaço. Ela
 pressupõe que o revisor está certo e o autor está errado, o que nem sempre é o caso.
 Os melhores revisores que já conheci formulam quase todos os seus comentários como
 perguntas ou sugestões, não como imperativos.
@@ -292,14 +292,14 @@ tem interface abstraída, então qualquer teste vai precisar mockar a implementa
 concreta, que tem 12 dependências'' é infinitamente mais útil do que ``muito acoplado''.
 O primeiro comentário transmite conhecimento. O segundo transmite opinião sem
 fundamentação. Quando o revisor explica o porquê, o autor não apenas corrige o
-problema atual --- ele internaliza o princípio e evita o mesmo tipo de problema no
+problema atual: ele internaliza o princípio e evita o mesmo tipo de problema no
 futuro. É a diferença entre dar um peixe e ensinar a pescar.
 
 O quarto princípio é \textbf{reconhecer o bom}. A tendência natural em code review é
 comentar apenas problemas. Isso cria uma dinâmica perversa onde abrir o PR e ver
 comentários se torna sinônimo de ``recebi críticas''. Quando o revisor também comenta
-o que está bom --- ``gostei dessa abstração, ficou bem clara'', ``excelente uso de
-pattern matching aqui'', ``esses testes cobrem bem os edge cases'' --- ele reforça boas
+o que está bom (``gostei dessa abstração, ficou bem clara'', ``excelente uso de
+pattern matching aqui'', ``esses testes cobrem bem os edge cases''), ele reforça boas
 práticas e cria uma experiência mais equilibrada. O autor sai sabendo não apenas o que
 precisa melhorar, mas também o que está fazendo certo.
 
@@ -313,7 +313,7 @@ de conformidade.
 \subsection{Tamanho Ideal de Pull Request}
 
 O tamanho do PR é um dos fatores mais determinantes para a qualidade da revisão.
-PRs grandes demais não recebem revisão real --- recebem um ``LGTM'' cansado, um
+PRs grandes demais não recebem revisão real. Recebem um ``LGTM'' cansado, um
 clique em ``Approve'' motivado mais pelo desejo de se livrar da tarefa do que pela
 convicção de que o código está correto. Esse fenômeno é tão previsível que tem nome
 na literatura: \textit{review fatigue}.
@@ -338,7 +338,7 @@ Uma pesquisa clássica conduzida pela SmartBear, envolvendo mais de 2.500 revis�
 código em uma empresa de telecomunicações, demonstrou que revisões de mais de 400
 linhas apresentam uma queda drástica na taxa de detecção de defeitos. O gráfico é
 alarmante: a eficácia da revisão cai quase linearmente conforme o tamanho do PR
-aumenta, e acima de 400 linhas a curva praticamente achata --- o revisor encontra
+aumenta, e acima de 400 linhas a curva praticamente achata. O revisor encontra
 quase a mesma quantidade (baixa) de defeitos em 400 linhas que em 800 ou 1200. O
 motivo é cognitivo: a memória de trabalho humana tem limites, e quando o revisor
 não consegue mais manter o contexto completo do PR na cabeça, ele começa a pular
@@ -347,7 +347,7 @@ trechos, ler superficialmente e aprovar por exaustão.
 Há também a regra dos 60 minutos: após 60 minutos de revisão contínua, a eficácia
 cai significativamente. O cérebro humano não foi projetado para manter atenção
 focada em código alheio por períodos prolongados. Pull Requests devem ser
-dimensionados para serem revisáveis em menos de uma hora --- idealmente em 20 a 30
+dimensionados para serem revisáveis em menos de uma hora, idealmente em 20 a 30
 minutos. Isso não significa que features complexas não possam existir; significa que
 devem ser decompostas em PRs incrementais, cada um funcional e testável
 independentemente.
@@ -363,7 +363,7 @@ conflicts menos frequentes e um histórico de commits que conta uma história le
 \subsection{A Mentalidade do Revisor}
 
 Ser um bom revisor é uma habilidade que se desenvolve com prática e intenção. Não
-basta ser um bom programador --- alguns dos piores revisores que já conheci eram
+basta ser um bom programador. Alguns dos piores revisores que já conheci eram
 tecnicamente brilhantes mas emocionalmente obtusas. A mentalidade com que você aborda
 o código alheio determina a qualidade da sua revisão mais do que seu conhecimento
 técnico.
@@ -371,7 +371,7 @@ técnico.
 A primeira atitude fundamental é abordar o código com curiosidade, não com
 desconfiança. Quando você abre um PR, a postura default deveria ser ``vamos ver o que
 essa pessoa construiu e como posso ajudar'' e não ``vamos ver o que essa pessoa fez
-de errado''. A diferença é sutil mas profunda. A curiosidade leva a perguntas
+de errado''. A diferença é sutil mas significativa. A curiosidade leva a perguntas
 genuínas; a desconfiança leva a acusações disfarçadas de perguntas.
 
 Assuma que o autor tinha boas razões para suas decisões. Se algo parece estranho,
@@ -384,7 +384,7 @@ Nem todo comentário precisa bloquear o merge, e essa priorização é uma das m
 de um revisor maduro. Existe uma diferença fundamental entre ``precisa mudar antes
 do merge'' e ``eu faria diferente, mas o que está aqui funciona''. O revisor
 experiente sabe diferenciar os dois e comunicar claramente qual é qual. Uma prática
-excelente é usar o prefixo \texttt{nit:} para sugestões opcionais e cosméticas ---
+excelente é usar o prefixo \texttt{nit:} para sugestões opcionais e cosméticas,
 sinais claros de que aquele comentário é uma sugestão, não um bloqueio. Isso respeita
 a autonomia do autor e mantém o foco da discussão nos pontos que realmente importam.
 
@@ -399,7 +399,7 @@ O primeiro imperativo é não levar feedback para o lado pessoal. Isso é mais f
 de dizer do que de fazer. Quando você investiu horas ou dias em uma implementação,
 cada comentário de revisão pode sentir como uma crítica pessoal. Mas o alvo do
 feedback é o código, não você. Separar sua identidade do seu código é uma habilidade
-profissional fundamental --- e, paradoxalmente, os melhores desenvolvedores são os que
+profissional fundamental, e, paradoxalmente, os melhores desenvolvedores são os que
 conseguem fazer isso com mais naturalidade, porque sua confiança não depende de cada
 linha de código ser perfeita.
 
@@ -408,7 +408,7 @@ claras no PR explicando o contexto, a motivação e as decisões tomadas; PRs pe
 e focados em vez de monolitos de 1000 linhas; testes que demonstram que o código
 funciona e cobrem os edge cases relevantes. Um PR bem preparado é um ato de respeito
 pelo tempo do revisor. Um PR com descrição vazia, 800 linhas alteradas e sem testes
-é um ato de desrespeito --- mesmo que não intencional.
+é um ato de desrespeito, mesmo que não intencional.
 
 Responder todos os comentários, mesmo que seja com um simples ``concordo, corrigido'',
 é uma questão de cortesia e de rastreabilidade. O revisor investiu tempo para
@@ -424,7 +424,7 @@ agradecer sugestões boas reforça a cultura de colaboração que torna todo o p
 viável a longo prazo.
 
 Com os princípios estabelecidos, podemos agora examinar com mais precisão onde a IA
-se encaixa nesse quadro --- começando pelo que ela faz excepcionalmente bem.
+se encaixa nesse quadro, começando pelo que ela faz excepcionalmente bem.
 
 % ============================================================
 \section{O Que a IA Revisa Bem}
@@ -438,21 +438,21 @@ exige julgamento.
 
 A primeira categoria onde a IA brilha é na detecção de \textbf{erros de sintaxe e
 typos}. Variáveis com nomes errados, parênteses desbalanceados, imports não
-utilizados, ponto e vírgula faltando --- esses são problemas que a IA encontra com
+utilizados, ponto e vírgula faltando. Esses são problemas que a IA encontra com
 precisão perfeita e velocidade instantânea. Para um humano, percorrer 500 linhas de
 código procurando um import não usado é uma tarefa tediosa que consome minutos e está
 sujeita a lapsos de atenção. Para a IA, é uma operação trivial que leva
 milissegundos. Considere este cenário concreto: um desenvolvedor refatorou um módulo,
 movendo várias funções para outros arquivos. No processo, esqueceu de remover três
 imports que não são mais utilizados. Em uma revisão humana, esses imports provavelmente
-passariam despercebidos --- eles não causam erro, não afetam o comportamento, e o olho
+passariam despercebidos: eles não causam erro, não afetam o comportamento, e o olho
 humano naturalmente pula a seção de imports para focar na lógica. A IA os encontra
 todos, em todos os arquivos, toda vez.
 
 A segunda categoria é a detecção de \textbf{vulnerabilidades de segurança conhecidas},
 especialmente os padrões catalogados pelo OWASP. SQL injection, Cross-Site Scripting
 (XSS), path traversal, uso de funções criptográficas obsoletas como MD5 ou SHA-1 para
-hashing de senhas, transmissão de dados sensíveis sem TLS --- esses são padrões com
+hashing de senhas, transmissão de dados sensíveis sem TLS. Esses são padrões com
 assinaturas reconhecíveis que a IA aprendeu a partir de milhões de exemplos no seu
 conjunto de treinamento. Imagine uma função que constrói uma query SQL concatenando
 diretamente o input do usuário: \texttt{query = "SELECT * FROM users WHERE id = " +
@@ -461,7 +461,7 @@ parecer inofensiva. A IA a identifica instantaneamente como SQL injection e suge
 correção: prepared statements com parâmetros vinculados.
 
 A terceira categoria abrange \textbf{violações de convenções}. Naming conventions,
-organização de imports, padrões de estrutura de arquivos --- todas essas são regras
+organização de imports, padrões de estrutura de arquivos: todas essas são regras
 codificáveis que humanos esquecem com frequência alarmante. A IA não esquece. Se o
 time decidiu que todas as interfaces começam com ``I'' (um padrão comum em C\#), ou
 que funções exportadas em Go começam com letra maiúscula (uma regra da linguagem),
@@ -479,12 +479,12 @@ A quinta categoria é a \textbf{complexidade ciclomática}. A IA calcula e alert
 quando a complexidade ultrapassa limiares aceitáveis. Thomas McCabe definiu em 1976
 que uma complexidade ciclomática acima de 10 merece atenção especial, e acima de 20
 indica necessidade de refatoração obrigatória. A IA aplica esse cálculo a cada
-função, em cada PR, sem exceção --- algo que nenhum revisor humano faz
+função, em cada PR, sem exceção, algo que nenhum revisor humano faz
 consistentemente.
 
 A sexta categoria é \textbf{código morto}: variáveis declaradas mas nunca lidas,
 funções definidas mas nunca chamadas, branches de código inacessíveis (como um
-\texttt{if} cuja condição é sempre falsa). Código morto é entropia --- ele não causa
+\texttt{if} cuja condição é sempre falsa). Código morto é entropia. Ele não causa
 danos imediatos, mas aumenta a confusão, dificulta a manutenção e eventualmente
 se torna um vetor de bugs quando alguém o modifica pensando que está em uso.
 
@@ -527,7 +527,7 @@ corrigir.
 
 Essa capacidade da IA de varrer sistematicamente as categorias quantificáveis de
 problemas é o que libera o revisor humano para focar no que realmente exige sua
-atenção. E é exatamente sobre isso que precisamos falar agora: as dimensões da
+atenção. E é sobre isso que precisamos falar agora: as dimensões da
 revisão onde o julgamento humano é insubstituível.
 
 % ============================================================
@@ -541,7 +541,7 @@ tem vulnerabilidades \textit{hoje} mas que será impossível de manter \textit{a
 
 A primeira dimensão exclusivamente humana é a \textbf{adequação ao domínio de
 negócio}. O código resolve o problema certo? Essa pergunta parece trivial, mas é onde
-a maioria dos defeitos verdadeiramente caros se origina. A IA não sabe que ``cliente
+a maioria dos defeitos mais caros se origina. A IA não sabe que ``cliente
 premium'' no seu sistema tem regras específicas de desconto que foram discutidas em
 uma reunião com o product owner semana passada e que ainda não foram formalizadas em
 nenhuma especificação. A IA não sabe que o campo \texttt{data\_vencimento} nunca
@@ -559,7 +559,7 @@ revelam a intenção do domínio? Considere a diferença entre uma função cham
 \texttt{process(data)} e uma função chamada
 \texttt{validateAndEnrichCustomerProfile(rawRegistrationData)}. Ambas podem fazer
 exatamente a mesma coisa, mas a segunda comunica sua intenção de forma que o próximo
-desenvolvedor que ler o código --- que pode ser você mesmo em seis meses --- saiba
+desenvolvedor que ler o código (que pode ser você mesmo em seis meses) saiba
 imediatamente o que esperar. A IA pode sugerir que o nome \texttt{process} é
 genérico demais, mas não pode sugerir que
 \texttt{validateAndEnrichCustomerProfile} é o nome correto, porque para isso
@@ -568,7 +568,7 @@ precisaria entender o domínio.
 A terceira dimensão envolve \textbf{decisões de design e arquitetura}. Esse serviço
 deveria ser síncrono ou assíncrono? Essa responsabilidade pertence a esta camada ou à
 camada acima? Estamos criando acoplamento desnecessário entre módulos que deveriam ser
-independentes? Essas perguntas não têm respostas universais --- elas dependem dos
+independentes? Essas perguntas não têm respostas universais. Elas dependem dos
 requisitos não-funcionais do sistema, da estratégia de escalonamento, da estrutura da
 equipe (a Lei de Conway nos lembra que a arquitetura do software reflete a estrutura
 de comunicação da organização) e de dezenas de outros fatores contextuais.
@@ -577,8 +577,8 @@ A quarta dimensão são os \textbf{trade-offs e decisões técnicas}. Usamos cac
 aceitamos eventual inconsistência? Duplicamos dados para melhorar performance de
 leitura, aceitando o custo de sincronização? Adotamos uma solução simples mas que
 não escala além de 10.000 usuários, sabendo que hoje temos 500? Cada uma dessas
-decisões envolve pesar prioridades conflitantes --- performance versus consistência,
-simplicidade versus escalabilidade, velocidade de entrega versus robustez --- e essas
+decisões envolve pesar prioridades conflitantes: performance versus consistência,
+simplicidade versus escalabilidade, velocidade de entrega versus robustez. E essas
 prioridades são definidas por contexto humano, não por análise de código.
 
 A quinta dimensão é o \textbf{contexto organizacional}. Esse PR afeta o time de data
@@ -594,7 +594,7 @@ conhecimento da equipe}. A revisão é uma oportunidade de mentoria. O júnior q
 escreveu esse código está pronto para aprender sobre esse padrão mais avançado? Essa
 é a hora certa para introduzir o conceito de event sourcing, ou isso vai
 sobrecarregar alguém que ainda está aprendendo os fundamentos? O revisor humano
-calibra seu feedback ao nível e ao momento do autor --- algo que nenhuma IA faz.
+calibra seu feedback ao nível e ao momento do autor, algo que nenhuma IA faz.
 
 \begin{table}[htbp]
 \centering
@@ -638,9 +638,9 @@ Mentoria e crescimento da equipe    & Inexistente & Essencial  \\
 - O humano viu o RISCO DE NEGOCIO (contexto).
 \end{lstlisting}
 
-O exemplo acima captura a essência da complementaridade. A IA identifica um sintoma
-mensurável --- complexidade ciclomática 12. O humano identifica a causa raiz e o
-risco real --- duplicação de lógica de negócio que vai causar inconsistência quando as
+O exemplo acima captura a complementaridade. A IA identifica um sintoma
+mensurável: complexidade ciclomática 12. O humano identifica a causa raiz e o
+risco real, a duplicação de lógica de negócio que vai causar inconsistência quando as
 regras mudarem. Ambos os feedbacks são valiosos, mas o do humano é o que previne o
 incidente em produção no próximo trimestre.
 
@@ -683,14 +683,14 @@ correções são triviais e automáticas.
 
 A regra aqui é de tolerância zero: se o código não passa no linter, o PR não avança.
 Ponto final. Não há espaço para ``ah, mas é só um espaço a mais'' ou ``isso não
-afeta o comportamento''. A consistência de estilo é binária --- ou está conforme ou
+afeta o comportamento''. A consistência de estilo é binária: ou está conforme ou
 não está. Essa rigidez é libertadora: elimina completamente a categoria de
 discussões de estilo do code review, reservando a atenção humana para o que importa.
 
 Idealmente, Maria já teria rodado essas ferramentas localmente antes do push,
 usando pre-commit hooks configurados com Husky (para projetos Node.js), pre-commit
 (para projetos Python) ou ferramentas equivalentes. Quando o CI falha por estilo, o
-ciclo de feedback é mais lento --- Maria precisa fazer um novo commit e push. Quando
+ciclo de feedback é mais lento, pois Maria precisa fazer um novo commit e push. Quando
 o pre-commit hook pega o problema localmente, ela corrige em segundos. O investimento
 em configurar pre-commit hooks se paga em dias.
 
@@ -706,8 +706,8 @@ função que valida a chave PIX do cliente está usando uma regex que não trata
 corretamente chaves do tipo telefone com DDI internacional, o que poderia permitir
 inputs malformados. Segundo, um aviso de performance: dentro do loop que processa
 os itens do carrinho para calcular o valor total, Maria está fazendo uma chamada
-individual ao serviço de impostos para cada item, gerando um clássico problema N+1 ---
-uma única chamada batch seria muito mais eficiente. Terceiro, um code smell: a função
+individual ao serviço de impostos para cada item, gerando um clássico problema N+1.
+Uma única chamada batch seria muito mais eficiente. Terceiro, um code smell: a função
 \texttt{processarPagamentoPix} tem 85 linhas e complexidade ciclomática 14, sugerindo
 que deveria ser decomposta.
 
@@ -717,7 +717,7 @@ revisor humano. Cada achado inclui a localização (arquivo e linha), a severida
 sugestão de correção.
 
 Um ponto crítico nessa etapa é a calibração da sensibilidade da ferramenta. Muitos
-falsos positivos --- alertas que se revelam irrelevantes ou incorretos --- fazem com
+falsos positivos (alertas que se revelam irrelevantes ou incorretos) fazem com
 que o time comece a ignorar a ferramenta, como o menino que gritou lobo. Se a IA
 marca 20 achados em cada PR e 15 são falsos positivos, em poucas semanas ninguém
 lerá mais os achados da IA. A calibração é um processo contínuo: ajustar regras,
@@ -726,9 +726,9 @@ adicionar regras customizadas para padrões específicos do domínio.
 
 \subsection{Passo 3: Autor Endereça Achados da IA}
 
-Antes de solicitar revisão humana, Maria endereça os achados da IA. Essa etapa é
-fundamental para o funcionamento do workflow híbrido --- ela garante que o revisor
-humano não gaste tempo em problemas que uma máquina já detectou.
+Antes de solicitar revisão humana, Maria endereça os achados da IA. Essa etapa
+garante que o revisor humano não gaste tempo em problemas que uma máquina já detectou,
+e por isso é tão importante para o funcionamento do workflow híbrido.
 
 Maria corrige a regex de validação da chave PIX, expandindo-a para cobrir o formato
 com DDI. Refatora a consulta de impostos para usar uma chamada batch em vez de
@@ -751,10 +751,10 @@ Maria faz commit das correções, faz push, e então marca os revisores humanos.
 Agora Carlos, o tech lead do time de pagamentos, e Ana, uma desenvolvedora sênior do
 time de checkout (que consome a API de pagamentos), recebem a notificação de que o PR
 está pronto para revisão humana. O código que eles vão revisar já está limpo de
-problemas triviais --- a IA e os linters fizeram seu trabalho. Carlos e Ana podem
+problemas triviais, pois a IA e os linters fizeram seu trabalho. Carlos e Ana podem
 focar no que realmente exige julgamento humano.
 
-Carlos lê a descrição do PR primeiro --- Maria seguiu o template do time, explicando
+Carlos lê a descrição do PR primeiro. Maria seguiu o template do time, explicando
 o contexto (suporte a PIX no checkout), as decisões de design (por que optou por
 uma abstração PaymentMethod em vez de um if/else no handler) e como testar (QR code
 de teste fornecido pelo sandbox do banco). Então ele vai ao diff.
@@ -776,8 +776,8 @@ retorna \texttt{\{status, txId, createdAt\}}. Isso vai quebrar o parsing no fron
 de checkout, que espera um formato consistente. Ana comenta pedindo a normalização
 do contrato.
 
-Esses dois achados --- o problema de design de interface e a inconsistência de contrato
-de API --- são precisamente o tipo de coisa que somente humanos com contexto
+Esses dois achados (o problema de design de interface e a inconsistência de contrato
+de API) são o tipo de coisa que somente humanos com contexto
 organizacional e conhecimento do roadmap podem identificar.
 
 \subsection{Passo 5: Discussão e Aprovação}
@@ -792,7 +792,7 @@ interface, um return false na implementação) enquanto o custo de não ter e pr
 refatorar depois é alto (mudança em todas as implementações existentes). Maria
 concorda e faz a adição.
 
-Todos os comentários são resolvidos explicitamente --- Maria responde cada um indicando
+Todos os comentários são resolvidos explicitamente. Maria responde cada um indicando
 o que fez ou o que decidiu. Carlos e Ana revisam as mudanças finais e aprovam o PR.
 O merge é feito com squash, consolidando os commits de feature + correções em um
 único commit limpo no branch principal. O pipeline de CI/CD executa os testes uma
@@ -803,7 +803,7 @@ estratégico, e o resultado é melhor do que qualquer um dos dois alcançaria so
 A regra de ouro que sustenta todo o processo: nunca faça merge do próprio PR sem
 revisão, exceto em emergências documentadas. Essa regra existe não porque o autor
 é incompetente, mas porque a revisão por outro par de olhos é estatisticamente
-superior à auto-revisão --- mesmo quando o autor é o desenvolvedor mais sênior do
+superior à auto-revisão, mesmo quando o autor é o desenvolvedor mais sênior do
 time.
 
 \subsection{Ferramentas do Ecossistema}
@@ -826,7 +826,7 @@ dashboard histórico que mostra a evolução da qualidade ao longo do tempo.
 O \textbf{CodeRabbit} representa a nova geração de revisão por IA. Ele analisa o diff
 do PR usando LLMs e produz comentários contextualizados que vão além de regras
 estáticas. Ele entende a semântica do código, pode sugerir refatorações complexas e
-gera resumos automáticos do que o PR faz --- úteis para revisores humanos que querem
+gera resumos automáticos do que o PR faz, úteis para revisores humanos que querem
 entender o contexto rapidamente.
 
 O \textbf{Semgrep} é uma ferramenta de análise estática baseada em regras
@@ -853,7 +853,7 @@ automaticamente, sem depender do autor lembrar de marcar os revisores corretos.
     \caption{Ciclo de Vida de um Pull Request}
 \end{figure}
 
-Com o workflow e as ferramentas estabelecidos, chegamos ao checklist prático --- um
+Com o workflow e as ferramentas estabelecidos, chegamos ao checklist prático, um
 guia que consolida o que discutimos em uma referência rápida para o dia a dia.
 
 % ============================================================
@@ -869,7 +869,7 @@ de revisar bem, nenhum aspecto fundamental seja negligenciado.
 
 O checklist abaixo combina verificações automatizáveis (delegáveis à IA e ao CI)
 e verificações que exigem julgamento humano. A coluna ``Responsável'' indica quem
-deveria primariamente se ocupar daquele item --- mas isso não significa exclusividade.
+deveria primariamente se ocupar daquele item, sem que isso signifique exclusividade.
 O humano pode e deve confirmar achados da IA quando a severidade justifica; a IA
 pode auxiliar o humano apontando indícios que merecem investigação mais profunda.
 
@@ -915,7 +915,7 @@ A descrição ideal segue uma estrutura que responde às perguntas fundamentais 
 revisor: por que essa mudança é necessária (contexto), o que exatamente muda (scope),
 quais decisões de design foram tomadas e por quê (raciocínio), e como verificar que
 funciona (teste). Quando o autor investe dez minutos escrevendo uma boa descrição,
-ele economiza trinta minutos do revisor --- e cria um registro permanente que beneficia
+ele economiza trinta minutos do revisor, e cria um registro permanente que beneficia
 todo futuro leitor.
 
 \begin{lstlisting}[language={}, caption={Exemplo de Descrição de Pull Request}]
@@ -970,8 +970,8 @@ escrito por IA? A resposta curta é: com muito mais cuidado do que a maioria pra
 \subsection{Código de IA Precisa de MAIS Revisão, Não Menos}
 
 Há uma armadilha cognitiva perigosa em ação quando revisamos código gerado por IA.
-Como a IA ``parece saber o que faz'' --- o código é sintaticamente limpo, os nomes são
-razoáveis, a estrutura é plausível --- revisores tendem a confiar mais no código
+Como a IA ``parece saber o que faz'' (o código é sintaticamente limpo, os nomes são
+razoáveis, a estrutura é plausível), revisores tendem a confiar mais no código
 gerado por IA do que no código de um desenvolvedor júnior. Isso é um erro grave e
 contra-intuitivo.
 
@@ -979,19 +979,19 @@ Quando um júnior escreve código, nossos radares de revisão estão em alerta m
 Sabemos que ele pode não conhecer os padrões do projeto, que pode ter entendido mal
 o requisito, que pode ter implementado algo que funciona mas é frágil. Então lemos
 cada linha com atenção. Quando a IA gera código, algo curioso acontece no cérebro do
-revisor: o código ``parece profissional'' --- indentação perfeita, nomes seguindo
-convenções, estrutura organizada --- e isso ativa um viés de confirmação. Se parece
+revisor: o código ``parece profissional'' (indentação perfeita, nomes seguindo
+convenções, estrutura organizada) e isso ativa um viés de confirmação. Se parece
 correto, provavelmente está correto. Exceto que frequentemente não está.
 
-A IA gera código que \textbf{parece} correto --- sintaxe limpa, nomes razoáveis,
+A IA gera código que \textbf{parece} correto: sintaxe limpa, nomes razoáveis,
 estrutura plausível. Isso cria uma falsa sensação de segurança que é mais perigosa
-do que código obviamente ruim. Código obviamente ruim é pego rapidamente --- ele chama
+do que código obviamente ruim. Código obviamente ruim é pego rapidamente, porque ele chama
 atenção para si mesmo. Código sutilmente errado, envolto em uma aparência de
 competência, passa despercebido e causa danos em produção.
 
 A IA não entende o domínio. Ela não conhece as regras de negócio implícitas. Não sabe
 que ``aquele campo nunca pode ser null nesse contexto'' porque essa invariante não
-está no schema do banco nem em nenhuma validação explícita --- ela existe apenas na
+está no schema do banco nem em nenhuma validação explícita. Ela existe apenas na
 cabeça do time que opera o sistema. A IA vê o padrão estatístico mais provável dado
 o prompt e o contexto, e gera código que satisfaz esse padrão. Mas o padrão mais
 provável não é necessariamente o correto para o seu caso específico.
@@ -1018,22 +1018,22 @@ principal pelo qual código de IA causa problemas em produção. Vamos examinar 
 concretos para entender como ela opera.
 
 O primeiro cenário é o código que é \textbf{sintaticamente perfeito mas resolve o
-problema errado}. Imagine que você pediu à IA para implementar uma função que calcula
+problema errado}. Suponha que você pediu à IA para implementar uma função que calcula
 o frete baseado no CEP do destinatário. A IA gera uma função elegante que consulta
 uma API de CEP, calcula a distância, aplica uma tabela de faixas de peso e retorna
 o valor. O código compila, os testes passam. Mas a IA usou a API dos Correios, e seu
 sistema usa uma transportadora privada com tabela de preços completamente diferente.
-O código ``funciona'' --- ele calcula um frete. Mas calcula o frete \textit{errado}
+O código ``funciona''. Ele calcula um frete. Mas calcula o frete \textit{errado}
 para o contexto do seu sistema. E como o resultado é um número plausível (não é zero,
 não é negativo, não é absurdamente alto), ninguém percebe até que os clientes começam
 a reclamar que o frete cobrado não bate com o frete real.
 
 O segundo cenário envolve \textbf{dependências desatualizadas ou incompatíveis}. A IA
-usa uma biblioteca que existia na versão 2.x mas teve breaking changes na 3.x --- e
+usa uma biblioteca que existia na versão 2.x mas teve breaking changes na 3.x, e
 seu projeto usa a 3.x. O código que a IA gerou chama um método que foi renomeado, usa
 um parâmetro que foi removido, ou depende de um comportamento que mudou. Em linguagens
 com tipagem forte, o compilador pode pegar isso. Em linguagens dinâmicas como Python
-ou JavaScript, o erro só aparece em runtime --- possivelmente em produção.
+ou JavaScript, o erro só aparece em runtime, possivelmente em produção.
 
 O terceiro cenário é a \textbf{escolha algorítmica subótima}. A IA implementa um
 algoritmo O(n\textsuperscript{2}) quando existe uma solução O(n) bem conhecida para
@@ -1044,12 +1044,12 @@ de dados.
 
 O quarto cenário, particularmente insidioso, é quando a IA \textbf{copia um padrão
 popular que tem uma vulnerabilidade conhecida}. Stack Overflow está cheio de
-respostas populares --- com milhares de votos --- que contêm vulnerabilidades
+respostas populares, com milhares de votos, que contêm vulnerabilidades
 documentadas em CVEs publicados anos depois. A IA, treinada nesse mesmo conteúdo,
 reproduz esses padrões fielmente. O código parece correto porque \textit{foi}
 correto quando foi escrito, mas o mundo mudou.
 
-O quinto cenário é o mais traiçoeiro: o código compila, os testes passam --- mas os
+O quinto cenário é o mais traiçoeiro: o código compila, os testes passam, mas os
 testes estão errados. Quando você pede à IA para gerar código E testes, há um risco
 real de que a IA gere testes que testam a \textit{implementação}, não o
 \textit{comportamento esperado}. O teste valida que a função faz o que faz, não que
@@ -1068,13 +1068,13 @@ Ela ``lembra'' de um método que existia em uma versão anterior, ou confunde m�
 de bibliotecas diferentes, ou simplesmente inventa um nome que ``parece'' que deveria
 existir. A verificação é direta mas exige disciplina: para cada chamada de API gerada
 pela IA, consulte a documentação oficial da versão específica que o projeto utiliza.
-Não confie na sua memória --- confie na documentação.
+Não confie na sua memória; confie na documentação.
 
 Uma forma ainda mais perigosa é a importação de \textbf{bibliotecas fictícias}. A IA
 pode gerar um \texttt{import} de um pacote que simplesmente não existe no npm, no
 PyPI ou no Maven Central. Em alguns casos, essas ``alucinações'' de nomes de pacotes
 foram exploradas por atacantes que registraram pacotes maliciosos com os nomes que
-as IAs costumam inventar --- um vetor de ataque conhecido como \textit{dependency
+as IAs costumam inventar, um vetor de ataque conhecido como \textit{dependency
 confusion} ou \textit{AI package hallucination attack}. Sempre valide que as
 dependências sugeridas pela IA existem de fato, são mantidas ativamente e têm uma
 base de usuários real.
@@ -1090,7 +1090,7 @@ pode gerar manifestos Terraform, Kubernetes ou Docker que parecem válidos
 sintaticamente mas contêm valores default inseguros: portas expostas desnecessariamente,
 permissões excessivas em IAM roles, volumes montados sem restrição de acesso, secrets
 passados como variáveis de ambiente sem encryption. Essas configurações passam na
-validação sintática e frequentemente funcionam --- mas criam superfícies de ataque que
+validação sintática e frequentemente funcionam, mas criam superfícies de ataque que
 um atacante explorarar.
 
 \subsection{Validação de Dependências e Licenças}
@@ -1115,7 +1115,7 @@ instaladas são as que importam, não as que a IA assume.
 A terceira verificação, frequentemente negligenciada, é a \textbf{compatibilidade de
 licenças}. Se a IA sugeriu usar uma biblioteca licenciada sob GPL em um projeto
 proprietário, há um problema legal real. A GPL exige que qualquer software que
-incorpore código GPL também seja distribuído sob GPL --- o que pode ser incompatível
+incorpore código GPL também seja distribuído sob GPL, o que pode ser incompatível
 com o modelo de negócio da empresa. Licenças como MIT, Apache 2.0 e BSD são geralmente
 seguras para projetos proprietários. Licenças como GPL, AGPL e SSPL exigem análise
 jurídica. O revisor deve verificar a licença de cada nova dependência sugerida pela IA.
@@ -1127,7 +1127,7 @@ de CVEs. Adicionar uma dependência com vulnerabilidade conhecida é introduzir 
 falha de segurança voluntariamente.
 
 A quinta verificação, cada vez mais relevante, é contra \textbf{supply chain attacks}.
-A IA pode sugerir pacotes com nomes similares a pacotes populares --- um fenômeno
+A IA pode sugerir pacotes com nomes similares a pacotes populares, um fenômeno
 conhecido como \textit{typosquatting}. O pacote \texttt{crypt0} em vez de
 \texttt{crypto}, \texttt{requets} em vez de \texttt{requests}. Esses pacotes
 maliciosos são criados por atacantes que sabem que desenvolvedores (e IAs) cometem
@@ -1140,7 +1140,7 @@ A interseção entre código gerado por IA e segurança merece atenção redobra
 a IA tem tendências específicas que criam riscos previsíveis.
 
 A IA pode gerar código que loga dados sensíveis em plain text. Tokens de
-autenticação, senhas, CPFs, números de cartão de crédito --- tudo isso pode aparecer
+autenticação, senhas, CPFs, números de cartão de crédito: tudo isso pode aparecer
 em logs se a IA gera um \texttt{console.log(request)} ou \texttt{logger.info(payload)}
 sem considerar que o payload contém dados pessoais. Em um ambiente regulado por LGPD
 ou GDPR, esse tipo de logging é não apenas um problema de segurança mas uma violação
@@ -1150,10 +1150,10 @@ A IA pode hardcodar credenciais. Não intencionalmente, mas porque foi treinada 
 milhares de exemplos de código onde credenciais aparecem hardcodadas (tutoriais,
 exemplos de documentação, código de teste). Quando ela gera um exemplo de conexão
 com banco de dados, é comum que inclua algo como
-\texttt{password = "admin123"} --- e se o desenvolvedor não percebe e remove,
+\texttt{password = "admin123"}, e se o desenvolvedor não percebe e remove,
 essa credencial vai para o repositório.
 
-A IA pode gerar código sem rate limiting, sem autenticação, sem autorização --- porque
+A IA pode gerar código sem rate limiting, sem autenticação, sem autorização, porque
 o prompt não mencionou esses requisitos. A IA faz exatamente o que foi pedido e nada
 mais. Se você pediu ``crie um endpoint que retorna a lista de usuários'', ela cria
 um endpoint que retorna a lista de usuários. Sem autenticação. Sem paginação. Sem
@@ -1173,7 +1173,7 @@ apenas testes funcionais).
     \caption{Modelo de Maturidade em Code Review}
 \end{figure}
 
-A revisão de código gerado por IA é, em essência, uma nova competência que todo
+A revisão de código gerado por IA é uma nova competência que todo
 engenheiro de software precisa desenvolver. Ela exige um ceticismo calibrado: não
 paranoia que paralisa, mas vigilância que protege. Com essa competência em mente,
 podemos agora discutir como medir se nosso processo de revisão --- híbrido, combinando
@@ -1184,9 +1184,9 @@ IA e humanos --- está realmente funcionando.
 
 O que não se mede, não se melhora. Mas cuidado: métricas mal escolhidas
 incentivam comportamentos errados. Medir ``número de comentários por review''
-incentiva comentários desnecessários --- revisores escrevem observações triviais
-para inflar o número. Medir ``tempo até aprovação'' incentiva revisões superficiais
---- o revisor clica approve o mais rápido possível para melhorar a métrica. A
+incentiva comentários desnecessários, pois revisores escrevem observações triviais
+para inflar o número. Medir ``tempo até aprovação'' incentiva revisões superficiais,
+porque o revisor clica approve o mais rápido possível para melhorar a métrica. A
 escolha de métricas é tão importante quanto a decisão de medir, e métricas erradas
 são piores que nenhuma métrica, porque dão uma ilusão de controle sobre um processo
 que está se deteriorando.
@@ -1220,7 +1220,7 @@ desenvolvedor abre um PR, quanto tempo ele espera até que alguém olhe? Se a re
 é ``mais de um dia'', há um problema. O desenvolvedor que esperou o dia inteiro já
 trocou de contexto, está trabalhando em outra coisa, e quando o feedback finalmente
 chega, ele precisa recarregar todo o contexto do PR original na memória. A meta de
-menos de 4 horas úteis não é arbitrária --- ela reflete o tempo máximo que um
+menos de 4 horas úteis não é arbitrária. Ela reflete o tempo máximo que um
 desenvolvedor pode esperar sem perder o contexto mental do que fez. Para medir isso,
 ferramentas como LinearB, Haystack e o próprio GitHub Insights calculam
 automaticamente a partir dos timestamps do PR. A armadilha dessa métrica é que ela
@@ -1246,11 +1246,11 @@ e qualidade da revisão. A meta de 100 a 300 linhas é derivada dos estudos da S
 e de dados internos do Google (cujo processo de revisão é considerado referência na
 indústria). A forma de medir é simples: a maioria das plataformas de código reporta
 o número de linhas alteradas por PR. A armadilha é que essa métrica pode incentivar
-PRs artificialmente pequenos --- dividir um commit de 10 linhas em dois PRs de 5 linhas
-cada não ajuda ninguém. O objetivo é que features sejam genuinamente decompostas em
+PRs artificialmente pequenos, como dividir um commit de 10 linhas em dois PRs de 5 linhas
+cada, o que não ajuda ninguém. O objetivo é que features sejam genuinamente decompostas em
 unidades coerentes, não que sejam fatiadas arbitrariamente.
 
-A \textbf{taxa de bugs pós-merge} é, em última análise, a métrica mais importante:
+No fim das contas, a \textbf{taxa de bugs pós-merge} é a métrica mais importante:
 ela mede se a revisão está cumprindo seu propósito fundamental de encontrar problemas
 antes que cheguem a produção. A meta é uma tendência decrescente, não um número
 absoluto, porque o baseline varia enormemente entre projetos. Um projeto legado com
@@ -1260,7 +1260,7 @@ ou menor que a do mês anterior. Se não é, algo no processo precisa mudar.
 
 A \textbf{satisfação do time com reviews} é a métrica que muitos times ignoram por
 considerá-la ``soft demais''. Mas ela é o canário na mina de carvão. Quando a
-satisfação cai, as outras métricas eventualmente seguem --- mas com atraso. Um time
+satisfação cai, as outras métricas eventualmente seguem, com atraso. Um time
 insatisfeito com o processo de revisão começa a evitá-lo: PRs ficam maiores (para
 reduzir o número de revisões), revisões ficam mais superficiais (porque ninguém quer
 se engajar em um processo que desgosta), e a qualidade se deteriora silenciosamente.
@@ -1270,7 +1270,7 @@ necessária.
 O \textbf{percentual de PRs com revisão por IA} mede a adoção da automação. Se o
 time investiu na configuração de ferramentas de revisão por IA, essa métrica verifica
 se elas estão de fato sendo usadas. Um percentual abaixo de 90\% indica que há PRs
-escapando do pipeline automatizado --- seja por configuração incorreta, por exceções
+escapando do pipeline automatizado, seja por configuração incorreta, por exceções
 não justificadas, ou por resistência da equipe. A armadilha é tratar essa métrica
 como fim em si mesma: 100\% dos PRs passando por revisão de IA não significa nada se
 a equipe ignora os achados da IA.
@@ -1300,7 +1300,7 @@ quantas pessoas? Quanto tempo levou a revisão? Os comentários da IA incluíam 
 relevante que foi ignorado? O que, especificamente, poderia ter sido feito
 diferente na revisão para detectar esse bug?
 
-É crucial que essa análise não seja usada para culpar revisores. O objetivo é
+Essa análise não pode ser usada para culpar revisores. O objetivo é
 melhorar o processo, não punir pessoas. Se um revisor sênior não detectou um bug
 sutil, a pergunta certa não é ``por que ele não viu?'' mas ``o que no nosso processo
 permitiu que um bug desse tipo passasse?''. Talvez o PR fosse grande demais. Talvez
@@ -1322,7 +1322,7 @@ investimento deve ser em cobertura de testes.
 
 A satisfação da equipe com o processo de revisão é um indicador antecedente de
 problemas. Quando a satisfação cai, os problemas objetivos (mais bugs, mais ciclos,
-mais tempo até merge) seguem --- mas com um atraso de semanas ou meses. Monitorar
+mais tempo até merge) seguem, com um atraso de semanas ou meses. Monitorar
 a satisfação permite agir preventivamente, antes que os problemas se manifestem em
 métricas de qualidade.
 
@@ -1333,11 +1333,11 @@ sente que os reviews que recebe são construtivos?'' mede a qualidade do feedbac
 são feitos em tempo razoável?'' mede a responsividade. ``A IA está ajudando ou
 atrapalhando o processo?'' mede a percepção sobre a automação.
 
-Se a satisfação está baixa, o processo precisa mudar --- independentemente de quão
+Se a satisfação está baixa, o processo precisa mudar, independentemente de quão
 ``correto'' ele pareça no papel. Um processo que gera ressentimento não é sustentável.
 Os melhores engenheiros vão evitá-lo, contorná-lo ou, no limite, buscar times ou
 empresas onde o processo de revisão é uma experiência positiva. A satisfação não é
-um ``nice to have'' --- é uma condição de sustentabilidade do processo.
+um ``nice to have''; é uma condição de sustentabilidade do processo.
 
 As respostas das pesquisas devem ser discutidas em retrospectivas dedicadas, com
 ações concretas definidas e prazos para implementação. Uma pesquisa cujos resultados
@@ -1352,7 +1352,7 @@ velocidade do processo de revisão, mas também a disciplina de decomposição d
 a disponibilidade dos revisores e a clareza da comunicação.
 
 Se o throughput cai, a investigação deve ser multifatorial. Revisores sobrecarregados
-são a causa mais comum --- quando cada pessoa do time tem 5 PRs para revisar por dia,
+são a causa mais comum: quando cada pessoa do time tem 5 PRs para revisar por dia,
 a qualidade e a velocidade caem inevitavelmente. PRs grandes demais são outra causa
 frequente: um PR de 800 linhas leva o mesmo tempo de revisão que três PRs de 250
 linhas, mas produz uma revisão significativamente pior. Falta de contexto nas
@@ -1387,19 +1387,19 @@ deve entrar na lista.
 A calibração das ferramentas de IA é um processo contínuo. Regras que geram muitos
 falsos positivos devem ser ajustadas ou desativadas. Regras que estão faltando devem
 ser adicionadas. A sensibilidade deve ser calibrada para o equilíbrio ideal entre
-rigor e praticidade --- rigor demais gera fadiga de alertas, praticidade demais deixa
+rigor e praticidade; rigor demais gera fadiga de alertas, praticidade demais deixa
 problemas passarem.
 
 A rotação de revisores é uma prática poderosa que muitos times negligenciam. Quando
 sempre as mesmas pessoas revisam os mesmos módulos, o conhecimento se concentra em
 vez de se distribuir. Pior: os revisores ``habituais'' de um módulo desenvolvem pontos
-cegos --- eles conhecem tão bem o código que deixam de questionar decisões que um
+cegos, pois conhecem tão bem o código que deixam de questionar decisões que um
 olhar fresco questionaria. Rotacionar revisores periodicamente distribui conhecimento,
 oferece perspectivas novas e previne a formação de silos.
 
-Finalmente, quando uma discussão de review gera uma decisão importante --- ``decidimos
+Finalmente, quando uma discussão de review gera uma decisão importante (``decidimos
 usar filas em vez de chamadas síncronas para integração entre serviços'' ou
-``decidimos que todo endpoint deve ter rate limiting configurável'' --- essa decisão
+``decidimos que todo endpoint deve ter rate limiting configurável''), essa decisão
 deve ser registrada como um ADR (Architecture Decision Record). ADRs são documentos
 curtos que registram o contexto, a decisão e as consequências. Eles transformam
 decisões efêmeras de comentários de PR em conhecimento permanente do projeto.
@@ -1413,12 +1413,12 @@ decisões efêmeras de comentários de PR em conhecimento permanente do projeto.
 % ============================================================
 \section{Conclusão}
 
-Revisão de código na era da IA não é mais simples --- é mais sofisticada.
+Revisão de código na era da IA não é mais simples. É mais sofisticada.
 A IA elimina o trabalho tedioso de verificar sintaxe, convenções e padrões
 conhecidos, liberando o revisor humano para o que realmente importa: avaliar
 design, questionar decisões, entender contexto e ensinar.
 
-A revisão é, em sua essência, sobre \textbf{aprendizado coletivo}. O objetivo final
+A revisão é, no fundo, sobre \textbf{aprendizado coletivo}. O objetivo final
 não é apenas código melhor, mas um time melhor. Quando o processo de revisão funciona
 bem, cada PR mergeado deixa o time mais alinhado, mais informado e mais capaz do que
 antes. O código melhora como efeito colateral do time que melhora. Times que entendem
@@ -1426,7 +1426,7 @@ isso investem no processo de revisão não como overhead burocrático, mas como 
 atividades de maior retorno sobre investimento em engenharia de software.
 
 A IA \textbf{amplifica, não substitui} o julgamento humano. Ela é o melhor assistente
-que um revisor pode ter --- incansável, consistente, rápido e com uma memória perfeita
+que um revisor pode ter: incansável, consistente, rápido e com uma memória perfeita
 para padrões conhecidos de problemas. Mas a responsabilidade pelo que entra em
 produção continua sendo humana. A IA não entende o domínio, não conhece o roadmap,
 não sabe quem está esperando aquela API e não se importa se o time está aprendendo.
@@ -1435,7 +1435,7 @@ processo de revisão que apenas existe.
 
 Código gerado por IA exige \textbf{mais rigor}, não menos. A armadilha do ``parece
 certo'' é real e documentada. Estudos mostram que desenvolvedores que usam IA
-produzem mais vulnerabilidades e sentem mais confiança --- uma combinação perigosa.
+produzem mais vulnerabilidades e sentem mais confiança, uma combinação perigosa.
 A revisão de código de IA deve ser mais cuidadosa, mais sistemática e mais cética do
 que a revisão de código humano, precisamente porque a aparência de competência da IA
 desativa nossos mecanismos naturais de vigilância.
@@ -1444,25 +1444,25 @@ O processo de revisão \textbf{evolui continuamente}. Métricas, retrospectivas 
 feedback contínuo garantem que o processo acompanhe a evolução do time e das
 ferramentas. O checklist de hoje não será o checklist de amanhã. As regras da IA que
 funcionam hoje precisarão ser recalibradas no próximo trimestre. Os revisores que hoje
-são novatos serão os mentores do próximo ano. O processo é vivo --- e processos vivos
+são novatos serão os mentores do próximo ano. O processo é vivo, e processos vivos
 exigem cuidado contínuo.
 
 Acima de tudo, \textbf{cultura importa mais que ferramentas}. A melhor ferramenta
 de revisão do mundo não salva um time com cultura tóxica de feedback. Um time onde
 revisão é sinônimo de humilhação não vai melhorar com CodeRabbit. Um time onde
 ninguém lê os PRs dos outros não vai melhorar com SonarQube. As ferramentas
-amplificam a cultura existente --- para o bem ou para o mal. Invista em princípios
+amplificam a cultura existente, para o bem ou para o mal. Invista em princípios
 antes de investir em automação. Invista em empatia antes de investir em regras.
 Invista em confiança antes de investir em métricas.
 
 Como disse Gerald Weinberg, décadas antes da IA existir mas com uma lucidez que
 permanece intacta: ``Independentemente do que o problema pareça ser, é sempre um
-problema de pessoas.'' Revisão de código não é diferente. As ferramentas mudam ---
+problema de pessoas.'' Revisão de código não é diferente. As ferramentas mudam,
 de inspeções presenciais de Fagan a patches por e-mail, de Pull Requests do GitHub
 a revisões automatizadas por LLMs. Mas o desafio fundamental permanece o mesmo: como
 criamos um processo onde pessoas colaboram para produzir software melhor, aprendendo
-umas com as outras no caminho? Esse é o verdadeiro problema que a revisão de código
-resolve, e nenhuma IA --- por mais avançada que seja --- vai resolvê-lo por nós.
+umas com as outras no caminho? Esse é o problema que a revisão de código
+resolve, e nenhuma IA, por mais avançada que seja, vai resolvê-lo por nós.
 
 % ============================================================
 \section*{Exercícios}
